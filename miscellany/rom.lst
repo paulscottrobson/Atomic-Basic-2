@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.54.1900 listing file
 ; 64tass -a --m4510 -b -L rom.lst -o rom.bin test.asm
-; Fri Jul 26 03:36:09 2019
+; Fri Jul 26 15:19:03 2019
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -304,140 +304,173 @@
 .f031	a9 40		lda #$40			lda 	#$40
 .f033	ea		nop				nop
 .f034	92 04		sta ($04),z			sta 	($04),z
-.f036	a3 20		ldz #$20			ldz 	#$20
-.f038	a9 00		lda #$00			lda 	#$00
+.f036	a3 31		ldz #$31			ldz 	#$31
+.f038	a9 40		lda #$40			lda 	#$40
 .f03a	ea		nop				nop
 .f03b	92 04		sta ($04),z			sta 	($04),z
-.f03d	a3 21		ldz #$21			ldz 	#$21
-.f03f	a9 00		lda #$00			lda 	#$00
-.f041	ea		nop				nop
-.f042	92 04		sta ($04),z			sta 	($04),z
-.f044	a3 6f		ldz #$6f			ldz 	#$6F
-.f046	a9 60		lda #$60			lda 	#$60
-.f048	ea		nop				nop
-.f049	92 04		sta ($04),z			sta 	($04),z
-.f04b	a3 18		ldz #$18			ldz 	#$18
-.f04d	a9 42		lda #$42			lda 	#$42
-.f04f	ea		nop				nop
-.f050	92 04		sta ($04),z			sta 	($04),z
-.f052	a3 11		ldz #$11			ldz 	#$11
-.f054	a9 1b		lda #$1b			lda 	#$1B
-.f056	ea		nop				nop
-.f057	92 04		sta ($04),z			sta 	($04),z
-.f059	a3 16		ldz #$16			ldz 	#$16
-.f05b	a9 c8		lda #$c8			lda 	#$C8
-.f05d	ea		nop				nop
-.f05e	92 04		sta ($04),z			sta 	($04),z
-.f060	a3 54		ldz #$54			ldz 	#$54
-.f062	a9 c5		lda #$c5			lda 	#$C5
-.f064	ea		nop				nop
-.f065	92 04		sta ($04),z			sta 	($04),z
-.f067	a3 58		ldz #$58			ldz 	#$58
-.f069	a9 50		lda #$50			lda 	#80
-.f06b	ea		nop				nop
-.f06c	92 04		sta ($04),z			sta 	($04),z
-.f06e	a3 59		ldz #$59			ldz 	#$59
-.f070	a9 00		lda #$00			lda 	#0
-.f072	ea		nop				nop
-.f073	92 04		sta ($04),z			sta 	($04),z
-.f075	a3 00		ldz #$00			ldz 	#$00
-.f077	a9 ff		lda #$ff			lda 	#$FF
-.f079	ea		nop				nop
-.f07a	92 04		sta ($04),z			sta 	($04),z
-.f07c	a3 01		ldz #$01			ldz 	#$01
-.f07e	a9 ff		lda #$ff			lda 	#$FF
-.f080	ea		nop				nop
-.f081	92 04		sta ($04),z			sta 	($04),z
-.f083	a3 30		ldz #$30			ldz 	#$30
-.f085	a9 04		lda #$04			lda 	#4
-.f087	ea		nop				nop
-.f088	92 04		sta ($04),z			sta 	($04),z
-.f08a	a3 70		ldz #$70			ldz 	#$70
-.f08c	a9 ff		lda #$ff			lda 	#$FF
-.f08e	ea		nop				nop
-.f08f	92 04		sta ($04),z			sta 	($04),z
-.f091	a9 00		lda #$00			lda 	#$00						; colour RAM at $1F800-1FFFF (2kb)
-.f093	85 0b		sta $0b				sta 	$0B 						; char RAM appears to be here.
-.f095	a9 01		lda #$01			lda 	#$01
-.f097	85 0a		sta $0a				sta 	$0A
-.f099	a9 f8		lda #$f8			lda 	#$F8
-.f09b	85 09		sta $09				sta 	$09
-.f09d	a9 00		lda #$00			lda 	#$00
-.f09f	85 08		sta $08				sta 	$08
-.f0a1	a3 00		ldz #$00			ldz 	#0
-.f0a3					SetColorRam:
-.f0a3	6b		tza				tza
-.f0a4	ea		nop				nop
-.f0a5	92 08		sta ($08),z			sta 	($08),z
-.f0a7	3b		dez				dez
-.f0a8	d0 f9		bne $f0a3			bne 	SetColorRam
-.f0aa	e6 09		inc $09				inc 	$09
-.f0ac	d0 f5		bne $f0a3			bne 	SetColorRam
+.f03d	ad 31 d0	lda $d031			lda $d031	; VIC-III Control Register B
+.f040	29 40		and #$40			and #$40	; bit-6 is 4mhz
+.f042	8d 31 d0	sta $d031			sta $d031
+.f045	a3 20		ldz #$20			ldz 	#$20
+.f047	a9 00		lda #$00			lda 	#0
+.f049	ea		nop				nop
+.f04a	92 04		sta ($04),z			sta 	($04),z
+.f04c	a3 21		ldz #$21			ldz 	#$21
+.f04e	a9 00		lda #$00			lda 	#0
+.f050	ea		nop				nop
+.f051	92 04		sta ($04),z			sta 	($04),z
+.f053	a3 6f		ldz #$6f			ldz 	#$6F
+.f055	a9 80		lda #$80			lda 	#$80
+.f057	ea		nop				nop
+.f058	92 04		sta ($04),z			sta 	($04),z
+.f05a	ad 66 d0	lda $d066			lda $d066
+.f05d	29 7f		and #$7f			and #$7F
+.f05f	8d 66 d0	sta $d066			sta $d066
+.f062	a3 6a		ldz #$6a			ldz 	#$6A
+.f064	a9 00		lda #$00			lda 	#$00
+.f066	ea		nop				nop
+.f067	92 04		sta ($04),z			sta 	($04),z
+.f069	a3 6b		ldz #$6b			ldz 	#$6B
+.f06b	a9 00		lda #$00			lda 	#$00
+.f06d	ea		nop				nop
+.f06e	92 04		sta ($04),z			sta 	($04),z
+.f070	a3 78		ldz #$78			ldz 	#$78
+.f072	a9 00		lda #$00			lda 	#$00
+.f074	ea		nop				nop
+.f075	92 04		sta ($04),z			sta 	($04),z
+.f077	a3 5f		ldz #$5f			ldz 	#$5F
+.f079	a9 00		lda #$00			lda 	#$00
+.f07b	ea		nop				nop
+.f07c	92 04		sta ($04),z			sta 	($04),z
+.f07e	a3 5a		ldz #$5a			ldz 	#$5A
+.f080	a9 78		lda #$78			lda 	#$78
+.f082	ea		nop				nop
+.f083	92 04		sta ($04),z			sta 	($04),z
+.f085	a3 5d		ldz #$5d			ldz 	#$5D
+.f087	a9 c0		lda #$c0			lda 	#$C0
+.f089	ea		nop				nop
+.f08a	92 04		sta ($04),z			sta 	($04),z
+.f08c	a3 5c		ldz #$5c			ldz 	#$5C
+.f08e	a9 50		lda #$50			lda 	#80
+.f090	ea		nop				nop
+.f091	92 04		sta ($04),z			sta 	($04),z
+.f093	a9 ff		lda #$ff			lda #$ff
+.f095	8d 01 dd	sta $dd01			sta $DD01
+.f098	8d 00 dd	sta $dd00			sta $DD00
+.f09b	a3 18		ldz #$18			ldz 	#$18
+.f09d	a9 14		lda #$14			lda 	#$14
+.f09f	ea		nop				nop
+.f0a0	92 04		sta ($04),z			sta 	($04),z
+.f0a2	a3 11		ldz #$11			ldz 	#$11
+.f0a4	a9 1b		lda #$1b			lda 	#$1B
+.f0a6	ea		nop				nop
+.f0a7	92 04		sta ($04),z			sta 	($04),z
+.f0a9	a3 16		ldz #$16			ldz 	#$16
+.f0ab	a9 c8		lda #$c8			lda 	#$C8
+.f0ad	ea		nop				nop
+.f0ae	92 04		sta ($04),z			sta 	($04),z
+.f0b0	a3 c5		ldz #$c5			ldz 	#$C5
+.f0b2	a9 54		lda #$54			lda 	#$54
+.f0b4	ea		nop				nop
+.f0b5	92 04		sta ($04),z			sta 	($04),z
+.f0b7	a3 58		ldz #$58			ldz 	#$58
+.f0b9	a9 50		lda #$50			lda 	#80
+.f0bb	ea		nop				nop
+.f0bc	92 04		sta ($04),z			sta 	($04),z
+.f0be	a3 59		ldz #$59			ldz 	#$59
+.f0c0	a9 00		lda #$00			lda 	#0
+.f0c2	ea		nop				nop
+.f0c3	92 04		sta ($04),z			sta 	($04),z
+.f0c5	a3 18		ldz #$18			ldz 	#$18
+.f0c7	a9 42		lda #$42			lda 	#$42
+.f0c9	ea		nop				nop
+.f0ca	92 04		sta ($04),z			sta 	($04),z
+.f0cc	a3 11		ldz #$11			ldz 	#$11
+.f0ce	a9 1b		lda #$1b			lda 	#$1B
+.f0d0	ea		nop				nop
+.f0d1	92 04		sta ($04),z			sta 	($04),z
+.f0d3	a9 00		lda #$00			lda 	#$00						; colour RAM at $1F800-1FFFF (2kb)
+.f0d5	85 0b		sta $0b				sta 	$0B 						; char RAM appears to be here.
+.f0d7	a9 01		lda #$01			lda 	#$01
+.f0d9	85 0a		sta $0a				sta 	$0A
+.f0db	a9 f8		lda #$f8			lda 	#$F8
+.f0dd	85 09		sta $09				sta 	$09
+.f0df	a9 00		lda #$00			lda 	#$00
+.f0e1	85 08		sta $08				sta 	$08
+.f0e3	a3 00		ldz #$00			ldz 	#0
+.f0e5					SetColorRam:
+.f0e5	6b		tza				tza
+.f0e6	ea		nop				nop
+.f0e7	92 08		sta ($08),z			sta 	($08),z
+.f0e9	3b		dez				dez
+.f0ea	d0 f9		bne $f0e5			bne 	SetColorRam
+.f0ec	e6 09		inc $09				inc 	$09
+.f0ee	d0 f5		bne $f0e5			bne 	SetColorRam
 =$1000					Screen = $1000								; 2k screen RAM here
-.f0ae	a2 00		ldx #$00			ldx 	#0
-.f0b0					Clear2:
-.f0b0	8a		txa				txa
-.f0b1	29 01		and #$01			and 	#1									; odd bits write zero
-.f0b3	49 01		eor #$01			eor 	#1
-.f0b5	f0 02		beq $f0b9			beq 	_CL2Write
-.f0b7	8a		txa				txa
-.f0b8	4a		lsr a				lsr 	a
-.f0b9					_CL2Write:
-.f0b9	9d 00 10	sta $1000,x			sta 	Screen,x
-.f0bc	9d 00 11	sta $1100,x			sta 	Screen+$100,x
-.f0bf	9d 00 12	sta $1200,x			sta 	Screen+$200,x
-.f0c2	9d 00 13	sta $1300,x			sta 	Screen+$300,x
-.f0c5	9d 00 14	sta $1400,x			sta 	Screen+$400,x
-.f0c8	9d 00 15	sta $1500,x			sta 	Screen+$500,x
-.f0cb	9d 00 16	sta $1600,x			sta 	Screen+$600,x
-.f0ce	9d 00 17	sta $1700,x			sta 	Screen+$700,x
-.f0d1	e8		inx				inx
-.f0d2	d0 dc		bne $f0b0			bne 	Clear2
+.f0f0	a2 00		ldx #$00			ldx 	#0
+.f0f2					Clear2:
+.f0f2	8a		txa				txa
+.f0f3	29 01		and #$01			and 	#1									; odd bits write zero
+.f0f5	49 01		eor #$01			eor 	#1
+.f0f7	f0 02		beq $f0fb			beq 	_CL2Write
+.f0f9	8a		txa				txa
+.f0fa	4a		lsr a				lsr 	a
+.f0fb					_CL2Write:
+.f0fb	9d 00 10	sta $1000,x			sta 	Screen,x
+.f0fe	9d 00 11	sta $1100,x			sta 	Screen+$100,x
+.f101	9d 00 12	sta $1200,x			sta 	Screen+$200,x
+.f104	9d 00 13	sta $1300,x			sta 	Screen+$300,x
+.f107	9d 00 14	sta $1400,x			sta 	Screen+$400,x
+.f10a	9d 00 15	sta $1500,x			sta 	Screen+$500,x
+.f10d	9d 00 16	sta $1600,x			sta 	Screen+$600,x
+.f110	9d 00 17	sta $1700,x			sta 	Screen+$700,x
+.f113	e8		inx				inx
+.f114	d0 dc		bne $f0f2			bne 	Clear2
 =$800					CSet = $800
-.f0d4	a2 00		ldx #$00			ldx 	#0
-.f0d6					CopyPetFont:
-.f0d6	bd 00 e0	lda $e000,x			lda 	PETFont,x
-.f0d9	9d 00 08	sta $0800,x			sta 	CSet,x
-.f0dc	bd 00 e1	lda $e100,x			lda 	PETFont+$100,x
-.f0df	9d 00 09	sta $0900,x			sta 	CSet+$100,x
-.f0e2	bd 00 e2	lda $e200,x			lda 	PETFont+$200,x
-.f0e5	9d 00 0a	sta $0a00,x			sta 	CSet+$200,x
-.f0e8	bd 00 e3	lda $e300,x			lda 	PETFont+$300,x
-.f0eb	9d 00 0b	sta $0b00,x			sta 	CSet+$300,x
-.f0ee	ca		dex				dex
-.f0ef	d0 e5		bne $f0d6			bne 	CopyPetFont
-.f0f1	a9 36		lda #$36			lda 	#$36
-.f0f3	85 05		sta $05				sta 	$05
-.f0f5	a9 10		lda #$10			lda 	#$10
-.f0f7	85 04		sta $04				sta 	$04
-.f0f9	a3 00		ldz #$00	Halt:	ldz 	#0
-.f0fb	ea		nop				nop
-.f0fc	b2 04		lda ($04),z			lda		($04),z
-.f0fe	f0 f9		beq $f0f9			beq 	Halt
-.f100	48		pha				pha
-.f101	4a		lsr a				lsr 	a
-.f102	4a		lsr a				lsr 	a
-.f103	4a		lsr a				lsr 	a
-.f104	4a		lsr a				lsr 	a
-.f105	20 18 f1	jsr $f118			jsr 	ToHex
-.f108	8d 02 10	sta $1002			sta 	Screen+2
-.f10b	68		pla				pla
-.f10c	20 18 f1	jsr $f118			jsr 	ToHex
-.f10f	8d 04 10	sta $1004			sta 	Screen+4
-.f112	ea		nop				nop
-.f113	92 04		sta ($04),z			sta 	($04),z
-.f115	80 e2		bra $f0f9			bra 	Halt
-.f117	40		rti		Dummy:	rti
-.f118	29 0f		and #$0f	ToHex:	and 	#15
-.f11a	c9 0a		cmp #$0a			cmp 	#10
-.f11c	90 02		bcc $f120			bcc 	_IsDigit
-.f11e	e9 39		sbc #$39			sbc 	#48+9
-.f120					_IsDigit:
-.f120	69 30		adc #$30			adc 	#48
-.f122	60		rts				rts
-.f123	60		rts				rts
->fffa	17 f1						.word 	Dummy
+.f116	a2 00		ldx #$00			ldx 	#0
+.f118					CopyPetFont:
+.f118	bd 00 e0	lda $e000,x			lda 	PETFont,x
+.f11b	9d 00 08	sta $0800,x			sta 	CSet,x
+.f11e	bd 00 e1	lda $e100,x			lda 	PETFont+$100,x
+.f121	9d 00 09	sta $0900,x			sta 	CSet+$100,x
+.f124	bd 00 e2	lda $e200,x			lda 	PETFont+$200,x
+.f127	9d 00 0a	sta $0a00,x			sta 	CSet+$200,x
+.f12a	bd 00 e3	lda $e300,x			lda 	PETFont+$300,x
+.f12d	9d 00 0b	sta $0b00,x			sta 	CSet+$300,x
+.f130	ca		dex				dex
+.f131	d0 e5		bne $f118			bne 	CopyPetFont
+.f133	a9 36		lda #$36			lda 	#$36
+.f135	85 05		sta $05				sta 	$05
+.f137	a9 10		lda #$10			lda 	#$10
+.f139	85 04		sta $04				sta 	$04
+.f13b	a3 00		ldz #$00	Halt:	ldz 	#0
+.f13d	ea		nop				nop
+.f13e	b2 04		lda ($04),z			lda		($04),z
+.f140	f0 f9		beq $f13b			beq 	Halt
+.f142	48		pha				pha
+.f143	4a		lsr a				lsr 	a
+.f144	4a		lsr a				lsr 	a
+.f145	4a		lsr a				lsr 	a
+.f146	4a		lsr a				lsr 	a
+.f147	20 5a f1	jsr $f15a			jsr 	ToHex
+.f14a	8d 02 10	sta $1002			sta 	Screen+2
+.f14d	68		pla				pla
+.f14e	20 5a f1	jsr $f15a			jsr 	ToHex
+.f151	8d 04 10	sta $1004			sta 	Screen+4
+.f154	ea		nop				nop
+.f155	92 04		sta ($04),z			sta 	($04),z
+.f157	80 e2		bra $f13b			bra 	Halt
+.f159	40		rti		Dummy:	rti
+.f15a	29 0f		and #$0f	ToHex:	and 	#15
+.f15c	c9 0a		cmp #$0a			cmp 	#10
+.f15e	90 02		bcc $f162			bcc 	_IsDigit
+.f160	e9 39		sbc #$39			sbc 	#48+9
+.f162					_IsDigit:
+.f162	69 30		adc #$30			adc 	#48
+.f164	60		rts				rts
+.f165	60		rts				rts
+>fffa	59 f1						.word 	Dummy
 >fffc	00 f0						.word 	Start
->fffe	17 f1						.word 	Dummy
+>fffe	59 f1						.word 	Dummy
 
 ;******  End of listing

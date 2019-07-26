@@ -109,10 +109,8 @@ _EXTRKExit:
 EXTReadScreen:
 	phy 										; save Y
 	txa 										; multiply XY by 2
-	asl 	a
 	sta 	EXTZPWork							; into EXTZPWork
 	tya
-	rol 	a
 	ora 	#EXTScreen>>8 						; move into screen area
 	sta 	EXTZPWork+1 						; read character there
 	ldy 	#0
@@ -154,9 +152,6 @@ _EXTCSLoop:
 	lda 	#32
 	sta 	(EXTZPWork),y
 	iny
-	lda 	#0
-	sta 	(EXTZPWork),y
-	iny 	
 	bne 	_EXTCSLoop
 	inc 	EXTZPWork+1 						; next screen page	
 	lda 	EXTZPWork+1
@@ -180,20 +175,19 @@ EXTScrollDisplay:
 	lda 	#EXTScreen >> 8
 	sta 	EXTZPWork+1
 _EXTScroll:	
-	ldy 	#EXTWidth*2 						; x 2 because of two byte format.
+	ldy 	#EXTWidth 							; x 2 because of two byte format.
 	lda 	(EXTZPWork),y
 	ldy 	#0
 	sta 	(EXTZPWork),y
 	inc 	EXTZPWork 							; bump address
-	inc 	EXTZPWork
 	bne 	_EXTNoCarry
 	inc 	EXTZPWork+1
 _EXTNoCarry:
 	lda 	EXTZPWork 							; done ?
-	cmp	 	#(EXTScreen+2*EXTWidth*(EXTHeight-1)) & $FF
+	cmp	 	#(EXTScreen+EXTWidth*(EXTHeight-1)) & $FF
 	bne 	_EXTScroll
 	lda 	EXTZPWork+1
-	cmp	 	#(EXTScreen+2*EXTWidth*(EXTHeight-1)) >> 8
+	cmp	 	#(EXTScreen+EXTWidth*(EXTHeight-1)) >> 8
 	bne 	_EXTScroll
 	;
 	ldy 	#0									; clear bottom line.
@@ -201,8 +195,7 @@ _EXTLastLine:
 	lda 	#32
 	sta 	(EXTZPWork),y
 	iny
-	iny
-	cpy 	#EXTWidth*2
+	cpy 	#EXTWidth
 	bne 	_EXTLastLine	
 	ply 										; restore and exit.
 	pla
@@ -234,24 +227,52 @@ EXTReset:
 	lda 	#$00
 	sta 	EXTZPWork+0
 
-	#EXTWrite $30,$40 						; Charset
-	#EXTWrite $20,$00 						; border
-	#EXTWrite $21,$00	 					; background
-	#EXTWrite $6F,$60						; 60Hz
+	#EXTWrite 	$2F,$47
+	#EXTWrite 	$2F,$53
 
-	#EXTWrite $18,$42	 					; screen address $0800 video address $2000
+	#EXTWrite 	$30,$40
+	#EXTWrite 	$31,$40
+
+	lda $d031	; VIC-III Control Register B
+	and #$40	; bit-6 is 4mhz
+	sta $d031
+
+	#EXTWrite $20,0 						; black border
+	#EXTWrite $21,0 						; black background
+
+	#EXTWrite $6F,$80						; 60Mhz mode.
+
+
+	lda $d066
+	and #$7F
+	sta $d066
+
+	#EXTWrite $6A,$00
+	#EXTWrite $6B,$00
+	#EXTWrite $78,$00
+	#EXTWrite $5F,$00
+	
+	#EXTWrite $5A,$78
+	#EXTWrite $5D,$C0
+	#EXTWrite $5C,80
+
+	; point VIC-IV to bottom 16KB of display memory
+	;
+	lda #$ff
+	sta $DD01
+	sta $DD00
+
+	#EXTWrite $18,$14
 	#EXTWrite $11,$1B
 	#EXTWrite $16,$C8
 
-	#EXTWrite $54,$C5
+	#EXTWrite $C5,$54
+
 	#EXTWrite $58,80
 	#EXTWrite $59,0
 
-	#EXTWrite $00,$FF
-	#EXTWrite $01,$FF
-
-	#EXTWrite $30,4
-	#EXTWrite $70,$FF
+	#EXTWrite $18,$42	 				; screen address $0800 video address $2000
+	#EXTWrite $11,$1B
 
 	lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)
 	sta 	EXTZPWork+3 

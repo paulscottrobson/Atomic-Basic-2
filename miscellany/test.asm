@@ -53,6 +53,7 @@ Fill3:
 		cmp 	#$D0
 		bne 	Fill1
 NoFill:
+
 		lda 	#$0F 						; set up to write to video system.
 		sta 	$07
 		lda 	#$FD
@@ -62,24 +63,52 @@ NoFill:
 		lda 	#$00
 		sta 	$04
 
-		#vwrite $30,$40 					; Charset
-		#vwrite $20,$00 					; border
-		#vwrite $21,$00	 					; background
-		#vwrite $6F,$60						; 60Hz
+		#vwrite 	$2F,$47
+		#vwrite 	$2F,$53
 
-		#vwrite $18,$42	 					; screen address $0800 video address $2000
+		#vwrite 	$30,$40
+		#vwrite 	$31,$40
+
+		lda $d031	; VIC-III Control Register B
+		and #$40	; bit-6 is 4mhz
+		sta $d031
+
+		#vwrite $20,0 						; black border
+		#vwrite $21,0 						; black background
+
+		#vwrite $6F,$80						; 60Mhz mode.
+
+
+		lda $d066
+		and #$7F
+		sta $d066
+
+		#vwrite $6A,$00
+		#vwrite $6B,$00
+		#vwrite $78,$00
+		#vwrite $5F,$00
+		
+		#vwrite $5A,$78
+		#vwrite $5D,$C0
+		#vwrite $5C,80
+
+		; point VIC-IV to bottom 16KB of display memory
+		;
+		lda #$ff
+		sta $DD01
+		sta $DD00
+
+		#vwrite $18,$14
 		#vwrite $11,$1B
 		#vwrite $16,$C8
 
-		#vwrite $54,$C5
+		#vwrite $C5,$54
+
 		#vwrite $58,80
 		#vwrite $59,0
 
-		#vwrite $00,$FF
-		#vwrite $01,$FF
-
-		#vwrite $30,4
-		#vwrite $70,$FF
+		#vwrite $18,$42	 					; screen address $0800 video address $2000
+		#vwrite $11,$1B
 
 		lda 	#$00						; colour RAM at $1F800-1FFFF (2kb)
 		sta 	$0B 						; char RAM appears to be here.
