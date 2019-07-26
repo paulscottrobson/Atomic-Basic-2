@@ -1,0 +1,19 @@
+This is the memory layout passed down by the Kernel.
+
+MAP code to do this is required.
+
+0000	================================
+		Free RAM
+4000	================================
+		RAM with something loaded in ???
+9000	================================
+		Free RAM
+A000	================================
+		128k ROM
+C000	================================
+		Code, Hyppo probably.
+D000	================================
+		Hardware	
+E000	================================
+		128k ROM
+FFFF	================================

@@ -1,0 +1,727 @@
+
+; 64tass Turbo Assembler Macro V1.54.1900 listing file
+; 64tass --m4510 -D TARGET=1 -b -L rom.lst -o rom.bin ptest.asm
+; Fri Jul 26 03:55:26 2019
+
+;Offset	;Hex		;Monitor	;Source
+
+;******  Command line definitions
+
+=1					TARGET=1
+
+;******  Processing input file: ptest.asm
+
+.fff8					EXTDummyInterrupt:
+.fff8	40		rti			rti
+>fffa	f8 ff					.word 	EXTDummyInterrupt
+>fffc	00 b0					.word 	EXTStartPersonalise
+>fffe	f8 ff					.word 	EXTDummyInterrupt
+=4					EXTZPWork = 4								; Zero Page work for EXT
+
+;******  Processing file: personality_mega65.asm
+
+=40					EXTWidth = 40 								; screen width
+=25					EXTHeight = 25 								; screen height
+=$2000					EXTLowMemory = $2000 						; Workspace RAM starts here
+=$8000					EXTHighMemory = $8000 						; Workspace RAM ends here
+=$1000					EXTScreen = $1000							; 2k screen RAM here
+=$800					EXTCharSet = $800							; 2k character set (0-7F) here
+>0000	00 00					.word 	0 								; forces it to be a 64k ROM (at least)
+.a000					EXTCBMFont:
+>a000	3c 66 6e 6e 60 62 3c 00			.binary "c64-chargen.rom"
+>a008	18 3c 66 7e 66 66 66 00 7c 66 66 7c 66 66 7c 00
+>a018	3c 66 60 60 60 66 3c 00 78 6c 66 66 66 6c 78 00
+>a028	7e 60 60 78 60 60 7e 00 7e 60 60 78 60 60 60 00
+>a038	3c 66 60 6e 66 66 3c 00 66 66 66 7e 66 66 66 00
+>a048	3c 18 18 18 18 18 3c 00 1e 0c 0c 0c 0c 6c 38 00
+>a058	66 6c 78 70 78 6c 66 00 60 60 60 60 60 60 7e 00
+>a068	63 77 7f 6b 63 63 63 00 66 76 7e 7e 6e 66 66 00
+>a078	3c 66 66 66 66 66 3c 00 7c 66 66 7c 60 60 60 00
+>a088	3c 66 66 66 66 3c 0e 00 7c 66 66 7c 78 6c 66 00
+>a098	3c 66 60 3c 06 66 3c 00 7e 18 18 18 18 18 18 00
+>a0a8	66 66 66 66 66 66 3c 00 66 66 66 66 66 3c 18 00
+>a0b8	63 63 63 6b 7f 77 63 00 66 66 3c 18 3c 66 66 00
+>a0c8	66 66 66 3c 18 18 18 00 7e 06 0c 18 30 60 7e 00
+>a0d8	3c 30 30 30 30 30 3c 00 0c 12 30 7c 30 62 fc 00
+>a0e8	3c 0c 0c 0c 0c 0c 3c 00 00 18 3c 7e 18 18 18 18
+>a0f8	00 10 30 7f 7f 30 10 00 00 00 00 00 00 00 00 00
+>a108	18 18 18 18 00 00 18 00 66 66 66 00 00 00 00 00
+>a118	66 66 ff 66 ff 66 66 00 18 3e 60 3c 06 7c 18 00
+>a128	62 66 0c 18 30 66 46 00 3c 66 3c 38 67 66 3f 00
+>a138	06 0c 18 00 00 00 00 00 0c 18 30 30 30 18 0c 00
+>a148	30 18 0c 0c 0c 18 30 00 00 66 3c ff 3c 66 00 00
+>a158	00 18 18 7e 18 18 00 00 00 00 00 00 00 18 18 30
+>a168	00 00 00 7e 00 00 00 00 00 00 00 00 00 18 18 00
+>a178	00 03 06 0c 18 30 60 00 3c 66 6e 76 66 66 3c 00
+>a188	18 18 38 18 18 18 7e 00 3c 66 06 0c 30 60 7e 00
+>a198	3c 66 06 1c 06 66 3c 00 06 0e 1e 66 7f 06 06 00
+>a1a8	7e 60 7c 06 06 66 3c 00 3c 66 60 7c 66 66 3c 00
+>a1b8	7e 66 0c 18 18 18 18 00 3c 66 66 3c 66 66 3c 00
+>a1c8	3c 66 66 3e 06 66 3c 00 00 00 18 00 00 18 00 00
+>a1d8	00 00 18 00 00 18 18 30 0e 18 30 60 30 18 0e 00
+>a1e8	00 00 7e 00 7e 00 00 00 70 18 0c 06 0c 18 70 00
+>a1f8	3c 66 06 0c 18 00 18 00 00 00 00 ff ff 00 00 00
+>a208	08 1c 3e 7f 7f 1c 3e 00 18 18 18 18 18 18 18 18
+>a218	00 00 00 ff ff 00 00 00 00 00 ff ff 00 00 00 00
+>a228	00 ff ff 00 00 00 00 00 00 00 00 00 ff ff 00 00
+>a238	30 30 30 30 30 30 30 30 0c 0c 0c 0c 0c 0c 0c 0c
+>a248	00 00 00 e0 f0 38 18 18 18 18 1c 0f 07 00 00 00
+>a258	18 18 38 f0 e0 00 00 00 c0 c0 c0 c0 c0 c0 ff ff
+>a268	c0 e0 70 38 1c 0e 07 03 03 07 0e 1c 38 70 e0 c0
+>a278	ff ff c0 c0 c0 c0 c0 c0 ff ff 03 03 03 03 03 03
+>a288	00 3c 7e 7e 7e 7e 3c 00 00 00 00 00 00 ff ff 00
+>a298	36 7f 7f 7f 3e 1c 08 00 60 60 60 60 60 60 60 60
+>a2a8	00 00 00 07 0f 1c 18 18 c3 e7 7e 3c 3c 7e e7 c3
+>a2b8	00 3c 7e 66 66 7e 3c 00 18 18 66 66 18 18 3c 00
+>a2c8	06 06 06 06 06 06 06 06 08 1c 3e 7f 3e 1c 08 00
+>a2d8	18 18 18 ff ff 18 18 18 c0 c0 30 30 c0 c0 30 30
+>a2e8	18 18 18 18 18 18 18 18 00 00 03 3e 76 36 36 00
+>a2f8	ff 7f 3f 1f 0f 07 03 01 00 00 00 00 00 00 00 00
+>a308	f0 f0 f0 f0 f0 f0 f0 f0 00 00 00 00 ff ff ff ff
+>a318	ff 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff
+>a328	c0 c0 c0 c0 c0 c0 c0 c0 cc cc 33 33 cc cc 33 33
+>a338	03 03 03 03 03 03 03 03 00 00 00 00 cc cc 33 33
+>a348	ff fe fc f8 f0 e0 c0 80 03 03 03 03 03 03 03 03
+>a358	18 18 18 1f 1f 18 18 18 00 00 00 00 0f 0f 0f 0f
+>a368	18 18 18 1f 1f 00 00 00 00 00 00 f8 f8 18 18 18
+>a378	00 00 00 00 00 00 ff ff 00 00 00 1f 1f 18 18 18
+>a388	18 18 18 ff ff 00 00 00 00 00 00 ff ff 18 18 18
+>a398	18 18 18 f8 f8 18 18 18 c0 c0 c0 c0 c0 c0 c0 c0
+>a3a8	e0 e0 e0 e0 e0 e0 e0 e0 07 07 07 07 07 07 07 07
+>a3b8	ff ff 00 00 00 00 00 00 ff ff ff 00 00 00 00 00
+>a3c8	00 00 00 00 00 ff ff ff 03 03 03 03 03 03 ff ff
+>a3d8	00 00 00 00 f0 f0 f0 f0 0f 0f 0f 0f 00 00 00 00
+>a3e8	18 18 18 f8 f8 00 00 00 f0 f0 f0 f0 00 00 00 00
+>a3f8	f0 f0 f0 f0 0f 0f 0f 0f c3 99 91 91 9f 99 c3 ff
+>a408	e7 c3 99 81 99 99 99 ff 83 99 99 83 99 99 83 ff
+>a418	c3 99 9f 9f 9f 99 c3 ff 87 93 99 99 99 93 87 ff
+>a428	81 9f 9f 87 9f 9f 81 ff 81 9f 9f 87 9f 9f 9f ff
+>a438	c3 99 9f 91 99 99 c3 ff 99 99 99 81 99 99 99 ff
+>a448	c3 e7 e7 e7 e7 e7 c3 ff e1 f3 f3 f3 f3 93 c7 ff
+>a458	99 93 87 8f 87 93 99 ff 9f 9f 9f 9f 9f 9f 81 ff
+>a468	9c 88 80 94 9c 9c 9c ff 99 89 81 81 91 99 99 ff
+>a478	c3 99 99 99 99 99 c3 ff 83 99 99 83 9f 9f 9f ff
+>a488	c3 99 99 99 99 c3 f1 ff 83 99 99 83 87 93 99 ff
+>a498	c3 99 9f c3 f9 99 c3 ff 81 e7 e7 e7 e7 e7 e7 ff
+>a4a8	99 99 99 99 99 99 c3 ff 99 99 99 99 99 c3 e7 ff
+>a4b8	9c 9c 9c 94 80 88 9c ff 99 99 c3 e7 c3 99 99 ff
+>a4c8	99 99 99 c3 e7 e7 e7 ff 81 f9 f3 e7 cf 9f 81 ff
+>a4d8	c3 cf cf cf cf cf c3 ff f3 ed cf 83 cf 9d 03 ff
+>a4e8	c3 f3 f3 f3 f3 f3 c3 ff ff e7 c3 81 e7 e7 e7 e7
+>a4f8	ff ef cf 80 80 cf ef ff ff ff ff ff ff ff ff ff
+>a508	e7 e7 e7 e7 ff ff e7 ff 99 99 99 ff ff ff ff ff
+>a518	99 99 00 99 00 99 99 ff e7 c1 9f c3 f9 83 e7 ff
+>a528	9d 99 f3 e7 cf 99 b9 ff c3 99 c3 c7 98 99 c0 ff
+>a538	f9 f3 e7 ff ff ff ff ff f3 e7 cf cf cf e7 f3 ff
+>a548	cf e7 f3 f3 f3 e7 cf ff ff 99 c3 00 c3 99 ff ff
+>a558	ff e7 e7 81 e7 e7 ff ff ff ff ff ff ff e7 e7 cf
+>a568	ff ff ff 81 ff ff ff ff ff ff ff ff ff e7 e7 ff
+>a578	ff fc f9 f3 e7 cf 9f ff c3 99 91 89 99 99 c3 ff
+>a588	e7 e7 c7 e7 e7 e7 81 ff c3 99 f9 f3 cf 9f 81 ff
+>a598	c3 99 f9 e3 f9 99 c3 ff f9 f1 e1 99 80 f9 f9 ff
+>a5a8	81 9f 83 f9 f9 99 c3 ff c3 99 9f 83 99 99 c3 ff
+>a5b8	81 99 f3 e7 e7 e7 e7 ff c3 99 99 c3 99 99 c3 ff
+>a5c8	c3 99 99 c1 f9 99 c3 ff ff ff e7 ff ff e7 ff ff
+>a5d8	ff ff e7 ff ff e7 e7 cf f1 e7 cf 9f cf e7 f1 ff
+>a5e8	ff ff 81 ff 81 ff ff ff 8f e7 f3 f9 f3 e7 8f ff
+>a5f8	c3 99 f9 f3 e7 ff e7 ff ff ff ff 00 00 ff ff ff
+>a608	f7 e3 c1 80 80 e3 c1 ff e7 e7 e7 e7 e7 e7 e7 e7
+>a618	ff ff ff 00 00 ff ff ff ff ff 00 00 ff ff ff ff
+>a628	ff 00 00 ff ff ff ff ff ff ff ff ff 00 00 ff ff
+>a638	cf cf cf cf cf cf cf cf f3 f3 f3 f3 f3 f3 f3 f3
+>a648	ff ff ff 1f 0f c7 e7 e7 e7 e7 e3 f0 f8 ff ff ff
+>a658	e7 e7 c7 0f 1f ff ff ff 3f 3f 3f 3f 3f 3f 00 00
+>a668	3f 1f 8f c7 e3 f1 f8 fc fc f8 f1 e3 c7 8f 1f 3f
+>a678	00 00 3f 3f 3f 3f 3f 3f 00 00 fc fc fc fc fc fc
+>a688	ff c3 81 81 81 81 c3 ff ff ff ff ff ff 00 00 ff
+>a698	c9 80 80 80 c1 e3 f7 ff 9f 9f 9f 9f 9f 9f 9f 9f
+>a6a8	ff ff ff f8 f0 e3 e7 e7 3c 18 81 c3 c3 81 18 3c
+>a6b8	ff c3 81 99 99 81 c3 ff e7 e7 99 99 e7 e7 c3 ff
+>a6c8	f9 f9 f9 f9 f9 f9 f9 f9 f7 e3 c1 80 c1 e3 f7 ff
+>a6d8	e7 e7 e7 00 00 e7 e7 e7 3f 3f cf cf 3f 3f cf cf
+>a6e8	e7 e7 e7 e7 e7 e7 e7 e7 ff ff fc c1 89 c9 c9 ff
+>a6f8	00 80 c0 e0 f0 f8 fc fe ff ff ff ff ff ff ff ff
+>a708	0f 0f 0f 0f 0f 0f 0f 0f ff ff ff ff 00 00 00 00
+>a718	00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00
+>a728	3f 3f 3f 3f 3f 3f 3f 3f 33 33 cc cc 33 33 cc cc
+>a738	fc fc fc fc fc fc fc fc ff ff ff ff 33 33 cc cc
+>a748	00 01 03 07 0f 1f 3f 7f fc fc fc fc fc fc fc fc
+>a758	e7 e7 e7 e0 e0 e7 e7 e7 ff ff ff ff f0 f0 f0 f0
+>a768	e7 e7 e7 e0 e0 ff ff ff ff ff ff 07 07 e7 e7 e7
+>a778	ff ff ff ff ff ff 00 00 ff ff ff e0 e0 e7 e7 e7
+>a788	e7 e7 e7 00 00 ff ff ff ff ff ff 00 00 e7 e7 e7
+>a798	e7 e7 e7 07 07 e7 e7 e7 3f 3f 3f 3f 3f 3f 3f 3f
+>a7a8	1f 1f 1f 1f 1f 1f 1f 1f f8 f8 f8 f8 f8 f8 f8 f8
+>a7b8	00 00 ff ff ff ff ff ff 00 00 00 ff ff ff ff ff
+>a7c8	ff ff ff ff ff 00 00 00 fc fc fc fc fc fc 00 00
+>a7d8	ff ff ff ff 0f 0f 0f 0f f0 f0 f0 f0 ff ff ff ff
+>a7e8	e7 e7 e7 07 07 ff ff ff 0f 0f 0f 0f ff ff ff ff
+>a7f8	0f 0f 0f 0f f0 f0 f0 f0 3c 66 6e 6e 60 62 3c 00
+>a808	00 00 3c 06 3e 66 3e 00 00 60 60 7c 66 66 7c 00
+>a818	00 00 3c 60 60 60 3c 00 00 06 06 3e 66 66 3e 00
+>a828	00 00 3c 66 7e 60 3c 00 00 0e 18 3e 18 18 18 00
+>a838	00 00 3e 66 66 3e 06 7c 00 60 60 7c 66 66 66 00
+>a848	00 18 00 38 18 18 3c 00 00 06 00 06 06 06 06 3c
+>a858	00 60 60 6c 78 6c 66 00 00 38 18 18 18 18 3c 00
+>a868	00 00 66 7f 7f 6b 63 00 00 00 7c 66 66 66 66 00
+>a878	00 00 3c 66 66 66 3c 00 00 00 7c 66 66 7c 60 60
+>a888	00 00 3e 66 66 3e 06 06 00 00 7c 66 60 60 60 00
+>a898	00 00 3e 60 3c 06 7c 00 00 18 7e 18 18 18 0e 00
+>a8a8	00 00 66 66 66 66 3e 00 00 00 66 66 66 3c 18 00
+>a8b8	00 00 63 6b 7f 3e 36 00 00 00 66 3c 18 3c 66 00
+>a8c8	00 00 66 66 66 3e 0c 78 00 00 7e 0c 18 30 7e 00
+>a8d8	3c 30 30 30 30 30 3c 00 0c 12 30 7c 30 62 fc 00
+>a8e8	3c 0c 0c 0c 0c 0c 3c 00 00 18 3c 7e 18 18 18 18
+>a8f8	00 10 30 7f 7f 30 10 00 00 00 00 00 00 00 00 00
+>a908	18 18 18 18 00 00 18 00 66 66 66 00 00 00 00 00
+>a918	66 66 ff 66 ff 66 66 00 18 3e 60 3c 06 7c 18 00
+>a928	62 66 0c 18 30 66 46 00 3c 66 3c 38 67 66 3f 00
+>a938	06 0c 18 00 00 00 00 00 0c 18 30 30 30 18 0c 00
+>a948	30 18 0c 0c 0c 18 30 00 00 66 3c ff 3c 66 00 00
+>a958	00 18 18 7e 18 18 00 00 00 00 00 00 00 18 18 30
+>a968	00 00 00 7e 00 00 00 00 00 00 00 00 00 18 18 00
+>a978	00 03 06 0c 18 30 60 00 3c 66 6e 76 66 66 3c 00
+>a988	18 18 38 18 18 18 7e 00 3c 66 06 0c 30 60 7e 00
+>a998	3c 66 06 1c 06 66 3c 00 06 0e 1e 66 7f 06 06 00
+>a9a8	7e 60 7c 06 06 66 3c 00 3c 66 60 7c 66 66 3c 00
+>a9b8	7e 66 0c 18 18 18 18 00 3c 66 66 3c 66 66 3c 00
+>a9c8	3c 66 66 3e 06 66 3c 00 00 00 18 00 00 18 00 00
+>a9d8	00 00 18 00 00 18 18 30 0e 18 30 60 30 18 0e 00
+>a9e8	00 00 7e 00 7e 00 00 00 70 18 0c 06 0c 18 70 00
+>a9f8	3c 66 06 0c 18 00 18 00 00 00 00 ff ff 00 00 00
+>aa08	18 3c 66 7e 66 66 66 00 7c 66 66 7c 66 66 7c 00
+>aa18	3c 66 60 60 60 66 3c 00 78 6c 66 66 66 6c 78 00
+>aa28	7e 60 60 78 60 60 7e 00 7e 60 60 78 60 60 60 00
+>aa38	3c 66 60 6e 66 66 3c 00 66 66 66 7e 66 66 66 00
+>aa48	3c 18 18 18 18 18 3c 00 1e 0c 0c 0c 0c 6c 38 00
+>aa58	66 6c 78 70 78 6c 66 00 60 60 60 60 60 60 7e 00
+>aa68	63 77 7f 6b 63 63 63 00 66 76 7e 7e 6e 66 66 00
+>aa78	3c 66 66 66 66 66 3c 00 7c 66 66 7c 60 60 60 00
+>aa88	3c 66 66 66 66 3c 0e 00 7c 66 66 7c 78 6c 66 00
+>aa98	3c 66 60 3c 06 66 3c 00 7e 18 18 18 18 18 18 00
+>aaa8	66 66 66 66 66 66 3c 00 66 66 66 66 66 3c 18 00
+>aab8	63 63 63 6b 7f 77 63 00 66 66 3c 18 3c 66 66 00
+>aac8	66 66 66 3c 18 18 18 00 7e 06 0c 18 30 60 7e 00
+>aad8	18 18 18 ff ff 18 18 18 c0 c0 30 30 c0 c0 30 30
+>aae8	18 18 18 18 18 18 18 18 33 33 cc cc 33 33 cc cc
+>aaf8	33 99 cc 66 33 99 cc 66 00 00 00 00 00 00 00 00
+>ab08	f0 f0 f0 f0 f0 f0 f0 f0 00 00 00 00 ff ff ff ff
+>ab18	ff 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff
+>ab28	c0 c0 c0 c0 c0 c0 c0 c0 cc cc 33 33 cc cc 33 33
+>ab38	03 03 03 03 03 03 03 03 00 00 00 00 cc cc 33 33
+>ab48	cc 99 33 66 cc 99 33 66 03 03 03 03 03 03 03 03
+>ab58	18 18 18 1f 1f 18 18 18 00 00 00 00 0f 0f 0f 0f
+>ab68	18 18 18 1f 1f 00 00 00 00 00 00 f8 f8 18 18 18
+>ab78	00 00 00 00 00 00 ff ff 00 00 00 1f 1f 18 18 18
+>ab88	18 18 18 ff ff 00 00 00 00 00 00 ff ff 18 18 18
+>ab98	18 18 18 f8 f8 18 18 18 c0 c0 c0 c0 c0 c0 c0 c0
+>aba8	e0 e0 e0 e0 e0 e0 e0 e0 07 07 07 07 07 07 07 07
+>abb8	ff ff 00 00 00 00 00 00 ff ff ff 00 00 00 00 00
+>abc8	00 00 00 00 00 ff ff ff 01 03 06 6c 78 70 60 00
+>abd8	00 00 00 00 f0 f0 f0 f0 0f 0f 0f 0f 00 00 00 00
+>abe8	18 18 18 f8 f8 00 00 00 f0 f0 f0 f0 00 00 00 00
+>abf8	f0 f0 f0 f0 0f 0f 0f 0f c3 99 91 91 9f 99 c3 ff
+>ac08	ff ff c3 f9 c1 99 c1 ff ff 9f 9f 83 99 99 83 ff
+>ac18	ff ff c3 9f 9f 9f c3 ff ff f9 f9 c1 99 99 c1 ff
+>ac28	ff ff c3 99 81 9f c3 ff ff f1 e7 c1 e7 e7 e7 ff
+>ac38	ff ff c1 99 99 c1 f9 83 ff 9f 9f 83 99 99 99 ff
+>ac48	ff e7 ff c7 e7 e7 c3 ff ff f9 ff f9 f9 f9 f9 c3
+>ac58	ff 9f 9f 93 87 93 99 ff ff c7 e7 e7 e7 e7 c3 ff
+>ac68	ff ff 99 80 80 94 9c ff ff ff 83 99 99 99 99 ff
+>ac78	ff ff c3 99 99 99 c3 ff ff ff 83 99 99 83 9f 9f
+>ac88	ff ff c1 99 99 c1 f9 f9 ff ff 83 99 9f 9f 9f ff
+>ac98	ff ff c1 9f c3 f9 83 ff ff e7 81 e7 e7 e7 f1 ff
+>aca8	ff ff 99 99 99 99 c1 ff ff ff 99 99 99 c3 e7 ff
+>acb8	ff ff 9c 94 80 c1 c9 ff ff ff 99 c3 e7 c3 99 ff
+>acc8	ff ff 99 99 99 c1 f3 87 ff ff 81 f3 e7 cf 81 ff
+>acd8	c3 cf cf cf cf cf c3 ff f3 ed cf 83 cf 9d 03 ff
+>ace8	c3 f3 f3 f3 f3 f3 c3 ff ff e7 c3 81 e7 e7 e7 e7
+>acf8	ff ef cf 80 80 cf ef ff ff ff ff ff ff ff ff ff
+>ad08	e7 e7 e7 e7 ff ff e7 ff 99 99 99 ff ff ff ff ff
+>ad18	99 99 00 99 00 99 99 ff e7 c1 9f c3 f9 83 e7 ff
+>ad28	9d 99 f3 e7 cf 99 b9 ff c3 99 c3 c7 98 99 c0 ff
+>ad38	f9 f3 e7 ff ff ff ff ff f3 e7 cf cf cf e7 f3 ff
+>ad48	cf e7 f3 f3 f3 e7 cf ff ff 99 c3 00 c3 99 ff ff
+>ad58	ff e7 e7 81 e7 e7 ff ff ff ff ff ff ff e7 e7 cf
+>ad68	ff ff ff 81 ff ff ff ff ff ff ff ff ff e7 e7 ff
+>ad78	ff fc f9 f3 e7 cf 9f ff c3 99 91 89 99 99 c3 ff
+>ad88	e7 e7 c7 e7 e7 e7 81 ff c3 99 f9 f3 cf 9f 81 ff
+>ad98	c3 99 f9 e3 f9 99 c3 ff f9 f1 e1 99 80 f9 f9 ff
+>ada8	81 9f 83 f9 f9 99 c3 ff c3 99 9f 83 99 99 c3 ff
+>adb8	81 99 f3 e7 e7 e7 e7 ff c3 99 99 c3 99 99 c3 ff
+>adc8	c3 99 99 c1 f9 99 c3 ff ff ff e7 ff ff e7 ff ff
+>add8	ff ff e7 ff ff e7 e7 cf f1 e7 cf 9f cf e7 f1 ff
+>ade8	ff ff 81 ff 81 ff ff ff 8f e7 f3 f9 f3 e7 8f ff
+>adf8	c3 99 f9 f3 e7 ff e7 ff ff ff ff 00 00 ff ff ff
+>ae08	e7 c3 99 81 99 99 99 ff 83 99 99 83 99 99 83 ff
+>ae18	c3 99 9f 9f 9f 99 c3 ff 87 93 99 99 99 93 87 ff
+>ae28	81 9f 9f 87 9f 9f 81 ff 81 9f 9f 87 9f 9f 9f ff
+>ae38	c3 99 9f 91 99 99 c3 ff 99 99 99 81 99 99 99 ff
+>ae48	c3 e7 e7 e7 e7 e7 c3 ff e1 f3 f3 f3 f3 93 c7 ff
+>ae58	99 93 87 8f 87 93 99 ff 9f 9f 9f 9f 9f 9f 81 ff
+>ae68	9c 88 80 94 9c 9c 9c ff 99 89 81 81 91 99 99 ff
+>ae78	c3 99 99 99 99 99 c3 ff 83 99 99 83 9f 9f 9f ff
+>ae88	c3 99 99 99 99 c3 f1 ff 83 99 99 83 87 93 99 ff
+>ae98	c3 99 9f c3 f9 99 c3 ff 81 e7 e7 e7 e7 e7 e7 ff
+>aea8	99 99 99 99 99 99 c3 ff 99 99 99 99 99 c3 e7 ff
+>aeb8	9c 9c 9c 94 80 88 9c ff 99 99 c3 e7 c3 99 99 ff
+>aec8	99 99 99 c3 e7 e7 e7 ff 81 f9 f3 e7 cf 9f 81 ff
+>aed8	e7 e7 e7 00 00 e7 e7 e7 3f 3f cf cf 3f 3f cf cf
+>aee8	e7 e7 e7 e7 e7 e7 e7 e7 cc cc 33 33 cc cc 33 33
+>aef8	cc 66 33 99 cc 66 33 99 ff ff ff ff ff ff ff ff
+>af08	0f 0f 0f 0f 0f 0f 0f 0f ff ff ff ff 00 00 00 00
+>af18	00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00
+>af28	3f 3f 3f 3f 3f 3f 3f 3f 33 33 cc cc 33 33 cc cc
+>af38	fc fc fc fc fc fc fc fc ff ff ff ff 33 33 cc cc
+>af48	33 66 cc 99 33 66 cc 99 fc fc fc fc fc fc fc fc
+>af58	e7 e7 e7 e0 e0 e7 e7 e7 ff ff ff ff f0 f0 f0 f0
+>af68	e7 e7 e7 e0 e0 ff ff ff ff ff ff 07 07 e7 e7 e7
+>af78	ff ff ff ff ff ff 00 00 ff ff ff e0 e0 e7 e7 e7
+>af88	e7 e7 e7 00 00 ff ff ff ff ff ff 00 00 e7 e7 e7
+>af98	e7 e7 e7 07 07 e7 e7 e7 3f 3f 3f 3f 3f 3f 3f 3f
+>afa8	1f 1f 1f 1f 1f 1f 1f 1f f8 f8 f8 f8 f8 f8 f8 f8
+>afb8	00 00 ff ff ff ff ff ff 00 00 00 ff ff ff ff ff
+>afc8	ff ff ff ff ff 00 00 00 fe fc f9 93 87 8f 9f ff
+>afd8	ff ff ff ff 0f 0f 0f 0f f0 f0 f0 f0 ff ff ff ff
+>afe8	e7 e7 e7 07 07 ff ff ff 0f 0f 0f 0f ff ff ff ff
+>aff8	0f 0f 0f 0f f0 f0 f0 f0
+.b000					EXTStartPersonalise:
+.b000	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.b002	9a		txs			txs
+.b003	20 a1 b0	jsr $b0a1		jsr 	EXTReset 						; reset video
+.b006	20 49 b0	jsr $b049		jsr 	EXTClearScreen 					; clear screen
+.b009	4c 97 b2	jmp $b297		jmp 	Start 							; start main application
+.b00c					EXTReadKey:
+.b00c	db		phz			phz
+.b00d	a9 0f		lda #$0f		lda 	#$0F 							; set up to write to read keyboard.
+.b00f	85 07		sta $07			sta 	EXTZPWork+3
+.b011	a9 fd		lda #$fd		lda 	#$FD
+.b013	85 06		sta $06			sta 	EXTZPWork+2
+.b015	a9 36		lda #$36		lda 	#$36
+.b017	85 05		sta $05			sta 	EXTZPWork+1
+.b019	a9 10		lda #$10		lda 	#$10
+.b01b	85 04		sta $04			sta 	EXTZPWork+0
+.b01d	a3 00		ldz #$00		ldz 	#0
+.b01f	ea		nop			nop 									; read keyboard
+.b020	b2 04		lda ($04),z		lda 	(EXTZPWork),z
+.b022	f0 06		beq $b02a		beq 	_EXTRKExit
+.b024	48		pha			pha 									; save key
+.b025	6b		tza			tza 									; reset input
+.b026	ea		nop			nop
+.b027	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b029	68		pla			pla 									; restore/return value
+.b02a					_EXTRKExit:
+.b02a	fb		plz			plz
+.b02b	60		rts			rts
+.b02c					EXTReadScreen:
+.b02c	5a		phy			phy 										; save Y
+.b02d	8a		txa			txa 										; multiply XY by 2
+.b02e	0a		asl a			asl 	a
+.b02f	85 04		sta $04			sta 	EXTZPWork							; into EXTZPWork
+.b031	98		tya			tya
+.b032	2a		rol a			rol 	a
+.b033	09 10		ora #$10		ora 	#EXTScreen>>8 						; move into screen area
+.b035	85 05		sta $05			sta 	EXTZPWork+1 						; read character there
+.b037	a0 00		ldy #$00		ldy 	#0
+.b039	b1 04		lda ($04),y		lda 	(EXTZPWork),y
+.b03b	7a		ply			ply 										; restore Y and exit.
+.b03c	60		rts			rts
+.b03d					EXTWriteScreen:
+.b03d	5a		phy			phy
+.b03e	48		pha			pha
+.b03f	20 2c b0	jsr $b02c		jsr		EXTReadScreen 						; set up the address into EXTZPWork
+.b042	a0 00		ldy #$00		ldy 	#0
+.b044	68		pla			pla 										; restore and write.
+.b045	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b047	7a		ply			ply
+.b048	60		rts			rts
+.b049					EXTClearScreen:
+.b049	48		pha			pha 										; save registers
+.b04a	5a		phy			phy
+.b04b	a9 00		lda #$00		lda 	#EXTScreen & $FF 					; set up pointer
+.b04d	85 04		sta $04			sta 	EXTZPWork
+.b04f	a9 10		lda #$10		lda 	#EXTScreen >> 8
+.b051	85 05		sta $05			sta 	EXTZPWork+1
+.b053	a0 00		ldy #$00		ldy 	#0
+.b055					_EXTCSLoop:
+.b055	a9 20		lda #$20		lda 	#32
+.b057	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b059	c8		iny			iny
+.b05a	a9 00		lda #$00		lda 	#0
+.b05c	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b05e	c8		iny			iny
+.b05f	d0 f4		bne $b055		bne 	_EXTCSLoop
+.b061	e6 05		inc $05			inc 	EXTZPWork+1 						; next screen page
+.b063	a5 05		lda $05			lda 	EXTZPWork+1
+.b065	c9 18		cmp #$18		cmp 	#(EXTScreen>>8)+8 					; done 2k ?
+.b067	d0 ec		bne $b055		bne 	_EXTCSLoop
+.b069	7a		ply			ply 										; restore
+.b06a	68		pla			pla
+.b06b	60		rts			rts
+.b06c					EXTScrollDisplay:
+.b06c	48		pha			pha 										; save registers
+.b06d	5a		phy			phy
+.b06e	a9 00		lda #$00		lda 	#EXTScreen & $FF 					; set pointer to screen
+.b070	85 04		sta $04			sta 	EXTZPWork+0
+.b072	a9 10		lda #$10		lda 	#EXTScreen >> 8
+.b074	85 05		sta $05			sta 	EXTZPWork+1
+.b076					_EXTScroll:
+.b076	a0 50		ldy #$50		ldy 	#EXTWidth*2 						; x 2 because of two byte format.
+.b078	b1 04		lda ($04),y		lda 	(EXTZPWork),y
+.b07a	a0 00		ldy #$00		ldy 	#0
+.b07c	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b07e	e6 04		inc $04			inc 	EXTZPWork 							; bump address
+.b080	e6 04		inc $04			inc 	EXTZPWork
+.b082	d0 02		bne $b086		bne 	_EXTNoCarry
+.b084	e6 05		inc $05			inc 	EXTZPWork+1
+.b086					_EXTNoCarry:
+.b086	a5 04		lda $04			lda 	EXTZPWork 							; done ?
+.b088	c9 80		cmp #$80		cmp	 	#(EXTScreen+2*EXTWidth*(EXTHeight-1)) & $FF
+.b08a	d0 ea		bne $b076		bne 	_EXTScroll
+.b08c	a5 05		lda $05			lda 	EXTZPWork+1
+.b08e	c9 17		cmp #$17		cmp	 	#(EXTScreen+2*EXTWidth*(EXTHeight-1)) >> 8
+.b090	d0 e4		bne $b076		bne 	_EXTScroll
+.b092	a0 00		ldy #$00		ldy 	#0									; clear bottom line.
+.b094					_EXTLastLine:
+.b094	a9 20		lda #$20		lda 	#32
+.b096	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b098	c8		iny			iny
+.b099	c8		iny			iny
+.b09a	c0 50		cpy #$50		cpy 	#EXTWidth*2
+.b09c	d0 f6		bne $b094		bne 	_EXTLastLine
+.b09e	7a		ply			ply 										; restore and exit.
+.b09f	68		pla			pla
+.b0a0	60		rts			rts
+.b0a1					EXTReset:
+.b0a1	48		pha			pha 									; save registers
+.b0a2	da		phx			phx
+.b0a3	5a		phy			phy
+.b0a4	a9 0f		lda #$0f		lda 	#$0F 							; set up to write to video system.
+.b0a6	85 07		sta $07			sta 	EXTZPWork+3
+.b0a8	a9 fd		lda #$fd		lda 	#$FD
+.b0aa	85 06		sta $06			sta 	EXTZPWork+2
+.b0ac	a9 30		lda #$30		lda 	#$30
+.b0ae	85 05		sta $05			sta 	EXTZPWork+1
+.b0b0	a9 00		lda #$00		lda 	#$00
+.b0b2	85 04		sta $04			sta 	EXTZPWork+0
+.b0b4	a3 30		ldz #$30		ldz 	#$30 							; address already set up
+.b0b6	a9 40		lda #$40		lda 	#$40
+.b0b8	ea		nop			nop
+.b0b9	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0bb	a3 20		ldz #$20		ldz 	#$20 							; address already set up
+.b0bd	a9 00		lda #$00		lda 	#$00
+.b0bf	ea		nop			nop
+.b0c0	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0c2	a3 21		ldz #$21		ldz 	#$21 							; address already set up
+.b0c4	a9 00		lda #$00		lda 	#$00
+.b0c6	ea		nop			nop
+.b0c7	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0c9	a3 6f		ldz #$6f		ldz 	#$6F 							; address already set up
+.b0cb	a9 60		lda #$60		lda 	#$60
+.b0cd	ea		nop			nop
+.b0ce	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0d0	a3 18		ldz #$18		ldz 	#$18 							; address already set up
+.b0d2	a9 42		lda #$42		lda 	#$42
+.b0d4	ea		nop			nop
+.b0d5	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0d7	a3 11		ldz #$11		ldz 	#$11 							; address already set up
+.b0d9	a9 1b		lda #$1b		lda 	#$1B
+.b0db	ea		nop			nop
+.b0dc	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0de	a3 16		ldz #$16		ldz 	#$16 							; address already set up
+.b0e0	a9 c8		lda #$c8		lda 	#$C8
+.b0e2	ea		nop			nop
+.b0e3	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0e5	a3 54		ldz #$54		ldz 	#$54 							; address already set up
+.b0e7	a9 c5		lda #$c5		lda 	#$C5
+.b0e9	ea		nop			nop
+.b0ea	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0ec	a3 58		ldz #$58		ldz 	#$58 							; address already set up
+.b0ee	a9 50		lda #$50		lda 	#80
+.b0f0	ea		nop			nop
+.b0f1	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0f3	a3 59		ldz #$59		ldz 	#$59 							; address already set up
+.b0f5	a9 00		lda #$00		lda 	#0
+.b0f7	ea		nop			nop
+.b0f8	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0fa	a3 00		ldz #$00		ldz 	#$00 							; address already set up
+.b0fc	a9 ff		lda #$ff		lda 	#$FF
+.b0fe	ea		nop			nop
+.b0ff	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b101	a3 01		ldz #$01		ldz 	#$01 							; address already set up
+.b103	a9 ff		lda #$ff		lda 	#$FF
+.b105	ea		nop			nop
+.b106	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b108	a3 30		ldz #$30		ldz 	#$30 							; address already set up
+.b10a	a9 04		lda #$04		lda 	#4
+.b10c	ea		nop			nop
+.b10d	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b10f	a3 70		ldz #$70		ldz 	#$70 							; address already set up
+.b111	a9 ff		lda #$ff		lda 	#$FF
+.b113	ea		nop			nop
+.b114	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b116	a9 00		lda #$00		lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)
+.b118	85 07		sta $07			sta 	EXTZPWork+3
+.b11a	a9 01		lda #$01		lda 	#$01
+.b11c	85 06		sta $06			sta 	EXTZPWork+2
+.b11e	a9 f8		lda #$f8		lda 	#$F8
+.b120	85 05		sta $05			sta 	EXTZPWork+1
+.b122	a9 00		lda #$00		lda 	#$00
+.b124	85 04		sta $04			sta 	EXTZPWork+0
+.b126	a3 00		ldz #$00		ldz 	#0
+.b128					_EXTClearColorRam:
+.b128	a9 08		lda #$08		lda 	#8 								; fill that with this colour.
+.b12a	ea		nop			nop
+.b12b	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b12d	3b		dez			dez
+.b12e	d0 f8		bne $b128		bne 	_EXTClearColorRam
+.b130	e6 05		inc $05			inc 	EXTZPWork+1
+.b132	d0 f4		bne $b128		bne 	_EXTClearColorRam
+.b134	a2 00		ldx #$00		ldx 	#0 								; copy PET Font into memory.
+.b136					_EXTCopyCBMFont:
+.b136	bd 00 a0	lda $a000,x		lda 	EXTCBMFont,x
+.b139	9d 00 08	sta $0800,x		sta 	EXTCharSet,x
+.b13c	bd 00 a1	lda $a100,x		lda 	EXTCBMFont+$100,x
+.b13f	9d 00 09	sta $0900,x		sta 	EXTCharSet+$100,x
+.b142	bd 00 a2	lda $a200,x		lda 	EXTCBMFont+$200,x
+.b145	9d 00 0a	sta $0a00,x		sta 	EXTCharSet+$200,x
+.b148	bd 00 a3	lda $a300,x		lda 	EXTCBMFont+$300,x
+.b14b	9d 00 0b	sta $0b00,x		sta 	EXTCharSet+$300,x
+.b14e	ca		dex			dex
+.b14f	d0 e5		bne $b136		bne 	_EXTCopyCBMFont
+.b151	7a		ply			ply 									; restore and exit.
+.b152	fa		plx			plx
+.b153	68		pla			pla
+.b154	60		rts			rts
+
+;******  Return to file: ptest.asm
+
+
+;******  Processing file: personality_io.asm
+
+=8					IOCursorX = 8 								; cursor position
+=9					IOCursorY = 9
+=10					IOLineLo = 10 								; line position.
+=11					IOLineHi = 11
+.b155					IOInitialise:
+.b155	20 49 b0	jsr $b049			jsr 	EXTClearScreen 				; clear screen.
+.b158	48		pha				pha
+.b159	a9 00		lda #$00			lda 	#00 						; home cursor
+.b15b	85 08		sta $08				sta 	IOCursorX
+.b15d	85 09		sta $09				sta 	IOCursorY
+.b15f	68		pla				pla
+.b160	60		rts				rts
+.b161					IOPrintChar:
+.b161	48		pha				pha 								; save registers
+.b162	da		phx				phx
+.b163	5a		phy				phy
+.b164	29 7f		and #$7f			and 	#$7F 						; 7 bits only.
+.b166	c9 0d		cmp #$0d			cmp 	#13 						; handle CR
+.b168	f0 14		beq $b17e			beq 	_IOPCCarriageReturn
+.b16a	c9 20		cmp #$20			cmp 	#$20 						; control character
+.b16c	90 30		bcc $b19e			bcc 	_IOPControl
+.b16e	20 f6 b1	jsr $b1f6			jsr	 	IOGetCursorXY 				; get cursor address in XY.
+.b171	29 3f		and #$3f			and 	#$3F 						; 6 bit PETSCII
+.b173	20 3d b0	jsr $b03d			jsr 	EXTWriteScreen 				; write character at that position.
+.b176	e6 08		inc $08				inc 	IOCursorX 					; increment cursor X
+.b178	a5 08		lda $08				lda 	IOCursorX
+.b17a	c9 28		cmp #$28			cmp 	#EXTWidth 					; zero if at RHS
+.b17c	d0 1c		bne $b19a			bne 	_IOPCExit
+.b17e					_IOPCCarriageReturn:
+.b17e	a9 00		lda #$00			lda 	#0							; LHS
+.b180	85 08		sta $08				sta 	IOCursorX
+.b182	e6 09		inc $09				inc 	IOCursorY 					; one down
+.b184	a5 09		lda $09				lda 	IOCursorY 					; off the bottom ?
+.b186	c9 19		cmp #$19			cmp 	#EXTHeight
+.b188	d0 10		bne $b19a			bne 	_IOPCExit
+.b18a	c6 09		dec $09				dec 	IOCursorY 					; back up and scroll
+.b18c	20 6c b0	jsr $b06c			jsr 	EXTScrollDisplay
+.b18f	80 09		bra $b19a			bra 	_IOPCExit
+.b191					_IOPCClear:
+.b191	20 49 b0	jsr $b049			jsr 	EXTClearScreen
+.b194	a9 00		lda #$00			lda 	#0
+.b196	85 08		sta $08				sta 	IOCursorX
+.b198	85 09		sta $09				sta 	IOCursorY
+.b19a					_IOPCExit:
+.b19a	7a		ply				ply
+.b19b	fa		plx				plx
+.b19c	68		pla				pla
+.b19d	60		rts				rts
+.b19e					_IOPControl:
+.b19e	c9 1a		cmp #$1a			cmp 	#"Z"-64						; Ctrl-Z clear
+.b1a0	f0 ef		beq $b191			beq 	_IOPCClear
+.b1a2	c9 01		cmp #$01			cmp 	#"A"-64 					; Cursor movement.
+.b1a4	f0 18		beq $b1be			beq 	_IOPLeft
+.b1a6	c9 04		cmp #$04			cmp 	#"D"-64
+.b1a8	f0 1e		beq $b1c8			beq 	_IOPRight
+.b1aa	c9 17		cmp #$17			cmp 	#"W"-64
+.b1ac	f0 26		beq $b1d4			beq 	_IOPUp
+.b1ae	c9 13		cmp #$13			cmp 	#"S"-64
+.b1b0	f0 2c		beq $b1de			beq 	_IOPDown
+.b1b2	c9 08		cmp #$08			cmp 	#8							; Backspace
+.b1b4	d0 e4		bne $b19a			bne 	_IOPCExit
+.b1b6	20 f6 b1	jsr $b1f6			jsr	 	IOGetCursorXY 				; get cursor address in XY.
+.b1b9	a9 20		lda #$20			lda 	#" "
+.b1bb	20 3d b0	jsr $b03d			jsr 	EXTWriteScreen 				; write space at that position.
+.b1be					_IOPLeft:
+.b1be	c6 08		dec $08				dec 	IOCursorX
+.b1c0	10 d8		bpl $b19a			bpl 	_IOPCExit
+.b1c2	a9 27		lda #$27			lda 	#EXTWidth-1
+.b1c4	85 08		sta $08				sta 	IOCursorX
+.b1c6	80 d2		bra $b19a			bra 	_IOPCExit
+.b1c8					_IOPRight:
+.b1c8	e6 08		inc $08				inc 	IOCursorX
+.b1ca	a5 08		lda $08				lda 	IOCursorX
+.b1cc	49 28		eor #$28			eor 	#EXTWidth
+.b1ce	d0 ca		bne $b19a			bne 	_IOPCExit
+.b1d0	85 08		sta $08				sta 	IOCursorX
+.b1d2	80 c6		bra $b19a			bra 	_IOPCExit
+.b1d4					_IOPUp:
+.b1d4	c6 09		dec $09				dec 	IOCursorY
+.b1d6	10 c2		bpl $b19a			bpl 	_IOPCExit
+.b1d8	a9 18		lda #$18			lda 	#EXTHeight-1
+.b1da	85 09		sta $09				sta 	IOCursorY
+.b1dc	80 bc		bra $b19a			bra 	_IOPCExit
+.b1de					_IOPDown:
+.b1de	e6 09		inc $09				inc 	IOCursorY
+.b1e0	a5 09		lda $09				lda 	IOCursorY
+.b1e2	49 19		eor #$19			eor 	#EXTHeight
+.b1e4	d0 b4		bne $b19a			bne 	_IOPCExit
+.b1e6	85 09		sta $09				sta 	IOCursorY
+.b1e8	80 b0		bra $b19a			bra 	_IOPCExit
+.b1ea					IOUpperCase:
+.b1ea	c9 61		cmp #$61			cmp 	#"a"
+.b1ec	90 07		bcc $b1f5			bcc 	_IOUCExit
+.b1ee	c9 7b		cmp #$7b			cmp 	#"z"+1
+.b1f0	b0 03		bcs $b1f5			bcs 	_IOUCExit
+.b1f2	38		sec				sec
+.b1f3	e9 20		sbc #$20			sbc 	#32
+.b1f5					_IOUCExit:
+.b1f5	60		rts				rts
+.b1f6					IOGetCursorXY:
+.b1f6	48		pha				pha
+.b1f7	a5 09		lda $09				lda 	IOCursorY 					; multiply IOCursorY x 5
+.b1f9	0a		asl a				asl		a
+.b1fa	0a		asl a				asl		a 							; x 4, carry clear
+.b1fb	65 09		adc $09				adc 	IOCursorY 					; so this will be 0..199 now
+.b1fd	aa		tax				tax
+.b1fe	8a		txa				txa 								; x 10
+.b1ff	0a		asl a				asl 	a
+.b200	aa		tax				tax
+.b201	a9 00		lda #$00			lda 	#0
+.b203	2a		rol a				rol 	a
+.b204	a8		tay				tay
+.b205	8a		txa				txa 								; x 20
+.b206	0a		asl a				asl 	a
+.b207	aa		tax				tax
+.b208	98		tya				tya
+.b209	2a		rol a				rol 	a
+.b20a	a8		tay				tay
+.b20b	8a		txa				txa 								; x 40
+.b20c	0a		asl a				asl 	a
+.b20d	aa		tax				tax
+.b20e	98		tya				tya
+.b20f	2a		rol a				rol 	a
+.b210	a8		tay				tay
+.b211	8a		txa				txa 								; add X to that.
+.b212	18		clc				clc
+.b213	65 08		adc $08				adc 	IOCursorX
+.b215	aa		tax				tax
+.b216	90 01		bcc $b219			bcc 	_IOGCXYExit
+.b218	c8		iny				iny
+.b219					_IOGCXYExit:
+.b219	68		pla				pla
+.b21a	60		rts				rts
+.b21b					IOReadLine:
+.b21b	48		pha				pha
+.b21c	86 0a		stx $0a				stx		IOLineLo
+.b21e	84 0b		sty $0b				sty 	IOLineHi
+.b220					_IROLLoop:
+.b220	20 f6 b1	jsr $b1f6			jsr	 	IOGetCursorXY 				; get cursor address in XY.
+.b223	20 2c b0	jsr $b02c			jsr 	EXTReadScreen 				; get character there.
+.b226	48		pha				pha
+.b227	a9 66		lda #$66			lda 	#102 						; write cursor character there
+.b229	20 3d b0	jsr $b03d			jsr		EXTWriteScreen
+.b22c					_IROLWaitKey:
+.b22c	20 0c b0	jsr $b00c			jsr 	EXTReadKey
+.b22f	09 00		ora #$00			ora 	#0
+.b231	f0 f9		beq $b22c			beq 	_IROLWaitKey
+.b233	20 ea b1	jsr $b1ea			jsr 	IOUpperCase 				; capitalise
+.b236	aa		tax				tax 								; save in X
+.b237	68		pla				pla 								; restore old
+.b238	da		phx				phx 								; save new character.
+.b239	20 f6 b1	jsr $b1f6			jsr	 	IOGetCursorXY 				; get cursor address in XY.
+.b23c	20 3d b0	jsr $b03d			jsr 	EXTWriteScreen 				; write out.
+.b23f	68		pla				pla 								; restore old
+.b240	c9 0d		cmp #$0d			cmp 	#13
+.b242	f0 05		beq $b249			beq 	_IROLExit 					; exit if CR
+.b244	20 61 b1	jsr $b161			jsr 	IOPrintChar 				; print it.
+.b247	80 d7		bra $b220			bra 	_IROLLoop
+.b249					_IROLExit:
+.b249	a9 00		lda #$00			lda 	#0 							; go to start of line.
+.b24b	85 08		sta $08				sta 	IOCursorX
+.b24d	a0 00		ldy #$00			ldy 	#0 							; position
+.b24f					_IROLCopy:
+.b24f	5a		phy				phy 								; save position
+.b250	20 f6 b1	jsr $b1f6			jsr 	IOGetCursorXY 				; get cursor position.
+.b253	20 2c b0	jsr $b02c			jsr 	EXTReadScreen 				; read screen
+.b256	7a		ply				ply 								; get position back
+.b257	49 20		eor #$20			eor 	#$20
+.b259	18		clc				clc
+.b25a	69 20		adc #$20			adc 	#$20
+.b25c	91 0a		sta ($0a),y			sta 	(IOLineLo),y 				; save in buffer.
+.b25e	e6 08		inc $08				inc 	IOCursorX 					; cursor right
+.b260	c8		iny				iny 								; bump pointer
+.b261	c0 28		cpy #$28			cpy 	#EXTWidth 					; not done full line.
+.b263	d0 ea		bne $b24f			bne 	_IROLCopy
+.b265	a9 0d		lda #$0d			lda 	#13 						; carriage return
+.b267	20 61 b1	jsr $b161			jsr 	IOPrintChar
+.b26a	a0 28		ldy #$28			ldy 	#EXTWidth 					; trim trailing spaces
+.b26c					_IROLTrim:
+.b26c	88		dey				dey
+.b26d	30 06		bmi $b275			bmi 	_IROLFound
+.b26f	b1 0a		lda ($0a),y			lda 	(IOLineLo),y
+.b271	c9 20		cmp #$20			cmp 	#32
+.b273	f0 f7		beq $b26c			beq 	_IROLTrim
+.b275					_IROLFound:
+.b275	c8		iny				iny
+.b276	a9 00		lda #$00			lda 	#0 							; make it ASCIIZ
+.b278	91 0a		sta ($0a),y			sta 	(IOLineLo),y
+.b27a	a6 0a		ldx $0a				ldx 	IOLineLo
+.b27c	a4 0b		ldy $0b				ldy 	IOLineHi
+.b27e	68		pla				pla
+.b27f	60		rts				rts
+.b280					IOPrintString:
+.b280	48		pha				pha
+.b281	86 0a		stx $0a				stx 	IOLineLo
+.b283	84 0b		sty $0b				sty 	IOLineHi
+.b285	a0 00		ldy #$00			ldy 	#0
+.b287					_IOPSLoop:
+.b287	b1 0a		lda ($0a),y			lda 	(IOLineLo),y
+.b289	f0 06		beq $b291			beq 	_IOPSExit
+.b28b	20 61 b1	jsr $b161			jsr 	IOPrintChar
+.b28e	c8		iny				iny
+.b28f	80 f6		bra $b287			bra 	_IOPSLoop
+.b291					_IOPSExit
+.b291	a6 0a		ldx $0a				ldx 	IOLineLo
+.b293	a4 0b		ldy $0b				ldy 	IOLineHi
+.b295	68		pla				pla
+.b296	60		rts				rts
+
+;******  Return to file: ptest.asm
+
+.b297					Start:
+.b297	20 55 b1	jsr $b155		jsr 	IOInitialise
+.b29a	a2 ab		ldx #$ab		ldx 	#St1 & 255
+.b29c	a0 b2		ldy #$b2		ldy 	#St1 >> 8
+.b29e	20 80 b2	jsr $b280		jsr 	IOPrintString
+.b2a1					Loop:
+.b2a1	a2 80		ldx #$80		ldx 	#$80
+.b2a3	a0 00		ldy #$00		ldy 	#$00
+.b2a5	20 1b b2	jsr $b21b		jsr		IOReadLine
+>b2a8	03					.byte 	3
+.b2a9	80 f6		bra $b2a1		bra 	Loop
+>b2ab	37 31 36 37 20 42 59 54		St1:.text 	"7167 BYTES FREE",0
+>b2b3	45 53 20 46 52 45 45 00
+
+;******  End of listing
