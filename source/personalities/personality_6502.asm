@@ -67,14 +67,15 @@ EXTStartPersonalise:
 
 EXTReadKey:
 	lda 	PKeyboard							; read key
-	beq 	_EXTExit
+	bne 	EXTClearBuffer
+	rts
+EXTClearBuffer:
 	pha 										; key pressed clear queue byte.
 	lda 	#0
 	sta 	PKeyboard
 	pla
-_EXTExit:	
 	rts
-
+		
 ; ******************************************************************************
 ;
 ;		Read a byte from the screen (C64 codes, e.g. @ = 0) at XY -> A

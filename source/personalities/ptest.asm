@@ -23,7 +23,9 @@ EXTDummyInterrupt:							; interrupt that does nothing.
 	.word 	EXTStartPersonalise
 	.word 	EXTDummyInterrupt
 
-EXTZPWork = 4								; Zero Page work for EXT
+EXTZPWork = 4								; Zero Page work for EXT (4 bytes)
+IOCursorX = 8 								; Cursor position
+IOCursorY = 9
 
 ; ******************************************************************************
 ;
@@ -47,15 +49,8 @@ EXTZPWork = 4								; Zero Page work for EXT
 
 Start:
 	jsr 	IOInitialise
-	ldx 	#St1 & 255
-	ldy 	#St1 >> 8
-	jsr 	IOPrintString
 Loop:
-	ldx 	#$80
-	ldy 	#$00
-	jsr		IOReadLine	
-	.byte 	3
+	jsr 	IOReadKey
+	jsr 	IOPrintChar
 	bra 	Loop
-
-St1:.text 	"7167 BYTES FREE",0
 

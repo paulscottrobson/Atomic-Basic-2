@@ -97,6 +97,7 @@ EXTReadKey:
 	pla 									; restore/return value
 _EXTRKExit:
 	plz
+	ora 	#0 								; set Z
 	rts
 
 ; ******************************************************************************

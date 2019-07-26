@@ -3,16 +3,12 @@
 ;
 ;		Name: 		personality_io.asm
 ;		Purpose:	Personality Common I/O Routines
-;		Date: 		22nd July 2019
+;		Date: 		26th July 2019
 ;		Author:		Paul Robson
 ;
 ; ******************************************************************************
 ; ******************************************************************************
 
-IOCursorX = 8 								; cursor position
-IOCursorY = 9
-IOLineLo = 10 								; line position.
-IOLineHi = 11
 
 ; ******************************************************************************
 ;
@@ -21,6 +17,7 @@ IOLineHi = 11
 ; ******************************************************************************
 
 IOInitialise:
+		jsr 	EXTReset 					; reset display.
 		jsr 	EXTClearScreen 				; clear screen.
 		pha
 		lda 	#00 						; home cursor
@@ -40,89 +37,60 @@ IOPrintChar:
 		pha 								; save registers
 		phx
 		phy
-		and 	#$7F 						; 7 bits only.
-		cmp 	#13 						; handle CR
-		beq 	_IOPCCarriageReturn
-		cmp 	#$20 						; control character
-		bcc 	_IOPControl
-		jsr	 	IOGetCursorXY 				; get cursor address in XY.
-		and 	#$3F 						; 6 bit PETSCII
-		jsr 	EXTWriteScreen 				; write character at that position.
-		inc 	IOCursorX 					; increment cursor X
+
+		and 	#$7F 						; bits 0-6 only
+		jsr 	IOUpperCase 				; convert to upper case.
+		cmp 	#13 						; new line ?
+		beq 	_IOPCNewLine
+		cmp 	#32 						; not printable.
+		bcc 	_IOPCExit
+		pha 								; print at cursor
+		jsr 	IOGetCursorXY		
+		pla
+		and 	#$3F 						; 6 Bit ASCII
+		jsr 	EXTWriteScreen
+		inc 	IOCursorX 					; move left.
 		lda 	IOCursorX
-		cmp 	#EXTWidth 					; zero if at RHS
-		bne 	_IOPCExit
-		;
-_IOPCCarriageReturn:
-		lda 	#0							; LHS
+		cmp		#EXTWidth 					; will be zero if at RHS
+		bne 	_IOPCExit 					; exit otherwise
+_IOPCNewLine:
+		lda 	#0 							; go down and to lhs
 		sta 	IOCursorX
-		inc 	IOCursorY 					; one down
-		lda 	IOCursorY 					; off the bottom ?
+		inc 	IOCursorY
+		lda 	IOCursorY 					; off bottom
 		cmp 	#EXTHeight
-		bne 	_IOPCExit
-		dec 	IOCursorY 					; back up and scroll
-		jsr 	EXTScrollDisplay
-		bra 	_IOPCExit
-		;
-_IOPCClear:
-		jsr 	EXTClearScreen
-		lda 	#0
-		sta 	IOCursorX
-		sta 	IOCursorY		
-		;
-_IOPCExit:									; reload registers and exit
+		bcc 	_IOPCExit
+		jsr 	EXTScrollDisplay 			; scroll
+		dec 	IOCursorY 					; fix up.
+_IOPCExit:
 		ply
 		plx
 		pla
 		rts
-		;
-_IOPControl:
-		cmp 	#"Z"-64						; Ctrl-Z clear
-		beq 	_IOPCClear
-		cmp 	#"A"-64 					; Cursor movement.
-		beq 	_IOPLeft
-		cmp 	#"D"-64
-		beq 	_IOPRight
-		cmp 	#"W"-64
-		beq 	_IOPUp
-		cmp 	#"S"-64
-		beq 	_IOPDown
-		cmp 	#8							; Backspace
-		bne 	_IOPCExit
-		;
-		jsr	 	IOGetCursorXY 				; get cursor address in XY.
+
+; ******************************************************************************
+;
+;							Read key with cursor
+;
+; ******************************************************************************
+
+IOReadKey:
+		phx 								; save XY
+		phy
+		jsr 	IOGetCursorXY 				; show prompt
+		lda 	#$1D
+		jsr  	EXTWriteScreen
+_IORKWait:									; wait for key press
+		jsr 	EXTReadKey
+		beq 	_IORKWait
+		pha 								; clear prompt
+		jsr 	IOGetCursorXY
 		lda 	#" "
-		jsr 	EXTWriteScreen 				; write space at that position.
-		;
-_IOPLeft:									; cursor movement.
-		dec 	IOCursorX
-		bpl 	_IOPCExit
-		lda 	#EXTWidth-1
-		sta 	IOCursorX
-		bra 	_IOPCExit
-
-_IOPRight:
-		inc 	IOCursorX
-		lda 	IOCursorX
-		eor 	#EXTWidth
-		bne 	_IOPCExit
-		sta 	IOCursorX
-		bra 	_IOPCExit
-
-_IOPUp:
-		dec 	IOCursorY
-		bpl 	_IOPCExit
-		lda 	#EXTHeight-1
-		sta 	IOCursorY
-		bra 	_IOPCExit
-
-_IOPDown:
-		inc 	IOCursorY
-		lda 	IOCursorY
-		eor 	#EXTHeight
-		bne 	_IOPCExit
-		sta 	IOCursorY
-		bra 	_IOPCExit
+		jsr  	EXTWriteScreen
+		pla
+		ply 								; restore and exit.
+		plx
+		rts
 
 ; ******************************************************************************
 ;
@@ -187,92 +155,4 @@ _IOGCXYExit:
 		pla
 		rts	
 
-; ******************************************************************************
-;
-;					Read line to XY from current position
-;
-; ******************************************************************************
 
-IOReadLine:
-		pha
-		stx		IOLineLo
-		sty 	IOLineHi
-_IROLLoop:
-		jsr	 	IOGetCursorXY 				; get cursor address in XY.
-		jsr 	EXTReadScreen 				; get character there.
-		pha
-		lda 	#102 						; write cursor character there
-		jsr		EXTWriteScreen
-_IROLWaitKey:								; get a keystroke
-		jsr 	EXTReadKey
-		ora 	#0
-		beq 	_IROLWaitKey
-		jsr 	IOUpperCase 				; capitalise
-		tax 								; save in X
-		pla 								; restore old
-		phx 								; save new character.		
-		jsr	 	IOGetCursorXY 				; get cursor address in XY.
-		jsr 	EXTWriteScreen 				; write out.
-		pla 								; restore old
-		cmp 	#13
-		beq 	_IROLExit 					; exit if CR
-		jsr 	IOPrintChar 				; print it.
-		bra 	_IROLLoop
-		;
-_IROLExit:
-		lda 	#0 							; go to start of line.
-		sta 	IOCursorX 	
-		ldy 	#0 							; position
-_IROLCopy:
-		phy 								; save position
-		jsr 	IOGetCursorXY 				; get cursor position.			
-		jsr 	EXTReadScreen 				; read screen
-		ply 								; get position back
-		eor 	#$20
-		clc
-		adc 	#$20
-		sta 	(IOLineLo),y 				; save in buffer.
-		inc 	IOCursorX 					; cursor right
-		iny 								; bump pointer
-		cpy 	#EXTWidth 					; not done full line.
-		bne 	_IROLCopy
-		lda 	#13 						; carriage return
-		jsr 	IOPrintChar		
-		ldy 	#EXTWidth 					; trim trailing spaces
-_IROLTrim:
-		dey
-		bmi 	_IROLFound
-		lda 	(IOLineLo),y
-		cmp 	#32
-		beq 	_IROLTrim
-_IROLFound:
-		iny
-		lda 	#0 							; make it ASCIIZ
-		sta 	(IOLineLo),y				
-		ldx 	IOLineLo
-		ldy 	IOLineHi
-		pla
-		rts
-
-; ******************************************************************************
-;
-;								Print String at XY
-;	
-; ******************************************************************************
-
-IOPrintString:
-		pha
-		stx 	IOLineLo
-		sty 	IOLineHi
-		ldy 	#0
-_IOPSLoop:
-		lda 	(IOLineLo),y
-		beq 	_IOPSExit
-		jsr 	IOPrintChar
-		iny 
-		bra 	_IOPSLoop
-_IOPSExit		
-		ldx 	IOLineLo
-		ldy 	IOLineHi
-		pla
-		rts
