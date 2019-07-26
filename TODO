@@ -1,2 +1,9 @@
+
 - Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
-- Import the old code in and start making it work.
+
+- Start to work on 
+	basic.asm
+	general/*
+	commands/*
+	for new format and check it.
+

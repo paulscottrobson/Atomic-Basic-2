@@ -82,7 +82,7 @@ void CPUExit(void) {}
 void CPUReset(void) {
 	FILE *f = fopen("rom.bin","rb");
 	if (f != NULL) {
-		CPULoadChunk(f,ramMemory+0xC000,0x4000);
+		CPULoadChunk(f,ramMemory,0x10000);
 		fclose(f);
 	}
 	resetProcessor();																// Reset CPU
