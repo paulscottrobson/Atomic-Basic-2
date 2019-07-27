@@ -168,7 +168,9 @@ _EVALExecuteA:
 _EVALExitPullA:
 		pla 								; restore precedence.		
 		rts
-
+		;
+		;		Check to see if it's a Unary function - keyword and type
+		;
 _EVALKeywordVariable:
 		ora 	#0 							; check bit 7
 		bpl 	_EVALNotUnaryFunction 		; must be set for unary function
@@ -179,23 +181,39 @@ _EVALKeywordVariable:
 		cmp 	#KTYPE_UNARYFN 				; is it a unary function
 		bne 	_EVALNotUnaryFunction 	
 		;
+		;		Unary function.	
+		;
 		lda 	(zCurrentLine),y 			; get the token back
 		iny 								; consume it
 		bra 	_EVALExecuteA 				; execute TOS.	
 
 _EVALNotUnaryFunction:			
 		lda 	(zCurrentLine),y
+		cmp 	#KW_MINUS 					; check negation
+		beq 	_EVALUnaryNegation
 		cmp 	#KW_LPAREN 					; check left bracket.
 		bne		_EVALCheckUnaryOperator 	
+		;
+		;		(expression)
 		;
 		iny 								; skip left bracket.
 		jsr 	EvaluateBaseCurrentLevel 	; calculate what's in the bracket.
 		lda 	#KW_RPAREN 					; check right bracket.
 		jsr 	CheckNextCharacter 			; check next character, after spaces.
 		bra 	_EVALGotAtom
-
-
+		;
+		;		-(atom)
+		;
+_EVALUnaryNegation:
+		iny 								; skip over the - sign.
+		jsr 	EvaluateAtomCurrentLevel 	; calculate what's being negatived (...)
+		jsr 	BFUNC_NegateAlways 			; negate it.
+		bra 	_EVALGotAtom
+		;
+		;		Choices left are $, ? or ! <atom>
+		;
 _EVALCheckUnaryOperator:		
+
 		bra 	_EVALCheckUnaryOperator
 
 

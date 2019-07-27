@@ -1,10 +1,8 @@
 
 - Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
 
-- Parenthesis.
-- Unary operators (- ? ! $)
-- Check -ve divides.
-- Put -ve numbers into unit tests (currently +ve)
+- Unary operators (? ! $)
+- Binary operators (? ! $)
 - Work on variables.
 - Assignment
 - LIST 

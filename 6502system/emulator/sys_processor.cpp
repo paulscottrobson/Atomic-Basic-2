@@ -17,7 +17,7 @@
 //														   Timing
 // *******************************************************************************************************************************
 
-#define CYCLE_RATE 		(8*1000*1000)												// Cycles per second (0.96Mhz)
+#define CYCLE_RATE 		(4*1000*1000)												// Cycles per second (0.96Mhz)
 #define FRAME_RATE		(60)														// Frames per second (50 arbitrary)
 #define CYCLES_PER_FRAME (CYCLE_RATE / FRAME_RATE)									// Cycles per frame (20,000)
 

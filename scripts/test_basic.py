@@ -43,7 +43,7 @@ class UnitTest(object):
 			n = random.randint(0,1000)
 		if s >= 5:
 			n = random.randint(0,0x3FFFFFFF)
-		return n
+		return n if random.randint(0,1) == 0 else -n
 	#
 	def add(self,text):
 		self.basic.add(text,self.lineNumber)
@@ -53,7 +53,7 @@ class UnitTest(object):
 class SimpleMathUnitTest(UnitTest):
 
 	def getCount(self):
-		return 60
+		return 40
 
 	def generate(self):
 		n1 = self.getInteger()
@@ -61,7 +61,7 @@ class SimpleMathUnitTest(UnitTest):
 		if random.randint(0,20) == 0:
 			n2 = n1
 
-		false = "#FFFFFFFF"
+		false = "-1"
 
 		self.add("assert {0}+{1}={2}".format(n1,n2,n1+n2))
 		if n1 > n2:
@@ -70,7 +70,7 @@ class SimpleMathUnitTest(UnitTest):
 			self.add("assert {0}*{1}={2}".format(n1,n2,n1*n2))
 		if n2 != 0:
 			self.add("assert {0}/{1}={2}".format(n1,n2,int(n1/n2)))
-			self.add("assert {0}%{1}={2}".format(n1,n2,int(n1%n2)))
+			self.add("assert {0}%{1}={2}".format(abs(n1),abs(n2),int(abs(n1)%abs(n2))))
 
 		self.add("assert ({0}&{1})={2}".format(n1,n2,n1&n2))
 		self.add("assert ({0}^{1})={2}".format(n1,n2,n1^n2))

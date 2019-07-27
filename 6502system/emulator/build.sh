@@ -1,7 +1,7 @@
 #
 #		Build emulator.
 #
-del /Q *.inc
+rm *.inc
 pushd ../processor
 sh build.sh
 popd
