@@ -15,37 +15,7 @@
 ;
 ; ******************************************************************************
 
-		* = 	$FFF8
-EXTDummyInterrupt:							; interrupt that does nothing.
-		rti
-		* = 	$FFFA 						; create the vectors.
-		.word 	EXTDummyInterrupt
-		.word 	EXTStartPersonalise
-		.word 	EXTDummyInterrupt
-
-EXTZPWork = 4								; Zero Page work for EXT (4 bytes)
-IOCursorX = 8 								; Cursor position
-IOCursorY = 9
-
-; ******************************************************************************
-;
-;					Load appropriate personality source in.
-;
-; ******************************************************************************
-
-		zeroPage 	= $20
-		startMemory = $2000
-		endMemory   = $4000
-		basicStack  = $200
-		evalStack   = $400
-
-		.if TARGET=1
-		.include 	"personalities/personality_mega65.asm"
-		.endif
-		.if TARGET=2
-		.include 	"personalities/personality_6502.asm"
-		.endif
-		.include	"personalities/personality_io.asm"		
+		.include 	"porting.asm"			; implementation specific stuff
 
 		* = $E000
 		.include 	"include/tokens.inc"	; generated token tables and constants.
@@ -65,7 +35,7 @@ IOCursorY = 9
 		.include 	"commands/miscellany.asm" ; miscellany
 
 Start:
-	jsr 	IOInitialise
+		jsr 	IOInitialise 		
 Loop:
 	jsr 	IOReadKey
 	jsr 	IOPrintChar
@@ -74,6 +44,7 @@ Loop:
 	bra 	Loop
 
 		#resetstack 						; reset CPU stack.
+		break
 		jsr 	COMMAND_New 				; do a new 
 		jsr 	COMMAND_Old 				; get back the old program as we're deving.
 
@@ -90,5 +61,6 @@ ReportError:
 		break
 		bra 	ReportError
 
-		* = basicProgram
+		* = basicProgram					; load BASIC into RAM space.
 		.include "include/basic_generated.inc"
+
