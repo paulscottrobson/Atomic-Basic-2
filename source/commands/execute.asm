@@ -39,8 +39,11 @@ CRUNNextInstruction:
 		;		Something there, check for a colon.
 		;
 CRUNNotEndOfLine:
+		cmp 	#' ' 
+		beq 	CRUNSkipLoop
 		cmp 	#KW_Colon 					; check for a colon first.
 		bne 	CRUNExecuteOne 				; if not that, execute the token.
+CRUNSkipLoop:
 		iny		 							; if colon, skip it and loop round.
 		bra 	CRUNNextInstruction
 		;

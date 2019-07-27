@@ -1,10 +1,7 @@
-Next
-====
-- Figure out why 'Q code' not working.
 
 Progress
 ========
-- Assignment (do $ completion code and x!?$y processing)
+- Assignment (do $ completion code (e.g. string copy) and x!?$y processing)
 - Command Line, tokenisation, executing from keyboard.
 - LIST 
 - GOTO GOSUB 

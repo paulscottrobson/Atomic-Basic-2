@@ -19,7 +19,7 @@ COMMAND_Let: 	;; let
 		lda 	(zCurrentLine),y 			; get first token not space
 		beq 	_CLESyntax
 		iny
-		cpy 	#32
+		cmp 	#32
 		beq 	COMMAND_Let
 		dey
 		;

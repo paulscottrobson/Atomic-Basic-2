@@ -114,9 +114,10 @@ if __name__ == '__main__':
 	bas = BasicProgram()
 	bas.add('c = 42:d = -2:e = c * 2:@ = -1:@ = d - 1',1)
 	bas.add('?#1FFF = 63:!#1FF8=#AB784501')
-	bas.add('q=#1E00:!q=-1:qq2=-2:q(4)=#5A6A7A8A:qq3=e:stop')
+	bas.add('q=#1E00: qq3=e:!q=-1:qq2=-2:q(4)=#5A6A7A8A:stop')
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)
 	bas.render(targetFile)
 	targetFile.close()
 
+# extra space causes the q(4) to fail ????
