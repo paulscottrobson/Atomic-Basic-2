@@ -109,9 +109,10 @@ if __name__ == '__main__':
 	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
-	bas.add('assert "he+lo"',1)
+	bas.add('assert "Hello, world"+1',1)
 
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)
 	bas.render(targetFile)
 	targetFile.close()
+

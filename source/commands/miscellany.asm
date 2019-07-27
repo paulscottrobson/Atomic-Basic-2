@@ -16,8 +16,8 @@
 ; *******************************************************************************************
 
 COMMAND_Assert:	;; assert
-		#break
 		jsr 	EvaluateBase 				; evaluate the expression
+		#break
 		lda 	evalStack+0,x 				; check non zero 	
 		ora 	evalStack+1,x
 		ora 	evalStack+2,x

@@ -29,7 +29,7 @@ IOCursorY = 9
 
 		zeroPage 	= $20 					; first ZP byte to use
 		startMemory = $2000 				; first non ZP byte to use
-		endMemory   = $4000 				; last non ZP byte to use
+		endMemory   = $8000 				; last non ZP byte to use
 		basicStack  = $200 					; stack for BASIC
 		evalStack   = $400 					; stack for evaluation of expressions
 

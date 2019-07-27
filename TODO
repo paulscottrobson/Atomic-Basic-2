@@ -1,8 +1,8 @@
 
 - Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
 
-	ASSERT 
-	Expression binary calls, constant needs redoing heavily.
+- Work on unary functions and operators
+- Put -ve numbers into unit tests (currently +ve)
+- Work on variables.
 
-	Unit Test
 

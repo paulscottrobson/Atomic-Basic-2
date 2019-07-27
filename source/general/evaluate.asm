@@ -12,9 +12,11 @@
 EvaluateSNError:
 		jmp 	SyntaxError
 EvaluateMissingQuote:	
-		#error 	"Missing string closing quote"
+		#error 	"Missing quote"
 EvaluateStringFull:
 		#error 	"String Buffer full"
+EvaluateBadHex:
+		#error 	"Bad Hex value"
 
 ; *******************************************************************************************
 ;
@@ -30,7 +32,9 @@ EvaluateBaseCurrentLevel:
 
 EvaluateAtPrecedenceLevel:
 		pha 								; save precedence level
-		lda 	#0 							; zero the result upper word.
+		lda 	#0 							; zero the result.
+		sta 	evalStack+0,x
+		sta 	evalStack+1,x
 		sta 	evalStack+2,x
 		sta 	evalStack+3,x
 		;
@@ -43,8 +47,21 @@ _EVALSkipSpace1:
 		dey 								; points at the token.
 		;
 		cmp 	#KW_DQUOTE					; is it opening quote ?
-		beq 	_EVALString  				; if so 
-		#break
+		beq 	_EVALString  				; if so load in a constant string
+		cmp 	#KW_HASH 					; is it a hash, e.g. hexadecimal.
+		beq 	_EVALHexadecimal 			
+		cmp 	#'0'						; is it in range 0-9
+		bcc		_EVALGoKeywordVariable 		; yes, it's a keyword or variable.
+		cmp 	#'9'+1
+		bcc 	_EVALDecimal
+_EVALGoKeywordVariable:
+		jmp 	_EVALKeywordVariable		
+		;
+		;		Decimal constant
+		;
+_EVALDecimal:
+		jsr 	EVALGetDecConstant 			; get decimal constant
+		bra 	_EVALGotAtom 				; got atom.		
 		;
 		;		String : copy into string buffer.
 		;
@@ -70,36 +87,52 @@ _EVALStringCopy:
 		plx 								; restore X
 		bra 	_EVALGotAtom 				; got the atom.
 		;
+		;		Hexadecimal.
+		;
+_EVALHexaDecimal
+		iny 								; skip over the '#'
+		phy 								; save Y
+		jsr 	EVALGetHexConstant 			; load in hexadecimal constant
+		sty 	Temp1 						; has Y changed ?
+		pla
+		cmp 	Temp1
+		beq 	EvaluateBadHex 				; if not, error.
 		;
 		;		Got here, there is an atom in our stack level.
 		;
 _EVALGotAtom:
-		bra 	_EVALGotAtom
-		iny 								; get the MSB of the token
-		lda 	(zCurrentLine),y 			; 001t tttk - we want 0010 xxxx 
-		and 	#$F0 						; for it to be a binary operator.
+;		
+_EVALGetOperator:		
+		lda 	(zCurrentLine),y 			; get next token skip spaces.
+		iny 								; this should be binary operator
 		cmp 	#$20
-		bne 	_EVALExitDecY 				; not a binary operator, so exit, unpicking the INY.
-		lda 	(zCurrentLine),y 			; get the token again
-		and 	#$0E 						; mask out the precedence bits
-		lsr 	a 							; now in bits 0,1,2
-		sta 	Temp1 						; save it.
-		pla 								; get current precedence level
-		pha 								; push it back again.
+		beq 	_EVALGetOperator
+		dey
+		ora 	#0 							; to be a binary token must be -ve
+		bpl 	_EVALExitPullA 				; if +ve then exit now.
+
+
+		phx 								; save X
+		tax 								; token in X
+		lda 	TokenTypeInformation-128,x 	; get the type info for it
+		sta 	Temp1 						; save precedence in Temp1
+		plx 								; restore X
+
+		cmp 	#8 							; if type >= 8, e.g. not binary, then exit.
+		bcs 	_EVALExitPullA 				
+
+		pla 								; get and save precedence level.
+		pha
 		cmp 	Temp1 						; compare operator precedence - keyword precedence level.
 		beq 	_EVALDoCalc					; equal, do it.		
-		bcs 	_EVALExitDecY				; too high, then exit.
+		bcs 	_EVALExitPullA				; too high, then exit.
 		;
 		;		Work out the RHS
 		;
 _EVALDoCalc:		
-		dey
-		lda 	(ZCurrentLine),y 			; low byte of operator.
+		lda 	(zCurrentLine),y 			; get the token, save on stack and skip it.
+		iny
 		pha
-		iny 							
-		lda 	(ZCurrentLine),y 			; high byte of operator
-		pha
-		iny 								; now points to next.
 
 		phx
 		inx 								; work out right hand side.
@@ -115,19 +148,11 @@ _EVALDoCalc:
 		;
 		;		Work out the index x 2, then the address of the jump vector.
 		;
-		pla 								; get keyword MSB ack
-		and 	#1 							; ID bit
-		sta 	Temp1+2 					; save in Temp1.2
-		pla 	 							; get LSB	
-		asl 	a 							; double it
-		rol 	Temp1+2 					; shift carry out from ASL into upper byte.
-		;
-		adc 	#(KeywordVectorTable-2) & $FF
-		sta 	Temp1+1
-		lda 	Temp1+2
-		adc 	#(KeywordVectorTable-2) >> 8
-		sta 	Temp1+2						; save in Temp1.1, which now has the indirect address
-											; of the routine.
+		pla 								; get keyword
+		asl 	a 							; shift left, drop bit 7
+		sta 	Temp1+1						; save in Temp1.1
+		lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
+		sta 	Temp1+2 					; set at Temp1.2
 		lda 	#$6C 						; make JMP (xxxx)
 		sta 	Temp1+0 												
 		jsr 	Temp1 						; call that routine.
@@ -135,15 +160,134 @@ _EVALDoCalc:
 		;
 		;		Exit code.
 		;
-_EVALExitDecY:
-		dey
-		pla 								; restore precedence.
-_EVALExit:		
+_EVALExitPullA:
+		pla 								; restore precedence.		
 		rts
 
-_EVALKeyword:
-		bra 	_EVALKeyword
+_EVALKeywordVariable:
+		bra 	_EVALKeywordVariable
 
-_EVALVariable:
-		bra 	_EVALVariable
 
+; *******************************************************************************************
+;
+;						 Load in a decimal constant from the input. 
+;
+; *******************************************************************************************
+
+EVALGetDecConstant:
+		lda 	(zCurrentLine),y 			; get next
+		cmp 	#'0'						; check in range 0-9.
+		bcc 	_EVGDExit
+		cmp 	#'9'+1
+		bcc 	_EVGDValue 					; if so has legal value
+_EVGDExit:
+		rts
+
+_EVGDValue:									; value. first multiply by 10.				
+		pha 								; save value, Y on stack
+		phy
+		ldy 	#3 							; 3 shifts.
+
+		lda 	evalStack+3,x 				; push x1 value on stack.
+		pha
+		lda 	evalStack+2,x
+		pha
+		lda 	evalStack+1,x
+		pha
+		lda 	evalStack+0,x
+		pha
+_EVGDLoop:
+		asl 	evalStack+0,x 				; rotate left once.
+		rol 	evalStack+1,x		
+		rol 	evalStack+2,x		
+		rol 	evalStack+3,x		
+
+		cpy 	#2 							; if done it twice now
+		bne 	_EVGDNoAdd
+
+		clc 								; then it will be x 4, adding +1 => x 5
+		pla
+		adc 	evalStack+0,x 				
+		sta 	evalStack+0,x
+		pla
+		adc 	evalStack+1,x 				
+		sta 	evalStack+1,x
+		pla
+		adc 	evalStack+2,x 				
+		sta 	evalStack+2,x
+		pla
+		adc 	evalStack+3,x 				
+		sta 	evalStack+3,x
+
+_EVGDNoAdd: 								; do 3 times in total.
+		dey
+		bne 	_EVGDLoop		
+		ply 								; restore YA
+		pla
+		iny 								; next character
+		and 	#15 						; force into range and put in.
+		clc
+		adc 	evalStack+0,x 				; add digit in
+		sta 	evalStack+0,x
+		bcc 	EVALGetDecConstant 			; propogate constant through
+		inc 	evalStack+1,x
+		bne 	EVALGetDecConstant 			
+		inc 	evalStack+2,x
+		bne 	EVALGetDecConstant 			
+		inc 	evalStack+3,x
+		bra 	EVALGetDecConstant 			; go back and try again.
+
+
+; *******************************************************************************************
+;
+;							Load in a hex constant from the input. 
+;
+; *******************************************************************************************
+
+EVALGetHexConstant:
+		lda 	(zCurrentLine),y 			; get next
+		jsr 	EVALToUpper 				; make upper case
+		sec
+		sbc 	#"0" 						; range 0-9
+		bcc 	_EVGHExit 					; exit if CC
+		cmp 	#9+1 						; if < 9 have a legal value.
+		bcc 	_EVGHValue
+		sbc 	#7 							; now in range 10-15 if okay.
+		cmp 	#15+1
+		bcc 	_EVGHValue		
+_EVGHExit:
+		rts		
+		;
+_EVGHValue:
+		phy 								; save Y and new digit. 
+		pha		
+		ldy 	#4 							; rotate left 4
+_EVGHRotate:
+		asl 	evalStack+0,x
+		rol 	evalStack+1,x		
+		rol 	evalStack+2,x		
+		rol 	evalStack+3,x		
+		dey
+		bne 	_EVGHRotate
+		pla 								; restore digit and X
+		ply
+		iny 								; next character
+		clc
+		ora 	evalStack+0,x 				; add digit in
+		sta 	evalStack+0,x
+		bra 	EVALGetHexConstant 			; go back and try again.
+
+; *******************************************************************************************
+;
+;									Convert A to upper case
+;
+; *******************************************************************************************
+
+EVALToUpper:
+		cmp 	#'a'
+		bcc 	_EVTUExit
+		cmp 	#'z'+1
+		bcs 	_EVTUExit
+		eor 	#32		
+_EVTUExit:
+		rts		
