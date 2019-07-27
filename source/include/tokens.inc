@@ -36,7 +36,7 @@ KeywordVectorTable:
 	.word	SyntaxError                   ; "list"     ($00a2)
 	.word	SyntaxError                   ; "loop"     ($00a3)
 	.word	SyntaxError                   ; "link"     ($00a4)
-	.word	SyntaxError                   ; "let"      ($00a5)
+	.word	COMMAND_Let                   ; "let"      ($00a5)
 	.word	UNARY_Len                     ; "len"      ($00a6)
 	.word	SyntaxError                   ; "next"     ($00a7)
 	.word	COMMAND_New                   ; "new"      ($00a8)

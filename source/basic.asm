@@ -29,7 +29,9 @@
 		
 		.include 	"commands/execute.asm"	; run/stop etc.		
 		.include 	"commands/miscellany.asm" ; miscellany
+		.include 	"commands/let.asm"		; assignment.
 
+		
 Start:
 		#resetstack 						; reset CPU stack.
 		jsr 	COMMAND_New 				; do a new 

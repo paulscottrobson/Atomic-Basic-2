@@ -1,8 +1,12 @@
+Next
+====
+- Figure out why 'Q code' not working.
+
 Progress
 ========
-- Assignment
+- Assignment (do $ completion code and x!?$y processing)
+- Command Line, tokenisation, executing from keyboard.
 - LIST 
-- Command Line, tokenisation.
 - GOTO GOSUB 
 - IF THEN 
 - DO LOOP 
@@ -13,4 +17,4 @@ Progress
 Later fixes
 ===========
 - Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
-- Fix long read/write for ! and ?
+- Fix long read/write for ! and ? to use the extended access on Mega65

@@ -56,10 +56,18 @@ CRUNNextLine:
 		inc 	zCurrentLine+1
 		bra 	CRUNNewLine
 		;
-		;		Execute instruction in XA. Requires the KVT to be at offset $00
-		;		otherwise it won't work !
+		;
 		;
 CRUNExecuteOne:
+		ora 	#0 							; if it is a character might be a variable.
+		bpl		_CRUNX1TryLet
+		cmp 	#KW_DOLLAR 					; likewise if ! something ? something $ something
+		beq 	_CRUNX1TryLet
+		cmp 	#KW_PLING
+		beq 	_CRUNX1TryLet
+		cmp 	#KW_QUESTION
+		beq 	_CRUNX1TryLet
+		;
 		iny 								; skip over loaded token
 		asl 	a 							; double lower keyword byte, clears bit 7.
 		sta 	Temp1+1 					; this is the low byte into the KVT
@@ -72,6 +80,10 @@ CRUNExecuteOne:
 		sta 	StringBufferPos
 		jsr 	Temp1 						; call instruction
 		bra 	CRUNNextInstruction 		; do next instruction.
+		;
+_CRUNX1TryLet:
+		jsr 	COMMAND_Let 				; try doing a LET if not a keyword.
+		bra 	CRUNNextInstruction
 
 ; *******************************************************************************************
 ;
