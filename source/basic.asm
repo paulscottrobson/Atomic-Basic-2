@@ -31,7 +31,6 @@
 		.include 	"commands/miscellany.asm" ; miscellany
 
 Start:
-		jsr 	IOInitialise 				; set up porting stuff.
 		#resetstack 						; reset CPU stack.
 		jsr 	COMMAND_New 				; do a new 
 		jsr 	COMMAND_Old 				; get back the old program as we're deving.

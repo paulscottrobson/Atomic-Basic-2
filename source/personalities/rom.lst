@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.54.1900 listing file
 ; 64tass --m4510 -D TARGET=1 -b -L rom.lst -o rom.bin ptest.asm
-; Sat Jul 27 18:02:20 2019
+; Sat Jul 27 18:11:21 2019
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -290,279 +290,277 @@
 .b000					EXTStartPersonalise:
 .b000	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
 .b002	9a		txs			txs
-.b003	20 a4 b0	jsr $b0a4		jsr 	EXTReset 						; reset video
-.b006	20 54 b0	jsr $b054		jsr 	EXTClearScreen 					; clear screen
-.b009	4c ad b1	jmp $b1ad		jmp 	Start 							; start main application
+.b003	20 a0 b0	jsr $b0a0		jsr 	EXTReset 						; reset video
+.b006	20 50 b0	jsr $b050		jsr 	EXTClearScreen 					; clear screen
+.b009	4c a9 b1	jmp $b1a9		jmp 	Start 							; start main application
 .b00c					EXTReadKeyPort:
 .b00c	db		phz			phz
-.b00d	20 26 b0	jsr $b026		jsr 	EXTSetupKeyAddress
-.b010	a3 00		ldz #$00		ldz 	#0
-.b012	ea		nop			nop 									; read keyboard
-.b013	b2 04		lda ($04),z		lda 	(EXTZPWork),z
-.b015	fb		plz			plz
-.b016	c9 00		cmp #$00		cmp 	#0 								; set Z
-.b018	60		rts			rts
-.b019					EXTRemoveKeyPressed:
-.b019	db		phz			phz
-.b01a	20 26 b0	jsr $b026		jsr 	EXTSetupKeyAddress
-.b01d	a3 00		ldz #$00		ldz 	#0
-.b01f	a9 00		lda #$00		lda 	#0
-.b021	ea		nop			nop 									; read keyboard
-.b022	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b024	fb		plz			plz
-.b025	60		rts			rts
-.b026					EXTSetupKeyAddress:
-.b026	a9 0f		lda #$0f		lda 	#$0F 							; set up to write to read keyboard.
-.b028	85 07		sta $07			sta 	EXTZPWork+3
-.b02a	a9 fd		lda #$fd		lda 	#$FD
-.b02c	85 06		sta $06			sta 	EXTZPWork+2
-.b02e	a9 36		lda #$36		lda 	#$36
-.b030	85 05		sta $05			sta 	EXTZPWork+1
-.b032	a9 10		lda #$10		lda 	#$10
-.b034	85 04		sta $04			sta 	EXTZPWork+0
-.b036	a3 00		ldz #$00		ldz 	#0
-.b038	60		rts			rts
-.b039					EXTReadScreen:
-.b039	5a		phy			phy 										; save Y
-.b03a	8a		txa			txa 										; multiply XY by 2
-.b03b	85 04		sta $04			sta 	EXTZPWork							; into EXTZPWork
-.b03d	98		tya			tya
-.b03e	09 10		ora #$10		ora 	#EXTScreen>>8 						; move into screen area
-.b040	85 05		sta $05			sta 	EXTZPWork+1 						; read character there
-.b042	a0 00		ldy #$00		ldy 	#0
-.b044	b1 04		lda ($04),y		lda 	(EXTZPWork),y
-.b046	7a		ply			ply 										; restore Y and exit.
-.b047	60		rts			rts
-.b048					EXTWriteScreen:
-.b048	5a		phy			phy
-.b049	48		pha			pha
-.b04a	20 39 b0	jsr $b039		jsr		EXTReadScreen 						; set up the address into EXTZPWork
-.b04d	a0 00		ldy #$00		ldy 	#0
-.b04f	68		pla			pla 										; restore and write.
-.b050	91 04		sta ($04),y		sta 	(EXTZPWork),y
-.b052	7a		ply			ply
-.b053	60		rts			rts
-.b054					EXTClearScreen:
-.b054	48		pha			pha 										; save registers
-.b055	5a		phy			phy
-.b056	a9 00		lda #$00		lda 	#EXTScreen & $FF 					; set up pointer
-.b058	85 04		sta $04			sta 	EXTZPWork
-.b05a	a9 10		lda #$10		lda 	#EXTScreen >> 8
-.b05c	85 05		sta $05			sta 	EXTZPWork+1
-.b05e	a0 00		ldy #$00		ldy 	#0
-.b060					_EXTCSLoop:
-.b060	a9 20		lda #$20		lda 	#32
-.b062	91 04		sta ($04),y		sta 	(EXTZPWork),y
-.b064	c8		iny			iny
-.b065	d0 f9		bne $b060		bne 	_EXTCSLoop
-.b067	e6 05		inc $05			inc 	EXTZPWork+1 						; next screen page
-.b069	a5 05		lda $05			lda 	EXTZPWork+1
-.b06b	c9 18		cmp #$18		cmp 	#(EXTScreen>>8)+8 					; done 2k ?
-.b06d	d0 f1		bne $b060		bne 	_EXTCSLoop
-.b06f	7a		ply			ply 										; restore
-.b070	68		pla			pla
-.b071	60		rts			rts
-.b072					EXTScrollDisplay:
-.b072	48		pha			pha 										; save registers
-.b073	5a		phy			phy
-.b074	a9 00		lda #$00		lda 	#EXTScreen & $FF 					; set pointer to screen
-.b076	85 04		sta $04			sta 	EXTZPWork+0
-.b078	a9 10		lda #$10		lda 	#EXTScreen >> 8
-.b07a	85 05		sta $05			sta 	EXTZPWork+1
-.b07c					_EXTScroll:
-.b07c	a0 28		ldy #$28		ldy 	#EXTWidth 							; x 2 because of two byte format.
-.b07e	b1 04		lda ($04),y		lda 	(EXTZPWork),y
-.b080	a0 00		ldy #$00		ldy 	#0
-.b082	91 04		sta ($04),y		sta 	(EXTZPWork),y
-.b084	e6 04		inc $04			inc 	EXTZPWork 							; bump address
-.b086	d0 02		bne $b08a		bne 	_EXTNoCarry
-.b088	e6 05		inc $05			inc 	EXTZPWork+1
-.b08a					_EXTNoCarry:
-.b08a	a5 04		lda $04			lda 	EXTZPWork 							; done ?
-.b08c	c9 c0		cmp #$c0		cmp	 	#(EXTScreen+EXTWidth*(EXTHeight-1)) & $FF
-.b08e	d0 ec		bne $b07c		bne 	_EXTScroll
-.b090	a5 05		lda $05			lda 	EXTZPWork+1
-.b092	c9 13		cmp #$13		cmp	 	#(EXTScreen+EXTWidth*(EXTHeight-1)) >> 8
-.b094	d0 e6		bne $b07c		bne 	_EXTScroll
-.b096	a0 00		ldy #$00		ldy 	#0									; clear bottom line.
-.b098					_EXTLastLine:
-.b098	a9 20		lda #$20		lda 	#32
-.b09a	91 04		sta ($04),y		sta 	(EXTZPWork),y
-.b09c	c8		iny			iny
-.b09d	c0 28		cpy #$28		cpy 	#EXTWidth
-.b09f	d0 f7		bne $b098		bne 	_EXTLastLine
-.b0a1	7a		ply			ply 										; restore and exit.
-.b0a2	68		pla			pla
-.b0a3	60		rts			rts
-.b0a4					EXTReset:
-.b0a4	48		pha			pha 									; save registers
-.b0a5	da		phx			phx
-.b0a6	5a		phy			phy
-.b0a7	a9 0f		lda #$0f		lda 	#$0F 							; set up to write to video system.
-.b0a9	85 07		sta $07			sta 	EXTZPWork+3
-.b0ab	a9 fd		lda #$fd		lda 	#$FD
-.b0ad	85 06		sta $06			sta 	EXTZPWork+2
-.b0af	a9 30		lda #$30		lda 	#$30
-.b0b1	85 05		sta $05			sta 	EXTZPWork+1
-.b0b3	a9 00		lda #$00		lda 	#$00
-.b0b5	85 04		sta $04			sta 	EXTZPWork+0
-.b0b7	a3 2f		ldz #$2f		ldz 	#$2F 							; address already set up
-.b0b9	a9 47		lda #$47		lda 	#$47
-.b0bb	ea		nop			nop
-.b0bc	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b0be	a3 2f		ldz #$2f		ldz 	#$2F 							; address already set up
-.b0c0	a9 53		lda #$53		lda 	#$53
-.b0c2	ea		nop			nop
-.b0c3	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b0c5	a3 30		ldz #$30		ldz 	#$30 							; address already set up
-.b0c7	a9 40		lda #$40		lda 	#$40
-.b0c9	ea		nop			nop
-.b0ca	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b0cc	a3 31		ldz #$31		ldz 	#$31 							; address already set up
-.b0ce	a9 40		lda #$40		lda 	#$40
-.b0d0	ea		nop			nop
-.b0d1	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b0d3	ad 31 d0	lda $d031		lda $d031	; VIC-III Control Register B
-.b0d6	29 40		and #$40		and #$40	; bit-6 is 4mhz
-.b0d8	8d 31 d0	sta $d031		sta $d031
-.b0db	a3 20		ldz #$20		ldz 	#$20 							; address already set up
-.b0dd	a9 00		lda #$00		lda 	#0
-.b0df	ea		nop			nop
-.b0e0	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b0e2	a3 21		ldz #$21		ldz 	#$21 							; address already set up
-.b0e4	a9 00		lda #$00		lda 	#0
-.b0e6	ea		nop			nop
-.b0e7	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b0e9	a3 6f		ldz #$6f		ldz 	#$6F 							; address already set up
-.b0eb	a9 80		lda #$80		lda 	#$80
-.b0ed	ea		nop			nop
-.b0ee	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b0f0	ad 66 d0	lda $d066		lda $d066
-.b0f3	29 7f		and #$7f		and #$7F
-.b0f5	8d 66 d0	sta $d066		sta $d066
-.b0f8	a3 6a		ldz #$6a		ldz 	#$6A 							; address already set up
-.b0fa	a9 00		lda #$00		lda 	#$00
-.b0fc	ea		nop			nop
-.b0fd	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b0ff	a3 6b		ldz #$6b		ldz 	#$6B 							; address already set up
-.b101	a9 00		lda #$00		lda 	#$00
-.b103	ea		nop			nop
-.b104	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b106	a3 78		ldz #$78		ldz 	#$78 							; address already set up
-.b108	a9 00		lda #$00		lda 	#$00
-.b10a	ea		nop			nop
-.b10b	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b10d	a3 5f		ldz #$5f		ldz 	#$5F 							; address already set up
-.b10f	a9 00		lda #$00		lda 	#$00
-.b111	ea		nop			nop
-.b112	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b114	a3 5a		ldz #$5a		ldz 	#$5A 							; address already set up
-.b116	a9 78		lda #$78		lda 	#$78
-.b118	ea		nop			nop
-.b119	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b11b	a3 5d		ldz #$5d		ldz 	#$5D 							; address already set up
-.b11d	a9 c0		lda #$c0		lda 	#$C0
-.b11f	ea		nop			nop
-.b120	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b122	a3 5c		ldz #$5c		ldz 	#$5C 							; address already set up
-.b124	a9 50		lda #$50		lda 	#80
-.b126	ea		nop			nop
-.b127	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b129	a9 ff		lda #$ff		lda #$ff
-.b12b	8d 01 dd	sta $dd01		sta $DD01
-.b12e	8d 00 dd	sta $dd00		sta $DD00
-.b131	a3 18		ldz #$18		ldz 	#$18 							; address already set up
-.b133	a9 14		lda #$14		lda 	#$14
-.b135	ea		nop			nop
-.b136	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b138	a3 11		ldz #$11		ldz 	#$11 							; address already set up
-.b13a	a9 1b		lda #$1b		lda 	#$1B
-.b13c	ea		nop			nop
-.b13d	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b13f	a3 16		ldz #$16		ldz 	#$16 							; address already set up
-.b141	a9 c8		lda #$c8		lda 	#$C8
-.b143	ea		nop			nop
-.b144	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b146	a3 c5		ldz #$c5		ldz 	#$C5 							; address already set up
-.b148	a9 54		lda #$54		lda 	#$54
-.b14a	ea		nop			nop
-.b14b	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b14d	a3 58		ldz #$58		ldz 	#$58 							; address already set up
-.b14f	a9 50		lda #$50		lda 	#80
-.b151	ea		nop			nop
-.b152	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b154	a3 59		ldz #$59		ldz 	#$59 							; address already set up
-.b156	a9 00		lda #$00		lda 	#0
-.b158	ea		nop			nop
-.b159	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b15b	a3 18		ldz #$18		ldz 	#$18 							; address already set up
-.b15d	a9 42		lda #$42		lda 	#$42
-.b15f	ea		nop			nop
-.b160	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b162	a3 11		ldz #$11		ldz 	#$11 							; address already set up
-.b164	a9 1b		lda #$1b		lda 	#$1B
-.b166	ea		nop			nop
-.b167	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b169	a9 00		lda #$00		lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)
-.b16b	85 07		sta $07			sta 	EXTZPWork+3
-.b16d	a9 01		lda #$01		lda 	#$01
-.b16f	85 06		sta $06			sta 	EXTZPWork+2
-.b171	a9 f8		lda #$f8		lda 	#$F8
-.b173	85 05		sta $05			sta 	EXTZPWork+1
-.b175	a9 00		lda #$00		lda 	#$00
-.b177	85 04		sta $04			sta 	EXTZPWork+0
-.b179	a3 00		ldz #$00		ldz 	#0
-.b17b					_EXTClearColorRam:
-.b17b	a9 08		lda #$08		lda 	#8 								; fill that with this colour.
-.b17d	ea		nop			nop
-.b17e	92 04		sta ($04),z		sta 	(EXTZPWork),z
-.b180	3b		dez			dez
-.b181	d0 f8		bne $b17b		bne 	_EXTClearColorRam
-.b183	e6 05		inc $05			inc 	EXTZPWork+1
-.b185	d0 f4		bne $b17b		bne 	_EXTClearColorRam
-.b187	a2 00		ldx #$00		ldx 	#0 								; copy PET Font into memory.
-.b189					_EXTCopyCBMFont:
-.b189	bd 00 a0	lda $a000,x		lda 	EXTCBMFont,x
-.b18c	9d 00 08	sta $0800,x		sta 	EXTCharSet,x
-.b18f	bd 00 a1	lda $a100,x		lda 	EXTCBMFont+$100,x
-.b192	9d 00 09	sta $0900,x		sta 	EXTCharSet+$100,x
-.b195	bd 00 a2	lda $a200,x		lda 	EXTCBMFont+$200,x
-.b198	9d 00 0a	sta $0a00,x		sta 	EXTCharSet+$200,x
-.b19b	bd 00 a3	lda $a300,x		lda 	EXTCBMFont+$300,x
-.b19e	9d 00 0b	sta $0b00,x		sta 	EXTCharSet+$300,x
-.b1a1	ca		dex			dex
-.b1a2	d0 e5		bne $b189		bne 	_EXTCopyCBMFont
-.b1a4	7a		ply			ply 									; restore and exit.
-.b1a5	fa		plx			plx
-.b1a6	68		pla			pla
-.b1a7	60		rts			rts
+.b00d	20 22 b0	jsr $b022		jsr 	EXTSetupKeyAddress
+.b010	ea		nop			nop 									; read keyboard
+.b011	b2 04		lda ($04),z		lda 	(EXTZPWork),z
+.b013	fb		plz			plz
+.b014	c9 00		cmp #$00		cmp 	#0 								; set Z
+.b016	60		rts			rts
+.b017					EXTRemoveKeyPressed:
+.b017	db		phz			phz
+.b018	20 22 b0	jsr $b022		jsr 	EXTSetupKeyAddress
+.b01b	a9 00		lda #$00		lda 	#0
+.b01d	ea		nop			nop 									; read keyboard
+.b01e	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b020	fb		plz			plz
+.b021	60		rts			rts
+.b022					EXTSetupKeyAddress:
+.b022	a9 0f		lda #$0f		lda 	#$0F 							; set up to write to read keyboard.
+.b024	85 07		sta $07			sta 	EXTZPWork+3
+.b026	a9 fd		lda #$fd		lda 	#$FD
+.b028	85 06		sta $06			sta 	EXTZPWork+2
+.b02a	a9 36		lda #$36		lda 	#$36
+.b02c	85 05		sta $05			sta 	EXTZPWork+1
+.b02e	a9 10		lda #$10		lda 	#$10
+.b030	85 04		sta $04			sta 	EXTZPWork+0
+.b032	a3 00		ldz #$00		ldz 	#0
+.b034	60		rts			rts
+.b035					EXTReadScreen:
+.b035	5a		phy			phy 										; save Y
+.b036	8a		txa			txa 										; multiply XY by 2
+.b037	85 04		sta $04			sta 	EXTZPWork							; into EXTZPWork
+.b039	98		tya			tya
+.b03a	09 10		ora #$10		ora 	#EXTScreen>>8 						; move into screen area
+.b03c	85 05		sta $05			sta 	EXTZPWork+1 						; read character there
+.b03e	a0 00		ldy #$00		ldy 	#0
+.b040	b1 04		lda ($04),y		lda 	(EXTZPWork),y
+.b042	7a		ply			ply 										; restore Y and exit.
+.b043	60		rts			rts
+.b044					EXTWriteScreen:
+.b044	5a		phy			phy
+.b045	48		pha			pha
+.b046	20 35 b0	jsr $b035		jsr		EXTReadScreen 						; set up the address into EXTZPWork
+.b049	a0 00		ldy #$00		ldy 	#0
+.b04b	68		pla			pla 										; restore and write.
+.b04c	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b04e	7a		ply			ply
+.b04f	60		rts			rts
+.b050					EXTClearScreen:
+.b050	48		pha			pha 										; save registers
+.b051	5a		phy			phy
+.b052	a9 00		lda #$00		lda 	#EXTScreen & $FF 					; set up pointer
+.b054	85 04		sta $04			sta 	EXTZPWork
+.b056	a9 10		lda #$10		lda 	#EXTScreen >> 8
+.b058	85 05		sta $05			sta 	EXTZPWork+1
+.b05a	a0 00		ldy #$00		ldy 	#0
+.b05c					_EXTCSLoop:
+.b05c	a9 20		lda #$20		lda 	#32
+.b05e	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b060	c8		iny			iny
+.b061	d0 f9		bne $b05c		bne 	_EXTCSLoop
+.b063	e6 05		inc $05			inc 	EXTZPWork+1 						; next screen page
+.b065	a5 05		lda $05			lda 	EXTZPWork+1
+.b067	c9 18		cmp #$18		cmp 	#(EXTScreen>>8)+8 					; done 2k ?
+.b069	d0 f1		bne $b05c		bne 	_EXTCSLoop
+.b06b	7a		ply			ply 										; restore
+.b06c	68		pla			pla
+.b06d	60		rts			rts
+.b06e					EXTScrollDisplay:
+.b06e	48		pha			pha 										; save registers
+.b06f	5a		phy			phy
+.b070	a9 00		lda #$00		lda 	#EXTScreen & $FF 					; set pointer to screen
+.b072	85 04		sta $04			sta 	EXTZPWork+0
+.b074	a9 10		lda #$10		lda 	#EXTScreen >> 8
+.b076	85 05		sta $05			sta 	EXTZPWork+1
+.b078					_EXTScroll:
+.b078	a0 28		ldy #$28		ldy 	#EXTWidth 							; x 2 because of two byte format.
+.b07a	b1 04		lda ($04),y		lda 	(EXTZPWork),y
+.b07c	a0 00		ldy #$00		ldy 	#0
+.b07e	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b080	e6 04		inc $04			inc 	EXTZPWork 							; bump address
+.b082	d0 02		bne $b086		bne 	_EXTNoCarry
+.b084	e6 05		inc $05			inc 	EXTZPWork+1
+.b086					_EXTNoCarry:
+.b086	a5 04		lda $04			lda 	EXTZPWork 							; done ?
+.b088	c9 c0		cmp #$c0		cmp	 	#(EXTScreen+EXTWidth*(EXTHeight-1)) & $FF
+.b08a	d0 ec		bne $b078		bne 	_EXTScroll
+.b08c	a5 05		lda $05			lda 	EXTZPWork+1
+.b08e	c9 13		cmp #$13		cmp	 	#(EXTScreen+EXTWidth*(EXTHeight-1)) >> 8
+.b090	d0 e6		bne $b078		bne 	_EXTScroll
+.b092	a0 00		ldy #$00		ldy 	#0									; clear bottom line.
+.b094					_EXTLastLine:
+.b094	a9 20		lda #$20		lda 	#32
+.b096	91 04		sta ($04),y		sta 	(EXTZPWork),y
+.b098	c8		iny			iny
+.b099	c0 28		cpy #$28		cpy 	#EXTWidth
+.b09b	d0 f7		bne $b094		bne 	_EXTLastLine
+.b09d	7a		ply			ply 										; restore and exit.
+.b09e	68		pla			pla
+.b09f	60		rts			rts
+.b0a0					EXTReset:
+.b0a0	48		pha			pha 									; save registers
+.b0a1	da		phx			phx
+.b0a2	5a		phy			phy
+.b0a3	a9 0f		lda #$0f		lda 	#$0F 							; set up to write to video system.
+.b0a5	85 07		sta $07			sta 	EXTZPWork+3
+.b0a7	a9 fd		lda #$fd		lda 	#$FD
+.b0a9	85 06		sta $06			sta 	EXTZPWork+2
+.b0ab	a9 30		lda #$30		lda 	#$30
+.b0ad	85 05		sta $05			sta 	EXTZPWork+1
+.b0af	a9 00		lda #$00		lda 	#$00
+.b0b1	85 04		sta $04			sta 	EXTZPWork+0
+.b0b3	a3 2f		ldz #$2f		ldz 	#$2F 							; address already set up
+.b0b5	a9 47		lda #$47		lda 	#$47
+.b0b7	ea		nop			nop
+.b0b8	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0ba	a3 2f		ldz #$2f		ldz 	#$2F 							; address already set up
+.b0bc	a9 53		lda #$53		lda 	#$53
+.b0be	ea		nop			nop
+.b0bf	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0c1	a3 30		ldz #$30		ldz 	#$30 							; address already set up
+.b0c3	a9 40		lda #$40		lda 	#$40
+.b0c5	ea		nop			nop
+.b0c6	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0c8	a3 31		ldz #$31		ldz 	#$31 							; address already set up
+.b0ca	a9 40		lda #$40		lda 	#$40
+.b0cc	ea		nop			nop
+.b0cd	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0cf	ad 31 d0	lda $d031		lda $d031	; VIC-III Control Register B
+.b0d2	29 40		and #$40		and #$40	; bit-6 is 4mhz
+.b0d4	8d 31 d0	sta $d031		sta $d031
+.b0d7	a3 20		ldz #$20		ldz 	#$20 							; address already set up
+.b0d9	a9 00		lda #$00		lda 	#0
+.b0db	ea		nop			nop
+.b0dc	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0de	a3 21		ldz #$21		ldz 	#$21 							; address already set up
+.b0e0	a9 00		lda #$00		lda 	#0
+.b0e2	ea		nop			nop
+.b0e3	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0e5	a3 6f		ldz #$6f		ldz 	#$6F 							; address already set up
+.b0e7	a9 80		lda #$80		lda 	#$80
+.b0e9	ea		nop			nop
+.b0ea	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0ec	ad 66 d0	lda $d066		lda $d066
+.b0ef	29 7f		and #$7f		and #$7F
+.b0f1	8d 66 d0	sta $d066		sta $d066
+.b0f4	a3 6a		ldz #$6a		ldz 	#$6A 							; address already set up
+.b0f6	a9 00		lda #$00		lda 	#$00
+.b0f8	ea		nop			nop
+.b0f9	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b0fb	a3 6b		ldz #$6b		ldz 	#$6B 							; address already set up
+.b0fd	a9 00		lda #$00		lda 	#$00
+.b0ff	ea		nop			nop
+.b100	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b102	a3 78		ldz #$78		ldz 	#$78 							; address already set up
+.b104	a9 00		lda #$00		lda 	#$00
+.b106	ea		nop			nop
+.b107	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b109	a3 5f		ldz #$5f		ldz 	#$5F 							; address already set up
+.b10b	a9 00		lda #$00		lda 	#$00
+.b10d	ea		nop			nop
+.b10e	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b110	a3 5a		ldz #$5a		ldz 	#$5A 							; address already set up
+.b112	a9 78		lda #$78		lda 	#$78
+.b114	ea		nop			nop
+.b115	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b117	a3 5d		ldz #$5d		ldz 	#$5D 							; address already set up
+.b119	a9 c0		lda #$c0		lda 	#$C0
+.b11b	ea		nop			nop
+.b11c	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b11e	a3 5c		ldz #$5c		ldz 	#$5C 							; address already set up
+.b120	a9 50		lda #$50		lda 	#80
+.b122	ea		nop			nop
+.b123	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b125	a9 ff		lda #$ff		lda #$ff
+.b127	8d 01 dd	sta $dd01		sta $DD01
+.b12a	8d 00 dd	sta $dd00		sta $DD00
+.b12d	a3 18		ldz #$18		ldz 	#$18 							; address already set up
+.b12f	a9 14		lda #$14		lda 	#$14
+.b131	ea		nop			nop
+.b132	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b134	a3 11		ldz #$11		ldz 	#$11 							; address already set up
+.b136	a9 1b		lda #$1b		lda 	#$1B
+.b138	ea		nop			nop
+.b139	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b13b	a3 16		ldz #$16		ldz 	#$16 							; address already set up
+.b13d	a9 c8		lda #$c8		lda 	#$C8
+.b13f	ea		nop			nop
+.b140	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b142	a3 c5		ldz #$c5		ldz 	#$C5 							; address already set up
+.b144	a9 54		lda #$54		lda 	#$54
+.b146	ea		nop			nop
+.b147	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b149	a3 58		ldz #$58		ldz 	#$58 							; address already set up
+.b14b	a9 50		lda #$50		lda 	#80
+.b14d	ea		nop			nop
+.b14e	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b150	a3 59		ldz #$59		ldz 	#$59 							; address already set up
+.b152	a9 00		lda #$00		lda 	#0
+.b154	ea		nop			nop
+.b155	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b157	a3 18		ldz #$18		ldz 	#$18 							; address already set up
+.b159	a9 42		lda #$42		lda 	#$42
+.b15b	ea		nop			nop
+.b15c	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b15e	a3 11		ldz #$11		ldz 	#$11 							; address already set up
+.b160	a9 1b		lda #$1b		lda 	#$1B
+.b162	ea		nop			nop
+.b163	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b165	a9 00		lda #$00		lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)
+.b167	85 07		sta $07			sta 	EXTZPWork+3
+.b169	a9 01		lda #$01		lda 	#$01
+.b16b	85 06		sta $06			sta 	EXTZPWork+2
+.b16d	a9 f8		lda #$f8		lda 	#$F8
+.b16f	85 05		sta $05			sta 	EXTZPWork+1
+.b171	a9 00		lda #$00		lda 	#$00
+.b173	85 04		sta $04			sta 	EXTZPWork+0
+.b175	a3 00		ldz #$00		ldz 	#0
+.b177					_EXTClearColorRam:
+.b177	a9 08		lda #$08		lda 	#8 								; fill that with this colour.
+.b179	ea		nop			nop
+.b17a	92 04		sta ($04),z		sta 	(EXTZPWork),z
+.b17c	3b		dez			dez
+.b17d	d0 f8		bne $b177		bne 	_EXTClearColorRam
+.b17f	e6 05		inc $05			inc 	EXTZPWork+1
+.b181	d0 f4		bne $b177		bne 	_EXTClearColorRam
+.b183	a2 00		ldx #$00		ldx 	#0 								; copy PET Font into memory.
+.b185					_EXTCopyCBMFont:
+.b185	bd 00 a0	lda $a000,x		lda 	EXTCBMFont,x
+.b188	9d 00 08	sta $0800,x		sta 	EXTCharSet,x
+.b18b	bd 00 a1	lda $a100,x		lda 	EXTCBMFont+$100,x
+.b18e	9d 00 09	sta $0900,x		sta 	EXTCharSet+$100,x
+.b191	bd 00 a2	lda $a200,x		lda 	EXTCBMFont+$200,x
+.b194	9d 00 0a	sta $0a00,x		sta 	EXTCharSet+$200,x
+.b197	bd 00 a3	lda $a300,x		lda 	EXTCBMFont+$300,x
+.b19a	9d 00 0b	sta $0b00,x		sta 	EXTCharSet+$300,x
+.b19d	ca		dex			dex
+.b19e	d0 e5		bne $b185		bne 	_EXTCopyCBMFont
+.b1a0	7a		ply			ply 									; restore and exit.
+.b1a1	fa		plx			plx
+.b1a2	68		pla			pla
+.b1a3	60		rts			rts
 
 ;******  Return to file: ptest.asm
 
-.b1a8					StartLoop:
-.b1a8	20 0c b0	jsr $b00c		jsr 	EXTReadKeyPort
-.b1ab	f0 fb		beq $b1a8		beq 	StartLoop
-.b1ad					Start:
-.b1ad	48		pha			pha
-.b1ae	a2 00		ldx #$00		ldx 	#0
-.b1b0	a0 00		ldy #$00		ldy 	#0
-.b1b2	4a		lsr a			lsr 	a
-.b1b3	4a		lsr a			lsr 	a
-.b1b4	4a		lsr a			lsr 	a
-.b1b5	4a		lsr a			lsr 	a
-.b1b6	20 c3 b1	jsr $b1c3		jsr 	WriteNibble
-.b1b9	68		pla			pla
-.b1ba	e8		inx			inx
-.b1bb	20 c3 b1	jsr $b1c3		jsr 	WriteNibble
-.b1be	20 19 b0	jsr $b019		jsr	 	EXTRemoveKeyPressed
-.b1c1	80 e5		bra $b1a8		bra 	StartLoop
-.b1c3					WriteNibble:
-.b1c3	29 0f		and #$0f		and 	#15
-.b1c5	c9 0a		cmp #$0a		cmp 	#10
-.b1c7	90 02		bcc $b1cb		bcc 	_WN0
-.b1c9	e9 39		sbc #$39		sbc 	#48+9
-.b1cb					_WN0:
-.b1cb	69 30		adc #$30		adc 	#48
-.b1cd	4c 48 b0	jmp $b048		jmp 	EXTWriteScreen
+.b1a4					StartLoop:
+.b1a4	20 0c b0	jsr $b00c		jsr 	EXTReadKeyPort
+.b1a7	f0 fb		beq $b1a4		beq 	StartLoop
+.b1a9					Start:
+.b1a9	48		pha			pha
+.b1aa	a2 00		ldx #$00		ldx 	#0
+.b1ac	a0 00		ldy #$00		ldy 	#0
+.b1ae	4a		lsr a			lsr 	a
+.b1af	4a		lsr a			lsr 	a
+.b1b0	4a		lsr a			lsr 	a
+.b1b1	4a		lsr a			lsr 	a
+.b1b2	20 bf b1	jsr $b1bf		jsr 	WriteNibble
+.b1b5	68		pla			pla
+.b1b6	e8		inx			inx
+.b1b7	20 bf b1	jsr $b1bf		jsr 	WriteNibble
+.b1ba	20 17 b0	jsr $b017		jsr	 	EXTRemoveKeyPressed
+.b1bd	80 e5		bra $b1a4		bra 	StartLoop
+.b1bf					WriteNibble:
+.b1bf	29 0f		and #$0f		and 	#15
+.b1c1	c9 0a		cmp #$0a		cmp 	#10
+.b1c3	90 02		bcc $b1c7		bcc 	_WN0
+.b1c5	e9 39		sbc #$39		sbc 	#48+9
+.b1c7					_WN0:
+.b1c7	69 30		adc #$30		adc 	#48
+.b1c9	4c 44 b0	jmp $b044		jmp 	EXTWriteScreen
 
 ;******  End of listing

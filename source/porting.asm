@@ -39,4 +39,3 @@ IOCursorY = 9
 		.if TARGET=2
 		.include 	"personalities/personality_6502.asm"
 		.endif
-		.include	"personalities/personality_io.asm"		
