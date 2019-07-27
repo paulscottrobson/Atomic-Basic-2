@@ -3,7 +3,14 @@
 
 - Parenthesis.
 - Unary operators (- ? ! $)
+- Check -ve divides.
 - Put -ve numbers into unit tests (currently +ve)
 - Work on variables.
-
-
+- Assignment
+- LIST 
+- GOTO GOSUB 
+- IF THEN 
+- DO LOOP 
+- FOR TO NEXT STEP
+- LINK
+- INPUT PRINT
