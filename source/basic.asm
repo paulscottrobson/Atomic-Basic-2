@@ -24,7 +24,8 @@
 		.include 	"binary/divide.asm" 	; division and modulus
 		.include 	"binary/compare.asm"	; numerical comparisons
 		.include 	"binary/scompare.asm"	; string comparisons
-
+		.include 	"unary/unary.asm"		; miscellaneous unary functions
+		
 		.include 	"commands/execute.asm"	; run/stop etc.		
 		.include 	"commands/miscellany.asm" ; miscellany
 

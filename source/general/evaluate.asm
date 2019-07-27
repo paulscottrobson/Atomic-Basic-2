@@ -16,13 +16,17 @@ EvaluateMissingQuote:
 EvaluateStringFull:
 		#error 	"String Buffer full"
 EvaluateBadHex:
-		#error 	"Bad Hex value"
+		#error 	"Bad Hex"
 
 ; *******************************************************************************************
 ;
 ;					Evaluate expression from reset stack/current level.
 ;
 ; *******************************************************************************************
+
+EvaluateAtomCurrentLevel:
+		lda 	#7 						
+		bra 	EvaluateAtPrecedenceLevel
 
 EvaluateBase:
 		ldx 	#0 							; reset the stack
@@ -149,6 +153,7 @@ _EVALDoCalc:
 		;		Work out the index x 2, then the address of the jump vector.
 		;
 		pla 								; get keyword
+_EVALExecuteA:		
 		asl 	a 							; shift left, drop bit 7
 		sta 	Temp1+1						; save in Temp1.1
 		lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
@@ -165,6 +170,22 @@ _EVALExitPullA:
 		rts
 
 _EVALKeywordVariable:
+		ora 	#0 							; check bit 7
+		bpl 	_EVALNotUnaryFunction 		; must be set for unary function
+		phx
+		tax 	
+		lda 	TokenTypeInformation-128,x 	; get the type info for it
+		plx
+		cmp 	#KTYPE_UNARYFN 				; is it a unary function
+		bne 	_EVALNotUnaryFunction 	
+		;
+		lda 	(zCurrentLine),y 			; get the token back
+		iny 								; consume it
+		bra 	_EVALExecuteA 				; execute TOS.	
+
+_EVALNotUnaryFunction:			
+		#break
+		lda 	(zCurrentLine),y
 		bra 	_EVALKeywordVariable
 
 

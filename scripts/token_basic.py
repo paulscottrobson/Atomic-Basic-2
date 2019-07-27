@@ -44,7 +44,7 @@ class Tokeniser(object):
 		if text.startswith('"'):												# quoted strings aren't tokenised.
 			text = text[1:]
 			p = text.find('"')
-			assert p > 0,"Missing closing quote"
+			assert p >= 0,"Missing closing quote"
 			self.tokens.append(self.tokenHash['"'][2])
 			for c in text[:p]:
 				self.tokens.append(ord(c))
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
-	bas.add('assert "Hello, world"+1',1)
+	bas.add('assert 2+len""+1',1)
 
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)
