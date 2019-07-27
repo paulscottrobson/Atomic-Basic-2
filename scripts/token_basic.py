@@ -41,6 +41,16 @@ class Tokeniser(object):
 	#							Tokenise a single item.
 	#
 	def tokeniseOne(self,text):
+		if text.startswith('"'):												# quoted strings aren't tokenised.
+			text = text[1:]
+			p = text.find('"')
+			assert p > 0,"Missing closing quote"
+			self.tokens.append(self.tokenHash['"'][2])
+			for c in text[:p]:
+				self.tokens.append(ord(c))
+			self.tokens.append(self.tokenHash['"'][2])
+			return text[p+1:]				
+
 		for i in range(1,9):
 			if text[:i] in self.tokenHash:
 				keyword = text[:i].lower()
@@ -99,7 +109,7 @@ if __name__ == '__main__':
 	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
-	bas.add("assert 42",1)
+	bas.add('assert "he+lo"',1)
 
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)

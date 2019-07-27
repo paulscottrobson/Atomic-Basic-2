@@ -29,8 +29,14 @@ HashTable:		.fill	HashTableSize*2		; hash table for variable linked lists.
 HighMemory:		.word 	?					; highest memory location available (2 bytes)
 Temp1:			.dword	?					; 4 byte temporary stores.
 SignCount:		.byte 	? 					; count of signs in divide.
+StringBufferPos:.byte 	? 					; next free slot in string buffer
+
+				.align	256 				
+StringBuffer:	 							; string buffer.
+				.byte ?
 
 				.align	256 				
 BasicProgram:					 			; BASIC program starts here.
 
 		* = currentPosData
+
