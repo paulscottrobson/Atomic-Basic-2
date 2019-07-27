@@ -91,15 +91,16 @@ class BasicProgram(object):
 		handle.write("\t.byte {0}\n".format(out))
 
 if __name__ == '__main__':
-	tok = Tokeniser()
-	tok.tokeniseTest('42 65537 #a3 #ffff')
-	tok.tokeniseTest('1 "Hello world" 2')
-	tok.tokeniseTest(' "" "x" "yz" ')
-	tok.tokeniseTest(' printlen("Hello world")')
-	tok.tokeniseTest(' printcatdog("Hello world")a')
+	#tok = Tokeniser()
+	#tok.tokeniseTest('42 65537 #a3 #ffff')
+	#tok.tokeniseTest('1 "Hello world" 2')
+	#tok.tokeniseTest(' "" "x" "yz" ')
+	#tok.tokeniseTest(' printlen("Hello world")')
+	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
-	bas.add("assert 1",42)
+	bas.add("rem hi:rem",1)
+	bas.add("rem bye",2)
 
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)

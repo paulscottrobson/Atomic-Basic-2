@@ -9,12 +9,6 @@
 ; *******************************************************************************************
 ; *******************************************************************************************
 
-; ******************************************************************************
-;
-;								6502 Vectors
-;
-; ******************************************************************************
-
 		.include 	"porting.asm"			; implementation specific stuff
 
 		* = $E000
@@ -35,14 +29,6 @@
 		.include 	"commands/miscellany.asm" ; miscellany
 
 Start:
-		jsr 	IOInitialise 		
-Loop:
-	jsr 	IOReadKey
-	jsr 	IOPrintChar
-	jsr 	IOPrintChar
-	jsr 	IOPrintChar
-	bra 	Loop
-
 		#resetstack 						; reset CPU stack.
 		break
 		jsr 	COMMAND_New 				; do a new 

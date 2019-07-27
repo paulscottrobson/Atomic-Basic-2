@@ -33,19 +33,13 @@ _CMDAExit:
 ; *******************************************************************************************
 
 COMMAND_Rem:	;; REM
-		iny
-		lda 	(zCurrentLine),y 			; check string follows
-		bne 	_CRMSyntax
-		dey
-		lda 	(zCurrentLine),y
-		beq 	_CRMSyntax
-		tya 								; skip over it.
-		clc
-		adc 	(zCurrentLine),y
-		tay
+		lda 	(zCurrentLine),y 			; get next character token.
+		beq 	_CREMExit 					; End of line, then exit.
+		iny 								; something to skip
+		cmp 	#KW_COLON 					; if not a colon
+		bne 	COMMAND_Rem 				; keep searching
+_CREMExit:		
 		rts
-_CRMSyntax:
-		jmp 	SyntaxError	
 
 ; *******************************************************************************************
 ;
@@ -55,8 +49,7 @@ _CRMSyntax:
 
 COMMAND_New:	 ;; NEW
 		lda 	#0 							; erase the actual program.
-		sta 	BasicProgram
-		sta 	BasicProgram+1
+		sta 	BasicProgram 				; by zeroing the initial offset.
 		;
 		jsr 	COMMAND_Clear 				; clear non fixed variable, reset stack and low mem pointer
 		;
@@ -103,11 +96,8 @@ _CCFindEnd:
 		bra 	_CCFindEnd
 		;
 _CCFoundEnd:
-		lda 	zLowMemory 					; variables etc. start after end of program.
-		clc
-		adc 	#2
-		sta 	zLowMemory
-		bcc 	_CCNoCarry
+		inc 	zLowMemory 					; variables etc. start after end of program.
+		bne 	_CCNoCarry 					; skip over zero end offset.
 		inc 	zLowMemory+1
 _CCNoCarry:
 		rts
@@ -123,11 +113,9 @@ COMMAND_Old:	;; OLD
 		sta 	zLowMemory 						
 		lda 	#BasicProgram >> 8
 		sta 	zLowMemory+1
-		ldy 	#4 							; look for the $0000 marker.
+		ldy 	#3 							; look for the $00 end of line marker.
 _COScan:	
 		lda 	(zLowMemory),y 				; look at next byte pair
-		iny
-		ora 	(zLowMemory),y
 		iny
 		beq 	_COFail 					; can't find marker, corrupted maybe ?
 		cmp 	#0 							; until $00 found.
@@ -141,3 +129,5 @@ _COScan:
 
 _COFail:
 		#error	"Cannot recover program"
+
+		

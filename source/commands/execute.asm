@@ -28,61 +28,43 @@ CRUNNewLine:
 		ldy 	#0 							; look at the offset, end of program
 		lda 	(zCurrentLine),y 
 		beq 	COMMAND_End 				; if zero, off end of program so stop.
-		ldy 	#4 							; offset to first token.
+		ldy 	#3 							; offset to first token.
 		;
 		;		Run another instruction from (zCurrentLine),y
 		;
 CRUNNextInstruction:
-		iny 								; check end of line.
-		lda 	(zCurrentLine),y
-		tax 								; XA = Token.
-		dey
-		lda 	(zCurrentLine),y 			; if XA = 0 then next line.
-		bne 	CRUNNotEndOfLine
-		cpx 	#0
-		beq 	CRUNNextLine
+		lda 	(zCurrentLine),y 			; get next token
+		beq 	CRUNNextLine 				; if zero, then end of line.
 		;
 		;		Something there, check for a colon.
 		;
 CRUNNotEndOfLine:
-		cmp 	#KW_Colon & $FF 			; check for a colon first.
-		bne 	CRUNExecuteOne
-		cpx 	#KW_Colon >> 8
-		bne 	CRUNExecuteOne
-		iny 								; if found, try next instruction
-		iny		
+		cmp 	#KW_Colon 					; check for a colon first.
+		bne 	CRUNExecuteOne 				; if not that, execute the token.
+		iny		 							; if colon, skip it and loop round.
 		bra 	CRUNNextInstruction
 		;
-		;		At the $0000 token, go to the next line.
+		;		At the $00 token, go to the next line.
 		;
 CRUNNextLine:		
-		iny 								; step over it.
-		iny
-		tya
-		clc 								; add Y+2 to pointer
+		ldy 	#0 							; add offset from line to line pointer
+		lda 	(zCurrentLine)
+		clc 				
 		adc 	zCurrentLine
 		sta 	zCurrentLine
 		bcc 	CRUNNewLine
 		inc 	zCurrentLine+1
 		bra 	CRUNNewLine
 		;
-		;		Execute instruction in XA
+		;		Execute instruction in XA. Requires the KVT to be at offset $00
+		;		otherwise it won't work !
 		;
 CRUNExecuteOne:
 		iny 								; skip over loaded token
-		iny
-		asl 	a 							; double lower keyword byte.
-		pha 								; save on stack.
-		txa 								; roll carry out into upper byte.
-		rol 	a
-		and 	#3 							; now an index 
-		tax 								; back in X
-		pla
-		clc 
-		adc 	#(KeywordVectorTable-2)&$FF
-		sta 	Temp1+1
+		asl 	a 							; double lower keyword byte, clears bit 7.
+		sta 	Temp1+1 					; this is the low byte into the KVT
 		txa
-		adc 	#(KeywordVectorTable-2)>>8
+		lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
 		sta 	Temp1+2
 		lda 	#$6C 						; make it jump indirect
 		sta 	Temp1+0
