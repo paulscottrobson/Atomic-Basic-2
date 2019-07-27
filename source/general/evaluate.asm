@@ -184,9 +184,19 @@ _EVALKeywordVariable:
 		bra 	_EVALExecuteA 				; execute TOS.	
 
 _EVALNotUnaryFunction:			
-		#break
 		lda 	(zCurrentLine),y
-		bra 	_EVALKeywordVariable
+		cmp 	#KW_LPAREN 					; check left bracket.
+		bne		_EVALCheckUnaryOperator 	
+		;
+		iny 								; skip left bracket.
+		jsr 	EvaluateBaseCurrentLevel 	; calculate what's in the bracket.
+		lda 	#KW_RPAREN 					; check right bracket.
+		jsr 	CheckNextCharacter 			; check next character, after spaces.
+		bra 	_EVALGotAtom
+
+
+_EVALCheckUnaryOperator:		
+		bra 	_EVALCheckUnaryOperator
 
 
 ; *******************************************************************************************

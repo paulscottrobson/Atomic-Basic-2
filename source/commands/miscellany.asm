@@ -17,12 +17,12 @@
 
 COMMAND_Assert:	;; assert
 		jsr 	EvaluateBase 				; evaluate the expression
-		#break
 		lda 	evalStack+0,x 				; check non zero 	
 		ora 	evalStack+1,x
 		ora 	evalStack+2,x
 		ora 	evalStack+3,x
 		bne 	_CMDAExit
+		#break
 		#error 	"Assert failed"
 _CMDAExit:
 		rts

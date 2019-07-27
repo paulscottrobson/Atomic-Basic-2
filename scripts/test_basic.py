@@ -35,13 +35,13 @@ class UnitTest(object):
 		targetFile.close()
 	#
 	def getInteger(self):
-		s = random.randint(0,3)
+		s = random.randint(0,10)
 		n = 0
-		if s == 1:
+		if s >= 1:
 			n = random.randint(0,10)
-		if s == 2:
+		if s >= 3:
 			n = random.randint(0,1000)
-		if s == 3:
+		if s >= 5:
 			n = random.randint(0,0x3FFFFFFF)
 		return n
 	#
@@ -53,11 +53,15 @@ class UnitTest(object):
 class SimpleMathUnitTest(UnitTest):
 
 	def getCount(self):
-		return 300
+		return 60
 
 	def generate(self):
 		n1 = self.getInteger()
 		n2 = self.getInteger()
+		if random.randint(0,20) == 0:
+			n2 = n1
+
+		false = "#FFFFFFFF"
 
 		self.add("assert {0}+{1}={2}".format(n1,n2,n1+n2))
 		if n1 > n2:
@@ -68,10 +72,16 @@ class SimpleMathUnitTest(UnitTest):
 			self.add("assert {0}/{1}={2}".format(n1,n2,int(n1/n2)))
 			self.add("assert {0}%{1}={2}".format(n1,n2,int(n1%n2)))
 
-		#self.add("assert {0}&{1}={2}".format(n1,n2,n1&n2))
-		#self.add("assert {0}|{1}={2}".format(n1,n2,n1|n2))
-		#self.add("assert {0}^{1}={2}".format(n1,n2,n1^n2))
+		self.add("assert ({0}&{1})={2}".format(n1,n2,n1&n2))
+		self.add("assert ({0}^{1})={2}".format(n1,n2,n1^n2))
+		self.add("assert ({0}|{1})={2}".format(n1,n2,n1|n2))
 
+		self.add("assert ({0}={1})={2}".format(n1,n2,false if (n1==n2) else 0))
+		self.add("assert ({0}<>{1})={2}".format(n1,n2,false if (n1!=n2) else 0))
+		self.add("assert ({0}<{1})={2}".format(n1,n2,false if (n1<n2) else 0))
+		self.add("assert ({0}<={1})={2}".format(n1,n2,false if (n1<=n2) else 0))
+		self.add("assert ({0}>{1})={2}".format(n1,n2,false if (n1>n2) else 0))
+		self.add("assert ({0}>={1})={2}".format(n1,n2,false if (n1>=n2) else 0))
 
 if __name__ == '__main__':
 	bas = SimpleMathUnitTest()
