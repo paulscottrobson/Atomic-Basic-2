@@ -39,7 +39,6 @@ IOCursorY = 9
 	.if TARGET=2
 	.include 	"personality_6502.asm"
 	.endif
-	.include	"personality_io.asm"
 
 ; ******************************************************************************
 ;
@@ -47,10 +46,29 @@ IOCursorY = 9
 ;
 ; ******************************************************************************
 
+StartLoop:
+	jsr 	EXTReadKeyPort
+	beq 	StartLoop
 Start:
-	jsr 	IOInitialise
-Loop:
-	jsr 	IOReadKey
-	jsr 	IOPrintChar
-	bra 	Loop
+	pha
+	ldx 	#0
+	ldy 	#0
+	lsr 	a
+	lsr 	a
+	lsr 	a
+	lsr 	a
+	jsr 	WriteNibble
+	pla
+	inx
+	jsr 	WriteNibble
+	jsr	 	EXTRemoveKeyPressed
+	bra 	StartLoop
 
+WriteNibble:
+	and 	#15
+	cmp 	#10
+	bcc 	_WN0
+	sbc 	#48+9
+_WN0:	
+	adc 	#48	
+	jmp 	EXTWriteScreen

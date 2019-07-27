@@ -61,17 +61,16 @@ EXTStartPersonalise:
 
 ; ******************************************************************************
 ;
-;		Read a key from the keyboard buffer, or whatever. This should return
-;		non-zero values once for every key press (e.g. a successful read
-;		removes the key from the input Queue)
+;				Read the key in the queue, remove the key pressed.
 ;
 ; ******************************************************************************
 
-EXTReadKey:
+EXTReadKeyPort:
 	lda 	PKeyboard							; read key
-	bne 	EXTClearBuffer
+	ora 	#0
 	rts
-EXTClearBuffer:
+
+EXTRemoveKeyPressed:
 	pha 										; key pressed clear queue byte.
 	lda 	#0
 	sta 	PKeyboard

@@ -70,14 +70,29 @@ EXTStartPersonalise:
 
 ; ******************************************************************************
 ;
-;		Read a key from the keyboard buffer, or whatever. This should return
-;		non-zero values once for every key press (e.g. a successful read
-;		removes the key from the input Queue)
+;				Read the key in the queue, remove the key pressed.
 ;
 ; ******************************************************************************
 
-EXTReadKey:
+EXTReadKeyPort:
 	phz
+	jsr 	EXTSetupKeyAddress
+	nop 									; read keyboard
+	lda 	(EXTZPWork),z 
+	plz
+	cmp 	#0 								; set Z
+	rts
+
+EXTRemoveKeyPressed:
+	phz
+	jsr 	EXTSetupKeyAddress
+	lda 	#0
+	nop 									; read keyboard
+	sta 	(EXTZPWork),z 
+	plz
+	rts
+
+EXTSetupKeyAddress:
 	lda 	#$0F 							; set up to write to read keyboard.
 	sta 	EXTZPWork+3
 	lda 	#$FD
@@ -87,17 +102,6 @@ EXTReadKey:
 	lda 	#$10
 	sta 	EXTZPWork+0	
 	ldz 	#0 			
-	nop 									; read keyboard
-	lda 	(EXTZPWork),z 
-	beq 	_EXTRKExit
-	pha 									; save key
-	tza 									; reset input
-	nop
-	sta 	(EXTZPWork),z
-	pla 									; restore/return value
-_EXTRKExit:
-	plz
-	ora 	#0 								; set Z
 	rts
 
 ; ******************************************************************************
