@@ -189,6 +189,8 @@ _EVALKeywordVariable:
 
 _EVALNotUnaryFunction:			
 		lda 	(zCurrentLine),y
+		bpl 	_EVALCheckVariable 			; if ASCII check variable
+		;
 		cmp 	#KW_MINUS 					; check negation
 		beq 	_EVALUnaryNegation
 		cmp 	#KW_LPAREN 					; check left bracket.
@@ -213,9 +215,30 @@ _EVALUnaryNegation:
 		;		Choices left are $, ? or ! <atom>
 		;
 _EVALCheckUnaryOperator:		
-
-		bra 	_EVALCheckUnaryOperator
-
+		pha 								; save indirection operator.
+		iny 								; skip over the operator
+		jsr 	EvaluateAtomCurrentLevel 	; calculate the address.
+		pla 								; restore the operator
+		cmp 	#KW_DOLLAR					; $ is for visual typing, it does nothing
+		beq 	_EVALGoGotAtom
+		cmp 	#KW_QUESTION				; byte indirection
+		beq 	_EVALByteRead
+		cmp 	#KW_PLING					; word indirection
+		beq 	_EVALWordRead
+		jmp 	SyntaxError 				; give up.
+		;
+_EVALByteRead:
+		jsr 	EVALReadByteIndirect
+_EVALGoGotAtom:		
+		jmp 	_EVALGotAtom
+_EVALWordRead:
+		jsr 	EVALReadWordIndirect
+		jmp 	_EVALGotAtom
+		;
+		;		Check variable X, array element X(4), array element XX0
+		;
+_EVALCheckVariable:
+		#break
 
 ; *******************************************************************************************
 ;
@@ -340,3 +363,56 @@ EVALToUpper:
 		eor 	#32		
 _EVTUExit:
 		rts		
+
+; *******************************************************************************************
+;
+;			Indirect byte read. If high bytes non zero do a long read on Mega65
+;
+; *******************************************************************************************
+
+EVALReadByteIndirect:
+		lda 	evalStack+0,x 	 			; copy address over.
+		sta 	zTemp1
+		lda 	evalStack+1,x 	
+		sta 	zTemp1+1
+		;
+		phy
+		ldy 	#0 							; read byte
+		lda 	(zTemp1),y
+		sta 	evalStack+0,x
+		ply
+		;
+		lda 	#0 							; zero upper three bytes
+		sta 	evalStack+1,x
+		sta 	evalStack+2,x
+		sta 	evalStack+3,x
+		rts
+
+; *******************************************************************************************
+;
+;			Indirect word read. If high bytes non zero do a long read on Mega65
+;
+; *******************************************************************************************
+
+EVALReadWordIndirect:
+		lda 	evalStack+0,x 	 			; copy address over.
+		sta 	zTemp1
+		lda 	evalStack+1,x 	
+		sta 	zTemp1+1
+		phy
+		;
+		ldy 	#0 							; read word
+		lda 	(zTemp1),y
+		sta 	evalStack+0,x
+		iny
+		lda 	(zTemp1),y
+		sta 	evalStack+1,x
+		iny
+		lda 	(zTemp1),y
+		sta 	evalStack+2,x
+		iny
+		lda 	(zTemp1),y
+		sta 	evalStack+3,x
+		;
+		ply
+		rts

@@ -59,7 +59,7 @@ class Tokeniser(object):
 				self.tokens.append(self.tokenHash[keyword][2])
 				return text[ch:]
 			ch -= 1
-		self.tokens.append(ord(text[0]))
+		self.tokens.append(ord(text[0].upper()))
 		return text[1:]
 	#
 	#								Simple tester
@@ -112,7 +112,7 @@ if __name__ == '__main__':
 	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
-	bas.add('assert -4+-4',1)
+	bas.add('assert A',1)
 
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)

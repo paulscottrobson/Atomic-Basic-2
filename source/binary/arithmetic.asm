@@ -52,5 +52,23 @@ BFUNC_Subtract:	;; 	-
 		sbc 	evalStack+7,x
 		sta 	evalStack+3,x			
 		rts
+
+; *******************************************************************************************
+;
+;									  	Indirect Reads
+;
+; *******************************************************************************************
 				
+BFUNC_String: ;; 	$
+		jsr 	BFUNC_Add
+		rts
+
+BFUNC_ByteInd: ;; 	?
+		jsr 	BFUNC_Add
+		jsr 	EVALReadByteIndirect
+		rts
 				
+BFUNC_WordInd: ;; 	!
+		jsr 	BFUNC_Add
+		jsr 	EVALReadWordIndirect
+		rts

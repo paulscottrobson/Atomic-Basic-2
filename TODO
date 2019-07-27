@@ -1,14 +1,17 @@
-
-- Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
-
-- Unary operators (? ! $)
-- Binary operators (? ! $)
+Progress
+========
 - Work on variables.
 - Assignment
 - LIST 
+- Command Line, tokenisation.
 - GOTO GOSUB 
 - IF THEN 
 - DO LOOP 
 - FOR TO NEXT STEP
 - LINK
 - INPUT PRINT
+
+Later fixes
+===========
+- Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
+- Fix long read/write for ! and ?
