@@ -238,7 +238,9 @@ _EVALWordRead:
 		;		Check variable X, array element X(4), array element XX0
 		;
 _EVALCheckVariable:
-		#break
+		jsr 	VARReference 				; get variable reference to ZTemp1
+		jsr 	EVALReadWordIndirectZTemp	; read that address into current stack level.
+		jmp 	_EVALGotAtom 				; and go round.
 
 ; *******************************************************************************************
 ;
@@ -375,6 +377,10 @@ EVALReadByteIndirect:
 		sta 	zTemp1
 		lda 	evalStack+1,x 	
 		sta 	zTemp1+1
+		lda 	evalStack+2,x 	
+		sta 	zTemp1+2
+		lda 	evalStack+3,x 	
+		sta 	zTemp1+3
 		;
 		phy
 		ldy 	#0 							; read byte
@@ -399,6 +405,12 @@ EVALReadWordIndirect:
 		sta 	zTemp1
 		lda 	evalStack+1,x 	
 		sta 	zTemp1+1
+		lda 	evalStack+2,x 	
+		sta 	zTemp1+2
+		lda 	evalStack+3,x 	
+		sta 	zTemp1+3
+		;
+EVALReadWordIndirectZTemp:		
 		phy
 		;
 		ldy 	#0 							; read word

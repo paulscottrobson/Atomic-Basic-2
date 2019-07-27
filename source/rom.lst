@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.54.1900 listing file
 ; 64tass -q -c -D TARGET=2 -b -L rom.lst -o rom.bin basic.asm
-; Sat Jul 27 15:58:59 2019
+; Sat Jul 27 16:48:46 2019
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -17,7 +17,7 @@
 .fff8					EXTDummyInterrupt:
 .fff8	40		rti				rti
 >fffa	f8 ff						.word 	EXTDummyInterrupt
->fffc	e2 e7						.word 	Start
+>fffc	86 e8						.word 	Start
 >fffe	f8 ff						.word 	EXTDummyInterrupt
 =4					EXTZPWork = 4								; Zero Page work for Personality (4 bytes)
 =8					IOCursorX = 8 								; Cursor position
@@ -42,7 +42,7 @@
 .a002	9a		txs			txs
 .a003	20 7e a0	jsr $a07e		jsr 	EXTReset 						; reset video
 .a006	20 34 a0	jsr $a034		jsr 	EXTClearScreen 					; clear screen
-.a009	4c e2 e7	jmp $e7e2		jmp 	Start 							; start main application
+.a009	4c 86 e8	jmp $e886		jmp 	Start 							; start main application
 .a00c					EXTReadKey:
 .a00c	ad 00 b8	lda $b800		lda 	PKeyboard							; read key
 .a00f	d0 01		bne $a012		bne 	EXTClearBuffer
@@ -239,58 +239,58 @@
 ;******  Processing file: include/tokens.inc
 
 .e000					KeywordVectorTable:
->e000	c3 e3					.word	BFUNC_WordInd                 ; "!"        ($0080)
->e002	f4 e7					.word	SyntaxError                   ; """        ($0081)
->e004	f4 e7					.word	SyntaxError                   ; "#"        ($0082)
->e006	b8 e3					.word	BFUNC_String                  ; "$"        ($0083)
->e008	57 e5					.word	BFUNC_Modulus                 ; "%"        ($0084)
->e00a	ca e3					.word	BFUNC_And                     ; "&"        ($0085)
->e00c	f4 e7					.word	SyntaxError                   ; "'"        ($0086)
->e00e	f4 e7					.word	SyntaxError                   ; "("        ($0087)
->e010	f4 e7					.word	SyntaxError                   ; ")"        ($0088)
->e012	39 e4					.word	BFUNC_Multiply                ; "*"        ($0089)
->e014	6c e3					.word	BFUNC_Add                     ; "+"        ($008a)
->e016	92 e3					.word	BFUNC_Subtract                ; "-"        ($008b)
->e018	90 e4					.word	BFUNC_Divide                  ; "/"        ($008c)
->e01a	f4 e7					.word	SyntaxError                   ; ":"        ($008d)
->e01c	f4 e7					.word	SyntaxError                   ; ";"        ($008e)
->e01e	d5 e5					.word	BFUNC_LessEqual               ; "<="       ($008f)
->e020	76 e5					.word	BFUNC_NotEquals               ; "<>"       ($0090)
->e022	b0 e5					.word	BFUNC_Less                    ; "<"        ($0091)
->e024	73 e5					.word	BFUNC_Equals                  ; "="        ($0092)
->e026	b3 e5					.word	BFUNC_GreaterEqual            ; ">="       ($0093)
->e028	d2 e5					.word	BFUNC_Greater                 ; ">"        ($0094)
->e02a	bc e3					.word	BFUNC_ByteInd                 ; "?"        ($0095)
->e02c	14 e4					.word	BFUNC_Xor                     ; "^"        ($0096)
->e02e	36 e7					.word	COMMAND_Assert                ; "assert"   ($0097)
->e030	89 e6					.word	UNARY_Abs                     ; "abs"      ($0098)
->e032	78 e7					.word	COMMAND_Clear                 ; "clear"    ($0099)
->e034	74 e6					.word	UNARY_Ch                      ; "ch"       ($009a)
->e036	f4 e7					.word	SyntaxError                   ; "do"       ($009b)
->e038	32 e7					.word	COMMAND_End                   ; "end"      ($009c)
->e03a	f4 e7					.word	SyntaxError                   ; "for"      ($009d)
->e03c	f4 e7					.word	SyntaxError                   ; "gosub"    ($009e)
->e03e	f4 e7					.word	SyntaxError                   ; "goto"     ($009f)
->e040	f4 e7					.word	SyntaxError                   ; "input"    ($00a0)
->e042	f4 e7					.word	SyntaxError                   ; "if"       ($00a1)
->e044	f4 e7					.word	SyntaxError                   ; "list"     ($00a2)
->e046	f4 e7					.word	SyntaxError                   ; "loop"     ($00a3)
->e048	f4 e7					.word	SyntaxError                   ; "link"     ($00a4)
->e04a	f4 e7					.word	SyntaxError                   ; "let"      ($00a5)
->e04c	32 e6					.word	UNARY_Len                     ; "len"      ($00a6)
->e04e	f4 e7					.word	SyntaxError                   ; "next"     ($00a7)
->e050	65 e7					.word	COMMAND_New                   ; "new"      ($00a8)
->e052	ac e7					.word	COMMAND_Old                   ; "old"      ($00a9)
->e054	f4 e7					.word	SyntaxError                   ; "print"    ($00aa)
->e056	5b e7					.word	COMMAND_Rem                   ; "rem"      ($00ab)
->e058	a6 e6					.word	UNARY_Rnd                     ; "rnd"      ($00ac)
->e05a	2a e7					.word	COMMAND_Stop                  ; "stop"     ($00ad)
->e05c	f4 e7					.word	SyntaxError                   ; "step"     ($00ae)
->e05e	f4 e7					.word	SyntaxError                   ; "then"     ($00af)
->e060	91 e6					.word	UNARY_Top                     ; "top"      ($00b0)
->e062	f4 e7					.word	SyntaxError                   ; "to"       ($00b1)
->e064	ef e3					.word	BFUNC_Or                      ; "|"        ($00b2)
->e066	f4 e5					.word	BFUNC_StringCompare           ; "~"        ($00b3)
+>e000	67 e4					.word	BFUNC_WordInd                 ; "!"        ($0080)
+>e002	98 e8					.word	SyntaxError                   ; """        ($0081)
+>e004	98 e8					.word	SyntaxError                   ; "#"        ($0082)
+>e006	5c e4					.word	BFUNC_String                  ; "$"        ($0083)
+>e008	fb e5					.word	BFUNC_Modulus                 ; "%"        ($0084)
+>e00a	6e e4					.word	BFUNC_And                     ; "&"        ($0085)
+>e00c	98 e8					.word	SyntaxError                   ; "'"        ($0086)
+>e00e	98 e8					.word	SyntaxError                   ; "("        ($0087)
+>e010	98 e8					.word	SyntaxError                   ; ")"        ($0088)
+>e012	dd e4					.word	BFUNC_Multiply                ; "*"        ($0089)
+>e014	10 e4					.word	BFUNC_Add                     ; "+"        ($008a)
+>e016	36 e4					.word	BFUNC_Subtract                ; "-"        ($008b)
+>e018	34 e5					.word	BFUNC_Divide                  ; "/"        ($008c)
+>e01a	98 e8					.word	SyntaxError                   ; ":"        ($008d)
+>e01c	98 e8					.word	SyntaxError                   ; ";"        ($008e)
+>e01e	79 e6					.word	BFUNC_LessEqual               ; "<="       ($008f)
+>e020	1a e6					.word	BFUNC_NotEquals               ; "<>"       ($0090)
+>e022	54 e6					.word	BFUNC_Less                    ; "<"        ($0091)
+>e024	17 e6					.word	BFUNC_Equals                  ; "="        ($0092)
+>e026	57 e6					.word	BFUNC_GreaterEqual            ; ">="       ($0093)
+>e028	76 e6					.word	BFUNC_Greater                 ; ">"        ($0094)
+>e02a	60 e4					.word	BFUNC_ByteInd                 ; "?"        ($0095)
+>e02c	b8 e4					.word	BFUNC_Xor                     ; "^"        ($0096)
+>e02e	da e7					.word	COMMAND_Assert                ; "assert"   ($0097)
+>e030	2d e7					.word	UNARY_Abs                     ; "abs"      ($0098)
+>e032	1c e8					.word	COMMAND_Clear                 ; "clear"    ($0099)
+>e034	18 e7					.word	UNARY_Ch                      ; "ch"       ($009a)
+>e036	98 e8					.word	SyntaxError                   ; "do"       ($009b)
+>e038	d6 e7					.word	COMMAND_End                   ; "end"      ($009c)
+>e03a	98 e8					.word	SyntaxError                   ; "for"      ($009d)
+>e03c	98 e8					.word	SyntaxError                   ; "gosub"    ($009e)
+>e03e	98 e8					.word	SyntaxError                   ; "goto"     ($009f)
+>e040	98 e8					.word	SyntaxError                   ; "input"    ($00a0)
+>e042	98 e8					.word	SyntaxError                   ; "if"       ($00a1)
+>e044	98 e8					.word	SyntaxError                   ; "list"     ($00a2)
+>e046	98 e8					.word	SyntaxError                   ; "loop"     ($00a3)
+>e048	98 e8					.word	SyntaxError                   ; "link"     ($00a4)
+>e04a	98 e8					.word	SyntaxError                   ; "let"      ($00a5)
+>e04c	d6 e6					.word	UNARY_Len                     ; "len"      ($00a6)
+>e04e	98 e8					.word	SyntaxError                   ; "next"     ($00a7)
+>e050	09 e8					.word	COMMAND_New                   ; "new"      ($00a8)
+>e052	50 e8					.word	COMMAND_Old                   ; "old"      ($00a9)
+>e054	98 e8					.word	SyntaxError                   ; "print"    ($00aa)
+>e056	ff e7					.word	COMMAND_Rem                   ; "rem"      ($00ab)
+>e058	4a e7					.word	UNARY_Rnd                     ; "rnd"      ($00ac)
+>e05a	ce e7					.word	COMMAND_Stop                  ; "stop"     ($00ad)
+>e05c	98 e8					.word	SyntaxError                   ; "step"     ($00ae)
+>e05e	98 e8					.word	SyntaxError                   ; "then"     ($00af)
+>e060	35 e7					.word	UNARY_Top                     ; "top"      ($00b0)
+>e062	98 e8					.word	SyntaxError                   ; "to"       ($00b1)
+>e064	93 e4					.word	BFUNC_Or                      ; "|"        ($00b2)
+>e066	98 e6					.word	BFUNC_StringCompare           ; "~"        ($00b3)
 .e068					TokenText:
 >e068	a1					.byte $a1                             ; $0080 !
 >e069	a2					.byte $a2                             ; $0081 "
@@ -472,7 +472,7 @@
 .e128	d0 01		bne $e12b			bne 	_CNCFail
 .e12a	60		rts				rts
 .e12b					_CNCFail:
-.e12b	20 f9 e7	jsr $e7f9			jsr 	ReportError
+.e12b	20 9d e8	jsr $e89d			jsr 	ReportError
 >e12e	4d 69 73 73 69 6e 67 20				.text 	"Missing token",$00
 >e136	74 6f 6b 65 6e 00
 
@@ -505,17 +505,17 @@
 ;******  Processing file: general/evaluate.asm
 
 .e13c					EvaluateSNError:
-.e13c	4c f4 e7	jmp $e7f4			jmp 	SyntaxError
+.e13c	4c 98 e8	jmp $e898			jmp 	SyntaxError
 .e13f					EvaluateMissingQuote:
-.e13f	20 f9 e7	jsr $e7f9			jsr 	ReportError
+.e13f	20 9d e8	jsr $e89d			jsr 	ReportError
 >e142	4d 69 73 73 69 6e 67 20				.text 	"Missing quote",$00
 >e14a	71 75 6f 74 65 00
 .e150					EvaluateStringFull:
-.e150	20 f9 e7	jsr $e7f9			jsr 	ReportError
+.e150	20 9d e8	jsr $e89d			jsr 	ReportError
 >e153	53 74 72 69 6e 67 20 42				.text 	"String Buffer full",$00
 >e15b	75 66 66 65 72 20 66 75 6c 6c 00
 .e166					EvaluateBadHex:
-.e166	20 f9 e7	jsr $e7f9			jsr 	ReportError
+.e166	20 9d e8	jsr $e89d			jsr 	ReportError
 >e169	42 61 64 20 48 65 78 00				.text 	"Bad Hex",$00
 .e171					EvaluateAtomCurrentLevel:
 .e171	a9 07		lda #$07			lda 	#7
@@ -549,7 +549,7 @@
 .e1a2					_EVALGoKeywordVariable:
 .e1a2	4c 27 e2	jmp $e227			jmp 	_EVALKeywordVariable
 .e1a5					_EVALDecimal:
-.e1a5	20 7c e2	jsr $e27c			jsr 	EVALGetDecConstant 			; get decimal constant
+.e1a5	20 84 e2	jsr $e284			jsr 	EVALGetDecConstant 			; get decimal constant
 .e1a8	80 34		bra $e1de			bra 	_EVALGotAtom 				; got atom.
 .e1aa					_EVALString:
 .e1aa	da		phx				phx 								; save X on stack
@@ -575,7 +575,7 @@
 .e1d0					_EVALHexaDecimal
 .e1d0	c8		iny				iny 								; skip over the '#'
 .e1d1	5a		phy				phy 								; save Y
-.e1d2	20 e8 e2	jsr $e2e8			jsr 	EVALGetHexConstant 			; load in hexadecimal constant
+.e1d2	20 f0 e2	jsr $e2f0			jsr 	EVALGetHexConstant 			; load in hexadecimal constant
 .e1d5	8c 6e 20	sty $206e			sty 	Temp1 						; has Y changed ?
 .e1d8	68		pla				pla
 .e1d9	cd 6e 20	cmp $206e			cmp 	Temp1
@@ -654,7 +654,7 @@
 .e251					_EVALUnaryNegation:
 .e251	c8		iny				iny 								; skip over the - sign.
 .e252	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; calculate what's being negatived (...)
-.e255	20 32 e5	jsr $e532			jsr 	BFUNC_NegateAlways 			; negate it.
+.e255	20 d6 e5	jsr $e5d6			jsr 	BFUNC_NegateAlways 			; negate it.
 .e258	80 84		bra $e1de			bra 	_EVALGotAtom
 .e25a					_EVALCheckUnaryOperator:
 .e25a	48		pha				pha 								; save indirection operator.
@@ -667,761 +667,853 @@
 .e266	f0 07		beq $e26f			beq 	_EVALByteRead
 .e268	c9 80		cmp #$80			cmp 	#KW_PLING					; word indirection
 .e26a	f0 09		beq $e275			beq 	_EVALWordRead
-.e26c	4c f4 e7	jmp $e7f4			jmp 	SyntaxError 				; give up.
+.e26c	4c 98 e8	jmp $e898			jmp 	SyntaxError 				; give up.
 .e26f					_EVALByteRead:
-.e26f	20 27 e3	jsr $e327			jsr 	EVALReadByteIndirect
+.e26f	20 2f e3	jsr $e32f			jsr 	EVALReadByteIndirect
 .e272					_EVALGoGotAtom:
 .e272	4c de e1	jmp $e1de			jmp 	_EVALGotAtom
 .e275					_EVALWordRead:
-.e275	20 46 e3	jsr $e346			jsr 	EVALReadWordIndirect
+.e275	20 58 e3	jsr $e358			jsr 	EVALReadWordIndirect
 .e278	4c de e1	jmp $e1de			jmp 	_EVALGotAtom
 .e27b					_EVALCheckVariable:
-.e27b	ea		nop				nop
-.e27c					EVALGetDecConstant:
-.e27c	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next
-.e27e	c9 30		cmp #$30			cmp 	#'0'						; check in range 0-9.
-.e280	90 04		bcc $e286			bcc 	_EVGDExit
-.e282	c9 3a		cmp #$3a			cmp 	#'9'+1
-.e284	90 01		bcc $e287			bcc 	_EVGDValue 					; if so has legal value
-.e286					_EVGDExit:
-.e286	60		rts				rts
-.e287					_EVGDValue:
-.e287	48		pha				pha 								; save value, Y on stack
-.e288	5a		phy				phy
-.e289	a0 03		ldy #$03			ldy 	#3 							; 3 shifts.
-.e28b	bd 03 04	lda $0403,x			lda 	evalStack+3,x 				; push x1 value on stack.
-.e28e	48		pha				pha
-.e28f	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e292	48		pha				pha
-.e293	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e27b	20 88 e3	jsr $e388			jsr 	VARReference 				; get variable reference to ZTemp1
+.e27e	20 6c e3	jsr $e36c			jsr 	EVALReadWordIndirectZTemp	; read that address into current stack level.
+.e281	4c de e1	jmp $e1de			jmp 	_EVALGotAtom 				; and go round.
+.e284					EVALGetDecConstant:
+.e284	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next
+.e286	c9 30		cmp #$30			cmp 	#'0'						; check in range 0-9.
+.e288	90 04		bcc $e28e			bcc 	_EVGDExit
+.e28a	c9 3a		cmp #$3a			cmp 	#'9'+1
+.e28c	90 01		bcc $e28f			bcc 	_EVGDValue 					; if so has legal value
+.e28e					_EVGDExit:
+.e28e	60		rts				rts
+.e28f					_EVGDValue:
+.e28f	48		pha				pha 								; save value, Y on stack
+.e290	5a		phy				phy
+.e291	a0 03		ldy #$03			ldy 	#3 							; 3 shifts.
+.e293	bd 03 04	lda $0403,x			lda 	evalStack+3,x 				; push x1 value on stack.
 .e296	48		pha				pha
-.e297	bd 00 04	lda $0400,x			lda 	evalStack+0,x
+.e297	bd 02 04	lda $0402,x			lda 	evalStack+2,x
 .e29a	48		pha				pha
-.e29b					_EVGDLoop:
-.e29b	1e 00 04	asl $0400,x			asl 	evalStack+0,x 				; rotate left once.
-.e29e	3e 01 04	rol $0401,x			rol 	evalStack+1,x
-.e2a1	3e 02 04	rol $0402,x			rol 	evalStack+2,x
-.e2a4	3e 03 04	rol $0403,x			rol 	evalStack+3,x
-.e2a7	c0 02		cpy #$02			cpy 	#2 							; if done it twice now
-.e2a9	d0 1d		bne $e2c8			bne 	_EVGDNoAdd
-.e2ab	18		clc				clc 								; then it will be x 4, adding +1 => x 5
-.e2ac	68		pla				pla
-.e2ad	7d 00 04	adc $0400,x			adc 	evalStack+0,x
-.e2b0	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e2b3	68		pla				pla
-.e2b4	7d 01 04	adc $0401,x			adc 	evalStack+1,x
-.e2b7	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e2ba	68		pla				pla
-.e2bb	7d 02 04	adc $0402,x			adc 	evalStack+2,x
-.e2be	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e2c1	68		pla				pla
-.e2c2	7d 03 04	adc $0403,x			adc 	evalStack+3,x
-.e2c5	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e2c8					_EVGDNoAdd:
-.e2c8	88		dey				dey
-.e2c9	d0 d0		bne $e29b			bne 	_EVGDLoop
-.e2cb	7a		ply				ply 								; restore YA
-.e2cc	68		pla				pla
-.e2cd	c8		iny				iny 								; next character
-.e2ce	29 0f		and #$0f			and 	#15 						; force into range and put in.
-.e2d0	18		clc				clc
-.e2d1	7d 00 04	adc $0400,x			adc 	evalStack+0,x 				; add digit in
-.e2d4	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e2d7	90 a3		bcc $e27c			bcc 	EVALGetDecConstant 			; propogate constant through
-.e2d9	fe 01 04	inc $0401,x			inc 	evalStack+1,x
-.e2dc	d0 9e		bne $e27c			bne 	EVALGetDecConstant
-.e2de	fe 02 04	inc $0402,x			inc 	evalStack+2,x
-.e2e1	d0 99		bne $e27c			bne 	EVALGetDecConstant
-.e2e3	fe 03 04	inc $0403,x			inc 	evalStack+3,x
-.e2e6	80 94		bra $e27c			bra 	EVALGetDecConstant 			; go back and try again.
-.e2e8					EVALGetHexConstant:
-.e2e8	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next
-.e2ea	20 1c e3	jsr $e31c			jsr 	EVALToUpper 				; make upper case
-.e2ed	38		sec				sec
-.e2ee	e9 30		sbc #$30			sbc 	#"0" 						; range 0-9
-.e2f0	90 0a		bcc $e2fc			bcc 	_EVGHExit 					; exit if CC
-.e2f2	c9 0a		cmp #$0a			cmp 	#9+1 						; if < 9 have a legal value.
-.e2f4	90 07		bcc $e2fd			bcc 	_EVGHValue
-.e2f6	e9 07		sbc #$07			sbc 	#7 							; now in range 10-15 if okay.
-.e2f8	c9 10		cmp #$10			cmp 	#15+1
-.e2fa	90 01		bcc $e2fd			bcc 	_EVGHValue
-.e2fc					_EVGHExit:
-.e2fc	60		rts				rts
-.e2fd					_EVGHValue:
-.e2fd	5a		phy				phy 								; save Y and new digit.
-.e2fe	48		pha				pha
-.e2ff	a0 04		ldy #$04			ldy 	#4 							; rotate left 4
-.e301					_EVGHRotate:
-.e301	1e 00 04	asl $0400,x			asl 	evalStack+0,x
-.e304	3e 01 04	rol $0401,x			rol 	evalStack+1,x
-.e307	3e 02 04	rol $0402,x			rol 	evalStack+2,x
-.e30a	3e 03 04	rol $0403,x			rol 	evalStack+3,x
-.e30d	88		dey				dey
-.e30e	d0 f1		bne $e301			bne 	_EVGHRotate
-.e310	68		pla				pla 								; restore digit and X
-.e311	7a		ply				ply
-.e312	c8		iny				iny 								; next character
-.e313	18		clc				clc
-.e314	1d 00 04	ora $0400,x			ora 	evalStack+0,x 				; add digit in
-.e317	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e31a	80 cc		bra $e2e8			bra 	EVALGetHexConstant 			; go back and try again.
-.e31c					EVALToUpper:
-.e31c	c9 61		cmp #$61			cmp 	#'a'
-.e31e	90 06		bcc $e326			bcc 	_EVTUExit
-.e320	c9 7b		cmp #$7b			cmp 	#'z'+1
-.e322	b0 02		bcs $e326			bcs 	_EVTUExit
-.e324	49 20		eor #$20			eor 	#32
-.e326					_EVTUExit:
-.e326	60		rts				rts
-.e327					EVALReadByteIndirect:
-.e327	bd 00 04	lda $0400,x			lda 	evalStack+0,x 	 			; copy address over.
-.e32a	85 26		sta $26				sta 	zTemp1
-.e32c	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e32f	85 27		sta $27				sta 	zTemp1+1
-.e331	5a		phy				phy
-.e332	a0 00		ldy #$00			ldy 	#0 							; read byte
-.e334	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e336	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e339	7a		ply				ply
-.e33a	a9 00		lda #$00			lda 	#0 							; zero upper three bytes
-.e33c	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e33f	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e342	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e345	60		rts				rts
-.e346					EVALReadWordIndirect:
-.e346	bd 00 04	lda $0400,x			lda 	evalStack+0,x 	 			; copy address over.
-.e349	85 26		sta $26				sta 	zTemp1
-.e34b	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e34e	85 27		sta $27				sta 	zTemp1+1
-.e350	5a		phy				phy
-.e351	a0 00		ldy #$00			ldy 	#0 							; read word
-.e353	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e355	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e358	c8		iny				iny
-.e359	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e35b	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e35e	c8		iny				iny
-.e35f	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e361	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e364	c8		iny				iny
-.e365	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e367	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e36a	7a		ply				ply
-.e36b	60		rts				rts
+.e29b	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e29e	48		pha				pha
+.e29f	bd 00 04	lda $0400,x			lda 	evalStack+0,x
+.e2a2	48		pha				pha
+.e2a3					_EVGDLoop:
+.e2a3	1e 00 04	asl $0400,x			asl 	evalStack+0,x 				; rotate left once.
+.e2a6	3e 01 04	rol $0401,x			rol 	evalStack+1,x
+.e2a9	3e 02 04	rol $0402,x			rol 	evalStack+2,x
+.e2ac	3e 03 04	rol $0403,x			rol 	evalStack+3,x
+.e2af	c0 02		cpy #$02			cpy 	#2 							; if done it twice now
+.e2b1	d0 1d		bne $e2d0			bne 	_EVGDNoAdd
+.e2b3	18		clc				clc 								; then it will be x 4, adding +1 => x 5
+.e2b4	68		pla				pla
+.e2b5	7d 00 04	adc $0400,x			adc 	evalStack+0,x
+.e2b8	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e2bb	68		pla				pla
+.e2bc	7d 01 04	adc $0401,x			adc 	evalStack+1,x
+.e2bf	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e2c2	68		pla				pla
+.e2c3	7d 02 04	adc $0402,x			adc 	evalStack+2,x
+.e2c6	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e2c9	68		pla				pla
+.e2ca	7d 03 04	adc $0403,x			adc 	evalStack+3,x
+.e2cd	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e2d0					_EVGDNoAdd:
+.e2d0	88		dey				dey
+.e2d1	d0 d0		bne $e2a3			bne 	_EVGDLoop
+.e2d3	7a		ply				ply 								; restore YA
+.e2d4	68		pla				pla
+.e2d5	c8		iny				iny 								; next character
+.e2d6	29 0f		and #$0f			and 	#15 						; force into range and put in.
+.e2d8	18		clc				clc
+.e2d9	7d 00 04	adc $0400,x			adc 	evalStack+0,x 				; add digit in
+.e2dc	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e2df	90 a3		bcc $e284			bcc 	EVALGetDecConstant 			; propogate constant through
+.e2e1	fe 01 04	inc $0401,x			inc 	evalStack+1,x
+.e2e4	d0 9e		bne $e284			bne 	EVALGetDecConstant
+.e2e6	fe 02 04	inc $0402,x			inc 	evalStack+2,x
+.e2e9	d0 99		bne $e284			bne 	EVALGetDecConstant
+.e2eb	fe 03 04	inc $0403,x			inc 	evalStack+3,x
+.e2ee	80 94		bra $e284			bra 	EVALGetDecConstant 			; go back and try again.
+.e2f0					EVALGetHexConstant:
+.e2f0	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next
+.e2f2	20 24 e3	jsr $e324			jsr 	EVALToUpper 				; make upper case
+.e2f5	38		sec				sec
+.e2f6	e9 30		sbc #$30			sbc 	#"0" 						; range 0-9
+.e2f8	90 0a		bcc $e304			bcc 	_EVGHExit 					; exit if CC
+.e2fa	c9 0a		cmp #$0a			cmp 	#9+1 						; if < 9 have a legal value.
+.e2fc	90 07		bcc $e305			bcc 	_EVGHValue
+.e2fe	e9 07		sbc #$07			sbc 	#7 							; now in range 10-15 if okay.
+.e300	c9 10		cmp #$10			cmp 	#15+1
+.e302	90 01		bcc $e305			bcc 	_EVGHValue
+.e304					_EVGHExit:
+.e304	60		rts				rts
+.e305					_EVGHValue:
+.e305	5a		phy				phy 								; save Y and new digit.
+.e306	48		pha				pha
+.e307	a0 04		ldy #$04			ldy 	#4 							; rotate left 4
+.e309					_EVGHRotate:
+.e309	1e 00 04	asl $0400,x			asl 	evalStack+0,x
+.e30c	3e 01 04	rol $0401,x			rol 	evalStack+1,x
+.e30f	3e 02 04	rol $0402,x			rol 	evalStack+2,x
+.e312	3e 03 04	rol $0403,x			rol 	evalStack+3,x
+.e315	88		dey				dey
+.e316	d0 f1		bne $e309			bne 	_EVGHRotate
+.e318	68		pla				pla 								; restore digit and X
+.e319	7a		ply				ply
+.e31a	c8		iny				iny 								; next character
+.e31b	18		clc				clc
+.e31c	1d 00 04	ora $0400,x			ora 	evalStack+0,x 				; add digit in
+.e31f	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e322	80 cc		bra $e2f0			bra 	EVALGetHexConstant 			; go back and try again.
+.e324					EVALToUpper:
+.e324	c9 61		cmp #$61			cmp 	#'a'
+.e326	90 06		bcc $e32e			bcc 	_EVTUExit
+.e328	c9 7b		cmp #$7b			cmp 	#'z'+1
+.e32a	b0 02		bcs $e32e			bcs 	_EVTUExit
+.e32c	49 20		eor #$20			eor 	#32
+.e32e					_EVTUExit:
+.e32e	60		rts				rts
+.e32f					EVALReadByteIndirect:
+.e32f	bd 00 04	lda $0400,x			lda 	evalStack+0,x 	 			; copy address over.
+.e332	85 26		sta $26				sta 	zTemp1
+.e334	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e337	85 27		sta $27				sta 	zTemp1+1
+.e339	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e33c	85 28		sta $28				sta 	zTemp1+2
+.e33e	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e341	85 29		sta $29				sta 	zTemp1+3
+.e343	5a		phy				phy
+.e344	a0 00		ldy #$00			ldy 	#0 							; read byte
+.e346	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e348	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e34b	7a		ply				ply
+.e34c	a9 00		lda #$00			lda 	#0 							; zero upper three bytes
+.e34e	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e351	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e354	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e357	60		rts				rts
+.e358					EVALReadWordIndirect:
+.e358	bd 00 04	lda $0400,x			lda 	evalStack+0,x 	 			; copy address over.
+.e35b	85 26		sta $26				sta 	zTemp1
+.e35d	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e360	85 27		sta $27				sta 	zTemp1+1
+.e362	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e365	85 28		sta $28				sta 	zTemp1+2
+.e367	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e36a	85 29		sta $29				sta 	zTemp1+3
+.e36c					EVALReadWordIndirectZTemp:
+.e36c	5a		phy				phy
+.e36d	a0 00		ldy #$00			ldy 	#0 							; read word
+.e36f	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e371	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e374	c8		iny				iny
+.e375	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e377	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e37a	c8		iny				iny
+.e37b	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e37d	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e380	c8		iny				iny
+.e381	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e383	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e386	7a		ply				ply
+.e387	60		rts				rts
+
+;******  Return to file: basic.asm
+
+
+;******  Processing file: general/variable.asm
+
+.e388					VARReference:
+.e388	48		pha				pha
+.e389	a9 04		lda #$04			lda 	#4
+.e38b	8d 08 20	sta $2008			sta 	FixedVariables+8
+.e38e	a9 e0		lda #$e0			lda 	#$E0 						; Fix ; set B = $E004
+.e390	8d 09 20	sta $2009			sta 	FixedVariables+9
+.e393	68		pla				pla
+.e394	38		sec				sec 								; check range @-Z there
+.e395	c9 40		cmp #$40			cmp 	#'@'
+.e397	90 04		bcc $e39d			bcc 	_VARRError
+.e399	c9 5b		cmp #$5b			cmp 	#'Z'+1 						; there are 27 variables @ and A-Z
+.e39b	90 03		bcc $e3a0			bcc 	_VARROkay
+.e39d					_VARRError:
+.e39d	4c 98 e8	jmp $e898			jmp		SyntaxError
+.e3a0					_VARROkay:
+.e3a0	c8		iny				iny 								; consume the variable.
+.e3a1	d1 20		cmp ($20),y			cmp 	(zCurrentLine),y 			; is it @@ AA BB CC ?
+.e3a3	f0 1b		beq $e3c0			beq 	_VARArrayAccess 			; array access AA0 AA1 etc.
+.e3a5	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get that second character
+.e3a7	88		dey				dey 								; point back to the first character
+.e3a8	c9 87		cmp #$87			cmp 	#KW_LPAREN 					; if ( then it is A(x) format.
+.e3aa	f0 14		beq $e3c0			beq 	_VARArrayAccess
+.e3ac	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; reget variable.
+.e3ae	c8		iny				iny
+.e3af	29 1f		and #$1f			and		#31 						; mask out
+.e3b1	0a		asl a				asl 	a 							; x 4
+.e3b2	0a		asl a				asl 	a
+.e3b3	85 26		sta $26				sta 	zTemp1+0 					; rely on variables being page aligned.
+.e3b5	a9 20		lda #$20			lda 	#FixedVariables >> 8
+.e3b7	85 27		sta $27				sta 	zTemp1+1
+.e3b9	a9 00		lda #$00			lda 	#0 							; clear upper bytes
+.e3bb	85 28		sta $28				sta 	zTemp1+2
+.e3bd	85 29		sta $29				sta 	zTemp1+3 					; return with address set.
+.e3bf	60		rts				rts
+.e3c0					_VARArrayAccess:
+.e3c0	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get variable
+.e3c2	c8		iny				iny
+.e3c3	29 1f		and #$1f			and 	#31 						; mask it off
+.e3c5	48		pha				pha 								; save on the stack.
+.e3c6	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; calculate the index.
+.e3c9	1e 00 04	asl $0400,x			asl 	evalStack+0,x 				; multiply by four.
+.e3cc	3e 01 04	rol $0401,x			rol 	evalStack+1,x
+.e3cf	3e 02 04	rol $0402,x			rol 	evalStack+2,x
+.e3d2	3e 03 04	rol $0403,x			rol 	evalStack+3,x
+.e3d5	1e 00 04	asl $0400,x			asl 	evalStack+0,x
+.e3d8	3e 01 04	rol $0401,x			rol 	evalStack+1,x
+.e3db	3e 02 04	rol $0402,x			rol 	evalStack+2,x
+.e3de	3e 03 04	rol $0403,x			rol 	evalStack+3,x
+.e3e1	68		pla				pla 								; put address in zTemp1
+.e3e2	0a		asl a				asl 	a 							; x 4
+.e3e3	0a		asl a				asl 	a
+.e3e4	85 26		sta $26				sta 	zTemp1+0 					; rely on variables being page aligned.
+.e3e6	a9 20		lda #$20			lda 	#FixedVariables >> 8
+.e3e8	85 27		sta $27				sta 	zTemp1+1
+.e3ea	5a		phy				phy
+.e3eb	a0 00		ldy #$00			ldy 	#0 							; calculate	evalStack+0,3 + (zTemp)
+.e3ed	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e3ef	7d 00 04	adc $0400,x			adc 	evalStack+0,x
+.e3f2	48		pha				pha 								; save first result as we need the indirection.
+.e3f3	c8		iny				iny 								; 2nd byte
+.e3f4	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e3f6	7d 01 04	adc $0401,x			adc 	evalStack+1,x
+.e3f9	85 27		sta $27				sta 	zTemp1+1
+.e3fb	68		pla				pla 								; save the low byte.
+.e3fc	85 26		sta $26				sta 	zTemp1+0
+.e3fe	a9 00		lda #$00			lda 	#0
+.e400	7d 02 04	adc $0402,x			adc 	evalStack+2,x
+.e403	85 28		sta $28				sta 	zTemp1+2
+.e405	a9 00		lda #$00			lda 	#0
+.e407	7d 03 04	adc $0403,x			adc 	evalStack+3,x
+.e40a	85 29		sta $29				sta 	zTemp1+3
+.e40c	7a		ply				ply 								; restore Y, address setup
+.e40d	60		rts				rts
+.e40e	80 fe		bra $e40e	x1:		bra 	x1
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: binary/arithmetic.asm
 
-.e36c					BFUNC_Add:
-.e36c	18		clc				clc
-.e36d	bd 00 04	lda $0400,x			lda 	evalStack+0,x
-.e370	7d 04 04	adc $0404,x			adc 	evalStack+4,x
-.e373	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e376	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e379	7d 05 04	adc $0405,x			adc 	evalStack+5,x
-.e37c	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e37f	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e382	7d 06 04	adc $0406,x			adc 	evalStack+6,x
-.e385	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e388	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e38b	7d 07 04	adc $0407,x			adc 	evalStack+7,x
-.e38e	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e391	60		rts				rts
-.e392					BFUNC_Subtract:
-.e392	38		sec				sec
-.e393	bd 00 04	lda $0400,x			lda 	evalStack+0,x
-.e396	fd 04 04	sbc $0404,x			sbc 	evalStack+4,x
-.e399	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e39c	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e39f	fd 05 04	sbc $0405,x			sbc 	evalStack+5,x
-.e3a2	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e3a5	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e3a8	fd 06 04	sbc $0406,x			sbc 	evalStack+6,x
-.e3ab	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e3ae	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e3b1	fd 07 04	sbc $0407,x			sbc 	evalStack+7,x
-.e3b4	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e3b7	60		rts				rts
-.e3b8					BFUNC_String:
-.e3b8	20 6c e3	jsr $e36c			jsr 	BFUNC_Add
-.e3bb	60		rts				rts
-.e3bc					BFUNC_ByteInd:
-.e3bc	20 6c e3	jsr $e36c			jsr 	BFUNC_Add
-.e3bf	20 27 e3	jsr $e327			jsr 	EVALReadByteIndirect
-.e3c2	60		rts				rts
-.e3c3					BFUNC_WordInd:
-.e3c3	20 6c e3	jsr $e36c			jsr 	BFUNC_Add
-.e3c6	20 46 e3	jsr $e346			jsr 	EVALReadWordIndirect
-.e3c9	60		rts				rts
+.e410					BFUNC_Add:
+.e410	18		clc				clc
+.e411	bd 00 04	lda $0400,x			lda 	evalStack+0,x
+.e414	7d 04 04	adc $0404,x			adc 	evalStack+4,x
+.e417	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e41a	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e41d	7d 05 04	adc $0405,x			adc 	evalStack+5,x
+.e420	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e423	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e426	7d 06 04	adc $0406,x			adc 	evalStack+6,x
+.e429	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e42c	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e42f	7d 07 04	adc $0407,x			adc 	evalStack+7,x
+.e432	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e435	60		rts				rts
+.e436					BFUNC_Subtract:
+.e436	38		sec				sec
+.e437	bd 00 04	lda $0400,x			lda 	evalStack+0,x
+.e43a	fd 04 04	sbc $0404,x			sbc 	evalStack+4,x
+.e43d	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e440	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e443	fd 05 04	sbc $0405,x			sbc 	evalStack+5,x
+.e446	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e449	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e44c	fd 06 04	sbc $0406,x			sbc 	evalStack+6,x
+.e44f	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e452	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e455	fd 07 04	sbc $0407,x			sbc 	evalStack+7,x
+.e458	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e45b	60		rts				rts
+.e45c					BFUNC_String:
+.e45c	20 10 e4	jsr $e410			jsr 	BFUNC_Add
+.e45f	60		rts				rts
+.e460					BFUNC_ByteInd:
+.e460	20 10 e4	jsr $e410			jsr 	BFUNC_Add
+.e463	20 2f e3	jsr $e32f			jsr 	EVALReadByteIndirect
+.e466	60		rts				rts
+.e467					BFUNC_WordInd:
+.e467	20 10 e4	jsr $e410			jsr 	BFUNC_Add
+.e46a	20 58 e3	jsr $e358			jsr 	EVALReadWordIndirect
+.e46d	60		rts				rts
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: binary/binary.asm
 
-.e3ca					BFUNC_And:
-.e3ca	bd 00 04	lda $0400,x			lda 	evalStack+0,x
-.e3cd	3d 04 04	and $0404,x			and 	evalStack+4,x
-.e3d0	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e3d3	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e3d6	3d 05 04	and $0405,x			and 	evalStack+5,x
-.e3d9	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e3dc	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e3df	3d 06 04	and $0406,x			and 	evalStack+6,x
-.e3e2	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e3e5	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e3e8	3d 07 04	and $0407,x			and 	evalStack+7,x
-.e3eb	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e3ee	60		rts				rts
-.e3ef					BFUNC_Or:
-.e3ef	bd 00 04	lda $0400,x			lda 	evalStack+0,x
-.e3f2	1d 04 04	ora $0404,x			ora 	evalStack+4,x
-.e3f5	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e3f8	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e3fb	1d 05 04	ora $0405,x			ora 	evalStack+5,x
-.e3fe	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e401	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e404	1d 06 04	ora $0406,x			ora 	evalStack+6,x
-.e407	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e40a	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e40d	1d 07 04	ora $0407,x			ora 	evalStack+7,x
-.e410	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e413	60		rts				rts
-.e414					BFUNC_Xor:
-.e414	bd 00 04	lda $0400,x			lda 	evalStack+0,x
-.e417	5d 04 04	eor $0404,x			eor 	evalStack+4,x
-.e41a	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e41d	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e420	5d 05 04	eor $0405,x			eor 	evalStack+5,x
-.e423	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e426	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e429	5d 06 04	eor $0406,x			eor 	evalStack+6,x
-.e42c	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e42f	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e432	5d 07 04	eor $0407,x			eor 	evalStack+7,x
-.e435	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e438	60		rts				rts
+.e46e					BFUNC_And:
+.e46e	bd 00 04	lda $0400,x			lda 	evalStack+0,x
+.e471	3d 04 04	and $0404,x			and 	evalStack+4,x
+.e474	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e477	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e47a	3d 05 04	and $0405,x			and 	evalStack+5,x
+.e47d	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e480	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e483	3d 06 04	and $0406,x			and 	evalStack+6,x
+.e486	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e489	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e48c	3d 07 04	and $0407,x			and 	evalStack+7,x
+.e48f	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e492	60		rts				rts
+.e493					BFUNC_Or:
+.e493	bd 00 04	lda $0400,x			lda 	evalStack+0,x
+.e496	1d 04 04	ora $0404,x			ora 	evalStack+4,x
+.e499	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e49c	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e49f	1d 05 04	ora $0405,x			ora 	evalStack+5,x
+.e4a2	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e4a5	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e4a8	1d 06 04	ora $0406,x			ora 	evalStack+6,x
+.e4ab	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e4ae	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e4b1	1d 07 04	ora $0407,x			ora 	evalStack+7,x
+.e4b4	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e4b7	60		rts				rts
+.e4b8					BFUNC_Xor:
+.e4b8	bd 00 04	lda $0400,x			lda 	evalStack+0,x
+.e4bb	5d 04 04	eor $0404,x			eor 	evalStack+4,x
+.e4be	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e4c1	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e4c4	5d 05 04	eor $0405,x			eor 	evalStack+5,x
+.e4c7	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e4ca	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e4cd	5d 06 04	eor $0406,x			eor 	evalStack+6,x
+.e4d0	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e4d3	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e4d6	5d 07 04	eor $0407,x			eor 	evalStack+7,x
+.e4d9	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e4dc	60		rts				rts
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: binary/multiply.asm
 
-.e439					BFUNC_Multiply:
-.e439	bd 00 04	lda $0400,x			lda 	evalStack+0,x				; copy +0 to +8
-.e43c	9d 08 04	sta $0408,x			sta 	evalStack+8,x
-.e43f	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e442	9d 09 04	sta $0409,x			sta 	evalStack+9,x
-.e445	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e448	9d 0a 04	sta $040a,x			sta 	evalStack+10,x
-.e44b	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e44e	9d 0b 04	sta $040b,x			sta 	evalStack+11,x
-.e451	a9 00		lda #$00			lda 	#0
-.e453	9d 00 04	sta $0400,x			sta 	evalStack+0,x 				; zero +0
-.e456	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e459	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e45c	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e45f					_BFMMultiply:
-.e45f	bd 08 04	lda $0408,x			lda 	evalStack+8,x 				; get LSBit of 8-11
-.e462	29 01		and #$01			and 	#1
-.e464	f0 03		beq $e469			beq 	_BFMNoAdd
-.e466	20 6c e3	jsr $e36c			jsr 	BFunc_Add 					; if bit set, add 4 to 0.
-.e469					_BFMNoAdd:
-.e469	1e 04 04	asl $0404,x			asl 	evalStack+4,x 				; shift +4 left
-.e46c	3e 05 04	rol $0405,x			rol 	evalStack+5,x
-.e46f	3e 06 04	rol $0406,x			rol 	evalStack+6,x
-.e472	3e 07 04	rol $0407,x			rol 	evalStack+7,x
-.e475	5e 0b 04	lsr $040b,x			lsr 	evalStack+11,x 				; shift +8 right
-.e478	7e 0a 04	ror $040a,x			ror 	evalStack+10,x
-.e47b	7e 09 04	ror $0409,x			ror 	evalStack+9,x
-.e47e	7e 08 04	ror $0408,x			ror 	evalStack+8,x
-.e481	bd 08 04	lda $0408,x			lda 	evalStack+8,x 				; continue if +8 is nonzero
-.e484	1d 09 04	ora $0409,x			ora 	evalStack+9,x
-.e487	1d 0a 04	ora $040a,x			ora 	evalStack+10,x
-.e48a	1d 0b 04	ora $040b,x			ora 	evalStack+11,x
-.e48d	d0 d0		bne $e45f			bne 	_BFMMultiply
-.e48f	60		rts				rts
+.e4dd					BFUNC_Multiply:
+.e4dd	bd 00 04	lda $0400,x			lda 	evalStack+0,x				; copy +0 to +8
+.e4e0	9d 08 04	sta $0408,x			sta 	evalStack+8,x
+.e4e3	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e4e6	9d 09 04	sta $0409,x			sta 	evalStack+9,x
+.e4e9	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e4ec	9d 0a 04	sta $040a,x			sta 	evalStack+10,x
+.e4ef	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e4f2	9d 0b 04	sta $040b,x			sta 	evalStack+11,x
+.e4f5	a9 00		lda #$00			lda 	#0
+.e4f7	9d 00 04	sta $0400,x			sta 	evalStack+0,x 				; zero +0
+.e4fa	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e4fd	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e500	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e503					_BFMMultiply:
+.e503	bd 08 04	lda $0408,x			lda 	evalStack+8,x 				; get LSBit of 8-11
+.e506	29 01		and #$01			and 	#1
+.e508	f0 03		beq $e50d			beq 	_BFMNoAdd
+.e50a	20 10 e4	jsr $e410			jsr 	BFunc_Add 					; if bit set, add 4 to 0.
+.e50d					_BFMNoAdd:
+.e50d	1e 04 04	asl $0404,x			asl 	evalStack+4,x 				; shift +4 left
+.e510	3e 05 04	rol $0405,x			rol 	evalStack+5,x
+.e513	3e 06 04	rol $0406,x			rol 	evalStack+6,x
+.e516	3e 07 04	rol $0407,x			rol 	evalStack+7,x
+.e519	5e 0b 04	lsr $040b,x			lsr 	evalStack+11,x 				; shift +8 right
+.e51c	7e 0a 04	ror $040a,x			ror 	evalStack+10,x
+.e51f	7e 09 04	ror $0409,x			ror 	evalStack+9,x
+.e522	7e 08 04	ror $0408,x			ror 	evalStack+8,x
+.e525	bd 08 04	lda $0408,x			lda 	evalStack+8,x 				; continue if +8 is nonzero
+.e528	1d 09 04	ora $0409,x			ora 	evalStack+9,x
+.e52b	1d 0a 04	ora $040a,x			ora 	evalStack+10,x
+.e52e	1d 0b 04	ora $040b,x			ora 	evalStack+11,x
+.e531	d0 d0		bne $e503			bne 	_BFMMultiply
+.e533	60		rts				rts
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: binary/divide.asm
 
-.e490					BFUNC_Divide:
-.e490	bd 04 04	lda $0404,x			lda 	evalStack+4,x 				; check for /0
-.e493	1d 05 04	ora $0405,x			ora 	evalStack+5,x
-.e496	1d 06 04	ora $0406,x			ora 	evalStack+6,x
-.e499	1d 07 04	ora $0407,x			ora 	evalStack+7,x
-.e49c	d0 13		bne $e4b1			bne 	_BFDOkay
-.e49e	20 f9 e7	jsr $e7f9			jsr 	ReportError
->e4a1	44 69 76 69 73 6f 6e 20				.text 	"Divison by Zero",$00
->e4a9	62 79 20 5a 65 72 6f 00
-.e4b1					_BFDOkay:
-.e4b1	a9 00		lda #$00			lda 	#0 							; Temp1 is 'A' (and holds the remainder)
-.e4b3	8d 6e 20	sta $206e			sta 	Temp1 						; Q/Dividend/Left in +0
-.e4b6	8d 6f 20	sta $206f			sta 	Temp1+1 					; M/Divisor/Right in +4
-.e4b9	8d 70 20	sta $2070			sta 	Temp1+2
-.e4bc	8d 71 20	sta $2071			sta 	Temp1+3
-.e4bf	8d 72 20	sta $2072			sta 	SignCount 					; Count of signs.
-.e4c2	20 2d e5	jsr $e52d			jsr 	BFUNC_Negate 				; negate (and bump sign count)
-.e4c5	da		phx				phx
-.e4c6	e8		inx				inx
-.e4c7	e8		inx				inx
-.e4c8	e8		inx				inx
-.e4c9	e8		inx				inx
-.e4ca	20 2d e5	jsr $e52d			jsr 	BFUNC_Negate
-.e4cd	fa		plx				plx
-.e4ce	5a		phy				phy 								; Y is the counter
-.e4cf	a0 20		ldy #$20			ldy 	#32 						; 32 iterations of the loop.
-.e4d1					_BFDLoop:
-.e4d1	1e 00 04	asl $0400,x			asl 	evalStack+0,x 				; shift AQ left.
-.e4d4	3e 01 04	rol $0401,x			rol 	evalStack+1,x
-.e4d7	3e 02 04	rol $0402,x			rol 	evalStack+2,x
-.e4da	3e 03 04	rol $0403,x			rol 	evalStack+3,x
-.e4dd	2e 6e 20	rol $206e			rol 	Temp1
-.e4e0	2e 6f 20	rol $206f			rol 	Temp1+1
-.e4e3	2e 70 20	rol $2070			rol 	Temp1+2
-.e4e6	2e 71 20	rol $2071			rol 	Temp1+3
-.e4e9	38		sec				sec
-.e4ea	ad 6e 20	lda $206e			lda 	Temp1+0 					; Calculate A-M on stack.
-.e4ed	fd 04 04	sbc $0404,x			sbc 	evalStack+4,x
-.e4f0	48		pha				pha
-.e4f1	ad 6f 20	lda $206f			lda 	Temp1+1
-.e4f4	fd 05 04	sbc $0405,x			sbc 	evalStack+5,x
-.e4f7	48		pha				pha
-.e4f8	ad 70 20	lda $2070			lda 	Temp1+2
-.e4fb	fd 06 04	sbc $0406,x			sbc 	evalStack+6,x
-.e4fe	48		pha				pha
-.e4ff	ad 71 20	lda $2071			lda 	Temp1+3
-.e502	fd 07 04	sbc $0407,x			sbc 	evalStack+7,x
-.e505	90 19		bcc $e520			bcc 	_BFDNoAdd
-.e507	8d 71 20	sta $2071			sta 	Temp1+3 					; update A
-.e50a	68		pla				pla
-.e50b	8d 70 20	sta $2070			sta 	Temp1+2
-.e50e	68		pla				pla
-.e50f	8d 6f 20	sta $206f			sta 	Temp1+1
-.e512	68		pla				pla
-.e513	8d 6e 20	sta $206e			sta 	Temp1+0
-.e516	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; set Q bit 1.
-.e519	09 01		ora #$01			ora 	#1
-.e51b	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e51e	80 03		bra $e523			bra 	_BFDNext
-.e520					_BFDNoAdd:
-.e520	68		pla				pla 								; Throw away the intermediate calculations
-.e521	68		pla				pla
-.e522	68		pla				pla
-.e523					_BFDNext:
-.e523	88		dey				dey
-.e524	d0 ab		bne $e4d1			bne 	_BFDLoop
-.e526	7a		ply				ply 								; restore Y and exit
-.e527	4e 72 20	lsr $2072			lsr 	SignCount 					; if sign count odd,
-.e52a	b0 06		bcs $e532			bcs		BFUNC_NegateAlways 			; negate the result
-.e52c	60		rts				rts
-.e52d					BFUNC_Negate:
-.e52d	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e530	10 24		bpl $e556			bpl 	BFNExit
-.e532					BFUNC_NegateAlways:
-.e532	38		sec				sec
-.e533	a9 00		lda #$00			lda 	#0
-.e535	fd 00 04	sbc $0400,x			sbc 	evalStack+0,x
-.e538	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e53b	a9 00		lda #$00			lda 	#0
-.e53d	fd 01 04	sbc $0401,x			sbc 	evalStack+1,x
-.e540	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e543	a9 00		lda #$00			lda 	#0
-.e545	fd 02 04	sbc $0402,x			sbc 	evalStack+2,x
-.e548	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e54b	a9 00		lda #$00			lda 	#0
-.e54d	fd 03 04	sbc $0403,x			sbc 	evalStack+3,x
-.e550	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e553	ee 72 20	inc $2072			inc 	SignCount
-.e556					BFNExit:
-.e556	60		rts				rts
-.e557					BFUNC_Modulus:
-.e557	20 90 e4	jsr $e490			jsr 	BFUNC_Divide 				; start with division.
-.e55a	ad 6e 20	lda $206e			lda 	Temp1+0 					; copy remainder
-.e55d	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e560	ad 6f 20	lda $206f			lda 	Temp1+1
-.e563	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e566	ad 70 20	lda $2070			lda 	Temp1+2
-.e569	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e56c	ad 71 20	lda $2071			lda 	Temp1+3
-.e56f	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e572	60		rts				rts
+.e534					BFUNC_Divide:
+.e534	bd 04 04	lda $0404,x			lda 	evalStack+4,x 				; check for /0
+.e537	1d 05 04	ora $0405,x			ora 	evalStack+5,x
+.e53a	1d 06 04	ora $0406,x			ora 	evalStack+6,x
+.e53d	1d 07 04	ora $0407,x			ora 	evalStack+7,x
+.e540	d0 13		bne $e555			bne 	_BFDOkay
+.e542	20 9d e8	jsr $e89d			jsr 	ReportError
+>e545	44 69 76 69 73 6f 6e 20				.text 	"Divison by Zero",$00
+>e54d	62 79 20 5a 65 72 6f 00
+.e555					_BFDOkay:
+.e555	a9 00		lda #$00			lda 	#0 							; Temp1 is 'A' (and holds the remainder)
+.e557	8d 6e 20	sta $206e			sta 	Temp1 						; Q/Dividend/Left in +0
+.e55a	8d 6f 20	sta $206f			sta 	Temp1+1 					; M/Divisor/Right in +4
+.e55d	8d 70 20	sta $2070			sta 	Temp1+2
+.e560	8d 71 20	sta $2071			sta 	Temp1+3
+.e563	8d 72 20	sta $2072			sta 	SignCount 					; Count of signs.
+.e566	20 d1 e5	jsr $e5d1			jsr 	BFUNC_Negate 				; negate (and bump sign count)
+.e569	da		phx				phx
+.e56a	e8		inx				inx
+.e56b	e8		inx				inx
+.e56c	e8		inx				inx
+.e56d	e8		inx				inx
+.e56e	20 d1 e5	jsr $e5d1			jsr 	BFUNC_Negate
+.e571	fa		plx				plx
+.e572	5a		phy				phy 								; Y is the counter
+.e573	a0 20		ldy #$20			ldy 	#32 						; 32 iterations of the loop.
+.e575					_BFDLoop:
+.e575	1e 00 04	asl $0400,x			asl 	evalStack+0,x 				; shift AQ left.
+.e578	3e 01 04	rol $0401,x			rol 	evalStack+1,x
+.e57b	3e 02 04	rol $0402,x			rol 	evalStack+2,x
+.e57e	3e 03 04	rol $0403,x			rol 	evalStack+3,x
+.e581	2e 6e 20	rol $206e			rol 	Temp1
+.e584	2e 6f 20	rol $206f			rol 	Temp1+1
+.e587	2e 70 20	rol $2070			rol 	Temp1+2
+.e58a	2e 71 20	rol $2071			rol 	Temp1+3
+.e58d	38		sec				sec
+.e58e	ad 6e 20	lda $206e			lda 	Temp1+0 					; Calculate A-M on stack.
+.e591	fd 04 04	sbc $0404,x			sbc 	evalStack+4,x
+.e594	48		pha				pha
+.e595	ad 6f 20	lda $206f			lda 	Temp1+1
+.e598	fd 05 04	sbc $0405,x			sbc 	evalStack+5,x
+.e59b	48		pha				pha
+.e59c	ad 70 20	lda $2070			lda 	Temp1+2
+.e59f	fd 06 04	sbc $0406,x			sbc 	evalStack+6,x
+.e5a2	48		pha				pha
+.e5a3	ad 71 20	lda $2071			lda 	Temp1+3
+.e5a6	fd 07 04	sbc $0407,x			sbc 	evalStack+7,x
+.e5a9	90 19		bcc $e5c4			bcc 	_BFDNoAdd
+.e5ab	8d 71 20	sta $2071			sta 	Temp1+3 					; update A
+.e5ae	68		pla				pla
+.e5af	8d 70 20	sta $2070			sta 	Temp1+2
+.e5b2	68		pla				pla
+.e5b3	8d 6f 20	sta $206f			sta 	Temp1+1
+.e5b6	68		pla				pla
+.e5b7	8d 6e 20	sta $206e			sta 	Temp1+0
+.e5ba	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; set Q bit 1.
+.e5bd	09 01		ora #$01			ora 	#1
+.e5bf	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e5c2	80 03		bra $e5c7			bra 	_BFDNext
+.e5c4					_BFDNoAdd:
+.e5c4	68		pla				pla 								; Throw away the intermediate calculations
+.e5c5	68		pla				pla
+.e5c6	68		pla				pla
+.e5c7					_BFDNext:
+.e5c7	88		dey				dey
+.e5c8	d0 ab		bne $e575			bne 	_BFDLoop
+.e5ca	7a		ply				ply 								; restore Y and exit
+.e5cb	4e 72 20	lsr $2072			lsr 	SignCount 					; if sign count odd,
+.e5ce	b0 06		bcs $e5d6			bcs		BFUNC_NegateAlways 			; negate the result
+.e5d0	60		rts				rts
+.e5d1					BFUNC_Negate:
+.e5d1	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e5d4	10 24		bpl $e5fa			bpl 	BFNExit
+.e5d6					BFUNC_NegateAlways:
+.e5d6	38		sec				sec
+.e5d7	a9 00		lda #$00			lda 	#0
+.e5d9	fd 00 04	sbc $0400,x			sbc 	evalStack+0,x
+.e5dc	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e5df	a9 00		lda #$00			lda 	#0
+.e5e1	fd 01 04	sbc $0401,x			sbc 	evalStack+1,x
+.e5e4	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e5e7	a9 00		lda #$00			lda 	#0
+.e5e9	fd 02 04	sbc $0402,x			sbc 	evalStack+2,x
+.e5ec	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e5ef	a9 00		lda #$00			lda 	#0
+.e5f1	fd 03 04	sbc $0403,x			sbc 	evalStack+3,x
+.e5f4	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e5f7	ee 72 20	inc $2072			inc 	SignCount
+.e5fa					BFNExit:
+.e5fa	60		rts				rts
+.e5fb					BFUNC_Modulus:
+.e5fb	20 34 e5	jsr $e534			jsr 	BFUNC_Divide 				; start with division.
+.e5fe	ad 6e 20	lda $206e			lda 	Temp1+0 					; copy remainder
+.e601	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e604	ad 6f 20	lda $206f			lda 	Temp1+1
+.e607	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e60a	ad 70 20	lda $2070			lda 	Temp1+2
+.e60d	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e610	ad 71 20	lda $2071			lda 	Temp1+3
+.e613	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e616	60		rts				rts
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: binary/compare.asm
 
-.e573					BFUNC_Equals:
-.e573	18		clc				clc
-.e574	80 01		bra $e577			bra 	BFUNC_EqualCheck
-.e576					BFUNC_NotEquals:
-.e576	38		sec				sec
-.e577					BFUNC_EqualCheck:
-.e577	08		php				php									; save invert flag
-.e578	ad 00 04	lda $0400			lda 	evalStack+0 				; check equality
-.e57b	cd 04 04	cmp $0404			cmp 	evalStack+4
-.e57e	d0 1c		bne $e59c			bne 	COMP_Fail
-.e580	ad 01 04	lda $0401			lda 	evalStack+1
-.e583	cd 05 04	cmp $0405			cmp 	evalStack+5
-.e586	d0 14		bne $e59c			bne 	COMP_Fail
-.e588	ad 02 04	lda $0402			lda 	evalStack+2
-.e58b	cd 06 04	cmp $0406			cmp 	evalStack+6
-.e58e	d0 0c		bne $e59c			bne 	COMP_Fail
-.e590	ad 03 04	lda $0403			lda 	evalStack+3
-.e593	cd 07 04	cmp $0407			cmp 	evalStack+7
-.e596	d0 04		bne $e59c			bne 	COMP_Fail
-.e598					COMP_Succeed:
-.e598	a9 ff		lda #$ff			lda 	#$FF
-.e59a	80 02		bra $e59e			bra 	COMP_SetResult
-.e59c					COMP_Fail:
-.e59c	a9 00		lda #$00			lda 	#0 							; here return 0
-.e59e					COMP_SetResult:
-.e59e	28		plp				plp 								; but if CS
-.e59f	90 02		bcc $e5a3			bcc 	COMP_Accept
-.e5a1	49 ff		eor #$ff			eor 	#$FF 						; invert that
-.e5a3					COMP_Accept:
-.e5a3	9d 00 04	sta $0400,x			sta 	evalStack+0,x 				; write to result.
-.e5a6	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e5a9	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e5ac	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e5af	60		rts				rts
-.e5b0					BFUNC_Less:
-.e5b0	18		clc				clc
-.e5b1	80 01		bra $e5b4			bra 	BFUNC_LessCheck
-.e5b3					BFUNC_GreaterEqual:
-.e5b3	38		sec				sec
-.e5b4					BFUNC_LessCheck:
-.e5b4	08		php				php
-.e5b5	38		sec				sec
-.e5b6	ad 00 04	lda $0400			lda 	evalStack+0 				; compare using direct subtraction
-.e5b9	ed 04 04	sbc $0404			sbc 	evalStack+4
-.e5bc	ad 01 04	lda $0401			lda 	evalStack+1
-.e5bf	ed 05 04	sbc $0405			sbc 	evalStack+5
-.e5c2	ad 02 04	lda $0402			lda 	evalStack+2
-.e5c5	ed 06 04	sbc $0406			sbc 	evalStack+6
-.e5c8	ad 03 04	lda $0403			lda 	evalStack+3
-.e5cb	ed 07 04	sbc $0407			sbc 	evalStack+7
-.e5ce	30 c8		bmi $e598			bmi 	COMP_Succeed
-.e5d0	80 ca		bra $e59c			bra 	COMP_Fail
-.e5d2					BFUNC_Greater:
-.e5d2	18		clc				clc
-.e5d3	80 01		bra $e5d6			bra 	BFUNC_GreaterCheck
-.e5d5					BFUNC_LessEqual:
-.e5d5	38		sec				sec
-.e5d6					BFUNC_GreaterCheck:
-.e5d6	08		php				php
-.e5d7	38		sec				sec
-.e5d8	ad 04 04	lda $0404			lda 	evalStack+4 				; compare using direct subtraction
-.e5db	ed 00 04	sbc $0400			sbc 	evalStack+0
-.e5de	ad 05 04	lda $0405			lda 	evalStack+5
-.e5e1	ed 01 04	sbc $0401			sbc 	evalStack+1
-.e5e4	ad 06 04	lda $0406			lda 	evalStack+6
-.e5e7	ed 02 04	sbc $0402			sbc 	evalStack+2
-.e5ea	ad 07 04	lda $0407			lda 	evalStack+7
-.e5ed	ed 03 04	sbc $0403			sbc 	evalStack+3
-.e5f0	30 a6		bmi $e598			bmi 	COMP_Succeed
-.e5f2	80 a8		bra $e59c			bra 	COMP_Fail
+.e617					BFUNC_Equals:
+.e617	18		clc				clc
+.e618	80 01		bra $e61b			bra 	BFUNC_EqualCheck
+.e61a					BFUNC_NotEquals:
+.e61a	38		sec				sec
+.e61b					BFUNC_EqualCheck:
+.e61b	08		php				php									; save invert flag
+.e61c	ad 00 04	lda $0400			lda 	evalStack+0 				; check equality
+.e61f	cd 04 04	cmp $0404			cmp 	evalStack+4
+.e622	d0 1c		bne $e640			bne 	COMP_Fail
+.e624	ad 01 04	lda $0401			lda 	evalStack+1
+.e627	cd 05 04	cmp $0405			cmp 	evalStack+5
+.e62a	d0 14		bne $e640			bne 	COMP_Fail
+.e62c	ad 02 04	lda $0402			lda 	evalStack+2
+.e62f	cd 06 04	cmp $0406			cmp 	evalStack+6
+.e632	d0 0c		bne $e640			bne 	COMP_Fail
+.e634	ad 03 04	lda $0403			lda 	evalStack+3
+.e637	cd 07 04	cmp $0407			cmp 	evalStack+7
+.e63a	d0 04		bne $e640			bne 	COMP_Fail
+.e63c					COMP_Succeed:
+.e63c	a9 ff		lda #$ff			lda 	#$FF
+.e63e	80 02		bra $e642			bra 	COMP_SetResult
+.e640					COMP_Fail:
+.e640	a9 00		lda #$00			lda 	#0 							; here return 0
+.e642					COMP_SetResult:
+.e642	28		plp				plp 								; but if CS
+.e643	90 02		bcc $e647			bcc 	COMP_Accept
+.e645	49 ff		eor #$ff			eor 	#$FF 						; invert that
+.e647					COMP_Accept:
+.e647	9d 00 04	sta $0400,x			sta 	evalStack+0,x 				; write to result.
+.e64a	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e64d	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e650	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e653	60		rts				rts
+.e654					BFUNC_Less:
+.e654	18		clc				clc
+.e655	80 01		bra $e658			bra 	BFUNC_LessCheck
+.e657					BFUNC_GreaterEqual:
+.e657	38		sec				sec
+.e658					BFUNC_LessCheck:
+.e658	08		php				php
+.e659	38		sec				sec
+.e65a	ad 00 04	lda $0400			lda 	evalStack+0 				; compare using direct subtraction
+.e65d	ed 04 04	sbc $0404			sbc 	evalStack+4
+.e660	ad 01 04	lda $0401			lda 	evalStack+1
+.e663	ed 05 04	sbc $0405			sbc 	evalStack+5
+.e666	ad 02 04	lda $0402			lda 	evalStack+2
+.e669	ed 06 04	sbc $0406			sbc 	evalStack+6
+.e66c	ad 03 04	lda $0403			lda 	evalStack+3
+.e66f	ed 07 04	sbc $0407			sbc 	evalStack+7
+.e672	30 c8		bmi $e63c			bmi 	COMP_Succeed
+.e674	80 ca		bra $e640			bra 	COMP_Fail
+.e676					BFUNC_Greater:
+.e676	18		clc				clc
+.e677	80 01		bra $e67a			bra 	BFUNC_GreaterCheck
+.e679					BFUNC_LessEqual:
+.e679	38		sec				sec
+.e67a					BFUNC_GreaterCheck:
+.e67a	08		php				php
+.e67b	38		sec				sec
+.e67c	ad 04 04	lda $0404			lda 	evalStack+4 				; compare using direct subtraction
+.e67f	ed 00 04	sbc $0400			sbc 	evalStack+0
+.e682	ad 05 04	lda $0405			lda 	evalStack+5
+.e685	ed 01 04	sbc $0401			sbc 	evalStack+1
+.e688	ad 06 04	lda $0406			lda 	evalStack+6
+.e68b	ed 02 04	sbc $0402			sbc 	evalStack+2
+.e68e	ad 07 04	lda $0407			lda 	evalStack+7
+.e691	ed 03 04	sbc $0403			sbc 	evalStack+3
+.e694	30 a6		bmi $e63c			bmi 	COMP_Succeed
+.e696	80 a8		bra $e640			bra 	COMP_Fail
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: binary/scompare.asm
 
-.e5f4					BFUNC_StringCompare:
-.e5f4	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; get address into temporaries.
-.e5f7	85 26		sta $26				sta 	zTemp1
-.e5f9	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e5fc	85 27		sta $27				sta 	zTemp1+1
-.e5fe	bd 04 04	lda $0404,x			lda 	evalStack+4,x
-.e601	85 28		sta $28				sta 	zTemp2
-.e603	bd 05 04	lda $0405,x			lda 	evalStack+5,x
-.e606	85 29		sta $29				sta 	zTemp2+1
-.e608	a0 00		ldy #$00			ldy 	#0
-.e60a					_BFSCLoop:
-.e60a	b1 26		lda ($26),y			lda 	(zTemp1),y 					; comparison
-.e60c	38		sec				sec
-.e60d	d1 28		cmp ($28),y			cmp 	(zTemp2),y
-.e60f	d0 14		bne $e625			bne		_BFSCDifferent 				; return different result.
-.e611	c8		iny				iny
-.e612	c9 00		cmp #$00			cmp 	#0							; until both EOS.
-.e614	d0 f4		bne $e60a			bne 	_BFSCLoop
-.e616	a9 00		lda #$00			lda 	#0
-.e618					_BFSCSetAll:
-.e618	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e61b	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e61e	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e621	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e624	60		rts				rts
-.e625					_BFSCDifferent:
-.e625	a9 ff		lda #$ff			lda 	#255 						; if CC set all as <
-.e627	90 ef		bcc $e618			bcc 	_BFSCSetAll
-.e629	a9 00		lda #$00			lda 	#0 							; set all zero
-.e62b	20 18 e6	jsr $e618			jsr 	_BFSCSetAll
-.e62e	fe 00 04	inc $0400,x			inc 	evalStack+0,x 				; and make it one.
-.e631	60		rts				rts
+.e698					BFUNC_StringCompare:
+.e698	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; get address into temporaries.
+.e69b	85 26		sta $26				sta 	zTemp1
+.e69d	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e6a0	85 27		sta $27				sta 	zTemp1+1
+.e6a2	bd 04 04	lda $0404,x			lda 	evalStack+4,x
+.e6a5	85 28		sta $28				sta 	zTemp2
+.e6a7	bd 05 04	lda $0405,x			lda 	evalStack+5,x
+.e6aa	85 29		sta $29				sta 	zTemp2+1
+.e6ac	a0 00		ldy #$00			ldy 	#0
+.e6ae					_BFSCLoop:
+.e6ae	b1 26		lda ($26),y			lda 	(zTemp1),y 					; comparison
+.e6b0	38		sec				sec
+.e6b1	d1 28		cmp ($28),y			cmp 	(zTemp2),y
+.e6b3	d0 14		bne $e6c9			bne		_BFSCDifferent 				; return different result.
+.e6b5	c8		iny				iny
+.e6b6	c9 00		cmp #$00			cmp 	#0							; until both EOS.
+.e6b8	d0 f4		bne $e6ae			bne 	_BFSCLoop
+.e6ba	a9 00		lda #$00			lda 	#0
+.e6bc					_BFSCSetAll:
+.e6bc	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e6bf	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e6c2	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e6c5	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e6c8	60		rts				rts
+.e6c9					_BFSCDifferent:
+.e6c9	a9 ff		lda #$ff			lda 	#255 						; if CC set all as <
+.e6cb	90 ef		bcc $e6bc			bcc 	_BFSCSetAll
+.e6cd	a9 00		lda #$00			lda 	#0 							; set all zero
+.e6cf	20 bc e6	jsr $e6bc			jsr 	_BFSCSetAll
+.e6d2	fe 00 04	inc $0400,x			inc 	evalStack+0,x 				; and make it one.
+.e6d5	60		rts				rts
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: unary/unary.asm
 
-.e632					UNARY_Len:
-.e632	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
-.e635	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; copy string address to zTemp1
-.e638	85 26		sta $26				sta 	zTemp1
-.e63a	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e63d	85 27		sta $27				sta 	zTemp1+1
-.e63f	5a		phy				phy
-.e640	a0 00		ldy #$00			ldy 	#0 							; now figure out its length.
-.e642					_ULGetLength:
-.e642	b1 26		lda ($26),y			lda 	(zTemp1),y 					; read character
-.e644	f0 1d		beq $e663			beq 	_ULFoundEOL 				; found end of line.
-.e646	c8		iny				iny
-.e647	d0 f9		bne $e642			bne 	_ULGetLength 				; scan 256 only.
-.e649	20 f9 e7	jsr $e7f9			jsr 	ReportError
->e64c	43 61 6e 6e 6f 74 20 66				.text 	"Cannot find string end",$00
->e654	69 6e 64 20 73 74 72 69 6e 67 20 65 6e 64 00
-.e663					_ULFoundEOL:
-.e663	98		tya				tya 								; length in A, restore Y
-.e664	7a		ply				ply
-.e665					UNARY_ReturnByte:
-.e665	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e668	a9 00		lda #$00			lda 	#0 							; clear the rests
-.e66a	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e66d	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e670	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e673	60		rts				rts
-.e674					UNARY_Ch:
-.e674	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
-.e677	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; copy string address to zTemp1
-.e67a	85 26		sta $26				sta 	zTemp1
-.e67c	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e67f	85 27		sta $27				sta 	zTemp1+1
-.e681	5a		phy				phy
-.e682	a0 00		ldy #$00			ldy 	#0 							; now get first character
-.e684	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e686	7a		ply				ply
-.e687	80 dc		bra $e665			bra 	UNARY_ReturnByte 			; return that byte.
-.e689					UNARY_Abs:
-.e689	ea		nop				nop
-.e68a	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
-.e68d	20 2d e5	jsr $e52d			jsr 	BFUNC_Negate 				; there's an ABS routine in divide
-.e690	60		rts				rts
-.e691					UNARY_Top:
-.e691	ad 6c 20	lda $206c			lda 	highMemory
-.e694	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e697	ad 6d 20	lda $206d			lda 	highMemory+1
-.e69a	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e69d	a9 00		lda #$00			lda 	#0
-.e69f	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e6a2	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e6a5	60		rts				rts
-.e6a6					UNARY_Rnd:
-.e6a6	20 b1 e6	jsr $e6b1			jsr 	Random16 					; call 16 bit RNG twice
-.e6a9	e8		inx				inx
-.e6aa	e8		inx				inx
-.e6ab	20 b1 e6	jsr $e6b1			jsr 	Random16
-.e6ae	ca		dex				dex
-.e6af	ca		dex				dex
-.e6b0	60		rts				rts
-.e6b1					Random16:
-.e6b1	ad 74 20	lda $2074			lda 	RandomSeed 					; initialise if nonzero
-.e6b4	0d 75 20	ora $2075			ora 	RandomSeed+1
-.e6b7	d0 0d		bne $e6c6			bne 	_R16_NoInit
-.e6b9	ee 74 20	inc $2074			inc 	RandomSeed 					; by setting low to 1
-.e6bc	5a		phy				phy
-.e6bd	a0 14		ldy #$14			ldy 	#20 						; call it 20 times to get it started
-.e6bf					_R16_Setup:
-.e6bf	20 b1 e6	jsr $e6b1			jsr 	Random16
-.e6c2	88		dey				dey
-.e6c3	d0 fa		bne $e6bf			bne 	_R16_Setup
-.e6c5	7a		ply				ply
-.e6c6					_R16_NoInit:
-.e6c6	4e 75 20	lsr $2075			lsr 	RandomSeed+1				; shift seed right
-.e6c9	6e 74 20	ror $2074			ror 	RandomSeed
-.e6cc	90 08		bcc $e6d6			bcc 	_R16_NoXor
-.e6ce	ad 75 20	lda $2075			lda 	RandomSeed+1				; xor MSB with $B4 if bit set.
-.e6d1	49 b4		eor #$b4			eor 	#$B4 						; like the Wikipedia one.
-.e6d3	8d 75 20	sta $2075			sta 	RandomSeed+1
-.e6d6					_R16_NoXor:
-.e6d6	ad 74 20	lda $2074			lda 	RandomSeed					; copy result to evaluate stack.
-.e6d9	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e6dc	ad 75 20	lda $2075			lda 	RandomSeed+1
-.e6df	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e6e2	60		rts				rts
+.e6d6					UNARY_Len:
+.e6d6	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
+.e6d9	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; copy string address to zTemp1
+.e6dc	85 26		sta $26				sta 	zTemp1
+.e6de	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e6e1	85 27		sta $27				sta 	zTemp1+1
+.e6e3	5a		phy				phy
+.e6e4	a0 00		ldy #$00			ldy 	#0 							; now figure out its length.
+.e6e6					_ULGetLength:
+.e6e6	b1 26		lda ($26),y			lda 	(zTemp1),y 					; read character
+.e6e8	f0 1d		beq $e707			beq 	_ULFoundEOL 				; found end of line.
+.e6ea	c8		iny				iny
+.e6eb	d0 f9		bne $e6e6			bne 	_ULGetLength 				; scan 256 only.
+.e6ed	20 9d e8	jsr $e89d			jsr 	ReportError
+>e6f0	43 61 6e 6e 6f 74 20 66				.text 	"Cannot find string end",$00
+>e6f8	69 6e 64 20 73 74 72 69 6e 67 20 65 6e 64 00
+.e707					_ULFoundEOL:
+.e707	98		tya				tya 								; length in A, restore Y
+.e708	7a		ply				ply
+.e709					UNARY_ReturnByte:
+.e709	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e70c	a9 00		lda #$00			lda 	#0 							; clear the rests
+.e70e	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e711	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e714	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e717	60		rts				rts
+.e718					UNARY_Ch:
+.e718	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
+.e71b	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; copy string address to zTemp1
+.e71e	85 26		sta $26				sta 	zTemp1
+.e720	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e723	85 27		sta $27				sta 	zTemp1+1
+.e725	5a		phy				phy
+.e726	a0 00		ldy #$00			ldy 	#0 							; now get first character
+.e728	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e72a	7a		ply				ply
+.e72b	80 dc		bra $e709			bra 	UNARY_ReturnByte 			; return that byte.
+.e72d					UNARY_Abs:
+.e72d	ea		nop				nop
+.e72e	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
+.e731	20 d1 e5	jsr $e5d1			jsr 	BFUNC_Negate 				; there's an ABS routine in divide
+.e734	60		rts				rts
+.e735					UNARY_Top:
+.e735	ad 6c 20	lda $206c			lda 	highMemory
+.e738	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e73b	ad 6d 20	lda $206d			lda 	highMemory+1
+.e73e	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e741	a9 00		lda #$00			lda 	#0
+.e743	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e746	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e749	60		rts				rts
+.e74a					UNARY_Rnd:
+.e74a	20 55 e7	jsr $e755			jsr 	Random16 					; call 16 bit RNG twice
+.e74d	e8		inx				inx
+.e74e	e8		inx				inx
+.e74f	20 55 e7	jsr $e755			jsr 	Random16
+.e752	ca		dex				dex
+.e753	ca		dex				dex
+.e754	60		rts				rts
+.e755					Random16:
+.e755	ad 74 20	lda $2074			lda 	RandomSeed 					; initialise if nonzero
+.e758	0d 75 20	ora $2075			ora 	RandomSeed+1
+.e75b	d0 0d		bne $e76a			bne 	_R16_NoInit
+.e75d	ee 74 20	inc $2074			inc 	RandomSeed 					; by setting low to 1
+.e760	5a		phy				phy
+.e761	a0 14		ldy #$14			ldy 	#20 						; call it 20 times to get it started
+.e763					_R16_Setup:
+.e763	20 55 e7	jsr $e755			jsr 	Random16
+.e766	88		dey				dey
+.e767	d0 fa		bne $e763			bne 	_R16_Setup
+.e769	7a		ply				ply
+.e76a					_R16_NoInit:
+.e76a	4e 75 20	lsr $2075			lsr 	RandomSeed+1				; shift seed right
+.e76d	6e 74 20	ror $2074			ror 	RandomSeed
+.e770	90 08		bcc $e77a			bcc 	_R16_NoXor
+.e772	ad 75 20	lda $2075			lda 	RandomSeed+1				; xor MSB with $B4 if bit set.
+.e775	49 b4		eor #$b4			eor 	#$B4 						; like the Wikipedia one.
+.e777	8d 75 20	sta $2075			sta 	RandomSeed+1
+.e77a					_R16_NoXor:
+.e77a	ad 74 20	lda $2074			lda 	RandomSeed					; copy result to evaluate stack.
+.e77d	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e780	ad 75 20	lda $2075			lda 	RandomSeed+1
+.e783	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e786	60		rts				rts
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: commands/execute.asm
 
-.e6e3					COMMAND_Run:
-.e6e3	20 78 e7	jsr $e778			jsr 	COMMAND_Clear 				; clear everything for a new run.
-.e6e6	a2 00		ldx #$00			ldx 	#BasicProgram & 255 		; start from here
-.e6e8	a0 22		ldy #$22			ldy 	#BasicProgram >> 8
-.e6ea	86 20		stx $20				stx 	zCurrentLine 				; set current line.
-.e6ec	84 21		sty $21				sty 	zCurrentLine+1
-.e6ee					CRUNNewLine:
-.e6ee	a0 00		ldy #$00			ldy 	#0 							; look at the offset, end of program
-.e6f0	b1 20		lda ($20),y			lda 	(zCurrentLine),y
-.e6f2	f0 3e		beq $e732			beq 	COMMAND_End 				; if zero, off end of program so stop.
-.e6f4	a0 03		ldy #$03			ldy 	#3 							; offset to first token.
-.e6f6					CRUNNextInstruction:
-.e6f6	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next token
-.e6f8	f0 07		beq $e701			beq 	CRUNNextLine 				; if zero, then end of line.
-.e6fa					CRUNNotEndOfLine:
-.e6fa	c9 8d		cmp #$8d			cmp 	#KW_Colon 					; check for a colon first.
-.e6fc	d0 12		bne $e710			bne 	CRUNExecuteOne 				; if not that, execute the token.
-.e6fe	c8		iny				iny		 							; if colon, skip it and loop round.
-.e6ff	80 f5		bra $e6f6			bra 	CRUNNextInstruction
-.e701					CRUNNextLine:
-.e701	a0 00		ldy #$00			ldy 	#0 							; add offset from line to line pointer
-.e703	b1 20		lda ($20),y			lda 	(zCurrentLine),y
-.e705	18		clc				clc
-.e706	65 20		adc $20				adc 	zCurrentLine
-.e708	85 20		sta $20				sta 	zCurrentLine
-.e70a	90 e2		bcc $e6ee			bcc 	CRUNNewLine
-.e70c	e6 21		inc $21				inc 	zCurrentLine+1
-.e70e	80 de		bra $e6ee			bra 	CRUNNewLine
-.e710					CRUNExecuteOne:
-.e710	c8		iny				iny 								; skip over loaded token
-.e711	0a		asl a				asl 	a 							; double lower keyword byte, clears bit 7.
-.e712	8d 6f 20	sta $206f			sta 	Temp1+1 					; this is the low byte into the KVT
-.e715	8a		txa				txa
-.e716	a9 e0		lda #$e0			lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
-.e718	8d 70 20	sta $2070			sta 	Temp1+2
-.e71b	a9 6c		lda #$6c			lda 	#$6C 						; make it jump indirect
-.e71d	8d 6e 20	sta $206e			sta 	Temp1+0
-.e720	a9 00		lda #$00			lda 	#0 							; reset the string buffer position
-.e722	8d 73 20	sta $2073			sta 	StringBufferPos
-.e725	20 6e 20	jsr $206e			jsr 	Temp1 						; call instruction
-.e728	80 cc		bra $e6f6			bra 	CRUNNextInstruction 		; do next instruction.
-.e72a					COMMAND_Stop:
-.e72a	20 f9 e7	jsr $e7f9			jsr 	ReportError
->e72d	53 74 6f 70 00					.text 	"Stop",$00
-.e732					COMMAND_End:
->e732	02						.byte 	2
-.e733	4c ee e7	jmp $e7ee			jmp 	WarmStart
+.e787					COMMAND_Run:
+.e787	20 1c e8	jsr $e81c			jsr 	COMMAND_Clear 				; clear everything for a new run.
+.e78a	a2 00		ldx #$00			ldx 	#BasicProgram & 255 		; start from here
+.e78c	a0 22		ldy #$22			ldy 	#BasicProgram >> 8
+.e78e	86 20		stx $20				stx 	zCurrentLine 				; set current line.
+.e790	84 21		sty $21				sty 	zCurrentLine+1
+.e792					CRUNNewLine:
+.e792	a0 00		ldy #$00			ldy 	#0 							; look at the offset, end of program
+.e794	b1 20		lda ($20),y			lda 	(zCurrentLine),y
+.e796	f0 3e		beq $e7d6			beq 	COMMAND_End 				; if zero, off end of program so stop.
+.e798	a0 03		ldy #$03			ldy 	#3 							; offset to first token.
+.e79a					CRUNNextInstruction:
+.e79a	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next token
+.e79c	f0 07		beq $e7a5			beq 	CRUNNextLine 				; if zero, then end of line.
+.e79e					CRUNNotEndOfLine:
+.e79e	c9 8d		cmp #$8d			cmp 	#KW_Colon 					; check for a colon first.
+.e7a0	d0 12		bne $e7b4			bne 	CRUNExecuteOne 				; if not that, execute the token.
+.e7a2	c8		iny				iny		 							; if colon, skip it and loop round.
+.e7a3	80 f5		bra $e79a			bra 	CRUNNextInstruction
+.e7a5					CRUNNextLine:
+.e7a5	a0 00		ldy #$00			ldy 	#0 							; add offset from line to line pointer
+.e7a7	b1 20		lda ($20),y			lda 	(zCurrentLine),y
+.e7a9	18		clc				clc
+.e7aa	65 20		adc $20				adc 	zCurrentLine
+.e7ac	85 20		sta $20				sta 	zCurrentLine
+.e7ae	90 e2		bcc $e792			bcc 	CRUNNewLine
+.e7b0	e6 21		inc $21				inc 	zCurrentLine+1
+.e7b2	80 de		bra $e792			bra 	CRUNNewLine
+.e7b4					CRUNExecuteOne:
+.e7b4	c8		iny				iny 								; skip over loaded token
+.e7b5	0a		asl a				asl 	a 							; double lower keyword byte, clears bit 7.
+.e7b6	8d 6f 20	sta $206f			sta 	Temp1+1 					; this is the low byte into the KVT
+.e7b9	8a		txa				txa
+.e7ba	a9 e0		lda #$e0			lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
+.e7bc	8d 70 20	sta $2070			sta 	Temp1+2
+.e7bf	a9 6c		lda #$6c			lda 	#$6C 						; make it jump indirect
+.e7c1	8d 6e 20	sta $206e			sta 	Temp1+0
+.e7c4	a9 00		lda #$00			lda 	#0 							; reset the string buffer position
+.e7c6	8d 73 20	sta $2073			sta 	StringBufferPos
+.e7c9	20 6e 20	jsr $206e			jsr 	Temp1 						; call instruction
+.e7cc	80 cc		bra $e79a			bra 	CRUNNextInstruction 		; do next instruction.
+.e7ce					COMMAND_Stop:
+.e7ce	20 9d e8	jsr $e89d			jsr 	ReportError
+>e7d1	53 74 6f 70 00					.text 	"Stop",$00
+.e7d6					COMMAND_End:
+>e7d6	02						.byte 	2
+.e7d7	4c 92 e8	jmp $e892			jmp 	WarmStart
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: commands/miscellany.asm
 
-.e736					COMMAND_Assert:
-.e736	20 75 e1	jsr $e175			jsr 	EvaluateBase 				; evaluate the expression
-.e739	ea		nop				nop
-.e73a	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; check non zero
-.e73d	1d 01 04	ora $0401,x			ora 	evalStack+1,x
-.e740	1d 02 04	ora $0402,x			ora 	evalStack+2,x
-.e743	1d 03 04	ora $0403,x			ora 	evalStack+3,x
-.e746	d0 12		bne $e75a			bne 	_CMDAExit
-.e748	ea		nop				nop
-.e749	20 f9 e7	jsr $e7f9			jsr 	ReportError
->e74c	41 73 73 65 72 74 20 66				.text 	"Assert failed",$00
->e754	61 69 6c 65 64 00
-.e75a					_CMDAExit:
-.e75a	60		rts				rts
-.e75b					COMMAND_Rem:
-.e75b	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next character token.
-.e75d	f0 05		beq $e764			beq 	_CREMExit 					; End of line, then exit.
-.e75f	c8		iny				iny 								; something to skip
-.e760	c9 8d		cmp #$8d			cmp 	#KW_COLON 					; if not a colon
-.e762	d0 f7		bne $e75b			bne 	COMMAND_Rem 				; keep searching
-.e764					_CREMExit:
-.e764	60		rts				rts
-.e765					COMMAND_New:
-.e765	a9 00		lda #$00			lda 	#0 							; erase the actual program.
-.e767	8d 00 22	sta $2200			sta 	BasicProgram 				; by zeroing the initial offset.
-.e76a	20 78 e7	jsr $e778			jsr 	COMMAND_Clear 				; clear non fixed variable, reset stack and low mem pointer
-.e76d	a9 00		lda #$00			lda 	#endMemory & $FF 			; reset high memory pointer.
-.e76f	8d 6c 20	sta $206c			sta 	HighMemory
-.e772	a9 80		lda #$80			lda 	#endMemory >> 8
-.e774	8d 6d 20	sta $206d			sta 	HighMemory+1
-.e777	60		rts				rts
-.e778					COMMAND_Clear:
-.e778	a2 00		ldx #$00			ldx 	#0	 						; clear variables @A-Z
-.e77a					_CCClearVar:
-.e77a	a9 00		lda #$00			lda 	#$00
-.e77c	9d 00 20	sta $2000,x			sta 	FixedVariables,x
-.e77f	e8		inx				inx
-.e780	e0 6c		cpx #$6c			cpx 	#27*4
-.e782	10 f6		bpl $e77a			bpl 	_CCClearVar
-.e784	a9 00		lda #$00			lda 	#basicStack & $FF 			; reset BASIC stack
-.e786	85 22		sta $22				sta 	zBasicStack
-.e788	a9 02		lda #$02			lda 	#basicStack >> 8
-.e78a	85 23		sta $23				sta 	zBasicStack+1
-.e78c	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; now find where the program ends.
-.e78e	85 24		sta $24				sta 	zLowMemory
-.e790	a9 22		lda #$22			lda 	#BasicProgram >> 8
-.e792	85 25		sta $25				sta 	zLowMemory+1
-.e794					_CCFindEnd:
-.e794	a0 00		ldy #$00			ldy 	#0 							; look at next offset
-.e796	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; if zero, reached the end.
-.e798	f0 0b		beq $e7a5			beq 	_CCFoundEnd
-.e79a	18		clc				clc 								; go to next line.
-.e79b	65 24		adc $24				adc 	zLowMemory
-.e79d	85 24		sta $24				sta 	zLowMemory
-.e79f	90 f3		bcc $e794			bcc 	_CCFindEnd
-.e7a1	e6 25		inc $25				inc 	zLowMemory+1
-.e7a3	80 ef		bra $e794			bra 	_CCFindEnd
-.e7a5					_CCFoundEnd:
-.e7a5	e6 24		inc $24				inc 	zLowMemory 					; variables etc. start after end of program.
-.e7a7	d0 02		bne $e7ab			bne 	_CCNoCarry 					; skip over zero end offset.
-.e7a9	e6 25		inc $25				inc 	zLowMemory+1
-.e7ab					_CCNoCarry:
-.e7ab	60		rts				rts
-.e7ac					COMMAND_Old:
-.e7ac	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
-.e7ae	85 24		sta $24				sta 	zLowMemory
-.e7b0	a9 22		lda #$22			lda 	#BasicProgram >> 8
-.e7b2	85 25		sta $25				sta 	zLowMemory+1
-.e7b4	a0 03		ldy #$03			ldy 	#3 							; look for the $00 end of line marker.
-.e7b6					_COScan:
-.e7b6	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; look at next byte pair
-.e7b8	c8		iny				iny
-.e7b9	f0 0d		beq $e7c8			beq 	_COFail 					; can't find marker, corrupted maybe ?
-.e7bb	c9 00		cmp #$00			cmp 	#0 							; until $00 found.
-.e7bd	d0 f7		bne $e7b6			bne 	_COScan
-.e7bf	98		tya				tya 								; Y is the new offset to the next instruction
-.e7c0	a0 00		ldy #$00			ldy 	#0 							; overwrite the old one
-.e7c2	91 24		sta ($24),y			sta 	(zLowMemory),y
-.e7c4	20 78 e7	jsr $e778			jsr 	COMMAND_Clear 				; reset variables, stacks and pointers.
-.e7c7	60		rts				rts
-.e7c8					_COFail:
-.e7c8	20 f9 e7	jsr $e7f9			jsr 	ReportError
->e7cb	43 61 6e 6e 6f 74 20 72				.text 	"Cannot recover program",$00
->e7d3	65 63 6f 76 65 72 20 70 72 6f 67 72 61 6d 00
+.e7da					COMMAND_Assert:
+.e7da	20 75 e1	jsr $e175			jsr 	EvaluateBase 				; evaluate the expression
+.e7dd	ea		nop				nop
+.e7de	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; check non zero
+.e7e1	1d 01 04	ora $0401,x			ora 	evalStack+1,x
+.e7e4	1d 02 04	ora $0402,x			ora 	evalStack+2,x
+.e7e7	1d 03 04	ora $0403,x			ora 	evalStack+3,x
+.e7ea	d0 12		bne $e7fe			bne 	_CMDAExit
+.e7ec	ea		nop				nop
+.e7ed	20 9d e8	jsr $e89d			jsr 	ReportError
+>e7f0	41 73 73 65 72 74 20 66				.text 	"Assert failed",$00
+>e7f8	61 69 6c 65 64 00
+.e7fe					_CMDAExit:
+.e7fe	60		rts				rts
+.e7ff					COMMAND_Rem:
+.e7ff	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next character token.
+.e801	f0 05		beq $e808			beq 	_CREMExit 					; End of line, then exit.
+.e803	c8		iny				iny 								; something to skip
+.e804	c9 8d		cmp #$8d			cmp 	#KW_COLON 					; if not a colon
+.e806	d0 f7		bne $e7ff			bne 	COMMAND_Rem 				; keep searching
+.e808					_CREMExit:
+.e808	60		rts				rts
+.e809					COMMAND_New:
+.e809	a9 00		lda #$00			lda 	#0 							; erase the actual program.
+.e80b	8d 00 22	sta $2200			sta 	BasicProgram 				; by zeroing the initial offset.
+.e80e	20 1c e8	jsr $e81c			jsr 	COMMAND_Clear 				; clear non fixed variable, reset stack and low mem pointer
+.e811	a9 00		lda #$00			lda 	#endMemory & $FF 			; reset high memory pointer.
+.e813	8d 6c 20	sta $206c			sta 	HighMemory
+.e816	a9 80		lda #$80			lda 	#endMemory >> 8
+.e818	8d 6d 20	sta $206d			sta 	HighMemory+1
+.e81b	60		rts				rts
+.e81c					COMMAND_Clear:
+.e81c	a2 00		ldx #$00			ldx 	#0	 						; clear variables @A-Z
+.e81e					_CCClearVar:
+.e81e	a9 00		lda #$00			lda 	#$00
+.e820	9d 00 20	sta $2000,x			sta 	FixedVariables,x
+.e823	e8		inx				inx
+.e824	e0 6c		cpx #$6c			cpx 	#27*4
+.e826	10 f6		bpl $e81e			bpl 	_CCClearVar
+.e828	a9 00		lda #$00			lda 	#basicStack & $FF 			; reset BASIC stack
+.e82a	85 22		sta $22				sta 	zBasicStack
+.e82c	a9 02		lda #$02			lda 	#basicStack >> 8
+.e82e	85 23		sta $23				sta 	zBasicStack+1
+.e830	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; now find where the program ends.
+.e832	85 24		sta $24				sta 	zLowMemory
+.e834	a9 22		lda #$22			lda 	#BasicProgram >> 8
+.e836	85 25		sta $25				sta 	zLowMemory+1
+.e838					_CCFindEnd:
+.e838	a0 00		ldy #$00			ldy 	#0 							; look at next offset
+.e83a	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; if zero, reached the end.
+.e83c	f0 0b		beq $e849			beq 	_CCFoundEnd
+.e83e	18		clc				clc 								; go to next line.
+.e83f	65 24		adc $24				adc 	zLowMemory
+.e841	85 24		sta $24				sta 	zLowMemory
+.e843	90 f3		bcc $e838			bcc 	_CCFindEnd
+.e845	e6 25		inc $25				inc 	zLowMemory+1
+.e847	80 ef		bra $e838			bra 	_CCFindEnd
+.e849					_CCFoundEnd:
+.e849	e6 24		inc $24				inc 	zLowMemory 					; variables etc. start after end of program.
+.e84b	d0 02		bne $e84f			bne 	_CCNoCarry 					; skip over zero end offset.
+.e84d	e6 25		inc $25				inc 	zLowMemory+1
+.e84f					_CCNoCarry:
+.e84f	60		rts				rts
+.e850					COMMAND_Old:
+.e850	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
+.e852	85 24		sta $24				sta 	zLowMemory
+.e854	a9 22		lda #$22			lda 	#BasicProgram >> 8
+.e856	85 25		sta $25				sta 	zLowMemory+1
+.e858	a0 03		ldy #$03			ldy 	#3 							; look for the $00 end of line marker.
+.e85a					_COScan:
+.e85a	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; look at next byte pair
+.e85c	c8		iny				iny
+.e85d	f0 0d		beq $e86c			beq 	_COFail 					; can't find marker, corrupted maybe ?
+.e85f	c9 00		cmp #$00			cmp 	#0 							; until $00 found.
+.e861	d0 f7		bne $e85a			bne 	_COScan
+.e863	98		tya				tya 								; Y is the new offset to the next instruction
+.e864	a0 00		ldy #$00			ldy 	#0 							; overwrite the old one
+.e866	91 24		sta ($24),y			sta 	(zLowMemory),y
+.e868	20 1c e8	jsr $e81c			jsr 	COMMAND_Clear 				; reset variables, stacks and pointers.
+.e86b	60		rts				rts
+.e86c					_COFail:
+.e86c	20 9d e8	jsr $e89d			jsr 	ReportError
+>e86f	43 61 6e 6e 6f 74 20 72				.text 	"Cannot recover program",$00
+>e877	65 63 6f 76 65 72 20 70 72 6f 67 72 61 6d 00
 
 ;******  Return to file: basic.asm
 
-.e7e2					Start:
-.e7e2	20 7f a0	jsr $a07f			jsr 	IOInitialise 				; set up porting stuff.
-.e7e5	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.e7e7	9a		txs			txs
-.e7e8	20 65 e7	jsr $e765			jsr 	COMMAND_New 				; do a new
-.e7eb	20 ac e7	jsr $e7ac			jsr 	COMMAND_Old 				; get back the old program as we're deving.
-.e7ee					WarmStart:
-.e7ee	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.e7f0	9a		txs			txs
-.e7f1	4c e3 e6	jmp $e6e3			jmp 	COMMAND_Run 				; RUN current program.
-.e7f4					SyntaxError:
-.e7f4	a9 01		lda #$01			lda 	#1
-.e7f6	ea		nop				nop
-.e7f7	80 fb		bra $e7f4			bra 	SyntaxError
-.e7f9					ReportError:
-.e7f9	a9 02		lda #$02			lda 	#2
-.e7fb	ea		nop				nop
-.e7fc	80 fb		bra $e7f9			bra 	ReportError
+.e886					Start:
+.e886	20 7f a0	jsr $a07f			jsr 	IOInitialise 				; set up porting stuff.
+.e889	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.e88b	9a		txs			txs
+.e88c	20 09 e8	jsr $e809			jsr 	COMMAND_New 				; do a new
+.e88f	20 50 e8	jsr $e850			jsr 	COMMAND_Old 				; get back the old program as we're deving.
+.e892					WarmStart:
+.e892	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.e894	9a		txs			txs
+.e895	4c 87 e7	jmp $e787			jmp 	COMMAND_Run 				; RUN current program.
+.e898					SyntaxError:
+.e898	a9 01		lda #$01			lda 	#1
+.e89a	ea		nop				nop
+.e89b	80 fb		bra $e898			bra 	SyntaxError
+.e89d					ReportError:
+.e89d	a9 02		lda #$02			lda 	#2
+.e89f	ea		nop				nop
+.e8a0	80 fb		bra $e89d			bra 	ReportError
 
 ;******  Processing file: include/basic_generated.inc
 
->2200	07 01 00 97 20 41 00 00			.byte $07,$01,$00,$97,$20,$41,$00,$00
+>2200	0a 01 00 97 20 42 80 31			.byte $0a,$01,$00,$97,$20,$42,$80,$31,$32,$00,$00
+>2208	32 00 00
 
 ;******  Return to file: basic.asm
 

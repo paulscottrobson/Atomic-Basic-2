@@ -22,7 +22,8 @@ zTemp2:			.word 	?
 		* = startMemory
 
 FixedVariables:	.fill 	27*4 				; address of 26 x 4 byte fixed variables @A-Z
-
+											; these must be page aligned.
+											
 HighMemory:		.word 	?					; highest memory location available (2 bytes)
 Temp1:			.dword	?					; 4 byte temporary stores.
 SignCount:		.byte 	? 					; count of signs in divide.

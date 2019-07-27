@@ -17,7 +17,8 @@
 		.include 	"general/support.asm" 	; general support.
 		.include 	"general/data.asm"		; data handling.
 		.include 	"general/evaluate.asm"	; evaluation code.
-
+		.include 	"general/variable.asm"	; variable handling.
+		
 		.include 	"binary/arithmetic.asm" ; basic arithmetic
 		.include 	"binary/binary.asm" 	; binary operators
 		.include 	"binary/multiply.asm" 	; multiplication
