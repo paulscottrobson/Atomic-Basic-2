@@ -79,9 +79,9 @@ class TokenList(object):
 		#		Standard commands
 		#
 		[command]	let 	end 	goto	gosub	for 	next
-					print 	input 	else 	local 	list 	stop 	
-					assert 	rem		new 	old 	clear	if
-					then 	do		loop 	to 		step	link
+					print 	input 	list 	stop 	assert 	rem		
+					new 	old 	clear	if		then 	do		
+					loop 	to 		step	link
 		#
 		#		Unary operators
 		#

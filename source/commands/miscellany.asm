@@ -17,7 +17,6 @@
 
 COMMAND_Assert:	;; assert
 		jsr 	EvaluateBase 				; evaluate the expression
-		#break
 		lda 	evalStack+0,x 				; check non zero 	
 		ora 	evalStack+1,x
 		ora 	evalStack+2,x
@@ -63,18 +62,19 @@ COMMAND_New:	 ;; NEW
 
 ; *******************************************************************************************
 ;
-;				CLEAR non fixed variables, BASIC stack, Low Memory Pointer
+;					CLEAR variables, BASIC stack, Low Memory Pointer
 ;
 ; *******************************************************************************************
 
 COMMAND_Clear: 	;; CLEAR
 
-		ldx 	#hashTableSize*2-1 			; clear the hash table to all zeros.
-_CCClearHash:
+		ldx 	#0	 						; clear variables @A-Z	
+_CCClearVar:
 		lda 	#$00
-		sta 	HashTable,x
-		dex
-		bpl 	_CCClearHash 				
+		sta 	FixedVariables,x
+		inx
+		cpx 	#27*4
+		bpl 	_CCClearVar
 		;
 		lda 	#basicStack & $FF 			; reset BASIC stack
 		sta 	zBasicStack

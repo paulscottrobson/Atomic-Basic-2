@@ -1,8 +1,8 @@
 
 - Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
 
-- Remove Hashes, clear variables :)
-- Work on unary functions and operators
+- Parenthesis.
+- Unary operators (- ? ! $)
 - Put -ve numbers into unit tests (currently +ve)
 - Work on variables.
 

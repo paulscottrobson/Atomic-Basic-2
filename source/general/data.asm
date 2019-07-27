@@ -21,15 +21,13 @@ zTemp2:			.word 	?
 
 		* = startMemory
 
-FixedVariables:	.fill 	26*4 				; address of 26 x 4 byte fixed variables A-Z
-
-HashTableSize = 8 							; number of entries, must be a power of 2.
-HashTable:		.fill	HashTableSize*2		; hash table for variable linked lists.
+FixedVariables:	.fill 	27*4 				; address of 26 x 4 byte fixed variables @A-Z
 
 HighMemory:		.word 	?					; highest memory location available (2 bytes)
 Temp1:			.dword	?					; 4 byte temporary stores.
 SignCount:		.byte 	? 					; count of signs in divide.
 StringBufferPos:.byte 	? 					; next free slot in string buffer
+RandomSeed 		.word 	? 					; Random Number
 
 				.align	256 				
 StringBuffer:	 							; string buffer.

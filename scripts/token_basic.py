@@ -51,7 +51,7 @@ class Tokeniser(object):
 			self.tokens.append(self.tokenHash['"'][2])
 			return text[p+1:]				
 
-		for i in range(1,9):
+		for i in range(9,1,-1):
 			if text[:i] in self.tokenHash:
 				keyword = text[:i].lower()
 				self.tokens.append(self.tokenHash[keyword][2])
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
-	bas.add('assert 2+len""+1',1)
+	bas.add('assert RND',1)
 
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)
