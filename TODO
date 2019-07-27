@@ -2,11 +2,11 @@
 - Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
 
 - Test
-	NEW	
-	OLD
-	REM
 	Running
+	REM
+
 	ASSERT 
 	Expression binary calls, constant needs redoing heavily.
+	
 	Unit Test
 

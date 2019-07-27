@@ -16,6 +16,7 @@
 ; *******************************************************************************************
 
 COMMAND_Assert:	;; assert
+		#break
 		jsr 	EvaluateBase 				; evaluate the expression
 		lda 	evalStack+0,x 				; check non zero 	
 		ora 	evalStack+1,x
@@ -70,7 +71,7 @@ COMMAND_Clear: 	;; CLEAR
 
 		ldx 	#hashTableSize*2-1 			; clear the hash table to all zeros.
 _CCClearHash:
-		lda 	#$AA
+		lda 	#$00
 		sta 	HashTable,x
 		dex
 		bpl 	_CCClearHash 				

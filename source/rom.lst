@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.54.1900 listing file
 ; 64tass -c -D TARGET=2 -b -L rom.lst -o rom.bin basic.asm
-; Sat Jul 27 06:37:02 2019
+; Sat Jul 27 08:24:56 2019
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -17,7 +17,7 @@
 .fff8					EXTDummyInterrupt:
 .fff8	40		rti				rti
 >fffa	f8 ff						.word 	EXTDummyInterrupt
->fffc	00 a0						.word 	EXTStartPersonalise
+>fffc	be e5						.word 	Start
 >fffe	f8 ff						.word 	EXTDummyInterrupt
 =4					EXTZPWork = 4								; Zero Page work for Personality (4 bytes)
 =8					IOCursorX = 8 								; Cursor position
@@ -42,7 +42,7 @@
 .a002	9a		txs			txs
 .a003	20 7e a0	jsr $a07e		jsr 	EXTReset 						; reset video
 .a006	20 34 a0	jsr $a034		jsr 	EXTClearScreen 					; clear screen
-.a009	4c bd e5	jmp $e5bd		jmp 	Start 							; start main application
+.a009	4c be e5	jmp $e5be		jmp 	Start 							; start main application
 .a00c					EXTReadKey:
 .a00c	ad 00 b8	lda $b800		lda 	PKeyboard							; read key
 .a00f	d0 01		bne $a012		bne 	EXTClearBuffer
@@ -239,58 +239,58 @@
 ;******  Processing file: include/tokens.inc
 
 .e000					KeywordVectorTable:
->e000	cd e5					.word	SyntaxError                   ; "!"        ($0080)
->e002	cd e5					.word	SyntaxError                   ; """        ($0081)
->e004	cd e5					.word	SyntaxError                   ; "#"        ($0082)
->e006	cd e5					.word	SyntaxError                   ; "$"        ($0083)
+>e000	d0 e5					.word	SyntaxError                   ; "!"        ($0080)
+>e002	d0 e5					.word	SyntaxError                   ; """        ($0081)
+>e004	d0 e5					.word	SyntaxError                   ; "#"        ($0082)
+>e006	d0 e5					.word	SyntaxError                   ; "$"        ($0083)
 >e008	ec e3					.word	BFUNC_Modulus                 ; "%"        ($0084)
 >e00a	5f e2					.word	BFUNC_And                     ; "&"        ($0085)
->e00c	cd e5					.word	SyntaxError                   ; "'"        ($0086)
->e00e	cd e5					.word	SyntaxError                   ; "("        ($0087)
->e010	cd e5					.word	SyntaxError                   ; ")"        ($0088)
+>e00c	d0 e5					.word	SyntaxError                   ; "'"        ($0086)
+>e00e	d0 e5					.word	SyntaxError                   ; "("        ($0087)
+>e010	d0 e5					.word	SyntaxError                   ; ")"        ($0088)
 >e012	ce e2					.word	BFUNC_Multiply                ; "*"        ($0089)
 >e014	13 e2					.word	BFUNC_Add                     ; "+"        ($008a)
 >e016	39 e2					.word	BFUNC_Subtract                ; "-"        ($008b)
 >e018	25 e3					.word	BFUNC_Divide                  ; "/"        ($008c)
->e01a	cd e5					.word	SyntaxError                   ; ":"        ($008d)
->e01c	cd e5					.word	SyntaxError                   ; ";"        ($008e)
+>e01a	d0 e5					.word	SyntaxError                   ; ":"        ($008d)
+>e01c	d0 e5					.word	SyntaxError                   ; ";"        ($008e)
 >e01e	6a e4					.word	BFUNC_LessEqual               ; "<="       ($008f)
 >e020	0b e4					.word	BFUNC_NotEquals               ; "<>"       ($0090)
 >e022	45 e4					.word	BFUNC_Less                    ; "<"        ($0091)
 >e024	08 e4					.word	BFUNC_Equals                  ; "="        ($0092)
 >e026	48 e4					.word	BFUNC_GreaterEqual            ; ">="       ($0093)
 >e028	67 e4					.word	BFUNC_Greater                 ; ">"        ($0094)
->e02a	cd e5					.word	SyntaxError                   ; "?"        ($0095)
+>e02a	d0 e5					.word	SyntaxError                   ; "?"        ($0095)
 >e02c	a9 e2					.word	BFUNC_Xor                     ; "^"        ($0096)
 >e02e	15 e5					.word	COMMAND_Assert                ; "assert"   ($0097)
->e030	cd e5					.word	SyntaxError                   ; "abs"      ($0098)
->e032	55 e5					.word	COMMAND_Clear                 ; "clear"    ($0099)
->e034	cd e5					.word	SyntaxError                   ; "ch"       ($009a)
->e036	cd e5					.word	SyntaxError                   ; "do"       ($009b)
->e038	cd e5					.word	SyntaxError                   ; "else"     ($009c)
+>e030	d0 e5					.word	SyntaxError                   ; "abs"      ($0098)
+>e032	56 e5					.word	COMMAND_Clear                 ; "clear"    ($0099)
+>e034	d0 e5					.word	SyntaxError                   ; "ch"       ($009a)
+>e036	d0 e5					.word	SyntaxError                   ; "do"       ($009b)
+>e038	d0 e5					.word	SyntaxError                   ; "else"     ($009c)
 >e03a	11 e5					.word	COMMAND_End                   ; "end"      ($009d)
->e03c	cd e5					.word	SyntaxError                   ; "for"      ($009e)
->e03e	cd e5					.word	SyntaxError                   ; "gosub"    ($009f)
->e040	cd e5					.word	SyntaxError                   ; "goto"     ($00a0)
->e042	cd e5					.word	SyntaxError                   ; "input"    ($00a1)
->e044	cd e5					.word	SyntaxError                   ; "if"       ($00a2)
->e046	cd e5					.word	SyntaxError                   ; "local"    ($00a3)
->e048	cd e5					.word	SyntaxError                   ; "list"     ($00a4)
->e04a	cd e5					.word	SyntaxError                   ; "loop"     ($00a5)
->e04c	cd e5					.word	SyntaxError                   ; "link"     ($00a6)
->e04e	cd e5					.word	SyntaxError                   ; "let"      ($00a7)
->e050	cd e5					.word	SyntaxError                   ; "len"      ($00a8)
->e052	cd e5					.word	SyntaxError                   ; "next"     ($00a9)
->e054	42 e5					.word	COMMAND_New                   ; "new"      ($00aa)
->e056	87 e5					.word	COMMAND_Old                   ; "old"      ($00ab)
->e058	cd e5					.word	SyntaxError                   ; "print"    ($00ac)
->e05a	38 e5					.word	COMMAND_Rem                   ; "rem"      ($00ad)
->e05c	cd e5					.word	SyntaxError                   ; "rnd"      ($00ae)
+>e03c	d0 e5					.word	SyntaxError                   ; "for"      ($009e)
+>e03e	d0 e5					.word	SyntaxError                   ; "gosub"    ($009f)
+>e040	d0 e5					.word	SyntaxError                   ; "goto"     ($00a0)
+>e042	d0 e5					.word	SyntaxError                   ; "input"    ($00a1)
+>e044	d0 e5					.word	SyntaxError                   ; "if"       ($00a2)
+>e046	d0 e5					.word	SyntaxError                   ; "local"    ($00a3)
+>e048	d0 e5					.word	SyntaxError                   ; "list"     ($00a4)
+>e04a	d0 e5					.word	SyntaxError                   ; "loop"     ($00a5)
+>e04c	d0 e5					.word	SyntaxError                   ; "link"     ($00a6)
+>e04e	d0 e5					.word	SyntaxError                   ; "let"      ($00a7)
+>e050	d0 e5					.word	SyntaxError                   ; "len"      ($00a8)
+>e052	d0 e5					.word	SyntaxError                   ; "next"     ($00a9)
+>e054	43 e5					.word	COMMAND_New                   ; "new"      ($00aa)
+>e056	88 e5					.word	COMMAND_Old                   ; "old"      ($00ab)
+>e058	d0 e5					.word	SyntaxError                   ; "print"    ($00ac)
+>e05a	39 e5					.word	COMMAND_Rem                   ; "rem"      ($00ad)
+>e05c	d0 e5					.word	SyntaxError                   ; "rnd"      ($00ae)
 >e05e	09 e5					.word	COMMAND_Stop                  ; "stop"     ($00af)
->e060	cd e5					.word	SyntaxError                   ; "step"     ($00b0)
->e062	cd e5					.word	SyntaxError                   ; "then"     ($00b1)
->e064	cd e5					.word	SyntaxError                   ; "top"      ($00b2)
->e066	cd e5					.word	SyntaxError                   ; "to"       ($00b3)
+>e060	d0 e5					.word	SyntaxError                   ; "step"     ($00b0)
+>e062	d0 e5					.word	SyntaxError                   ; "then"     ($00b1)
+>e064	d0 e5					.word	SyntaxError                   ; "top"      ($00b2)
+>e066	d0 e5					.word	SyntaxError                   ; "to"       ($00b3)
 >e068	84 e2					.word	BFUNC_Or                      ; "|"        ($00b4)
 >e06a	89 e4					.word	BFUNC_StringCompare           ; "~"        ($00b5)
 .e06c					TokenText:
@@ -495,7 +495,7 @@
 ;******  Processing file: general/evaluate.asm
 
 .e128					EvaluateSNError:
-.e128	4c cd e5	jmp $e5cd			jmp 	SyntaxError
+.e128	4c d0 e5	jmp $e5d0			jmp 	SyntaxError
 .e12b					EvaluateBase:
 .e12b	a2 00		ldx #$00			ldx 	#0 							; reset the stack
 .e12d					EvaluateBaseCurrentLevel:
@@ -765,7 +765,7 @@
 .e32b	1d 06 04	ora $0406,x			ora 	evalStack+6,x
 .e32e	1d 07 04	ora $0407,x			ora 	evalStack+7,x
 .e331	d0 13		bne $e346			bne 	_BFDOkay
-.e333	20 d2 e5	jsr $e5d2			jsr 	ReportError
+.e333	20 d5 e5	jsr $e5d5			jsr 	ReportError
 >e336	44 69 76 69 73 6f 6e 20				.text 	"Divison by Zero",$00
 >e33e	62 79 20 5a 65 72 6f 00
 .e346					_BFDOkay:
@@ -981,7 +981,7 @@
 ;******  Processing file: commands/execute.asm
 
 .e4c7					COMMAND_Run:
-.e4c7	20 55 e5	jsr $e555			jsr 	COMMAND_Clear 				; clear everything for a new run.
+.e4c7	20 56 e5	jsr $e556			jsr 	COMMAND_Clear 				; clear everything for a new run.
 .e4ca	a2 00		ldx #$00			ldx 	#BasicProgram & 255 		; start from here
 .e4cc	a0 21		ldy #$21			ldy 	#BasicProgram >> 8
 .e4ce	86 20		stx $20				stx 	zCurrentLine 				; set current line.
@@ -1001,7 +1001,7 @@
 .e4e3	80 f5		bra $e4da			bra 	CRUNNextInstruction
 .e4e5					CRUNNextLine:
 .e4e5	a0 00		ldy #$00			ldy 	#0 							; add offset from line to line pointer
-.e4e7	b2 20		lda ($20)			lda 	(zCurrentLine)
+.e4e7	b1 20		lda ($20),y			lda 	(zCurrentLine),y
 .e4e9	18		clc				clc
 .e4ea	65 20		adc $20				adc 	zCurrentLine
 .e4ec	85 20		sta $20				sta 	zCurrentLine
@@ -1020,11 +1020,11 @@
 .e504	20 7a 20	jsr $207a			jsr 	Temp1 						; call instruction
 .e507	80 d1		bra $e4da			bra 	CRUNNextInstruction 		; do next instruction.
 .e509					COMMAND_Stop:
-.e509	20 d2 e5	jsr $e5d2			jsr 	ReportError
+.e509	20 d5 e5	jsr $e5d5			jsr 	ReportError
 >e50c	53 74 6f 70 00					.text 	"Stop",$00
 .e511					COMMAND_End:
 >e511	02						.byte 	2
-.e512	4c c7 e5	jmp $e5c7			jmp 	WarmStart
+.e512	4c ca e5	jmp $e5ca			jmp 	WarmStart
 
 ;******  Return to file: basic.asm
 
@@ -1032,112 +1032,113 @@
 ;******  Processing file: commands/miscellany.asm
 
 .e515					COMMAND_Assert:
-.e515	20 2b e1	jsr $e12b			jsr 	EvaluateBase 				; evaluate the expression
-.e518	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; check non zero
-.e51b	1d 01 04	ora $0401,x			ora 	evalStack+1,x
-.e51e	1d 02 04	ora $0402,x			ora 	evalStack+2,x
-.e521	1d 03 04	ora $0403,x			ora 	evalStack+3,x
-.e524	d0 11		bne $e537			bne 	_CMDAExit
-.e526	20 d2 e5	jsr $e5d2			jsr 	ReportError
->e529	41 73 73 65 72 74 20 66				.text 	"Assert failed",$00
->e531	61 69 6c 65 64 00
-.e537					_CMDAExit:
-.e537	60		rts				rts
-.e538					COMMAND_Rem:
-.e538	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next character token.
-.e53a	f0 05		beq $e541			beq 	_CREMExit 					; End of line, then exit.
-.e53c	c8		iny				iny 								; something to skip
-.e53d	c9 8d		cmp #$8d			cmp 	#KW_COLON 					; if not a colon
-.e53f	d0 f7		bne $e538			bne 	COMMAND_Rem 				; keep searching
-.e541					_CREMExit:
-.e541	60		rts				rts
-.e542					COMMAND_New:
-.e542	a9 00		lda #$00			lda 	#0 							; erase the actual program.
-.e544	8d 00 21	sta $2100			sta 	BasicProgram 				; by zeroing the initial offset.
-.e547	20 55 e5	jsr $e555			jsr 	COMMAND_Clear 				; clear non fixed variable, reset stack and low mem pointer
-.e54a	a9 00		lda #$00			lda 	#endMemory & $FF 			; reset high memory pointer.
-.e54c	8d 78 20	sta $2078			sta 	HighMemory
-.e54f	a9 40		lda #$40			lda 	#endMemory >> 8
-.e551	8d 79 20	sta $2079			sta 	HighMemory+1
-.e554	60		rts				rts
-.e555					COMMAND_Clear:
-.e555	a2 0f		ldx #$0f			ldx 	#hashTableSize*2-1 			; clear the hash table to all zeros.
-.e557					_CCClearHash:
-.e557	a9 aa		lda #$aa			lda 	#$AA
-.e559	9d 68 20	sta $2068,x			sta 	HashTable,x
-.e55c	ca		dex				dex
-.e55d	10 f8		bpl $e557			bpl 	_CCClearHash
-.e55f	a9 00		lda #$00			lda 	#basicStack & $FF 			; reset BASIC stack
-.e561	85 22		sta $22				sta 	zBasicStack
-.e563	a9 02		lda #$02			lda 	#basicStack >> 8
-.e565	85 23		sta $23				sta 	zBasicStack+1
-.e567	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; now find where the program ends.
-.e569	85 24		sta $24				sta 	zLowMemory
-.e56b	a9 21		lda #$21			lda 	#BasicProgram >> 8
-.e56d	85 25		sta $25				sta 	zLowMemory+1
-.e56f					_CCFindEnd:
-.e56f	a0 00		ldy #$00			ldy 	#0 							; look at next offset
-.e571	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; if zero, reached the end.
-.e573	f0 0b		beq $e580			beq 	_CCFoundEnd
-.e575	18		clc				clc 								; go to next line.
-.e576	65 24		adc $24				adc 	zLowMemory
-.e578	85 24		sta $24				sta 	zLowMemory
-.e57a	90 f3		bcc $e56f			bcc 	_CCFindEnd
-.e57c	e6 25		inc $25				inc 	zLowMemory+1
-.e57e	80 ef		bra $e56f			bra 	_CCFindEnd
-.e580					_CCFoundEnd:
-.e580	e6 24		inc $24				inc 	zLowMemory 					; variables etc. start after end of program.
-.e582	d0 02		bne $e586			bne 	_CCNoCarry 					; skip over zero end offset.
-.e584	e6 25		inc $25				inc 	zLowMemory+1
-.e586					_CCNoCarry:
-.e586	60		rts				rts
-.e587					COMMAND_Old:
-.e587	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
-.e589	85 24		sta $24				sta 	zLowMemory
-.e58b	a9 21		lda #$21			lda 	#BasicProgram >> 8
-.e58d	85 25		sta $25				sta 	zLowMemory+1
-.e58f	a0 03		ldy #$03			ldy 	#3 							; look for the $00 end of line marker.
-.e591					_COScan:
-.e591	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; look at next byte pair
-.e593	c8		iny				iny
-.e594	f0 0d		beq $e5a3			beq 	_COFail 					; can't find marker, corrupted maybe ?
-.e596	c9 00		cmp #$00			cmp 	#0 							; until $00 found.
-.e598	d0 f7		bne $e591			bne 	_COScan
-.e59a	98		tya				tya 								; Y is the new offset to the next instruction
-.e59b	a0 00		ldy #$00			ldy 	#0 							; overwrite the old one
-.e59d	91 24		sta ($24),y			sta 	(zLowMemory),y
-.e59f	20 55 e5	jsr $e555			jsr 	COMMAND_Clear 				; reset variables, stacks and pointers.
-.e5a2	60		rts				rts
-.e5a3					_COFail:
-.e5a3	20 d2 e5	jsr $e5d2			jsr 	ReportError
->e5a6	43 61 6e 6e 6f 74 20 72				.text 	"Cannot recover program",$00
->e5ae	65 63 6f 76 65 72 20 70 72 6f 67 72 61 6d 00
+.e515	ea		nop				nop
+.e516	20 2b e1	jsr $e12b			jsr 	EvaluateBase 				; evaluate the expression
+.e519	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; check non zero
+.e51c	1d 01 04	ora $0401,x			ora 	evalStack+1,x
+.e51f	1d 02 04	ora $0402,x			ora 	evalStack+2,x
+.e522	1d 03 04	ora $0403,x			ora 	evalStack+3,x
+.e525	d0 11		bne $e538			bne 	_CMDAExit
+.e527	20 d5 e5	jsr $e5d5			jsr 	ReportError
+>e52a	41 73 73 65 72 74 20 66				.text 	"Assert failed",$00
+>e532	61 69 6c 65 64 00
+.e538					_CMDAExit:
+.e538	60		rts				rts
+.e539					COMMAND_Rem:
+.e539	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next character token.
+.e53b	f0 05		beq $e542			beq 	_CREMExit 					; End of line, then exit.
+.e53d	c8		iny				iny 								; something to skip
+.e53e	c9 8d		cmp #$8d			cmp 	#KW_COLON 					; if not a colon
+.e540	d0 f7		bne $e539			bne 	COMMAND_Rem 				; keep searching
+.e542					_CREMExit:
+.e542	60		rts				rts
+.e543					COMMAND_New:
+.e543	a9 00		lda #$00			lda 	#0 							; erase the actual program.
+.e545	8d 00 21	sta $2100			sta 	BasicProgram 				; by zeroing the initial offset.
+.e548	20 56 e5	jsr $e556			jsr 	COMMAND_Clear 				; clear non fixed variable, reset stack and low mem pointer
+.e54b	a9 00		lda #$00			lda 	#endMemory & $FF 			; reset high memory pointer.
+.e54d	8d 78 20	sta $2078			sta 	HighMemory
+.e550	a9 40		lda #$40			lda 	#endMemory >> 8
+.e552	8d 79 20	sta $2079			sta 	HighMemory+1
+.e555	60		rts				rts
+.e556					COMMAND_Clear:
+.e556	a2 0f		ldx #$0f			ldx 	#hashTableSize*2-1 			; clear the hash table to all zeros.
+.e558					_CCClearHash:
+.e558	a9 00		lda #$00			lda 	#$00
+.e55a	9d 68 20	sta $2068,x			sta 	HashTable,x
+.e55d	ca		dex				dex
+.e55e	10 f8		bpl $e558			bpl 	_CCClearHash
+.e560	a9 00		lda #$00			lda 	#basicStack & $FF 			; reset BASIC stack
+.e562	85 22		sta $22				sta 	zBasicStack
+.e564	a9 02		lda #$02			lda 	#basicStack >> 8
+.e566	85 23		sta $23				sta 	zBasicStack+1
+.e568	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; now find where the program ends.
+.e56a	85 24		sta $24				sta 	zLowMemory
+.e56c	a9 21		lda #$21			lda 	#BasicProgram >> 8
+.e56e	85 25		sta $25				sta 	zLowMemory+1
+.e570					_CCFindEnd:
+.e570	a0 00		ldy #$00			ldy 	#0 							; look at next offset
+.e572	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; if zero, reached the end.
+.e574	f0 0b		beq $e581			beq 	_CCFoundEnd
+.e576	18		clc				clc 								; go to next line.
+.e577	65 24		adc $24				adc 	zLowMemory
+.e579	85 24		sta $24				sta 	zLowMemory
+.e57b	90 f3		bcc $e570			bcc 	_CCFindEnd
+.e57d	e6 25		inc $25				inc 	zLowMemory+1
+.e57f	80 ef		bra $e570			bra 	_CCFindEnd
+.e581					_CCFoundEnd:
+.e581	e6 24		inc $24				inc 	zLowMemory 					; variables etc. start after end of program.
+.e583	d0 02		bne $e587			bne 	_CCNoCarry 					; skip over zero end offset.
+.e585	e6 25		inc $25				inc 	zLowMemory+1
+.e587					_CCNoCarry:
+.e587	60		rts				rts
+.e588					COMMAND_Old:
+.e588	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
+.e58a	85 24		sta $24				sta 	zLowMemory
+.e58c	a9 21		lda #$21			lda 	#BasicProgram >> 8
+.e58e	85 25		sta $25				sta 	zLowMemory+1
+.e590	a0 03		ldy #$03			ldy 	#3 							; look for the $00 end of line marker.
+.e592					_COScan:
+.e592	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; look at next byte pair
+.e594	c8		iny				iny
+.e595	f0 0d		beq $e5a4			beq 	_COFail 					; can't find marker, corrupted maybe ?
+.e597	c9 00		cmp #$00			cmp 	#0 							; until $00 found.
+.e599	d0 f7		bne $e592			bne 	_COScan
+.e59b	98		tya				tya 								; Y is the new offset to the next instruction
+.e59c	a0 00		ldy #$00			ldy 	#0 							; overwrite the old one
+.e59e	91 24		sta ($24),y			sta 	(zLowMemory),y
+.e5a0	20 56 e5	jsr $e556			jsr 	COMMAND_Clear 				; reset variables, stacks and pointers.
+.e5a3	60		rts				rts
+.e5a4					_COFail:
+.e5a4	20 d5 e5	jsr $e5d5			jsr 	ReportError
+>e5a7	43 61 6e 6e 6f 74 20 72				.text 	"Cannot recover program",$00
+>e5af	65 63 6f 76 65 72 20 70 72 6f 67 72 61 6d 00
 
 ;******  Return to file: basic.asm
 
-.e5bd					Start:
-.e5bd	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.e5bf	9a		txs			txs
-.e5c0	ea		nop				nop
-.e5c1	20 42 e5	jsr $e542			jsr 	COMMAND_New 				; do a new
-.e5c4	20 87 e5	jsr $e587			jsr 	COMMAND_Old 				; get back the old program as we're deving.
-.e5c7					WarmStart:
-.e5c7	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.e5c9	9a		txs			txs
-.e5ca	4c c7 e4	jmp $e4c7			jmp 	COMMAND_Run 				; RUN current program.
-.e5cd					SyntaxError:
-.e5cd	a9 01		lda #$01			lda 	#1
-.e5cf	ea		nop				nop
-.e5d0	80 fb		bra $e5cd			bra 	SyntaxError
-.e5d2					ReportError:
-.e5d2	a9 02		lda #$02			lda 	#2
-.e5d4	ea		nop				nop
-.e5d5	80 fb		bra $e5d2			bra 	ReportError
+.e5be					Start:
+.e5be	20 7f a0	jsr $a07f			jsr 	IOInitialise 				; set up porting stuff.
+.e5c1	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.e5c3	9a		txs			txs
+.e5c4	20 43 e5	jsr $e543			jsr 	COMMAND_New 				; do a new
+.e5c7	20 88 e5	jsr $e588			jsr 	COMMAND_Old 				; get back the old program as we're deving.
+.e5ca					WarmStart:
+.e5ca	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.e5cc	9a		txs			txs
+.e5cd	4c c7 e4	jmp $e4c7			jmp 	COMMAND_Run 				; RUN current program.
+.e5d0					SyntaxError:
+.e5d0	a9 01		lda #$01			lda 	#1
+.e5d2	ea		nop				nop
+.e5d3	80 fb		bra $e5d0			bra 	SyntaxError
+.e5d5					ReportError:
+.e5d5	a9 02		lda #$02			lda 	#2
+.e5d7	ea		nop				nop
+.e5d8	80 fb		bra $e5d5			bra 	ReportError
 
 ;******  Processing file: include/basic_generated.inc
 
->2100	0a 01 00 ad 20 68 69 8d			.byte $0a,$01,$00,$ad,$20,$68,$69,$8d,$ad,$00,$09,$02,$00,$ad,$20,$62,$79,$65,$00,$00
->2108	ad 00 09 02 00 ad 20 62 79 65 00 00
+>2100	08 01 00 97 20 34 32 00			.byte $08,$01,$00,$97,$20,$34,$32,$00,$00
+>2108	00
 
 ;******  Return to file: basic.asm
 

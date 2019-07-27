@@ -14,7 +14,7 @@ EXTDummyInterrupt:							; interrupt that does nothing.
 		rti
 		* = 	$FFFA 						; create the vectors.
 		.word 	EXTDummyInterrupt
-		.word 	EXTStartPersonalise
+		.word 	Start
 		.word 	EXTDummyInterrupt
 
 EXTZPWork = 4								; Zero Page work for Personality (4 bytes)

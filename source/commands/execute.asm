@@ -48,7 +48,7 @@ CRUNNotEndOfLine:
 		;
 CRUNNextLine:		
 		ldy 	#0 							; add offset from line to line pointer
-		lda 	(zCurrentLine)
+		lda 	(zCurrentLine),y
 		clc 				
 		adc 	zCurrentLine
 		sta 	zCurrentLine
