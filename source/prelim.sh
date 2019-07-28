@@ -1,7 +1,7 @@
-rm rom.bin memory.dump
+rm rom.bin memory.dump block.check
 pushd ../scripts
 python token_code.py
-python token_basic.py 
-#python test_basic.py
+#python token_basic.py 
+python test_math.py
 popd
 

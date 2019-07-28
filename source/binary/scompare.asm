@@ -24,6 +24,8 @@ BFUNC_StringCompare:	;; ~
 		sta 	zTemp2
 		lda 	evalStack+5,x
 		sta 	zTemp2+1		
+
+		phy
 		ldy 	#0
 _BFSCLoop:
 		lda 	(zTemp1),y 					; comparison
@@ -33,6 +35,7 @@ _BFSCLoop:
 		iny
 		cmp 	#0							; until both EOS.
 		bne 	_BFSCLoop
+		ply
 		lda 	#0
 _BFSCSetAll:
 		sta 	evalStack+0,x
@@ -42,6 +45,7 @@ _BFSCSetAll:
 		rts
 ;
 _BFSCDifferent:
+		ply
 		lda 	#255 						; if CC set all as <
 		bcc 	_BFSCSetAll
 		lda 	#0 							; set all zero

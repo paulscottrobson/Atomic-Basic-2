@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.54.1900 listing file
 ; 64tass -q -c -D TARGET=2 -b -L rom.lst -o rom.bin basic.asm
-; Sun Jul 28 08:07:01 2019
+; Sun Jul 28 08:53:57 2019
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -17,7 +17,7 @@
 .fff8					EXTDummyInterrupt:
 .fff8	40		rti				rti
 >fffa	f8 ff						.word 	EXTDummyInterrupt
->fffc	9b e9						.word 	Start
+>fffc	9e e9						.word 	Start
 >fffe	f8 ff						.word 	EXTDummyInterrupt
 =4					EXTZPWork = 4								; Zero Page work for Personality (4 bytes)
 =8					IOCursorX = 8 								; Cursor position
@@ -43,7 +43,7 @@
 .a002	9a		txs			txs
 .a003	20 82 a0	jsr $a082		jsr 	EXTReset 						; reset video
 .a006	20 38 a0	jsr $a038		jsr 	EXTClearScreen 					; clear screen
-.a009	4c 9b e9	jmp $e99b		jmp 	Start 							; start main application
+.a009	4c 9e e9	jmp $e99e		jmp 	Start 							; start main application
 .a00c					EXTReadKeyPort:
 .a00c	ad 00 b8	lda $b800		lda 	PKeyboard							; read key
 .a00f	09 00		ora #$00		ora 	#0
@@ -136,20 +136,20 @@
 
 .e000					KeywordVectorTable:
 >e000	5b e4					.word	BFUNC_WordInd                 ; "!"        ($0080)
->e002	aa e9					.word	SyntaxError                   ; """        ($0081)
->e004	aa e9					.word	SyntaxError                   ; "#"        ($0082)
+>e002	ad e9					.word	SyntaxError                   ; """        ($0081)
+>e004	ad e9					.word	SyntaxError                   ; "#"        ($0082)
 >e006	50 e4					.word	BFUNC_String                  ; "$"        ($0083)
 >e008	ef e5					.word	BFUNC_Modulus                 ; "%"        ($0084)
 >e00a	62 e4					.word	BFUNC_And                     ; "&"        ($0085)
->e00c	aa e9					.word	SyntaxError                   ; "'"        ($0086)
->e00e	aa e9					.word	SyntaxError                   ; "("        ($0087)
->e010	aa e9					.word	SyntaxError                   ; ")"        ($0088)
+>e00c	ad e9					.word	SyntaxError                   ; "'"        ($0086)
+>e00e	ad e9					.word	SyntaxError                   ; "("        ($0087)
+>e010	ad e9					.word	SyntaxError                   ; ")"        ($0088)
 >e012	d1 e4					.word	BFUNC_Multiply                ; "*"        ($0089)
 >e014	04 e4					.word	BFUNC_Add                     ; "+"        ($008a)
 >e016	2a e4					.word	BFUNC_Subtract                ; "-"        ($008b)
 >e018	28 e5					.word	BFUNC_Divide                  ; "/"        ($008c)
->e01a	aa e9					.word	SyntaxError                   ; ":"        ($008d)
->e01c	aa e9					.word	SyntaxError                   ; ";"        ($008e)
+>e01a	ad e9					.word	SyntaxError                   ; ":"        ($008d)
+>e01c	ad e9					.word	SyntaxError                   ; ";"        ($008e)
 >e01e	6d e6					.word	BFUNC_LessEqual               ; "<="       ($008f)
 >e020	0e e6					.word	BFUNC_NotEquals               ; "<>"       ($0090)
 >e022	48 e6					.word	BFUNC_Less                    ; "<"        ($0091)
@@ -158,33 +158,33 @@
 >e028	6a e6					.word	BFUNC_Greater                 ; ">"        ($0094)
 >e02a	54 e4					.word	BFUNC_ByteInd                 ; "?"        ($0095)
 >e02c	ac e4					.word	BFUNC_Xor                     ; "^"        ($0096)
->e02e	e7 e7					.word	COMMAND_Assert                ; "assert"   ($0097)
->e030	21 e7					.word	UNARY_Abs                     ; "abs"      ($0098)
->e032	28 e8					.word	COMMAND_Clear                 ; "clear"    ($0099)
->e034	0c e7					.word	UNARY_Ch                      ; "ch"       ($009a)
->e036	aa e9					.word	SyntaxError                   ; "do"       ($009b)
->e038	e3 e7					.word	COMMAND_End                   ; "end"      ($009c)
->e03a	aa e9					.word	SyntaxError                   ; "for"      ($009d)
->e03c	aa e9					.word	SyntaxError                   ; "gosub"    ($009e)
->e03e	aa e9					.word	SyntaxError                   ; "goto"     ($009f)
->e040	aa e9					.word	SyntaxError                   ; "input"    ($00a0)
->e042	aa e9					.word	SyntaxError                   ; "if"       ($00a1)
->e044	aa e9					.word	SyntaxError                   ; "list"     ($00a2)
->e046	aa e9					.word	SyntaxError                   ; "loop"     ($00a3)
->e048	aa e9					.word	SyntaxError                   ; "link"     ($00a4)
->e04a	92 e8					.word	COMMAND_Let                   ; "let"      ($00a5)
->e04c	ca e6					.word	UNARY_Len                     ; "len"      ($00a6)
->e04e	aa e9					.word	SyntaxError                   ; "next"     ($00a7)
->e050	15 e8					.word	COMMAND_New                   ; "new"      ($00a8)
->e052	5c e8					.word	COMMAND_Old                   ; "old"      ($00a9)
->e054	aa e9					.word	SyntaxError                   ; "print"    ($00aa)
->e056	0b e8					.word	COMMAND_Rem                   ; "rem"      ($00ab)
->e058	3e e7					.word	UNARY_Rnd                     ; "rnd"      ($00ac)
->e05a	db e7					.word	COMMAND_Stop                  ; "stop"     ($00ad)
->e05c	aa e9					.word	SyntaxError                   ; "step"     ($00ae)
->e05e	aa e9					.word	SyntaxError                   ; "then"     ($00af)
->e060	29 e7					.word	UNARY_Top                     ; "top"      ($00b0)
->e062	aa e9					.word	SyntaxError                   ; "to"       ($00b1)
+>e02e	ea e7					.word	COMMAND_Assert                ; "assert"   ($0097)
+>e030	24 e7					.word	UNARY_Abs                     ; "abs"      ($0098)
+>e032	2b e8					.word	COMMAND_Clear                 ; "clear"    ($0099)
+>e034	0f e7					.word	UNARY_Ch                      ; "ch"       ($009a)
+>e036	ad e9					.word	SyntaxError                   ; "do"       ($009b)
+>e038	e6 e7					.word	COMMAND_End                   ; "end"      ($009c)
+>e03a	ad e9					.word	SyntaxError                   ; "for"      ($009d)
+>e03c	ad e9					.word	SyntaxError                   ; "gosub"    ($009e)
+>e03e	ad e9					.word	SyntaxError                   ; "goto"     ($009f)
+>e040	ad e9					.word	SyntaxError                   ; "input"    ($00a0)
+>e042	ad e9					.word	SyntaxError                   ; "if"       ($00a1)
+>e044	ad e9					.word	SyntaxError                   ; "list"     ($00a2)
+>e046	ad e9					.word	SyntaxError                   ; "loop"     ($00a3)
+>e048	ad e9					.word	SyntaxError                   ; "link"     ($00a4)
+>e04a	95 e8					.word	COMMAND_Let                   ; "let"      ($00a5)
+>e04c	cd e6					.word	UNARY_Len                     ; "len"      ($00a6)
+>e04e	ad e9					.word	SyntaxError                   ; "next"     ($00a7)
+>e050	18 e8					.word	COMMAND_New                   ; "new"      ($00a8)
+>e052	5f e8					.word	COMMAND_Old                   ; "old"      ($00a9)
+>e054	ad e9					.word	SyntaxError                   ; "print"    ($00aa)
+>e056	0e e8					.word	COMMAND_Rem                   ; "rem"      ($00ab)
+>e058	41 e7					.word	UNARY_Rnd                     ; "rnd"      ($00ac)
+>e05a	de e7					.word	COMMAND_Stop                  ; "stop"     ($00ad)
+>e05c	ad e9					.word	SyntaxError                   ; "step"     ($00ae)
+>e05e	ad e9					.word	SyntaxError                   ; "then"     ($00af)
+>e060	2c e7					.word	UNARY_Top                     ; "top"      ($00b0)
+>e062	ad e9					.word	SyntaxError                   ; "to"       ($00b1)
 >e064	87 e4					.word	BFUNC_Or                      ; "|"        ($00b2)
 >e066	8c e6					.word	BFUNC_StringCompare           ; "~"        ($00b3)
 .e068					TokenText:
@@ -368,7 +368,7 @@
 .e128	d0 01		bne $e12b			bne 	_CNCFail
 .e12a	60		rts				rts
 .e12b					_CNCFail:
-.e12b	20 af e9	jsr $e9af			jsr 	ReportError
+.e12b	20 b2 e9	jsr $e9b2			jsr 	ReportError
 >e12e	4d 69 73 73 69 6e 67 20				.text 	"Missing token",$00
 >e136	74 6f 6b 65 6e 00
 
@@ -402,17 +402,17 @@
 ;******  Processing file: general/evaluate.asm
 
 .e13c					EvaluateSNError:
-.e13c	4c aa e9	jmp $e9aa			jmp 	SyntaxError
+.e13c	4c ad e9	jmp $e9ad			jmp 	SyntaxError
 .e13f					EvaluateMissingQuote:
-.e13f	20 af e9	jsr $e9af			jsr 	ReportError
+.e13f	20 b2 e9	jsr $e9b2			jsr 	ReportError
 >e142	4d 69 73 73 69 6e 67 20				.text 	"Missing quote",$00
 >e14a	71 75 6f 74 65 00
 .e150					EvaluateStringFull:
-.e150	20 af e9	jsr $e9af			jsr 	ReportError
+.e150	20 b2 e9	jsr $e9b2			jsr 	ReportError
 >e153	53 74 72 69 6e 67 20 42				.text 	"String Buffer full",$00
 >e15b	75 66 66 65 72 20 66 75 6c 6c 00
 .e166					EvaluateBadHex:
-.e166	20 af e9	jsr $e9af			jsr 	ReportError
+.e166	20 b2 e9	jsr $e9b2			jsr 	ReportError
 >e169	42 61 64 20 48 65 78 00				.text 	"Bad Hex",$00
 .e171					EvaluateAtomCurrentLevel:
 .e171	a9 07		lda #$07			lda 	#7
@@ -564,7 +564,7 @@
 .e266	f0 07		beq $e26f			beq 	_EVALByteRead
 .e268	c9 80		cmp #$80			cmp 	#KW_PLING					; word indirection
 .e26a	f0 09		beq $e275			beq 	_EVALWordRead
-.e26c	4c aa e9	jmp $e9aa			jmp 	SyntaxError 				; give up.
+.e26c	4c ad e9	jmp $e9ad			jmp 	SyntaxError 				; give up.
 .e26f					_EVALByteRead:
 .e26f	20 2f e3	jsr $e32f			jsr 	EVALReadByteIndirect
 .e272					_EVALGoGotAtom:
@@ -729,7 +729,7 @@
 .e38d	c9 5b		cmp #$5b			cmp 	#'Z'+1 						; there are 27 variables @ and A-Z
 .e38f	90 03		bcc $e394			bcc 	_VARROkay
 .e391					_VARRError:
-.e391	4c aa e9	jmp $e9aa			jmp		SyntaxError
+.e391	4c ad e9	jmp $e9ad			jmp		SyntaxError
 .e394					_VARROkay:
 .e394	c8		iny				iny 								; consume the variable.
 .e395	d1 20		cmp ($20),y			cmp 	(zCurrentLine),y 			; is it @@ AA BB CC ?
@@ -937,7 +937,7 @@
 .e52e	1d 06 04	ora $0406,x			ora 	evalStack+6,x
 .e531	1d 07 04	ora $0407,x			ora 	evalStack+7,x
 .e534	d0 13		bne $e549			bne 	_BFDOkay
-.e536	20 af e9	jsr $e9af			jsr 	ReportError
+.e536	20 b2 e9	jsr $e9b2			jsr 	ReportError
 >e539	44 69 76 69 73 6f 6e 20				.text 	"Divison by Zero",$00
 >e541	62 79 20 5a 65 72 6f 00
 .e549					_BFDOkay:
@@ -1123,460 +1123,1292 @@
 .e699	85 28		sta $28				sta 	zTemp2
 .e69b	bd 05 04	lda $0405,x			lda 	evalStack+5,x
 .e69e	85 29		sta $29				sta 	zTemp2+1
-.e6a0	a0 00		ldy #$00			ldy 	#0
-.e6a2					_BFSCLoop:
-.e6a2	b1 26		lda ($26),y			lda 	(zTemp1),y 					; comparison
-.e6a4	38		sec				sec
-.e6a5	d1 28		cmp ($28),y			cmp 	(zTemp2),y
-.e6a7	d0 14		bne $e6bd			bne		_BFSCDifferent 				; return different result.
-.e6a9	c8		iny				iny
-.e6aa	c9 00		cmp #$00			cmp 	#0							; until both EOS.
-.e6ac	d0 f4		bne $e6a2			bne 	_BFSCLoop
-.e6ae	a9 00		lda #$00			lda 	#0
-.e6b0					_BFSCSetAll:
-.e6b0	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e6b3	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e6b6	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e6b9	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e6bc	60		rts				rts
-.e6bd					_BFSCDifferent:
-.e6bd	a9 ff		lda #$ff			lda 	#255 						; if CC set all as <
-.e6bf	90 ef		bcc $e6b0			bcc 	_BFSCSetAll
-.e6c1	a9 00		lda #$00			lda 	#0 							; set all zero
-.e6c3	20 b0 e6	jsr $e6b0			jsr 	_BFSCSetAll
-.e6c6	fe 00 04	inc $0400,x			inc 	evalStack+0,x 				; and make it one.
-.e6c9	60		rts				rts
+.e6a0	5a		phy				phy
+.e6a1	a0 00		ldy #$00			ldy 	#0
+.e6a3					_BFSCLoop:
+.e6a3	b1 26		lda ($26),y			lda 	(zTemp1),y 					; comparison
+.e6a5	38		sec				sec
+.e6a6	d1 28		cmp ($28),y			cmp 	(zTemp2),y
+.e6a8	d0 15		bne $e6bf			bne		_BFSCDifferent 				; return different result.
+.e6aa	c8		iny				iny
+.e6ab	c9 00		cmp #$00			cmp 	#0							; until both EOS.
+.e6ad	d0 f4		bne $e6a3			bne 	_BFSCLoop
+.e6af	7a		ply				ply
+.e6b0	a9 00		lda #$00			lda 	#0
+.e6b2					_BFSCSetAll:
+.e6b2	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e6b5	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e6b8	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e6bb	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e6be	60		rts				rts
+.e6bf					_BFSCDifferent:
+.e6bf	7a		ply				ply
+.e6c0	a9 ff		lda #$ff			lda 	#255 						; if CC set all as <
+.e6c2	90 ee		bcc $e6b2			bcc 	_BFSCSetAll
+.e6c4	a9 00		lda #$00			lda 	#0 							; set all zero
+.e6c6	20 b2 e6	jsr $e6b2			jsr 	_BFSCSetAll
+.e6c9	fe 00 04	inc $0400,x			inc 	evalStack+0,x 				; and make it one.
+.e6cc	60		rts				rts
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: unary/unary.asm
 
-.e6ca					UNARY_Len:
-.e6ca	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
-.e6cd	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; copy string address to zTemp1
-.e6d0	85 26		sta $26				sta 	zTemp1
-.e6d2	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e6d5	85 27		sta $27				sta 	zTemp1+1
-.e6d7	5a		phy				phy
-.e6d8	a0 00		ldy #$00			ldy 	#0 							; now figure out its length.
-.e6da					_ULGetLength:
-.e6da	b1 26		lda ($26),y			lda 	(zTemp1),y 					; read character
-.e6dc	f0 1d		beq $e6fb			beq 	_ULFoundEOL 				; found end of line.
-.e6de	c8		iny				iny
-.e6df	d0 f9		bne $e6da			bne 	_ULGetLength 				; scan 256 only.
-.e6e1	20 af e9	jsr $e9af			jsr 	ReportError
->e6e4	43 61 6e 6e 6f 74 20 66				.text 	"Cannot find string end",$00
->e6ec	69 6e 64 20 73 74 72 69 6e 67 20 65 6e 64 00
-.e6fb					_ULFoundEOL:
-.e6fb	98		tya				tya 								; length in A, restore Y
-.e6fc	7a		ply				ply
-.e6fd					UNARY_ReturnByte:
-.e6fd	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e700	a9 00		lda #$00			lda 	#0 							; clear the rests
-.e702	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e705	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e708	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e70b	60		rts				rts
-.e70c					UNARY_Ch:
-.e70c	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
-.e70f	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; copy string address to zTemp1
-.e712	85 26		sta $26				sta 	zTemp1
-.e714	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e717	85 27		sta $27				sta 	zTemp1+1
-.e719	5a		phy				phy
-.e71a	a0 00		ldy #$00			ldy 	#0 							; now get first character
-.e71c	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e71e	7a		ply				ply
-.e71f	80 dc		bra $e6fd			bra 	UNARY_ReturnByte 			; return that byte.
-.e721					UNARY_Abs:
-.e721	ea		nop				nop
-.e722	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
-.e725	20 c5 e5	jsr $e5c5			jsr 	BFUNC_Negate 				; there's an ABS routine in divide
-.e728	60		rts				rts
-.e729					UNARY_Top:
-.e729	ad 6c 20	lda $206c			lda 	highMemory
-.e72c	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e72f	ad 6d 20	lda $206d			lda 	highMemory+1
-.e732	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e735	a9 00		lda #$00			lda 	#0
-.e737	9d 02 04	sta $0402,x			sta 	evalStack+2,x
-.e73a	9d 03 04	sta $0403,x			sta 	evalStack+3,x
-.e73d	60		rts				rts
-.e73e					UNARY_Rnd:
-.e73e	20 49 e7	jsr $e749			jsr 	Random16 					; call 16 bit RNG twice
-.e741	e8		inx				inx
-.e742	e8		inx				inx
-.e743	20 49 e7	jsr $e749			jsr 	Random16
-.e746	ca		dex				dex
-.e747	ca		dex				dex
-.e748	60		rts				rts
-.e749					Random16:
-.e749	ad 74 20	lda $2074			lda 	RandomSeed 					; initialise if nonzero
-.e74c	0d 75 20	ora $2075			ora 	RandomSeed+1
-.e74f	d0 0d		bne $e75e			bne 	_R16_NoInit
-.e751	ee 74 20	inc $2074			inc 	RandomSeed 					; by setting low to 1
-.e754	5a		phy				phy
-.e755	a0 14		ldy #$14			ldy 	#20 						; call it 20 times to get it started
-.e757					_R16_Setup:
-.e757	20 49 e7	jsr $e749			jsr 	Random16
-.e75a	88		dey				dey
-.e75b	d0 fa		bne $e757			bne 	_R16_Setup
-.e75d	7a		ply				ply
-.e75e					_R16_NoInit:
-.e75e	4e 75 20	lsr $2075			lsr 	RandomSeed+1				; shift seed right
-.e761	6e 74 20	ror $2074			ror 	RandomSeed
-.e764	90 08		bcc $e76e			bcc 	_R16_NoXor
-.e766	ad 75 20	lda $2075			lda 	RandomSeed+1				; xor MSB with $B4 if bit set.
-.e769	49 b4		eor #$b4			eor 	#$B4 						; like the Wikipedia one.
-.e76b	8d 75 20	sta $2075			sta 	RandomSeed+1
-.e76e					_R16_NoXor:
-.e76e	ad 74 20	lda $2074			lda 	RandomSeed					; copy result to evaluate stack.
-.e771	9d 00 04	sta $0400,x			sta 	evalStack+0,x
-.e774	ad 75 20	lda $2075			lda 	RandomSeed+1
-.e777	9d 01 04	sta $0401,x			sta 	evalStack+1,x
-.e77a	60		rts				rts
+.e6cd					UNARY_Len:
+.e6cd	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
+.e6d0	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; copy string address to zTemp1
+.e6d3	85 26		sta $26				sta 	zTemp1
+.e6d5	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e6d8	85 27		sta $27				sta 	zTemp1+1
+.e6da	5a		phy				phy
+.e6db	a0 00		ldy #$00			ldy 	#0 							; now figure out its length.
+.e6dd					_ULGetLength:
+.e6dd	b1 26		lda ($26),y			lda 	(zTemp1),y 					; read character
+.e6df	f0 1d		beq $e6fe			beq 	_ULFoundEOL 				; found end of line.
+.e6e1	c8		iny				iny
+.e6e2	d0 f9		bne $e6dd			bne 	_ULGetLength 				; scan 256 only.
+.e6e4	20 b2 e9	jsr $e9b2			jsr 	ReportError
+>e6e7	43 61 6e 6e 6f 74 20 66				.text 	"Cannot find string end",$00
+>e6ef	69 6e 64 20 73 74 72 69 6e 67 20 65 6e 64 00
+.e6fe					_ULFoundEOL:
+.e6fe	98		tya				tya 								; length in A, restore Y
+.e6ff	7a		ply				ply
+.e700					UNARY_ReturnByte:
+.e700	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e703	a9 00		lda #$00			lda 	#0 							; clear the rests
+.e705	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e708	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e70b	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e70e	60		rts				rts
+.e70f					UNARY_Ch:
+.e70f	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
+.e712	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; copy string address to zTemp1
+.e715	85 26		sta $26				sta 	zTemp1
+.e717	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e71a	85 27		sta $27				sta 	zTemp1+1
+.e71c	5a		phy				phy
+.e71d	a0 00		ldy #$00			ldy 	#0 							; now get first character
+.e71f	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e721	7a		ply				ply
+.e722	80 dc		bra $e700			bra 	UNARY_ReturnByte 			; return that byte.
+.e724					UNARY_Abs:
+.e724	ea		nop				nop
+.e725	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel 	; get the string to measure the length of.
+.e728	20 c5 e5	jsr $e5c5			jsr 	BFUNC_Negate 				; there's an ABS routine in divide
+.e72b	60		rts				rts
+.e72c					UNARY_Top:
+.e72c	ad 6c 20	lda $206c			lda 	highMemory
+.e72f	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e732	ad 6d 20	lda $206d			lda 	highMemory+1
+.e735	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e738	a9 00		lda #$00			lda 	#0
+.e73a	9d 02 04	sta $0402,x			sta 	evalStack+2,x
+.e73d	9d 03 04	sta $0403,x			sta 	evalStack+3,x
+.e740	60		rts				rts
+.e741					UNARY_Rnd:
+.e741	20 4c e7	jsr $e74c			jsr 	Random16 					; call 16 bit RNG twice
+.e744	e8		inx				inx
+.e745	e8		inx				inx
+.e746	20 4c e7	jsr $e74c			jsr 	Random16
+.e749	ca		dex				dex
+.e74a	ca		dex				dex
+.e74b	60		rts				rts
+.e74c					Random16:
+.e74c	ad 74 20	lda $2074			lda 	RandomSeed 					; initialise if nonzero
+.e74f	0d 75 20	ora $2075			ora 	RandomSeed+1
+.e752	d0 0d		bne $e761			bne 	_R16_NoInit
+.e754	ee 74 20	inc $2074			inc 	RandomSeed 					; by setting low to 1
+.e757	5a		phy				phy
+.e758	a0 14		ldy #$14			ldy 	#20 						; call it 20 times to get it started
+.e75a					_R16_Setup:
+.e75a	20 4c e7	jsr $e74c			jsr 	Random16
+.e75d	88		dey				dey
+.e75e	d0 fa		bne $e75a			bne 	_R16_Setup
+.e760	7a		ply				ply
+.e761					_R16_NoInit:
+.e761	4e 75 20	lsr $2075			lsr 	RandomSeed+1				; shift seed right
+.e764	6e 74 20	ror $2074			ror 	RandomSeed
+.e767	90 08		bcc $e771			bcc 	_R16_NoXor
+.e769	ad 75 20	lda $2075			lda 	RandomSeed+1				; xor MSB with $B4 if bit set.
+.e76c	49 b4		eor #$b4			eor 	#$B4 						; like the Wikipedia one.
+.e76e	8d 75 20	sta $2075			sta 	RandomSeed+1
+.e771					_R16_NoXor:
+.e771	ad 74 20	lda $2074			lda 	RandomSeed					; copy result to evaluate stack.
+.e774	9d 00 04	sta $0400,x			sta 	evalStack+0,x
+.e777	ad 75 20	lda $2075			lda 	RandomSeed+1
+.e77a	9d 01 04	sta $0401,x			sta 	evalStack+1,x
+.e77d	60		rts				rts
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: commands/execute.asm
 
-.e77b					COMMAND_Run:
-.e77b	20 28 e8	jsr $e828			jsr 	COMMAND_Clear 				; clear everything for a new run.
-.e77e	a2 00		ldx #$00			ldx 	#BasicProgram & 255 		; start from here
-.e780	a0 22		ldy #$22			ldy 	#BasicProgram >> 8
-.e782	86 20		stx $20				stx 	zCurrentLine 				; set current line.
-.e784	84 21		sty $21				sty 	zCurrentLine+1
-.e786					CRUNNewLine:
-.e786	a0 00		ldy #$00			ldy 	#0 							; look at the offset, end of program
-.e788	b1 20		lda ($20),y			lda 	(zCurrentLine),y
-.e78a	f0 57		beq $e7e3			beq 	COMMAND_End 				; if zero, off end of program so stop.
-.e78c	a0 03		ldy #$03			ldy 	#3 							; offset to first token.
-.e78e					CRUNNextInstruction:
-.e78e	a9 00		lda #$00			lda 	#0 							; reset the string buffer position
-.e790	8d 73 20	sta $2073			sta 	StringBufferPos
-.e793	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next token
-.e795	f0 0b		beq $e7a2			beq 	CRUNNextLine 				; if zero, then end of line.
-.e797					CRUNNotEndOfLine:
-.e797	c9 20		cmp #$20			cmp 	#' '
-.e799	f0 04		beq $e79f			beq 	CRUNSkipLoop
-.e79b	c9 8d		cmp #$8d			cmp 	#KW_Colon 					; check for a colon first.
-.e79d	d0 12		bne $e7b1			bne 	CRUNExecuteOne 				; if not that, execute the token.
-.e79f					CRUNSkipLoop:
-.e79f	c8		iny				iny		 							; if colon, skip it and loop round.
-.e7a0	80 ec		bra $e78e			bra 	CRUNNextInstruction
-.e7a2					CRUNNextLine:
-.e7a2	a0 00		ldy #$00			ldy 	#0 							; add offset from line to line pointer
-.e7a4	b1 20		lda ($20),y			lda 	(zCurrentLine),y
-.e7a6	18		clc				clc
-.e7a7	65 20		adc $20				adc 	zCurrentLine
-.e7a9	85 20		sta $20				sta 	zCurrentLine
-.e7ab	90 d9		bcc $e786			bcc 	CRUNNewLine
-.e7ad	e6 21		inc $21				inc 	zCurrentLine+1
-.e7af	80 d5		bra $e786			bra 	CRUNNewLine
-.e7b1					CRUNExecuteOne:
-.e7b1	09 00		ora #$00			ora 	#0 							; if it is a character might be a variable.
-.e7b3	10 21		bpl $e7d6			bpl		_CRUNX1TryLet
-.e7b5	c9 83		cmp #$83			cmp 	#KW_DOLLAR 					; likewise if ! something ? something $ something
-.e7b7	f0 1d		beq $e7d6			beq 	_CRUNX1TryLet
-.e7b9	c9 80		cmp #$80			cmp 	#KW_PLING
-.e7bb	f0 19		beq $e7d6			beq 	_CRUNX1TryLet
-.e7bd	c9 95		cmp #$95			cmp 	#KW_QUESTION
-.e7bf	f0 15		beq $e7d6			beq 	_CRUNX1TryLet
-.e7c1	c8		iny				iny 								; skip over loaded token
-.e7c2	0a		asl a				asl 	a 							; double lower keyword byte, clears bit 7.
-.e7c3	8d 6f 20	sta $206f			sta 	Temp1+1 					; this is the low byte into the KVT
-.e7c6	8a		txa				txa
-.e7c7	a9 e0		lda #$e0			lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
-.e7c9	8d 70 20	sta $2070			sta 	Temp1+2
-.e7cc	a9 6c		lda #$6c			lda 	#$6C 						; make it jump indirect
-.e7ce	8d 6e 20	sta $206e			sta 	Temp1+0
-.e7d1	20 6e 20	jsr $206e			jsr 	Temp1 						; call instruction
-.e7d4	80 b8		bra $e78e			bra 	CRUNNextInstruction 		; do next instruction.
-.e7d6					_CRUNX1TryLet:
-.e7d6	20 92 e8	jsr $e892			jsr 	COMMAND_Let 				; try doing a LET if not a keyword.
-.e7d9	80 b3		bra $e78e			bra 	CRUNNextInstruction
-.e7db					COMMAND_Stop:
-.e7db	20 af e9	jsr $e9af			jsr 	ReportError
->e7de	53 74 6f 70 00					.text 	"Stop",$00
-.e7e3					COMMAND_End:
->e7e3	02						.byte 	2
-.e7e4	4c a4 e9	jmp $e9a4			jmp 	WarmStart
+.e77e					COMMAND_Run:
+.e77e	20 2b e8	jsr $e82b			jsr 	COMMAND_Clear 				; clear everything for a new run.
+.e781	a2 00		ldx #$00			ldx 	#BasicProgram & 255 		; start from here
+.e783	a0 22		ldy #$22			ldy 	#BasicProgram >> 8
+.e785	86 20		stx $20				stx 	zCurrentLine 				; set current line.
+.e787	84 21		sty $21				sty 	zCurrentLine+1
+.e789					CRUNNewLine:
+.e789	a0 00		ldy #$00			ldy 	#0 							; look at the offset, end of program
+.e78b	b1 20		lda ($20),y			lda 	(zCurrentLine),y
+.e78d	f0 57		beq $e7e6			beq 	COMMAND_End 				; if zero, off end of program so stop.
+.e78f	a0 03		ldy #$03			ldy 	#3 							; offset to first token.
+.e791					CRUNNextInstruction:
+.e791	a9 00		lda #$00			lda 	#0 							; reset the string buffer position
+.e793	8d 73 20	sta $2073			sta 	StringBufferPos
+.e796	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next token
+.e798	f0 0b		beq $e7a5			beq 	CRUNNextLine 				; if zero, then end of line.
+.e79a					CRUNNotEndOfLine:
+.e79a	c9 20		cmp #$20			cmp 	#' '
+.e79c	f0 04		beq $e7a2			beq 	CRUNSkipLoop
+.e79e	c9 8d		cmp #$8d			cmp 	#KW_Colon 					; check for a colon first.
+.e7a0	d0 12		bne $e7b4			bne 	CRUNExecuteOne 				; if not that, execute the token.
+.e7a2					CRUNSkipLoop:
+.e7a2	c8		iny				iny		 							; if colon, skip it and loop round.
+.e7a3	80 ec		bra $e791			bra 	CRUNNextInstruction
+.e7a5					CRUNNextLine:
+.e7a5	a0 00		ldy #$00			ldy 	#0 							; add offset from line to line pointer
+.e7a7	b1 20		lda ($20),y			lda 	(zCurrentLine),y
+.e7a9	18		clc				clc
+.e7aa	65 20		adc $20				adc 	zCurrentLine
+.e7ac	85 20		sta $20				sta 	zCurrentLine
+.e7ae	90 d9		bcc $e789			bcc 	CRUNNewLine
+.e7b0	e6 21		inc $21				inc 	zCurrentLine+1
+.e7b2	80 d5		bra $e789			bra 	CRUNNewLine
+.e7b4					CRUNExecuteOne:
+.e7b4	09 00		ora #$00			ora 	#0 							; if it is a character might be a variable.
+.e7b6	10 21		bpl $e7d9			bpl		_CRUNX1TryLet
+.e7b8	c9 83		cmp #$83			cmp 	#KW_DOLLAR 					; likewise if ! something ? something $ something
+.e7ba	f0 1d		beq $e7d9			beq 	_CRUNX1TryLet
+.e7bc	c9 80		cmp #$80			cmp 	#KW_PLING
+.e7be	f0 19		beq $e7d9			beq 	_CRUNX1TryLet
+.e7c0	c9 95		cmp #$95			cmp 	#KW_QUESTION
+.e7c2	f0 15		beq $e7d9			beq 	_CRUNX1TryLet
+.e7c4	c8		iny				iny 								; skip over loaded token
+.e7c5	0a		asl a				asl 	a 							; double lower keyword byte, clears bit 7.
+.e7c6	8d 6f 20	sta $206f			sta 	Temp1+1 					; this is the low byte into the KVT
+.e7c9	8a		txa				txa
+.e7ca	a9 e0		lda #$e0			lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
+.e7cc	8d 70 20	sta $2070			sta 	Temp1+2
+.e7cf	a9 6c		lda #$6c			lda 	#$6C 						; make it jump indirect
+.e7d1	8d 6e 20	sta $206e			sta 	Temp1+0
+.e7d4	20 6e 20	jsr $206e			jsr 	Temp1 						; call instruction
+.e7d7	80 b8		bra $e791			bra 	CRUNNextInstruction 		; do next instruction.
+.e7d9					_CRUNX1TryLet:
+.e7d9	20 95 e8	jsr $e895			jsr 	COMMAND_Let 				; try doing a LET if not a keyword.
+.e7dc	80 b3		bra $e791			bra 	CRUNNextInstruction
+.e7de					COMMAND_Stop:
+.e7de	20 b2 e9	jsr $e9b2			jsr 	ReportError
+>e7e1	53 74 6f 70 00					.text 	"Stop",$00
+.e7e6					COMMAND_End:
+>e7e6	02						.byte 	2
+.e7e7	4c a7 e9	jmp $e9a7			jmp 	WarmStart
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: commands/miscellany.asm
 
-.e7e7					COMMAND_Assert:
-.e7e7	20 75 e1	jsr $e175			jsr 	EvaluateBase 				; evaluate the expression
-.e7ea	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; check non zero
-.e7ed	1d 01 04	ora $0401,x			ora 	evalStack+1,x
-.e7f0	1d 02 04	ora $0402,x			ora 	evalStack+2,x
-.e7f3	1d 03 04	ora $0403,x			ora 	evalStack+3,x
-.e7f6	d0 12		bne $e80a			bne 	_CMDAExit
-.e7f8	ea		nop				nop
-.e7f9	20 af e9	jsr $e9af			jsr 	ReportError
->e7fc	41 73 73 65 72 74 20 66				.text 	"Assert failed",$00
->e804	61 69 6c 65 64 00
-.e80a					_CMDAExit:
-.e80a	60		rts				rts
-.e80b					COMMAND_Rem:
-.e80b	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next character token.
-.e80d	f0 05		beq $e814			beq 	_CREMExit 					; End of line, then exit.
-.e80f	c8		iny				iny 								; something to skip
-.e810	c9 8d		cmp #$8d			cmp 	#KW_COLON 					; if not a colon
-.e812	d0 f7		bne $e80b			bne 	COMMAND_Rem 				; keep searching
-.e814					_CREMExit:
-.e814	60		rts				rts
-.e815					COMMAND_New:
-.e815	a9 00		lda #$00			lda 	#0 							; erase the actual program.
-.e817	8d 00 22	sta $2200			sta 	BasicProgram 				; by zeroing the initial offset.
-.e81a	20 28 e8	jsr $e828			jsr 	COMMAND_Clear 				; clear non fixed variable, reset stack and low mem pointer
-.e81d	a9 00		lda #$00			lda 	#endMemory & $FF 			; reset high memory pointer.
-.e81f	8d 6c 20	sta $206c			sta 	HighMemory
-.e822	a9 80		lda #$80			lda 	#endMemory >> 8
-.e824	8d 6d 20	sta $206d			sta 	HighMemory+1
-.e827	60		rts				rts
-.e828					COMMAND_Clear:
-.e828	a2 00		ldx #$00			ldx 	#0	 						; clear variables @A-Z
-.e82a					_CCClearVar:
-.e82a	a9 00		lda #$00			lda 	#$00
-.e82c	9d 00 20	sta $2000,x			sta 	FixedVariables,x
-.e82f	e8		inx				inx
-.e830	e0 6c		cpx #$6c			cpx 	#27*4
-.e832	10 f6		bpl $e82a			bpl 	_CCClearVar
-.e834	a9 00		lda #$00			lda 	#basicStack & $FF 			; reset BASIC stack
-.e836	85 22		sta $22				sta 	zBasicStack
-.e838	a9 02		lda #$02			lda 	#basicStack >> 8
-.e83a	85 23		sta $23				sta 	zBasicStack+1
-.e83c	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; now find where the program ends.
-.e83e	85 24		sta $24				sta 	zLowMemory
-.e840	a9 22		lda #$22			lda 	#BasicProgram >> 8
-.e842	85 25		sta $25				sta 	zLowMemory+1
-.e844					_CCFindEnd:
-.e844	a0 00		ldy #$00			ldy 	#0 							; look at next offset
-.e846	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; if zero, reached the end.
-.e848	f0 0b		beq $e855			beq 	_CCFoundEnd
-.e84a	18		clc				clc 								; go to next line.
-.e84b	65 24		adc $24				adc 	zLowMemory
-.e84d	85 24		sta $24				sta 	zLowMemory
-.e84f	90 f3		bcc $e844			bcc 	_CCFindEnd
-.e851	e6 25		inc $25				inc 	zLowMemory+1
-.e853	80 ef		bra $e844			bra 	_CCFindEnd
-.e855					_CCFoundEnd:
-.e855	e6 24		inc $24				inc 	zLowMemory 					; variables etc. start after end of program.
-.e857	d0 02		bne $e85b			bne 	_CCNoCarry 					; skip over zero end offset.
-.e859	e6 25		inc $25				inc 	zLowMemory+1
-.e85b					_CCNoCarry:
-.e85b	60		rts				rts
-.e85c					COMMAND_Old:
-.e85c	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
-.e85e	85 24		sta $24				sta 	zLowMemory
-.e860	a9 22		lda #$22			lda 	#BasicProgram >> 8
-.e862	85 25		sta $25				sta 	zLowMemory+1
-.e864	a0 03		ldy #$03			ldy 	#3 							; look for the $00 end of line marker.
-.e866					_COScan:
-.e866	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; look at next byte pair
-.e868	c8		iny				iny
-.e869	f0 0d		beq $e878			beq 	_COFail 					; can't find marker, corrupted maybe ?
-.e86b	c9 00		cmp #$00			cmp 	#0 							; until $00 found.
-.e86d	d0 f7		bne $e866			bne 	_COScan
-.e86f	98		tya				tya 								; Y is the new offset to the next instruction
-.e870	a0 00		ldy #$00			ldy 	#0 							; overwrite the old one
-.e872	91 24		sta ($24),y			sta 	(zLowMemory),y
-.e874	20 28 e8	jsr $e828			jsr 	COMMAND_Clear 				; reset variables, stacks and pointers.
-.e877	60		rts				rts
-.e878					_COFail:
-.e878	20 af e9	jsr $e9af			jsr 	ReportError
->e87b	43 61 6e 6e 6f 74 20 72				.text 	"Cannot recover program",$00
->e883	65 63 6f 76 65 72 20 70 72 6f 67 72 61 6d 00
+.e7ea					COMMAND_Assert:
+.e7ea	20 75 e1	jsr $e175			jsr 	EvaluateBase 				; evaluate the expression
+.e7ed	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; check non zero
+.e7f0	1d 01 04	ora $0401,x			ora 	evalStack+1,x
+.e7f3	1d 02 04	ora $0402,x			ora 	evalStack+2,x
+.e7f6	1d 03 04	ora $0403,x			ora 	evalStack+3,x
+.e7f9	d0 12		bne $e80d			bne 	_CMDAExit
+.e7fb	ea		nop				nop
+.e7fc	20 b2 e9	jsr $e9b2			jsr 	ReportError
+>e7ff	41 73 73 65 72 74 20 66				.text 	"Assert failed",$00
+>e807	61 69 6c 65 64 00
+.e80d					_CMDAExit:
+.e80d	60		rts				rts
+.e80e					COMMAND_Rem:
+.e80e	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next character token.
+.e810	f0 05		beq $e817			beq 	_CREMExit 					; End of line, then exit.
+.e812	c8		iny				iny 								; something to skip
+.e813	c9 8d		cmp #$8d			cmp 	#KW_COLON 					; if not a colon
+.e815	d0 f7		bne $e80e			bne 	COMMAND_Rem 				; keep searching
+.e817					_CREMExit:
+.e817	60		rts				rts
+.e818					COMMAND_New:
+.e818	a9 00		lda #$00			lda 	#0 							; erase the actual program.
+.e81a	8d 00 22	sta $2200			sta 	BasicProgram 				; by zeroing the initial offset.
+.e81d	20 2b e8	jsr $e82b			jsr 	COMMAND_Clear 				; clear non fixed variable, reset stack and low mem pointer
+.e820	a9 00		lda #$00			lda 	#endMemory & $FF 			; reset high memory pointer.
+.e822	8d 6c 20	sta $206c			sta 	HighMemory
+.e825	a9 80		lda #$80			lda 	#endMemory >> 8
+.e827	8d 6d 20	sta $206d			sta 	HighMemory+1
+.e82a	60		rts				rts
+.e82b					COMMAND_Clear:
+.e82b	a2 00		ldx #$00			ldx 	#0	 						; clear variables @A-Z
+.e82d					_CCClearVar:
+.e82d	a9 00		lda #$00			lda 	#$00
+.e82f	9d 00 20	sta $2000,x			sta 	FixedVariables,x
+.e832	e8		inx				inx
+.e833	e0 6c		cpx #$6c			cpx 	#27*4
+.e835	10 f6		bpl $e82d			bpl 	_CCClearVar
+.e837	a9 00		lda #$00			lda 	#basicStack & $FF 			; reset BASIC stack
+.e839	85 22		sta $22				sta 	zBasicStack
+.e83b	a9 02		lda #$02			lda 	#basicStack >> 8
+.e83d	85 23		sta $23				sta 	zBasicStack+1
+.e83f	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; now find where the program ends.
+.e841	85 24		sta $24				sta 	zLowMemory
+.e843	a9 22		lda #$22			lda 	#BasicProgram >> 8
+.e845	85 25		sta $25				sta 	zLowMemory+1
+.e847					_CCFindEnd:
+.e847	a0 00		ldy #$00			ldy 	#0 							; look at next offset
+.e849	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; if zero, reached the end.
+.e84b	f0 0b		beq $e858			beq 	_CCFoundEnd
+.e84d	18		clc				clc 								; go to next line.
+.e84e	65 24		adc $24				adc 	zLowMemory
+.e850	85 24		sta $24				sta 	zLowMemory
+.e852	90 f3		bcc $e847			bcc 	_CCFindEnd
+.e854	e6 25		inc $25				inc 	zLowMemory+1
+.e856	80 ef		bra $e847			bra 	_CCFindEnd
+.e858					_CCFoundEnd:
+.e858	e6 24		inc $24				inc 	zLowMemory 					; variables etc. start after end of program.
+.e85a	d0 02		bne $e85e			bne 	_CCNoCarry 					; skip over zero end offset.
+.e85c	e6 25		inc $25				inc 	zLowMemory+1
+.e85e					_CCNoCarry:
+.e85e	60		rts				rts
+.e85f					COMMAND_Old:
+.e85f	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
+.e861	85 24		sta $24				sta 	zLowMemory
+.e863	a9 22		lda #$22			lda 	#BasicProgram >> 8
+.e865	85 25		sta $25				sta 	zLowMemory+1
+.e867	a0 03		ldy #$03			ldy 	#3 							; look for the $00 end of line marker.
+.e869					_COScan:
+.e869	b1 24		lda ($24),y			lda 	(zLowMemory),y 				; look at next byte pair
+.e86b	c8		iny				iny
+.e86c	f0 0d		beq $e87b			beq 	_COFail 					; can't find marker, corrupted maybe ?
+.e86e	c9 00		cmp #$00			cmp 	#0 							; until $00 found.
+.e870	d0 f7		bne $e869			bne 	_COScan
+.e872	98		tya				tya 								; Y is the new offset to the next instruction
+.e873	a0 00		ldy #$00			ldy 	#0 							; overwrite the old one
+.e875	91 24		sta ($24),y			sta 	(zLowMemory),y
+.e877	20 2b e8	jsr $e82b			jsr 	COMMAND_Clear 				; reset variables, stacks and pointers.
+.e87a	60		rts				rts
+.e87b					_COFail:
+.e87b	20 b2 e9	jsr $e9b2			jsr 	ReportError
+>e87e	43 61 6e 6e 6f 74 20 72				.text 	"Cannot recover program",$00
+>e886	65 63 6f 76 65 72 20 70 72 6f 67 72 61 6d 00
 
 ;******  Return to file: basic.asm
 
 
 ;******  Processing file: commands/let.asm
 
-.e892					COMMAND_Let:
-.e892	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get first token not space
-.e894	f0 58		beq $e8ee			beq 	_CLESyntax
-.e896	c8		iny				iny
-.e897	c9 20		cmp #$20			cmp 	#32
-.e899	f0 f7		beq $e892			beq 	COMMAND_Let
-.e89b	88		dey				dey
-.e89c	c9 95		cmp #$95			cmp 	#KW_QUESTION				; check for first being indirect.
-.e89e	f0 51		beq $e8f1			beq 	_CLEIndirect
-.e8a0	c9 80		cmp #$80			cmp 	#KW_PLING
-.e8a2	f0 4d		beq $e8f1			beq 	_CLEIndirect
-.e8a4	c9 83		cmp #$83			cmp 	#KW_DOLLAR
-.e8a6	f0 49		beq $e8f1			beq 	_CLEIndirect
-.e8a8	a2 00		ldx #$00			ldx 	#0 							; clear evaluation stack.
-.e8aa	20 88 e3	jsr $e388			jsr 	VARReference 				; get a variable reference.
-.e8ad	a5 26		lda $26				lda 	zTemp1 						; copy into target addr
-.e8af	85 2a		sta $2a				sta 	zTargetAddr
-.e8b1	a5 27		lda $27				lda 	zTemp1+1
-.e8b3	85 2b		sta $2b				sta 	zTargetAddr+1
-.e8b5	a5 28		lda $28				lda 	zTemp1+2
-.e8b7	85 2c		sta $2c				sta 	zTargetAddr+2
-.e8b9	a5 29		lda $29				lda 	zTemp1+3
-.e8bb	85 2d		sta $2d				sta 	zTargetAddr+3
-.e8bd					_CLEGetBinLHSOp:
-.e8bd	b1 20		lda ($20),y			lda 	(zCurrentLine),y
-.e8bf	f0 2d		beq $e8ee			beq 	_CLESyntax
-.e8c1	c8		iny				iny
-.e8c2	c9 20		cmp #$20			cmp 	#' '
-.e8c4	f0 f7		beq $e8bd			beq 	_CLEGetBinLHSOp
-.e8c6	88		dey				dey
-.e8c7	c9 95		cmp #$95			cmp 	#KW_QUESTION 				; got some sort of reference, check
-.e8c9	f0 45		beq $e910			beq 	_CLEBinaryLHTerm  			; if that's a basis for indirection ?
-.e8cb	c9 80		cmp #$80			cmp 	#KW_PLING
-.e8cd	f0 41		beq $e910			beq 	_CLEBinaryLHTerm
-.e8cf	c9 83		cmp #$83			cmp 	#KW_DOLLAR
-.e8d1	f0 3d		beq $e910			beq 	_CLEBinaryLHTerm
-.e8d3	a9 80		lda #$80			lda 	#KW_PLING 					; we want to do a 32 bit write.
-.e8d5					_CLEWriteToAddress:
-.e8d5	48		pha				pha 								; save write-type.
-.e8d6	a9 92		lda #$92			lda 	#KW_EQUAL 					; check for '=' sign.
-.e8d8	20 19 e1	jsr $e119			jsr 	CheckNextCharacter
-.e8db	20 75 e1	jsr $e175			jsr 	EvaluateBase 				; evaluate the RHS.
-.e8de	68		pla				pla
-.e8df	c9 80		cmp #$80			cmp 	#KW_PLING
-.e8e1	f0 6e		beq $e951			beq 	_CLEWordWrite
-.e8e3	c9 95		cmp #$95			cmp 	#KW_QUESTION
-.e8e5	f0 60		beq $e947			beq 	_CLEByteWrite
-.e8e7	c9 83		cmp #$83			cmp 	#KW_DOLLAR
-.e8e9					_ErrorInternal:
-.e8e9	d0 fe		bne $e8e9			bne 	_ErrorInternal
-.e8eb	4c 6d e9	jmp $e96d			jmp 	_CLEStringWrite
-.e8ee					_CLESyntax:
-.e8ee	4c aa e9	jmp $e9aa			jmp 	SyntaxError
-.e8f1					_CLEIndirect:
-.e8f1	48		pha				pha 								; save operator on stack
-.e8f2	c8		iny				iny									; advance over cursor
-.e8f3	a2 00		ldx #$00			ldx 	#0 							; evaluate the address to indirect through.
-.e8f5	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel
-.e8f8	bd 00 04	lda $0400,x			lda 	evalStack+0,x				; copy that as the address.
-.e8fb	85 2a		sta $2a				sta 	zTargetAddr+0
-.e8fd	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e900	85 2b		sta $2b				sta 	zTargetAddr+1
-.e902	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e905	85 2c		sta $2c				sta 	zTargetAddr+2
-.e907	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e90a	85 2d		sta $2d				sta 	zTargetAddr+3
-.e90c	68		pla				pla 								; restore operator.
-.e90d	4c d5 e8	jmp $e8d5			jmp 	_CLEWriteToAddress
-.e910					_CLEBinaryLHTerm:
-.e910	48		pha				pha 								; save operator on stack
-.e911	c8		iny				iny 								; skip over it.
-.e912	a2 00		ldx #$00			ldx 	#0 							; evaluate the address to indirect through.
-.e914	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel
-.e917	a5 2a		lda $2a				lda 	zTargetAddr 				; copy zTargetAddr to zTemp1. Technically
-.e919	85 26		sta $26				sta 	zTemp1 						; a four byte address.....
-.e91b	a5 2b		lda $2b				lda 	zTargetAddr+1
-.e91d	85 27		sta $27				sta 	zTemp1+1 					; we only worry about 4 byte value
-.e91f	5a		phy				phy 								; save Y
-.e920	18		clc				clc 								; add variable evaluated to (zTargetAddr)
-.e921	a0 00		ldy #$00			ldy 	#0
-.e923	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e925	7d 00 04	adc $0400,x			adc 	evalStack+0,x
-.e928	85 2a		sta $2a				sta 	zTargetAddr+0
-.e92a	c8		iny				iny
-.e92b	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e92d	7d 01 04	adc $0401,x			adc 	evalStack+1,x
-.e930	85 2b		sta $2b				sta 	zTargetAddr+1
-.e932	c8		iny				iny
-.e933	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e935	7d 02 04	adc $0402,x			adc 	evalStack+2,x
-.e938	85 2c		sta $2c				sta 	zTargetAddr+2
-.e93a	c8		iny				iny
-.e93b	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e93d	7d 03 04	adc $0403,x			adc 	evalStack+3,x
-.e940	85 2d		sta $2d				sta 	zTargetAddr+3
-.e942	7a		ply				ply 								; restore Y
-.e943	68		pla				pla 								; restore the operator.
-.e944	4c d5 e8	jmp $e8d5			jmp 	_CLEWriteToAddress
-.e947					_CLEByteWrite:
-.e947	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; get the byte to write.
-.e94a	5a		phy				phy 								; write the byte preserving Y
-.e94b	a0 00		ldy #$00			ldy 	#0
-.e94d	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
-.e94f	7a		ply				ply
-.e950	60		rts				rts
-.e951					_CLEWordWrite:
-.e951	5a		phy				phy
-.e952	a0 00		ldy #$00			ldy 	#0
-.e954	bd 00 04	lda $0400,x			lda 	evalStack+0,x
-.e957	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
-.e959	c8		iny				iny
-.e95a	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e95d	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
-.e95f	c8		iny				iny
-.e960	bd 02 04	lda $0402,x			lda 	evalStack+2,x
-.e963	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
-.e965	c8		iny				iny
-.e966	bd 03 04	lda $0403,x			lda 	evalStack+3,x
-.e969	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
-.e96b	7a		ply				ply 								; restore Y
-.e96c	60		rts				rts
-.e96d					_CLEStringWrite:
-.e96d	ea		nop				nop
-.e96e	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; source string -> zTemp1
-.e971	85 26		sta $26				sta 	zTemp1
-.e973	bd 01 04	lda $0401,x			lda 	evalStack+1,x
-.e976	85 27		sta $27				sta 	zTemp1+1
-.e978	5a		phy				phy
-.e979	a0 00		ldy #$00			ldy 	#0
-.e97b					_CLEStringCopy:
-.e97b	b1 26		lda ($26),y			lda 	(zTemp1),y
-.e97d	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
-.e97f	c9 00		cmp #$00			cmp 	#0
-.e981	f0 16		beq $e999			beq	 	_CLEStringWritten
-.e983	c8		iny				iny
-.e984	d0 f5		bne $e97b			bne 	_CLEStringCopy
-.e986	20 af e9	jsr $e9af			jsr 	ReportError
->e989	42 61 64 20 73 74 72 69				.text 	"Bad string copy",$00
->e991	6e 67 20 63 6f 70 79 00
-.e999					_CLEStringWritten:
-.e999	7a		ply				ply
-.e99a	60		rts				rts
+.e895					COMMAND_Let:
+.e895	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get first token not space
+.e897	f0 58		beq $e8f1			beq 	_CLESyntax
+.e899	c8		iny				iny
+.e89a	c9 20		cmp #$20			cmp 	#32
+.e89c	f0 f7		beq $e895			beq 	COMMAND_Let
+.e89e	88		dey				dey
+.e89f	c9 95		cmp #$95			cmp 	#KW_QUESTION				; check for first being indirect.
+.e8a1	f0 51		beq $e8f4			beq 	_CLEIndirect 				; e.g. !x = 42
+.e8a3	c9 80		cmp #$80			cmp 	#KW_PLING
+.e8a5	f0 4d		beq $e8f4			beq 	_CLEIndirect
+.e8a7	c9 83		cmp #$83			cmp 	#KW_DOLLAR
+.e8a9	f0 49		beq $e8f4			beq 	_CLEIndirect
+.e8ab	a2 00		ldx #$00			ldx 	#0 							; clear evaluation stack.
+.e8ad	20 88 e3	jsr $e388			jsr 	VARReference 				; get a variable reference.
+.e8b0	a5 26		lda $26				lda 	zTemp1 						; copy into target addr
+.e8b2	85 2a		sta $2a				sta 	zTargetAddr
+.e8b4	a5 27		lda $27				lda 	zTemp1+1
+.e8b6	85 2b		sta $2b				sta 	zTargetAddr+1
+.e8b8	a5 28		lda $28				lda 	zTemp1+2
+.e8ba	85 2c		sta $2c				sta 	zTargetAddr+2
+.e8bc	a5 29		lda $29				lda 	zTemp1+3
+.e8be	85 2d		sta $2d				sta 	zTargetAddr+3
+.e8c0					_CLEGetBinLHSOp:
+.e8c0	b1 20		lda ($20),y			lda 	(zCurrentLine),y
+.e8c2	f0 2d		beq $e8f1			beq 	_CLESyntax
+.e8c4	c8		iny				iny
+.e8c5	c9 20		cmp #$20			cmp 	#' '
+.e8c7	f0 f7		beq $e8c0			beq 	_CLEGetBinLHSOp
+.e8c9	88		dey				dey
+.e8ca	c9 95		cmp #$95			cmp 	#KW_QUESTION 				; got some sort of reference, check
+.e8cc	f0 45		beq $e913			beq 	_CLEBinaryLHTerm  			; if that's a basis for indirection ?
+.e8ce	c9 80		cmp #$80			cmp 	#KW_PLING
+.e8d0	f0 41		beq $e913			beq 	_CLEBinaryLHTerm
+.e8d2	c9 83		cmp #$83			cmp 	#KW_DOLLAR
+.e8d4	f0 3d		beq $e913			beq 	_CLEBinaryLHTerm
+.e8d6	a9 80		lda #$80			lda 	#KW_PLING 					; we want to do a 32 bit write.
+.e8d8					_CLEWriteToAddress:
+.e8d8	48		pha				pha 								; save write-type.
+.e8d9	a9 92		lda #$92			lda 	#KW_EQUAL 					; check for '=' sign.
+.e8db	20 19 e1	jsr $e119			jsr 	CheckNextCharacter
+.e8de	20 75 e1	jsr $e175			jsr 	EvaluateBase 				; evaluate the RHS.
+.e8e1	68		pla				pla
+.e8e2	c9 80		cmp #$80			cmp 	#KW_PLING
+.e8e4	f0 6e		beq $e954			beq 	_CLEWordWrite
+.e8e6	c9 95		cmp #$95			cmp 	#KW_QUESTION
+.e8e8	f0 60		beq $e94a			beq 	_CLEByteWrite
+.e8ea	c9 83		cmp #$83			cmp 	#KW_DOLLAR
+.e8ec					_ErrorInternal:
+.e8ec	d0 fe		bne $e8ec			bne 	_ErrorInternal
+.e8ee	4c 70 e9	jmp $e970			jmp 	_CLEStringWrite
+.e8f1					_CLESyntax:
+.e8f1	4c ad e9	jmp $e9ad			jmp 	SyntaxError
+.e8f4					_CLEIndirect:
+.e8f4	48		pha				pha 								; save operator on stack
+.e8f5	c8		iny				iny									; advance over cursor
+.e8f6	a2 00		ldx #$00			ldx 	#0 							; evaluate the address to indirect through.
+.e8f8	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel
+.e8fb	bd 00 04	lda $0400,x			lda 	evalStack+0,x				; copy that as the address.
+.e8fe	85 2a		sta $2a				sta 	zTargetAddr+0
+.e900	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e903	85 2b		sta $2b				sta 	zTargetAddr+1
+.e905	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e908	85 2c		sta $2c				sta 	zTargetAddr+2
+.e90a	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e90d	85 2d		sta $2d				sta 	zTargetAddr+3
+.e90f	68		pla				pla 								; restore operator.
+.e910	4c d8 e8	jmp $e8d8			jmp 	_CLEWriteToAddress
+.e913					_CLEBinaryLHTerm:
+.e913	48		pha				pha 								; save operator on stack
+.e914	c8		iny				iny 								; skip over it.
+.e915	a2 00		ldx #$00			ldx 	#0 							; evaluate the address to indirect through.
+.e917	20 71 e1	jsr $e171			jsr 	EvaluateAtomCurrentLevel
+.e91a	a5 2a		lda $2a				lda 	zTargetAddr 				; copy zTargetAddr to zTemp1. Technically
+.e91c	85 26		sta $26				sta 	zTemp1 						; a four byte address.....
+.e91e	a5 2b		lda $2b				lda 	zTargetAddr+1
+.e920	85 27		sta $27				sta 	zTemp1+1 					; we only worry about 4 byte value
+.e922	5a		phy				phy 								; save Y
+.e923	18		clc				clc 								; add variable evaluated to (zTargetAddr)
+.e924	a0 00		ldy #$00			ldy 	#0
+.e926	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e928	7d 00 04	adc $0400,x			adc 	evalStack+0,x
+.e92b	85 2a		sta $2a				sta 	zTargetAddr+0
+.e92d	c8		iny				iny
+.e92e	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e930	7d 01 04	adc $0401,x			adc 	evalStack+1,x
+.e933	85 2b		sta $2b				sta 	zTargetAddr+1
+.e935	c8		iny				iny
+.e936	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e938	7d 02 04	adc $0402,x			adc 	evalStack+2,x
+.e93b	85 2c		sta $2c				sta 	zTargetAddr+2
+.e93d	c8		iny				iny
+.e93e	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e940	7d 03 04	adc $0403,x			adc 	evalStack+3,x
+.e943	85 2d		sta $2d				sta 	zTargetAddr+3
+.e945	7a		ply				ply 								; restore Y
+.e946	68		pla				pla 								; restore the operator.
+.e947	4c d8 e8	jmp $e8d8			jmp 	_CLEWriteToAddress
+.e94a					_CLEByteWrite:
+.e94a	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; get the byte to write.
+.e94d	5a		phy				phy 								; write the byte preserving Y
+.e94e	a0 00		ldy #$00			ldy 	#0
+.e950	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
+.e952	7a		ply				ply
+.e953	60		rts				rts
+.e954					_CLEWordWrite:
+.e954	5a		phy				phy
+.e955	a0 00		ldy #$00			ldy 	#0
+.e957	bd 00 04	lda $0400,x			lda 	evalStack+0,x
+.e95a	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
+.e95c	c8		iny				iny
+.e95d	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e960	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
+.e962	c8		iny				iny
+.e963	bd 02 04	lda $0402,x			lda 	evalStack+2,x
+.e966	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
+.e968	c8		iny				iny
+.e969	bd 03 04	lda $0403,x			lda 	evalStack+3,x
+.e96c	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
+.e96e	7a		ply				ply 								; restore Y
+.e96f	60		rts				rts
+.e970					_CLEStringWrite:
+.e970	ea		nop				nop
+.e971	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; source string -> zTemp1
+.e974	85 26		sta $26				sta 	zTemp1
+.e976	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e979	85 27		sta $27				sta 	zTemp1+1
+.e97b	5a		phy				phy
+.e97c	a0 00		ldy #$00			ldy 	#0
+.e97e					_CLEStringCopy:
+.e97e	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e980	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
+.e982	c9 00		cmp #$00			cmp 	#0
+.e984	f0 16		beq $e99c			beq	 	_CLEStringWritten
+.e986	c8		iny				iny
+.e987	d0 f5		bne $e97e			bne 	_CLEStringCopy
+.e989	20 b2 e9	jsr $e9b2			jsr 	ReportError
+>e98c	42 61 64 20 73 74 72 69				.text 	"Bad string copy",$00
+>e994	6e 67 20 63 6f 70 79 00
+.e99c					_CLEStringWritten:
+.e99c	7a		ply				ply
+.e99d	60		rts				rts
 
 ;******  Return to file: basic.asm
 
-.e99b					Start:
-.e99b	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.e99d	9a		txs			txs
-.e99e	20 15 e8	jsr $e815			jsr 	COMMAND_New 				; do a new
-.e9a1	20 5c e8	jsr $e85c			jsr 	COMMAND_Old 				; get back the old program as we're deving.
-.e9a4					WarmStart:
-.e9a4	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.e9a6	9a		txs			txs
-.e9a7	4c 7b e7	jmp $e77b			jmp 	COMMAND_Run 				; RUN current program.
-.e9aa					SyntaxError:
-.e9aa	a9 01		lda #$01			lda 	#1
-.e9ac	ea		nop				nop
-.e9ad	80 fb		bra $e9aa			bra 	SyntaxError
-.e9af					ReportError:
-.e9af	a9 02		lda #$02			lda 	#2
-.e9b1	ea		nop				nop
-.e9b2	80 fb		bra $e9af			bra 	ReportError
+.e99e					Start:
+.e99e	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.e9a0	9a		txs			txs
+.e9a1	20 18 e8	jsr $e818			jsr 	COMMAND_New 				; do a new
+.e9a4	20 5f e8	jsr $e85f			jsr 	COMMAND_Old 				; get back the old program as we're deving.
+.e9a7					WarmStart:
+.e9a7	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.e9a9	9a		txs			txs
+.e9aa	4c 7e e7	jmp $e77e			jmp 	COMMAND_Run 				; RUN current program.
+.e9ad					SyntaxError:
+.e9ad	a9 01		lda #$01			lda 	#1
+.e9af	ea		nop				nop
+.e9b0	80 fb		bra $e9ad			bra 	SyntaxError
+.e9b2					ReportError:
+.e9b2	a9 02		lda #$02			lda 	#2
+.e9b4	ea		nop				nop
+.e9b5	80 fb		bra $e9b2			bra 	ReportError
 
 ;******  Processing file: include/basic_generated.inc
 
->2200	2c 01 00 43 20 92 20 34			.byte $2c,$01,$00,$43,$20,$92,$20,$34,$32,$8d,$44,$20,$92,$20,$8b,$32,$8d,$45,$20,$92,$20,$43,$20,$89,$20,$32,$8d,$40,$20,$92,$20,$8b,$31,$8d,$40,$20,$92,$20,$44,$20,$8b,$20,$31,$00,$20,$02,$00,$95,$82,$31,$46,$46,$46,$20,$92,$20,$36,$33,$8d,$80,$82,$31,$46,$46,$38,$92,$82,$41,$42,$37,$38,$34,$35,$30,$31,$00,$2e,$03,$00,$51,$92,$82,$31,$45,$30,$30,$8d,$20,$51,$51,$33,$92,$45,$8d,$80,$51,$92,$8b,$31,$8d,$51,$51,$32,$92,$8b,$32,$8d,$51,$87,$34,$88,$92,$82,$35,$41,$36,$41,$37,$41,$38,$41,$00,$1a,$04,$00,$51,$80,$32,$34,$92,$82,$31,$32,$33,$34,$35,$36,$37,$38,$8d,$51,$95,$32,$39,$92,$34,$32,$00,$1e,$05,$00,$41,$92,$82,$31,$44,$30,$30,$8d,$41,$41,$31,$92,$82,$31,$44,$38,$30,$8d,$41,$41,$31,$95,$33,$92,$34,$32,$00,$22,$06,$00,$83,$41,$92,$81,$48,$69,$81,$8d,$41,$83,$38,$92,$81,$77,$6f,$72,$6c,$64,$81,$8d,$40,$92,$9a,$87,$41,$83,$38,$88,$8d,$ad,$00,$00
->2208	32 8d 44 20 92 20 8b 32 8d 45 20 92 20 43 20 89
->2218	20 32 8d 40 20 92 20 8b 31 8d 40 20 92 20 44 20
->2228	8b 20 31 00 20 02 00 95 82 31 46 46 46 20 92 20
->2238	36 33 8d 80 82 31 46 46 38 92 82 41 42 37 38 34
->2248	35 30 31 00 2e 03 00 51 92 82 31 45 30 30 8d 20
->2258	51 51 33 92 45 8d 80 51 92 8b 31 8d 51 51 32 92
->2268	8b 32 8d 51 87 34 88 92 82 35 41 36 41 37 41 38
->2278	41 00 1a 04 00 51 80 32 34 92 82 31 32 33 34 35
->2288	36 37 38 8d 51 95 32 39 92 34 32 00 1e 05 00 41
->2298	92 82 31 44 30 30 8d 41 41 31 92 82 31 44 38 30
->22a8	8d 41 41 31 95 33 92 34 32 00 22 06 00 83 41 92
->22b8	81 48 69 81 8d 41 83 38 92 81 77 6f 72 6c 64 81
->22c8	8d 40 92 9a 87 41 83 38 88 8d ad 00 00
+>2200	27 01 00 97 20 8b 37 34			.byte $27,$01,$00,$97,$20,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$8a,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$92,$8b,$31,$36,$31,$33,$35,$31,$34,$38,$32,$35,$00,$25,$02,$00,$97,$20,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$8b,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$92,$31,$32,$34,$30,$37,$36,$39,$31,$37,$00,$1d,$03,$00,$97,$20,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$8c,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$92,$30,$00,$23,$04,$00,$97,$20,$37,$34,$34,$37,$31,$38,$39,$35,$34,$84,$38,$36,$38,$37,$39,$35,$38,$37,$31,$92,$37,$34,$34,$37,$31,$38,$39,$35,$34,$00,$29,$05,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$85,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$8b,$31,$30,$37,$32,$34,$31,$36,$37,$36,$38,$00,$27,$06,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$96,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$35,$33,$31,$33,$31,$38,$37,$31,$31,$00,$28,$07,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$b2,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$8b,$35,$34,$31,$30,$39,$38,$30,$35,$37,$00,$1f,$08,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$92,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$30,$00,$20,$09,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$90,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$8b,$31,$00,$1f,$0a,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$91,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$30,$00,$1f,$0b,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$8f,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$30,$00,$20,$0c,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$94,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$8b,$31,$00,$20,$0d,$00,$97,$20,$87,$8b,$37,$34,$34,$37,$31,$38,$39,$35,$34,$93,$8b,$38,$36,$38,$37,$39,$35,$38,$37,$31,$88,$92,$8b,$31,$00,$17,$0e,$00,$97,$20,$87,$81,$77,$72,$4c,$81,$b3,$81,$67,$2e,$52,$81,$88,$20,$92,$20,$31,$00,$0f,$0f,$00,$97,$20,$34,$39,$35,$8a,$31,$92,$34,$39,$36,$00,$0f,$10,$00,$97,$20,$34,$39,$35,$8b,$31,$92,$34,$39,$34,$00,$0f,$11,$00,$97,$20,$34,$39,$35,$89,$31,$92,$34,$39,$35,$00,$0f,$12,$00,$97,$20,$34,$39,$35,$8c,$31,$92,$34,$39,$35,$00,$0d,$13,$00,$97,$20,$34,$39,$35,$84,$31,$92,$30,$00,$0f,$14,$00,$97,$20,$87,$34,$39,$35,$85,$31,$88,$92,$31,$00,$11,$15,$00,$97,$20,$87,$34,$39,$35,$96,$31,$88,$92,$34,$39,$34,$00,$11,$16,$00,$97,$20,$87,$34,$39,$35,$b2,$31,$88,$92,$34,$39,$35,$00,$0f,$17,$00,$97,$20,$87,$34,$39,$35,$92,$31,$88,$92,$30,$00,$10,$18,$00,$97,$20,$87,$34,$39,$35,$90,$31,$88,$92,$8b,$31,$00,$0f,$19,$00,$97,$20,$87,$34,$39,$35,$91,$31,$88,$92,$30,$00,$0f,$1a,$00,$97,$20,$87,$34,$39,$35,$8f,$31,$88,$92,$30,$00,$10,$1b,$00,$97,$20,$87,$34,$39,$35,$94,$31,$88,$92,$8b,$31,$00,$10,$1c,$00,$97,$20,$87,$34,$39,$35,$93,$31,$88,$92,$8b,$31,$00,$18,$1d,$00,$97,$20,$87,$81,$26,$53,$66,$81,$b3,$81,$7d,$74,$28,$81,$88,$20,$92,$20,$8b,$31,$00,$0f,$1e,$00,$97,$20,$39,$35,$37,$8a,$31,$92,$39,$35,$38,$00,$0f,$1f,$00,$97,$20,$39,$35,$37,$8b,$31,$92,$39,$35,$36,$00,$0f,$20,$00,$97,$20,$39,$35,$37,$89,$31,$92,$39,$35,$37,$00,$0f,$21,$00,$97,$20,$39,$35,$37,$8c,$31,$92,$39,$35,$37,$00,$0d,$22,$00,$97,$20,$39,$35,$37,$84,$31,$92,$30,$00,$0f,$23,$00,$97,$20,$87,$39,$35,$37,$85,$31,$88,$92,$31,$00,$11,$24,$00,$97,$20,$87,$39,$35,$37,$96,$31,$88,$92,$39,$35,$36,$00,$11,$25,$00,$97,$20,$87,$39,$35,$37,$b2,$31,$88,$92,$39,$35,$37,$00,$0f,$26,$00,$97,$20,$87,$39,$35,$37,$92,$31,$88,$92,$30,$00,$10,$27,$00,$97,$20,$87,$39,$35,$37,$90,$31,$88,$92,$8b,$31,$00,$0f,$28,$00,$97,$20,$87,$39,$35,$37,$91,$31,$88,$92,$30,$00,$0f,$29,$00,$97,$20,$87,$39,$35,$37,$8f,$31,$88,$92,$30,$00,$10,$2a,$00,$97,$20,$87,$39,$35,$37,$94,$31,$88,$92,$8b,$31,$00,$10,$2b,$00,$97,$20,$87,$39,$35,$37,$93,$31,$88,$92,$8b,$31,$00,$17,$2c,$00,$97,$20,$87,$81,$58,$5f,$2b,$81,$b3,$81,$4e,$40,$63,$81,$88,$20,$92,$20,$31,$00,$0f,$2d,$00,$97,$20,$8b,$38,$8a,$8b,$36,$92,$8b,$31,$34,$00,$0e,$2e,$00,$97,$20,$8b,$38,$89,$8b,$36,$92,$34,$38,$00,$0d,$2f,$00,$97,$20,$8b,$38,$8c,$8b,$36,$92,$31,$00,$0b,$30,$00,$97,$20,$38,$84,$36,$92,$32,$00,$10,$31,$00,$97,$20,$87,$8b,$38,$85,$8b,$36,$88,$92,$8b,$38,$00,$0f,$32,$00,$97,$20,$87,$8b,$38,$96,$8b,$36,$88,$92,$32,$00,$10,$33,$00,$97,$20,$87,$8b,$38,$b2,$8b,$36,$88,$92,$8b,$36,$00,$0f,$34,$00,$97,$20,$87,$8b,$38,$92,$8b,$36,$88,$92,$30,$00,$10,$35,$00,$97,$20,$87,$8b,$38,$90,$8b,$36,$88,$92,$8b,$31,$00,$10,$36,$00,$97,$20,$87,$8b,$38,$91,$8b,$36,$88,$92,$8b,$31,$00,$10,$37,$00,$97,$20,$87,$8b,$38,$8f,$8b,$36,$88,$92,$8b,$31,$00,$0f,$38,$00,$97,$20,$87,$8b,$38,$94,$8b,$36,$88,$92,$30,$00,$0f,$39,$00,$97,$20,$87,$8b,$38,$93,$8b,$36,$88,$92,$30,$00,$18,$3a,$00,$97,$20,$87,$81,$4e,$52,$63,$81,$b3,$81,$6f,$57,$64,$81,$88,$20,$92,$20,$8b,$31,$00,$26,$3b,$00,$97,$20,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$8a,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$92,$8b,$37,$30,$36,$33,$33,$36,$30,$36,$35,$00,$1d,$3c,$00,$97,$20,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$8c,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$92,$32,$00,$22,$3d,$00,$97,$20,$34,$38,$37,$37,$33,$33,$37,$35,$33,$84,$32,$31,$38,$36,$30,$32,$33,$31,$32,$92,$35,$30,$35,$32,$39,$31,$32,$39,$00,$28,$3e,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$85,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$8b,$34,$38,$38,$30,$39,$34,$37,$32,$30,$00,$27,$3f,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$96,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$32,$36,$39,$38,$35,$33,$33,$37,$35,$00,$28,$40,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$b2,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$8b,$32,$31,$38,$32,$34,$31,$33,$34,$35,$00,$1f,$41,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$92,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$30,$00,$20,$42,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$90,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$8b,$31,$00,$20,$43,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$91,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$8b,$31,$00,$20,$44,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$8f,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$8b,$31,$00,$1f,$45,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$94,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$30,$00,$1f,$46,$00,$97,$20,$87,$8b,$34,$38,$37,$37,$33,$33,$37,$35,$33,$93,$8b,$32,$31,$38,$36,$30,$32,$33,$31,$32,$88,$92,$30,$00,$17,$47,$00,$97,$20,$87,$81,$51,$49,$50,$81,$b3,$81,$31,$54,$70,$81,$88,$20,$92,$20,$31,$00,$23,$48,$00,$97,$20,$36,$34,$38,$31,$39,$36,$36,$33,$33,$8a,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$92,$36,$31,$35,$34,$32,$36,$35,$33,$35,$00,$23,$49,$00,$97,$20,$36,$34,$38,$31,$39,$36,$36,$33,$33,$8b,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$92,$36,$38,$30,$39,$36,$36,$37,$33,$31,$00,$2c,$4a,$00,$97,$20,$36,$34,$38,$31,$39,$36,$36,$33,$33,$89,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$92,$8b,$32,$31,$32,$34,$31,$34,$36,$37,$31,$38,$36,$36,$38,$30,$30,$33,$34,$00,$1d,$4b,$00,$97,$20,$36,$34,$38,$31,$39,$36,$36,$33,$33,$8c,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$92,$8b,$31,$39,$00,$21,$4c,$00,$97,$20,$36,$34,$38,$31,$39,$36,$36,$33,$33,$84,$33,$32,$37,$37,$30,$30,$39,$38,$92,$32,$35,$35,$36,$34,$37,$37,$31,$00,$25,$4d,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$85,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$36,$33,$37,$37,$31,$30,$38,$35,$36,$00,$26,$4e,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$96,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$8b,$36,$35,$39,$39,$39,$35,$31,$37,$37,$00,$25,$4f,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$b2,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$8b,$32,$32,$32,$38,$34,$33,$32,$31,$00,$1d,$50,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$92,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$30,$00,$1e,$51,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$90,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$8b,$31,$00,$1d,$52,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$91,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$30,$00,$1d,$53,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$8f,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$30,$00,$1e,$54,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$94,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$8b,$31,$00,$1e,$55,$00,$97,$20,$87,$36,$34,$38,$31,$39,$36,$36,$33,$33,$93,$8b,$33,$32,$37,$37,$30,$30,$39,$38,$88,$92,$8b,$31,$00,$17,$56,$00,$97,$20,$87,$81,$5b,$2c,$7c,$81,$b3,$81,$3a,$44,$55,$81,$88,$20,$92,$20,$31,$00,$0d,$57,$00,$97,$20,$30,$8a,$8b,$37,$92,$8b,$37,$00,$0c,$58,$00,$97,$20,$30,$8b,$8b,$37,$92,$37,$00,$0c,$59,$00,$97,$20,$30,$89,$8b,$37,$92,$30,$00,$0c,$5a,$00,$97,$20,$30,$8c,$8b,$37,$92,$30,$00,$0b,$5b,$00,$97,$20,$30,$84,$37,$92,$30,$00,$0e,$5c,$00,$97,$20,$87,$30,$85,$8b,$37,$88,$92,$30,$00,$0f,$5d,$00,$97,$20,$87,$30,$96,$8b,$37,$88,$92,$8b,$37,$00,$0f,$5e,$00,$97,$20,$87,$30,$b2,$8b,$37,$88,$92,$8b,$37,$00,$0e,$5f,$00,$97,$20,$87,$30,$92,$8b,$37,$88,$92,$30,$00,$0f,$60,$00,$97,$20,$87,$30,$90,$8b,$37,$88,$92,$8b,$31,$00,$0e,$61,$00,$97,$20,$87,$30,$91,$8b,$37,$88,$92,$30,$00,$0e,$62,$00,$97,$20,$87,$30,$8f,$8b,$37,$88,$92,$30,$00,$0f,$63,$00,$97,$20,$87,$30,$94,$8b,$37,$88,$92,$8b,$31,$00,$0f,$64,$00,$97,$20,$87,$30,$93,$8b,$37,$88,$92,$8b,$31,$00,$18,$65,$00,$97,$20,$87,$81,$29,$40,$68,$81,$b3,$81,$2a,$58,$60,$81,$88,$20,$92,$20,$8b,$31,$00,$1c,$66,$00,$97,$20,$8b,$31,$33,$36,$8a,$31,$37,$34,$38,$37,$36,$33,$35,$92,$31,$37,$34,$38,$37,$34,$39,$39,$00,$1f,$67,$00,$97,$20,$8b,$31,$33,$36,$89,$31,$37,$34,$38,$37,$36,$33,$35,$92,$8b,$32,$33,$37,$38,$33,$31,$38,$33,$36,$30,$00,$15,$68,$00,$97,$20,$8b,$31,$33,$36,$8c,$31,$37,$34,$38,$37,$36,$33,$35,$92,$30,$00,$16,$69,$00,$97,$20,$31,$33,$36,$84,$31,$37,$34,$38,$37,$36,$33,$35,$92,$31,$33,$36,$00,$1e,$6a,$00,$97,$20,$87,$8b,$31,$33,$36,$85,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$31,$37,$34,$38,$37,$36,$33,$32,$00,$1f,$6b,$00,$97,$20,$87,$8b,$31,$33,$36,$96,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$8b,$31,$37,$34,$38,$37,$37,$36,$35,$00,$1a,$6c,$00,$97,$20,$87,$8b,$31,$33,$36,$b2,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$8b,$31,$33,$33,$00,$17,$6d,$00,$97,$20,$87,$8b,$31,$33,$36,$92,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$30,$00,$18,$6e,$00,$97,$20,$87,$8b,$31,$33,$36,$90,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$8b,$31,$00,$18,$6f,$00,$97,$20,$87,$8b,$31,$33,$36,$91,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$8b,$31,$00,$18,$70,$00,$97,$20,$87,$8b,$31,$33,$36,$8f,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$8b,$31,$00,$17,$71,$00,$97,$20,$87,$8b,$31,$33,$36,$94,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$30,$00,$17,$72,$00,$97,$20,$87,$8b,$31,$33,$36,$93,$31,$37,$34,$38,$37,$36,$33,$35,$88,$92,$30,$00,$18,$73,$00,$97,$20,$87,$81,$30,$5c,$26,$81,$b3,$81,$36,$43,$5c,$81,$88,$20,$92,$20,$8b,$31,$00,$27,$74,$00,$97,$20,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$8a,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$92,$8b,$31,$30,$30,$34,$35,$30,$38,$33,$36,$39,$00,$25,$75,$00,$97,$20,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$8b,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$92,$36,$38,$36,$31,$31,$33,$35,$38,$31,$00,$1d,$76,$00,$97,$20,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$8c,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$92,$30,$00,$23,$77,$00,$97,$20,$31,$35,$39,$31,$39,$37,$33,$39,$34,$84,$38,$34,$35,$33,$31,$30,$39,$37,$35,$92,$31,$35,$39,$31,$39,$37,$33,$39,$34,$00,$28,$78,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$85,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$8b,$39,$39,$38,$32,$30,$36,$34,$36,$34,$00,$27,$79,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$96,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$39,$39,$31,$39,$30,$34,$35,$35,$39,$00,$26,$7a,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$b2,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$8b,$36,$33,$30,$31,$39,$30,$35,$00,$1f,$7b,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$92,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$30,$00,$20,$7c,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$90,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$8b,$31,$00,$1f,$7d,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$91,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$30,$00,$1f,$7e,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$8f,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$30,$00,$20,$7f,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$94,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$8b,$31,$00,$20,$80,$00,$97,$20,$87,$8b,$31,$35,$39,$31,$39,$37,$33,$39,$34,$93,$8b,$38,$34,$35,$33,$31,$30,$39,$37,$35,$88,$92,$8b,$31,$00,$18,$81,$00,$97,$20,$87,$81,$2a,$4a,$67,$81,$b3,$81,$51,$3f,$28,$81,$88,$20,$92,$20,$8b,$31,$00,$1f,$82,$00,$97,$20,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$8a,$31,$35,$36,$92,$8b,$32,$35,$32,$33,$30,$31,$31,$39,$30,$00,$21,$83,$00,$97,$20,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$89,$31,$35,$36,$92,$8b,$33,$39,$33,$35,$39,$30,$30,$39,$39,$37,$36,$00,$1d,$84,$00,$97,$20,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$8c,$31,$35,$36,$92,$8b,$31,$36,$31,$37,$33,$31,$36,$00,$16,$85,$00,$97,$20,$32,$35,$32,$33,$30,$31,$33,$34,$36,$84,$31,$35,$36,$92,$35,$30,$00,$1a,$86,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$85,$31,$35,$36,$88,$92,$31,$35,$36,$00,$21,$87,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$96,$31,$35,$36,$88,$92,$8b,$32,$35,$32,$33,$30,$31,$35,$30,$32,$00,$21,$88,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$b2,$31,$35,$36,$88,$92,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$00,$18,$89,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$92,$31,$35,$36,$88,$92,$30,$00,$19,$8a,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$90,$31,$35,$36,$88,$92,$8b,$31,$00,$19,$8b,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$91,$31,$35,$36,$88,$92,$8b,$31,$00,$19,$8c,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$8f,$31,$35,$36,$88,$92,$8b,$31,$00,$18,$8d,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$94,$31,$35,$36,$88,$92,$30,$00,$18,$8e,$00,$97,$20,$87,$8b,$32,$35,$32,$33,$30,$31,$33,$34,$36,$93,$31,$35,$36,$88,$92,$30,$00,$18,$8f,$00,$97,$20,$87,$81,$3f,$47,$5d,$81,$b3,$81,$6a,$3f,$2b,$81,$88,$20,$92,$20,$8b,$31,$00,$1d,$90,$00,$97,$20,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$8a,$30,$92,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$00,$14,$91,$00,$97,$20,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$89,$30,$92,$30,$00,$16,$92,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$85,$30,$88,$92,$30,$00,$1f,$93,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$96,$30,$88,$92,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$00,$1f,$94,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$b2,$30,$88,$92,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$00,$16,$95,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$92,$30,$88,$92,$30,$00,$17,$96,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$90,$30,$88,$92,$8b,$31,$00,$17,$97,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$91,$30,$88,$92,$8b,$31,$00,$17,$98,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$8f,$30,$88,$92,$8b,$31,$00,$16,$99,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$94,$30,$88,$92,$30,$00,$16,$9a,$00,$97,$20,$87,$8b,$35,$38,$34,$32,$38,$30,$38,$32,$34,$93,$30,$88,$92,$30,$00,$17,$9b,$00,$97,$20,$87,$81,$6c,$3f,$43,$81,$b3,$81,$4f,$4b,$68,$81,$88,$20,$92,$20,$31,$00,$1b,$9c,$00,$97,$20,$36,$39,$31,$34,$32,$37,$33,$35,$32,$8a,$34,$92,$36,$39,$31,$34,$32,$37,$33,$35,$36,$00,$1b,$9d,$00,$97,$20,$36,$39,$31,$34,$32,$37,$33,$35,$32,$8b,$34,$92,$36,$39,$31,$34,$32,$37,$33,$34,$38,$00,$1b,$9e,$00,$97,$20,$36,$39,$31,$34,$32,$37,$33,$35,$32,$8c,$34,$92,$31,$37,$32,$38,$35,$36,$38,$33,$38,$00,$13,$9f,$00,$97,$20,$36,$39,$31,$34,$32,$37,$33,$35,$32,$84,$34,$92,$30,$00,$15,$a0,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$85,$34,$88,$92,$30,$00,$1d,$a1,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$96,$34,$88,$92,$36,$39,$31,$34,$32,$37,$33,$35,$36,$00,$1d,$a2,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$b2,$34,$88,$92,$36,$39,$31,$34,$32,$37,$33,$35,$36,$00,$15,$a3,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$92,$34,$88,$92,$30,$00,$16,$a4,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$90,$34,$88,$92,$8b,$31,$00,$15,$a5,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$91,$34,$88,$92,$30,$00,$15,$a6,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$8f,$34,$88,$92,$30,$00,$16,$a7,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$94,$34,$88,$92,$8b,$31,$00,$16,$a8,$00,$97,$20,$87,$36,$39,$31,$34,$32,$37,$33,$35,$32,$93,$34,$88,$92,$8b,$31,$00,$18,$a9,$00,$97,$20,$87,$81,$27,$73,$3f,$81,$b3,$81,$30,$31,$4e,$81,$88,$20,$92,$20,$8b,$31,$00,$1c,$aa,$00,$97,$20,$8b,$33,$39,$35,$8a,$34,$37,$36,$39,$36,$31,$31,$31,$92,$34,$37,$36,$39,$35,$37,$31,$36,$00,$20,$ab,$00,$97,$20,$8b,$33,$39,$35,$89,$34,$37,$36,$39,$36,$31,$31,$31,$92,$8b,$31,$38,$38,$33,$39,$39,$36,$33,$38,$34,$35,$00,$15,$ac,$00,$97,$20,$8b,$33,$39,$35,$8c,$34,$37,$36,$39,$36,$31,$31,$31,$92,$30,$00,$16,$ad,$00,$97,$20,$33,$39,$35,$84,$34,$37,$36,$39,$36,$31,$31,$31,$92,$33,$39,$35,$00,$1e,$ae,$00,$97,$20,$87,$8b,$33,$39,$35,$85,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$34,$37,$36,$39,$35,$39,$37,$33,$00,$1f,$af,$00,$97,$20,$87,$8b,$33,$39,$35,$96,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$8b,$34,$37,$36,$39,$36,$32,$33,$30,$00,$1a,$b0,$00,$97,$20,$87,$8b,$33,$39,$35,$b2,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$8b,$32,$35,$37,$00,$17,$b1,$00,$97,$20,$87,$8b,$33,$39,$35,$92,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$30,$00,$18,$b2,$00,$97,$20,$87,$8b,$33,$39,$35,$90,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$8b,$31,$00,$18,$b3,$00,$97,$20,$87,$8b,$33,$39,$35,$91,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$8b,$31,$00,$18,$b4,$00,$97,$20,$87,$8b,$33,$39,$35,$8f,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$8b,$31,$00,$17,$b5,$00,$97,$20,$87,$8b,$33,$39,$35,$94,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$30,$00,$17,$b6,$00,$97,$20,$87,$8b,$33,$39,$35,$93,$34,$37,$36,$39,$36,$31,$31,$31,$88,$92,$30,$00,$18,$b7,$00,$97,$20,$87,$81,$54,$3c,$5d,$81,$b3,$81,$62,$5e,$5b,$81,$88,$20,$92,$20,$8b,$31,$00,$28,$b8,$00,$97,$20,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$8a,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$92,$8b,$31,$33,$32,$32,$32,$31,$30,$32,$30,$33,$00,$26,$b9,$00,$97,$20,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$8b,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$92,$36,$38,$34,$33,$39,$34,$38,$35,$33,$00,$1e,$ba,$00,$97,$20,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$8c,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$92,$30,$00,$24,$bb,$00,$97,$20,$33,$31,$38,$39,$30,$37,$36,$37,$35,$84,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$92,$33,$31,$38,$39,$30,$37,$36,$37,$35,$00,$2a,$bc,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$85,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$8b,$31,$30,$30,$33,$34,$33,$33,$38,$35,$36,$00,$28,$bd,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$96,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$36,$38,$34,$36,$35,$37,$35,$30,$39,$00,$29,$be,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$b2,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$8b,$33,$31,$38,$37,$37,$36,$33,$34,$37,$00,$20,$bf,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$92,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$30,$00,$21,$c0,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$90,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$8b,$31,$00,$20,$c1,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$91,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$30,$00,$20,$c2,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$8f,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$30,$00,$21,$c3,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$94,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$8b,$31,$00,$21,$c4,$00,$97,$20,$87,$8b,$33,$31,$38,$39,$30,$37,$36,$37,$35,$93,$8b,$31,$30,$30,$33,$33,$30,$32,$35,$32,$38,$88,$92,$8b,$31,$00,$18,$c5,$00,$97,$20,$87,$81,$34,$6a,$2a,$81,$b3,$81,$4b,$6e,$61,$81,$88,$20,$92,$20,$8b,$31,$00,$1c,$c6,$00,$97,$20,$34,$36,$35,$38,$37,$39,$31,$31,$32,$8a,$8b,$34,$92,$34,$36,$35,$38,$37,$39,$31,$30,$38,$00,$1c,$c7,$00,$97,$20,$34,$36,$35,$38,$37,$39,$31,$31,$32,$8b,$8b,$34,$92,$34,$36,$35,$38,$37,$39,$31,$31,$36,$00,$1e,$c8,$00,$97,$20,$34,$36,$35,$38,$37,$39,$31,$31,$32,$89,$8b,$34,$92,$8b,$31,$38,$36,$33,$35,$31,$36,$34,$34,$38,$00,$1d,$c9,$00,$97,$20,$34,$36,$35,$38,$37,$39,$31,$31,$32,$8c,$8b,$34,$92,$8b,$31,$31,$36,$34,$36,$39,$37,$37,$38,$00,$13,$ca,$00,$97,$20,$34,$36,$35,$38,$37,$39,$31,$31,$32,$84,$34,$92,$30,$00,$1e,$cb,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$85,$8b,$34,$88,$92,$34,$36,$35,$38,$37,$39,$31,$31,$32,$00,$1f,$cc,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$96,$8b,$34,$88,$92,$8b,$34,$36,$35,$38,$37,$39,$31,$31,$36,$00,$17,$cd,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$b2,$8b,$34,$88,$92,$8b,$34,$00,$16,$ce,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$92,$8b,$34,$88,$92,$30,$00,$17,$cf,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$90,$8b,$34,$88,$92,$8b,$31,$00,$16,$d0,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$91,$8b,$34,$88,$92,$30,$00,$16,$d1,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$8f,$8b,$34,$88,$92,$30,$00,$17,$d2,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$94,$8b,$34,$88,$92,$8b,$31,$00,$17,$d3,$00,$97,$20,$87,$34,$36,$35,$38,$37,$39,$31,$31,$32,$93,$8b,$34,$88,$92,$8b,$31,$00,$18,$d4,$00,$97,$20,$87,$81,$36,$5d,$64,$81,$b3,$81,$4c,$37,$3a,$81,$88,$20,$92,$20,$8b,$31,$00,$23,$d5,$00,$97,$20,$34,$38,$34,$33,$39,$31,$32,$36,$32,$8a,$34,$38,$34,$33,$39,$31,$32,$36,$32,$92,$39,$36,$38,$37,$38,$32,$35,$32,$34,$00,$1b,$d6,$00,$97,$20,$34,$38,$34,$33,$39,$31,$32,$36,$32,$8c,$34,$38,$34,$33,$39,$31,$32,$36,$32,$92,$31,$00,$1b,$d7,$00,$97,$20,$34,$38,$34,$33,$39,$31,$32,$36,$32,$84,$34,$38,$34,$33,$39,$31,$32,$36,$32,$92,$30,$00,$25,$d8,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$85,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$34,$38,$34,$33,$39,$31,$32,$36,$32,$00,$1d,$d9,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$96,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$30,$00,$25,$da,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$b2,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$34,$38,$34,$33,$39,$31,$32,$36,$32,$00,$1e,$db,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$92,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$8b,$31,$00,$1d,$dc,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$90,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$30,$00,$1d,$dd,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$91,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$30,$00,$1e,$de,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$8f,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$8b,$31,$00,$1d,$df,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$94,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$30,$00,$1e,$e0,$00,$97,$20,$87,$34,$38,$34,$33,$39,$31,$32,$36,$32,$93,$34,$38,$34,$33,$39,$31,$32,$36,$32,$88,$92,$8b,$31,$00,$18,$e1,$00,$97,$20,$87,$81,$58,$55,$26,$81,$b3,$81,$76,$50,$3f,$81,$88,$20,$92,$20,$8b,$31,$00,$0c,$e2,$00,$97,$20,$8b,$36,$8a,$36,$92,$30,$00,$0e,$e3,$00,$97,$20,$8b,$36,$89,$36,$92,$8b,$33,$36,$00,$0d,$e4,$00,$97,$20,$8b,$36,$8c,$36,$92,$8b,$31,$00,$0b,$e5,$00,$97,$20,$36,$84,$36,$92,$30,$00,$0e,$e6,$00,$97,$20,$87,$8b,$36,$85,$36,$88,$92,$32,$00,$0f,$e7,$00,$97,$20,$87,$8b,$36,$96,$36,$88,$92,$8b,$34,$00,$0f,$e8,$00,$97,$20,$87,$8b,$36,$b2,$36,$88,$92,$8b,$32,$00,$0e,$e9,$00,$97,$20,$87,$8b,$36,$92,$36,$88,$92,$30,$00,$0f,$ea,$00,$97,$20,$87,$8b,$36,$90,$36,$88,$92,$8b,$31,$00,$0f,$eb,$00,$97,$20,$87,$8b,$36,$91,$36,$88,$92,$8b,$31,$00,$0f,$ec,$00,$97,$20,$87,$8b,$36,$8f,$36,$88,$92,$8b,$31,$00,$0e,$ed,$00,$97,$20,$87,$8b,$36,$94,$36,$88,$92,$30,$00,$0e,$ee,$00,$97,$20,$87,$8b,$36,$93,$36,$88,$92,$30,$00,$17,$ef,$00,$97,$20,$87,$81,$69,$61,$5a,$81,$b3,$81,$30,$70,$6d,$81,$88,$20,$92,$20,$31,$00,$13,$f0,$00,$97,$20,$8b,$36,$37,$35,$8a,$33,$39,$37,$92,$8b,$32,$37,$38,$00,$16,$f1,$00,$97,$20,$8b,$36,$37,$35,$89,$33,$39,$37,$92,$8b,$32,$36,$37,$39,$37,$35,$00,$11,$f2,$00,$97,$20,$8b,$36,$37,$35,$8c,$33,$39,$37,$92,$8b,$31,$00,$11,$f3,$00,$97,$20,$36,$37,$35,$84,$33,$39,$37,$92,$32,$37,$38,$00,$14,$f4,$00,$97,$20,$87,$8b,$36,$37,$35,$85,$33,$39,$37,$88,$92,$32,$36,$39,$00,$15,$f5,$00,$97,$20,$87,$8b,$36,$37,$35,$96,$33,$39,$37,$88,$92,$8b,$38,$31,$36,$00,$15,$f6,$00,$97,$20,$87,$8b,$36,$37,$35,$b2,$33,$39,$37,$88,$92,$8b,$35,$34,$37,$00,$12,$f7,$00,$97,$20,$87,$8b,$36,$37,$35,$92,$33,$39,$37,$88,$92,$30,$00,$13,$f8,$00,$97,$20,$87,$8b,$36,$37,$35,$90,$33,$39,$37,$88,$92,$8b,$31,$00,$13,$f9,$00,$97,$20,$87,$8b,$36,$37,$35,$91,$33,$39,$37,$88,$92,$8b,$31,$00,$13,$fa,$00,$97,$20,$87,$8b,$36,$37,$35,$8f,$33,$39,$37,$88,$92,$8b,$31,$00,$12,$fb,$00,$97,$20,$87,$8b,$36,$37,$35,$94,$33,$39,$37,$88,$92,$30,$00,$12,$fc,$00,$97,$20,$87,$8b,$36,$37,$35,$93,$33,$39,$37,$88,$92,$30,$00,$18,$fd,$00,$97,$20,$87,$81,$53,$46,$72,$81,$b3,$81,$74,$78,$3c,$81,$88,$20,$92,$20,$8b,$31,$00,$1f,$fe,$00,$97,$20,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$8a,$30,$92,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$00,$15,$ff,$00,$97,$20,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$89,$30,$92,$30,$00,$17,$00,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$85,$30,$88,$92,$30,$00,$21,$01,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$96,$30,$88,$92,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$00,$21,$02,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$b2,$30,$88,$92,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$00,$17,$03,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$92,$30,$88,$92,$30,$00,$18,$04,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$90,$30,$88,$92,$8b,$31,$00,$18,$05,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$91,$30,$88,$92,$8b,$31,$00,$18,$06,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$8f,$30,$88,$92,$8b,$31,$00,$17,$07,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$94,$30,$88,$92,$30,$00,$17,$08,$01,$97,$20,$87,$8b,$31,$30,$30,$30,$35,$33,$31,$37,$36,$33,$93,$30,$88,$92,$30,$00,$18,$09,$01,$97,$20,$87,$81,$45,$55,$3b,$81,$b3,$81,$69,$71,$5d,$81,$88,$20,$92,$20,$8b,$31,$00,$12,$0a,$01,$97,$20,$37,$39,$37,$8a,$8b,$38,$35,$32,$92,$8b,$35,$35,$00,$13,$0b,$01,$97,$20,$37,$39,$37,$8b,$8b,$38,$35,$32,$92,$31,$36,$34,$39,$00,$16,$0c,$01,$97,$20,$37,$39,$37,$89,$8b,$38,$35,$32,$92,$8b,$36,$37,$39,$30,$34,$34,$00,$10,$0d,$01,$97,$20,$37,$39,$37,$8c,$8b,$38,$35,$32,$92,$30,$00,$11,$0e,$01,$97,$20,$37,$39,$37,$84,$38,$35,$32,$92,$37,$39,$37,$00,$13,$0f,$01,$97,$20,$87,$37,$39,$37,$85,$8b,$38,$35,$32,$88,$92,$31,$32,$00,$14,$10,$01,$97,$20,$87,$37,$39,$37,$96,$8b,$38,$35,$32,$88,$92,$8b,$37,$39,$00,$14,$11,$01,$97,$20,$87,$37,$39,$37,$b2,$8b,$38,$35,$32,$88,$92,$8b,$36,$37,$00,$12,$12,$01,$97,$20,$87,$37,$39,$37,$92,$8b,$38,$35,$32,$88,$92,$30,$00,$13,$13,$01,$97,$20,$87,$37,$39,$37,$90,$8b,$38,$35,$32,$88,$92,$8b,$31,$00,$12,$14,$01,$97,$20,$87,$37,$39,$37,$91,$8b,$38,$35,$32,$88,$92,$30,$00,$12,$15,$01,$97,$20,$87,$37,$39,$37,$8f,$8b,$38,$35,$32,$88,$92,$30,$00,$13,$16,$01,$97,$20,$87,$37,$39,$37,$94,$8b,$38,$35,$32,$88,$92,$8b,$31,$00,$13,$17,$01,$97,$20,$87,$37,$39,$37,$93,$8b,$38,$35,$32,$88,$92,$8b,$31,$00,$17,$18,$01,$97,$20,$87,$81,$7c,$78,$5e,$81,$b3,$81,$59,$2c,$5b,$81,$88,$20,$92,$20,$31,$00,$26,$19,$01,$97,$20,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$8a,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$92,$8b,$39,$31,$38,$37,$32,$30,$30,$39,$35,$00,$24,$1a,$01,$97,$20,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$8b,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$92,$39,$34,$33,$30,$36,$30,$30,$31,$00,$1d,$1b,$01,$97,$20,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$8c,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$92,$30,$00,$23,$1c,$01,$97,$20,$34,$31,$32,$32,$30,$37,$30,$34,$37,$84,$35,$30,$36,$35,$31,$33,$30,$34,$38,$92,$34,$31,$32,$32,$30,$37,$30,$34,$37,$00,$28,$1d,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$85,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$8b,$35,$31,$34,$39,$36,$37,$35,$31,$32,$00,$27,$1e,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$96,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$31,$31,$31,$32,$31,$34,$39,$32,$39,$00,$28,$1f,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$b2,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$8b,$34,$30,$33,$37,$35,$32,$35,$38,$33,$00,$1f,$20,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$92,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$30,$00,$20,$21,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$90,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$8b,$31,$00,$1f,$22,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$91,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$30,$00,$1f,$23,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$8f,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$30,$00,$20,$24,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$94,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$8b,$31,$00,$20,$25,$01,$97,$20,$87,$8b,$34,$31,$32,$32,$30,$37,$30,$34,$37,$93,$8b,$35,$30,$36,$35,$31,$33,$30,$34,$38,$88,$92,$8b,$31,$00,$17,$26,$01,$97,$20,$87,$81,$75,$5b,$5a,$81,$b3,$81,$42,$54,$2d,$81,$88,$20,$92,$20,$31,$00,$0f,$27,$01,$97,$20,$30,$8a,$37,$33,$38,$92,$37,$33,$38,$00,$0d,$28,$01,$97,$20,$30,$89,$37,$33,$38,$92,$30,$00,$0d,$29,$01,$97,$20,$30,$8c,$37,$33,$38,$92,$30,$00,$0d,$2a,$01,$97,$20,$30,$84,$37,$33,$38,$92,$30,$00,$0f,$2b,$01,$97,$20,$87,$30,$85,$37,$33,$38,$88,$92,$30,$00,$11,$2c,$01,$97,$20,$87,$30,$96,$37,$33,$38,$88,$92,$37,$33,$38,$00,$11,$2d,$01,$97,$20,$87,$30,$b2,$37,$33,$38,$88,$92,$37,$33,$38,$00,$0f,$2e,$01,$97,$20,$87,$30,$92,$37,$33,$38,$88,$92,$30,$00,$10,$2f,$01,$97,$20,$87,$30,$90,$37,$33,$38,$88,$92,$8b,$31,$00,$10,$30,$01,$97,$20,$87,$30,$91,$37,$33,$38,$88,$92,$8b,$31,$00,$10,$31,$01,$97,$20,$87,$30,$8f,$37,$33,$38,$88,$92,$8b,$31,$00,$0f,$32,$01,$97,$20,$87,$30,$94,$37,$33,$38,$88,$92,$30,$00,$0f,$33,$01,$97,$20,$87,$30,$93,$37,$33,$38,$88,$92,$30,$00,$18,$34,$01,$97,$20,$87,$81,$4a,$47,$5a,$81,$b3,$81,$71,$50,$3a,$81,$88,$20,$92,$20,$8b,$31,$00,$26,$35,$01,$97,$20,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$8a,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$92,$8b,$31,$30,$32,$36,$38,$34,$36,$37,$36,$31,$00,$24,$36,$01,$97,$20,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$8b,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$92,$38,$37,$31,$33,$31,$36,$38,$37,$33,$00,$1c,$37,$01,$97,$20,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$8c,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$92,$30,$00,$21,$38,$01,$97,$20,$37,$37,$37,$36,$34,$39,$34,$34,$84,$39,$34,$39,$30,$38,$31,$38,$31,$37,$92,$37,$37,$37,$36,$34,$39,$34,$34,$00,$28,$39,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$85,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$8b,$31,$30,$31,$38,$34,$32,$31,$32,$31,$36,$00,$27,$3a,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$96,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$31,$30,$30,$39,$39,$39,$35,$36,$37,$31,$00,$25,$3b,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$b2,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$8b,$38,$34,$32,$35,$35,$34,$35,$00,$1e,$3c,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$92,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$30,$00,$1f,$3d,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$90,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$8b,$31,$00,$1e,$3e,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$91,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$30,$00,$1e,$3f,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$8f,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$30,$00,$1f,$40,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$94,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$8b,$31,$00,$1f,$41,$01,$97,$20,$87,$8b,$37,$37,$37,$36,$34,$39,$34,$34,$93,$8b,$39,$34,$39,$30,$38,$31,$38,$31,$37,$88,$92,$8b,$31,$00,$18,$42,$01,$97,$20,$87,$81,$32,$4c,$47,$81,$b3,$81,$48,$77,$7d,$81,$88,$20,$92,$20,$8b,$31,$00,$27,$43,$01,$97,$20,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$8a,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$92,$8b,$31,$34,$35,$39,$36,$32,$33,$37,$39,$38,$00,$1d,$44,$01,$97,$20,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$8c,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$92,$31,$00,$23,$45,$01,$97,$20,$38,$32,$32,$31,$30,$39,$35,$37,$38,$84,$36,$33,$37,$35,$31,$34,$32,$32,$30,$92,$31,$38,$34,$35,$39,$35,$33,$35,$38,$00,$28,$46,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$85,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$8b,$39,$30,$35,$39,$36,$37,$30,$38,$34,$00,$27,$47,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$96,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$33,$35,$32,$33,$31,$30,$33,$37,$30,$00,$28,$48,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$b2,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$8b,$35,$35,$33,$36,$35,$36,$37,$31,$34,$00,$1f,$49,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$92,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$30,$00,$20,$4a,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$90,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$8b,$31,$00,$20,$4b,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$91,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$8b,$31,$00,$20,$4c,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$8f,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$8b,$31,$00,$1f,$4d,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$94,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$30,$00,$1f,$4e,$01,$97,$20,$87,$8b,$38,$32,$32,$31,$30,$39,$35,$37,$38,$93,$8b,$36,$33,$37,$35,$31,$34,$32,$32,$30,$88,$92,$30,$00,$18,$4f,$01,$97,$20,$87,$81,$3f,$48,$42,$81,$b3,$81,$73,$58,$5e,$81,$88,$20,$92,$20,$8b,$31,$00,$26,$50,$01,$97,$20,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$8a,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$92,$8b,$35,$35,$33,$33,$35,$35,$30,$35,$32,$00,$25,$51,$01,$97,$20,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$8b,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$92,$31,$39,$30,$32,$34,$32,$38,$30,$36,$00,$1d,$52,$01,$97,$20,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$8c,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$92,$30,$00,$23,$53,$01,$97,$20,$31,$38,$31,$35,$35,$36,$31,$32,$33,$84,$33,$37,$31,$37,$39,$38,$39,$32,$39,$92,$31,$38,$31,$35,$35,$36,$31,$32,$33,$00,$28,$54,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$85,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$8b,$35,$31,$39,$37,$39,$35,$36,$31,$31,$00,$27,$55,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$96,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$34,$38,$36,$32,$33,$36,$31,$37,$30,$00,$27,$56,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$b2,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$8b,$33,$33,$35,$35,$39,$34,$34,$31,$00,$1f,$57,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$92,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$30,$00,$20,$58,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$90,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$8b,$31,$00,$1f,$59,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$91,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$30,$00,$1f,$5a,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$8f,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$30,$00,$20,$5b,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$94,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$8b,$31,$00,$20,$5c,$01,$97,$20,$87,$8b,$31,$38,$31,$35,$35,$36,$31,$32,$33,$93,$8b,$33,$37,$31,$37,$39,$38,$39,$32,$39,$88,$92,$8b,$31,$00,$18,$5d,$01,$97,$20,$87,$81,$39,$55,$39,$81,$b3,$81,$65,$7c,$79,$81,$88,$20,$92,$20,$8b,$31,$00,$12,$5e,$01,$97,$20,$8b,$37,$30,$35,$8a,$8b,$37,$92,$8b,$37,$31,$32,$00,$12,$5f,$01,$97,$20,$8b,$37,$30,$35,$89,$8b,$37,$92,$34,$39,$33,$35,$00,$11,$60,$01,$97,$20,$8b,$37,$30,$35,$8c,$8b,$37,$92,$31,$30,$30,$00,$0d,$61,$01,$97,$20,$37,$30,$35,$84,$37,$92,$35,$00,$14,$62,$01,$97,$20,$87,$8b,$37,$30,$35,$85,$8b,$37,$88,$92,$8b,$37,$31,$31,$00,$13,$63,$01,$97,$20,$87,$8b,$37,$30,$35,$96,$8b,$37,$88,$92,$37,$31,$30,$00,$12,$64,$01,$97,$20,$87,$8b,$37,$30,$35,$b2,$8b,$37,$88,$92,$8b,$31,$00,$11,$65,$01,$97,$20,$87,$8b,$37,$30,$35,$92,$8b,$37,$88,$92,$30,$00,$12,$66,$01,$97,$20,$87,$8b,$37,$30,$35,$90,$8b,$37,$88,$92,$8b,$31,$00,$12,$67,$01,$97,$20,$87,$8b,$37,$30,$35,$91,$8b,$37,$88,$92,$8b,$31,$00,$12,$68,$01,$97,$20,$87,$8b,$37,$30,$35,$8f,$8b,$37,$88,$92,$8b,$31,$00,$11,$69,$01,$97,$20,$87,$8b,$37,$30,$35,$94,$8b,$37,$88,$92,$30,$00,$11,$6a,$01,$97,$20,$87,$8b,$37,$30,$35,$93,$8b,$37,$88,$92,$30,$00,$18,$6b,$01,$97,$20,$87,$81,$27,$63,$5f,$81,$b3,$81,$5e,$5e,$55,$81,$88,$20,$92,$20,$8b,$31,$00,$1b,$6c,$01,$97,$20,$30,$8a,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$92,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$00,$1a,$6d,$01,$97,$20,$30,$8b,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$92,$34,$34,$37,$36,$33,$39,$39,$37,$00,$13,$6e,$01,$97,$20,$30,$89,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$92,$30,$00,$13,$6f,$01,$97,$20,$30,$8c,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$92,$30,$00,$12,$70,$01,$97,$20,$30,$84,$34,$34,$37,$36,$33,$39,$39,$37,$92,$30,$00,$15,$71,$01,$97,$20,$87,$30,$85,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$30,$00,$1d,$72,$01,$97,$20,$87,$30,$96,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$00,$1d,$73,$01,$97,$20,$87,$30,$b2,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$00,$15,$74,$01,$97,$20,$87,$30,$92,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$30,$00,$16,$75,$01,$97,$20,$87,$30,$90,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$8b,$31,$00,$15,$76,$01,$97,$20,$87,$30,$91,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$30,$00,$15,$77,$01,$97,$20,$87,$30,$8f,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$30,$00,$16,$78,$01,$97,$20,$87,$30,$94,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$8b,$31,$00,$16,$79,$01,$97,$20,$87,$30,$93,$8b,$34,$34,$37,$36,$33,$39,$39,$37,$88,$92,$8b,$31,$00,$18,$7a,$01,$97,$20,$87,$81,$4e,$30,$44,$81,$b3,$81,$5d,$3f,$39,$81,$88,$20,$92,$20,$8b,$31,$00,$25,$7b,$01,$97,$20,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$8a,$31,$33,$36,$31,$38,$35,$35,$37,$33,$92,$8b,$31,$39,$37,$38,$34,$39,$39,$37,$32,$00,$2d,$7c,$01,$97,$20,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$89,$31,$33,$36,$31,$38,$35,$35,$37,$33,$92,$8b,$34,$35,$34,$39,$30,$38,$32,$32,$30,$39,$38,$31,$39,$32,$32,$38,$35,$00,$1d,$7d,$01,$97,$20,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$8c,$31,$33,$36,$31,$38,$35,$35,$37,$33,$92,$8b,$32,$00,$22,$7e,$01,$97,$20,$33,$33,$34,$30,$33,$35,$35,$34,$35,$84,$31,$33,$36,$31,$38,$35,$35,$37,$33,$92,$36,$31,$36,$36,$34,$33,$39,$39,$00,$26,$7f,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$85,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$31,$33,$35,$36,$36,$30,$37,$30,$39,$00,$27,$80,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$96,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$8b,$34,$36,$39,$31,$37,$31,$33,$39,$30,$00,$27,$81,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$b2,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$8b,$33,$33,$33,$35,$31,$30,$36,$38,$31,$00,$1e,$82,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$92,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$30,$00,$1f,$83,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$90,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$8b,$31,$00,$1f,$84,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$91,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$8b,$31,$00,$1f,$85,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$8f,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$8b,$31,$00,$1e,$86,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$94,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$30,$00,$1e,$87,$01,$97,$20,$87,$8b,$33,$33,$34,$30,$33,$35,$35,$34,$35,$93,$31,$33,$36,$31,$38,$35,$35,$37,$33,$88,$92,$30,$00,$18,$88,$01,$97,$20,$87,$81,$56,$37,$50,$81,$b3,$81,$74,$57,$64,$81,$88,$20,$92,$20,$8b,$31,$00,$1e,$89,$01,$97,$20,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$8a,$8b,$33,$92,$8b,$36,$38,$34,$39,$33,$31,$38,$36,$32,$00,$1d,$8a,$01,$97,$20,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$8c,$8b,$33,$92,$32,$32,$38,$33,$31,$30,$36,$31,$39,$00,$13,$8b,$01,$97,$20,$36,$38,$34,$39,$33,$31,$38,$35,$39,$84,$33,$92,$32,$00,$20,$8c,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$85,$8b,$33,$88,$92,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$00,$1f,$8d,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$96,$8b,$33,$88,$92,$36,$38,$34,$39,$33,$31,$38,$35,$36,$00,$18,$8e,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$b2,$8b,$33,$88,$92,$8b,$33,$00,$17,$8f,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$92,$8b,$33,$88,$92,$30,$00,$18,$90,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$90,$8b,$33,$88,$92,$8b,$31,$00,$18,$91,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$91,$8b,$33,$88,$92,$8b,$31,$00,$18,$92,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$8f,$8b,$33,$88,$92,$8b,$31,$00,$17,$93,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$94,$8b,$33,$88,$92,$30,$00,$17,$94,$01,$97,$20,$87,$8b,$36,$38,$34,$39,$33,$31,$38,$35,$39,$93,$8b,$33,$88,$92,$30,$00,$18,$95,$01,$97,$20,$87,$81,$4a,$7a,$37,$81,$b3,$81,$5a,$78,$55,$81,$88,$20,$92,$20,$8b,$31,$00,$1b,$96,$01,$97,$20,$30,$8a,$33,$34,$35,$37,$36,$31,$35,$35,$30,$92,$33,$34,$35,$37,$36,$31,$35,$35,$30,$00,$13,$97,$01,$97,$20,$30,$89,$33,$34,$35,$37,$36,$31,$35,$35,$30,$92,$30,$00,$13,$98,$01,$97,$20,$30,$8c,$33,$34,$35,$37,$36,$31,$35,$35,$30,$92,$30,$00,$13,$99,$01,$97,$20,$30,$84,$33,$34,$35,$37,$36,$31,$35,$35,$30,$92,$30,$00,$15,$9a,$01,$97,$20,$87,$30,$85,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$30,$00,$1d,$9b,$01,$97,$20,$87,$30,$96,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$33,$34,$35,$37,$36,$31,$35,$35,$30,$00,$1d,$9c,$01,$97,$20,$87,$30,$b2,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$33,$34,$35,$37,$36,$31,$35,$35,$30,$00,$15,$9d,$01,$97,$20,$87,$30,$92,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$30,$00,$16,$9e,$01,$97,$20,$87,$30,$90,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$8b,$31,$00,$16,$9f,$01,$97,$20,$87,$30,$91,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$8b,$31,$00,$16,$a0,$01,$97,$20,$87,$30,$8f,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$8b,$31,$00,$15,$a1,$01,$97,$20,$87,$30,$94,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$30,$00,$15,$a2,$01,$97,$20,$87,$30,$93,$33,$34,$35,$37,$36,$31,$35,$35,$30,$88,$92,$30,$00,$17,$a3,$01,$97,$20,$87,$81,$49,$4b,$64,$81,$b3,$81,$47,$58,$6e,$81,$88,$20,$92,$20,$31,$00,$0b,$a4,$01,$97,$20,$39,$8a,$30,$92,$39,$00,$0b,$a5,$01,$97,$20,$39,$8b,$30,$92,$39,$00,$0b,$a6,$01,$97,$20,$39,$89,$30,$92,$30,$00,$0d,$a7,$01,$97,$20,$87,$39,$85,$30,$88,$92,$30,$00,$0d,$a8,$01,$97,$20,$87,$39,$96,$30,$88,$92,$39,$00,$0d,$a9,$01,$97,$20,$87,$39,$b2,$30,$88,$92,$39,$00,$0d,$aa,$01,$97,$20,$87,$39,$92,$30,$88,$92,$30,$00,$0e,$ab,$01,$97,$20,$87,$39,$90,$30,$88,$92,$8b,$31,$00,$0d,$ac,$01,$97,$20,$87,$39,$91,$30,$88,$92,$30,$00,$0d,$ad,$01,$97,$20,$87,$39,$8f,$30,$88,$92,$30,$00,$0e,$ae,$01,$97,$20,$87,$39,$94,$30,$88,$92,$8b,$31,$00,$0e,$af,$01,$97,$20,$87,$39,$93,$30,$88,$92,$8b,$31,$00,$17,$b0,$01,$97,$20,$87,$81,$70,$64,$49,$81,$b3,$81,$40,$2e,$7b,$81,$88,$20,$92,$20,$31,$00,$1b,$b1,$01,$97,$20,$30,$8a,$34,$38,$37,$35,$36,$33,$31,$34,$39,$92,$34,$38,$37,$35,$36,$33,$31,$34,$39,$00,$13,$b2,$01,$97,$20,$30,$89,$34,$38,$37,$35,$36,$33,$31,$34,$39,$92,$30,$00,$13,$b3,$01,$97,$20,$30,$8c,$34,$38,$37,$35,$36,$33,$31,$34,$39,$92,$30,$00,$13,$b4,$01,$97,$20,$30,$84,$34,$38,$37,$35,$36,$33,$31,$34,$39,$92,$30,$00,$15,$b5,$01,$97,$20,$87,$30,$85,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$30,$00,$1d,$b6,$01,$97,$20,$87,$30,$96,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$34,$38,$37,$35,$36,$33,$31,$34,$39,$00,$1d,$b7,$01,$97,$20,$87,$30,$b2,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$34,$38,$37,$35,$36,$33,$31,$34,$39,$00,$15,$b8,$01,$97,$20,$87,$30,$92,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$30,$00,$16,$b9,$01,$97,$20,$87,$30,$90,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$8b,$31,$00,$16,$ba,$01,$97,$20,$87,$30,$91,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$8b,$31,$00,$16,$bb,$01,$97,$20,$87,$30,$8f,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$8b,$31,$00,$15,$bc,$01,$97,$20,$87,$30,$94,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$30,$00,$15,$bd,$01,$97,$20,$87,$30,$93,$34,$38,$37,$35,$36,$33,$31,$34,$39,$88,$92,$30,$00,$17,$be,$01,$97,$20,$87,$81,$55,$3b,$26,$81,$b3,$81,$51,$4b,$55,$81,$88,$20,$92,$20,$31,$00,$1e,$bf,$01,$97,$20,$32,$34,$35,$34,$34,$36,$30,$31,$35,$8a,$8b,$31,$30,$37,$92,$32,$34,$35,$34,$34,$35,$39,$30,$38,$00,$1e,$c0,$01,$97,$20,$32,$34,$35,$34,$34,$36,$30,$31,$35,$8b,$8b,$31,$30,$37,$92,$32,$34,$35,$34,$34,$36,$31,$32,$32,$00,$21,$c1,$01,$97,$20,$32,$34,$35,$34,$34,$36,$30,$31,$35,$89,$8b,$31,$30,$37,$92,$8b,$32,$36,$32,$36,$32,$37,$32,$33,$36,$30,$35,$00,$1d,$c2,$01,$97,$20,$32,$34,$35,$34,$34,$36,$30,$31,$35,$8c,$8b,$31,$30,$37,$92,$8b,$32,$32,$39,$33,$38,$38,$37,$00,$17,$c3,$01,$97,$20,$32,$34,$35,$34,$34,$36,$30,$31,$35,$84,$31,$30,$37,$92,$31,$30,$36,$00,$20,$c4,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$85,$8b,$31,$30,$37,$88,$92,$32,$34,$35,$34,$34,$35,$39,$30,$39,$00,$21,$c5,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$96,$8b,$31,$30,$37,$88,$92,$8b,$32,$34,$35,$34,$34,$35,$39,$31,$30,$00,$19,$c6,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$b2,$8b,$31,$30,$37,$88,$92,$8b,$31,$00,$18,$c7,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$92,$8b,$31,$30,$37,$88,$92,$30,$00,$19,$c8,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$90,$8b,$31,$30,$37,$88,$92,$8b,$31,$00,$18,$c9,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$91,$8b,$31,$30,$37,$88,$92,$30,$00,$18,$ca,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$8f,$8b,$31,$30,$37,$88,$92,$30,$00,$19,$cb,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$94,$8b,$31,$30,$37,$88,$92,$8b,$31,$00,$19,$cc,$01,$97,$20,$87,$32,$34,$35,$34,$34,$36,$30,$31,$35,$93,$8b,$31,$30,$37,$88,$92,$8b,$31,$00,$17,$cd,$01,$97,$20,$87,$81,$55,$2f,$4d,$81,$b3,$81,$45,$77,$62,$81,$88,$20,$92,$20,$31,$00,$0f,$ce,$01,$97,$20,$35,$38,$33,$8a,$30,$92,$35,$38,$33,$00,$0f,$cf,$01,$97,$20,$35,$38,$33,$8b,$30,$92,$35,$38,$33,$00,$0d,$d0,$01,$97,$20,$35,$38,$33,$89,$30,$92,$30,$00,$0f,$d1,$01,$97,$20,$87,$35,$38,$33,$85,$30,$88,$92,$30,$00,$11,$d2,$01,$97,$20,$87,$35,$38,$33,$96,$30,$88,$92,$35,$38,$33,$00,$11,$d3,$01,$97,$20,$87,$35,$38,$33,$b2,$30,$88,$92,$35,$38,$33,$00,$0f,$d4,$01,$97,$20,$87,$35,$38,$33,$92,$30,$88,$92,$30,$00,$10,$d5,$01,$97,$20,$87,$35,$38,$33,$90,$30,$88,$92,$8b,$31,$00,$0f,$d6,$01,$97,$20,$87,$35,$38,$33,$91,$30,$88,$92,$30,$00,$0f,$d7,$01,$97,$20,$87,$35,$38,$33,$8f,$30,$88,$92,$30,$00,$10,$d8,$01,$97,$20,$87,$35,$38,$33,$94,$30,$88,$92,$8b,$31,$00,$10,$d9,$01,$97,$20,$87,$35,$38,$33,$93,$30,$88,$92,$8b,$31,$00,$17,$da,$01,$97,$20,$87,$81,$4a,$2b,$67,$81,$b3,$81,$2e,$68,$3e,$81,$88,$20,$92,$20,$31,$00,$1e,$db,$01,$97,$20,$8b,$35,$8a,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$92,$31,$30,$33,$31,$35,$31,$35,$31,$36,$35,$00,$1f,$dc,$01,$97,$20,$8b,$35,$89,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$92,$8b,$35,$31,$35,$37,$35,$37,$35,$38,$35,$30,$00,$15,$dd,$01,$97,$20,$8b,$35,$8c,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$92,$30,$00,$14,$de,$01,$97,$20,$35,$84,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$92,$35,$00,$20,$df,$01,$97,$20,$87,$8b,$35,$85,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$00,$21,$e0,$01,$97,$20,$87,$8b,$35,$96,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$8b,$31,$30,$33,$31,$35,$31,$35,$31,$37,$35,$00,$18,$e1,$01,$97,$20,$87,$8b,$35,$b2,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$8b,$35,$00,$17,$e2,$01,$97,$20,$87,$8b,$35,$92,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$30,$00,$18,$e3,$01,$97,$20,$87,$8b,$35,$90,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$8b,$31,$00,$18,$e4,$01,$97,$20,$87,$8b,$35,$91,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$8b,$31,$00,$18,$e5,$01,$97,$20,$87,$8b,$35,$8f,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$8b,$31,$00,$17,$e6,$01,$97,$20,$87,$8b,$35,$94,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$30,$00,$17,$e7,$01,$97,$20,$87,$8b,$35,$93,$31,$30,$33,$31,$35,$31,$35,$31,$37,$30,$88,$92,$30,$00,$18,$e8,$01,$97,$20,$87,$81,$56,$4c,$6b,$81,$b3,$81,$76,$53,$58,$81,$88,$20,$92,$20,$8b,$31,$00,$1b,$e9,$01,$97,$20,$37,$34,$34,$35,$39,$31,$39,$38,$39,$8a,$34,$92,$37,$34,$34,$35,$39,$31,$39,$39,$33,$00,$1b,$ea,$01,$97,$20,$37,$34,$34,$35,$39,$31,$39,$38,$39,$8b,$34,$92,$37,$34,$34,$35,$39,$31,$39,$38,$35,$00,$1b,$eb,$01,$97,$20,$37,$34,$34,$35,$39,$31,$39,$38,$39,$8c,$34,$92,$31,$38,$36,$31,$34,$37,$39,$39,$37,$00,$13,$ec,$01,$97,$20,$37,$34,$34,$35,$39,$31,$39,$38,$39,$84,$34,$92,$31,$00,$15,$ed,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$85,$34,$88,$92,$34,$00,$1d,$ee,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$96,$34,$88,$92,$37,$34,$34,$35,$39,$31,$39,$38,$35,$00,$1d,$ef,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$b2,$34,$88,$92,$37,$34,$34,$35,$39,$31,$39,$38,$39,$00,$15,$f0,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$92,$34,$88,$92,$30,$00,$16,$f1,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$90,$34,$88,$92,$8b,$31,$00,$15,$f2,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$91,$34,$88,$92,$30,$00,$15,$f3,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$8f,$34,$88,$92,$30,$00,$16,$f4,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$94,$34,$88,$92,$8b,$31,$00,$16,$f5,$01,$97,$20,$87,$37,$34,$34,$35,$39,$31,$39,$38,$39,$93,$34,$88,$92,$8b,$31,$00,$17,$f6,$01,$97,$20,$87,$81,$4f,$7c,$57,$81,$b3,$81,$35,$70,$45,$81,$88,$20,$92,$20,$31,$00,$0f,$f7,$01,$97,$20,$30,$8a,$39,$33,$37,$92,$39,$33,$37,$00,$0d,$f8,$01,$97,$20,$30,$89,$39,$33,$37,$92,$30,$00,$0d,$f9,$01,$97,$20,$30,$8c,$39,$33,$37,$92,$30,$00,$0d,$fa,$01,$97,$20,$30,$84,$39,$33,$37,$92,$30,$00,$0f,$fb,$01,$97,$20,$87,$30,$85,$39,$33,$37,$88,$92,$30,$00,$11,$fc,$01,$97,$20,$87,$30,$96,$39,$33,$37,$88,$92,$39,$33,$37,$00,$11,$fd,$01,$97,$20,$87,$30,$b2,$39,$33,$37,$88,$92,$39,$33,$37,$00,$0f,$fe,$01,$97,$20,$87,$30,$92,$39,$33,$37,$88,$92,$30,$00,$10,$ff,$01,$97,$20,$87,$30,$90,$39,$33,$37,$88,$92,$8b,$31,$00,$10,$00,$02,$97,$20,$87,$30,$91,$39,$33,$37,$88,$92,$8b,$31,$00,$10,$01,$02,$97,$20,$87,$30,$8f,$39,$33,$37,$88,$92,$8b,$31,$00,$0f,$02,$02,$97,$20,$87,$30,$94,$39,$33,$37,$88,$92,$30,$00,$0f,$03,$02,$97,$20,$87,$30,$93,$39,$33,$37,$88,$92,$30,$00,$18,$04,$02,$97,$20,$87,$81,$45,$39,$6d,$81,$b3,$81,$78,$46,$6b,$81,$88,$20,$92,$20,$8b,$31,$00,$1f,$05,$02,$97,$20,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$8a,$35,$33,$33,$92,$8b,$33,$36,$33,$30,$30,$33,$36,$31,$37,$00,$22,$06,$02,$97,$20,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$89,$35,$33,$33,$92,$8b,$31,$39,$33,$34,$38,$31,$32,$31,$31,$39,$35,$30,$00,$1c,$07,$02,$97,$20,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$8c,$35,$33,$33,$92,$8b,$36,$38,$31,$30,$35,$38,$00,$17,$08,$02,$97,$20,$33,$36,$33,$30,$30,$34,$31,$35,$30,$84,$35,$33,$33,$92,$32,$33,$36,$00,$1a,$09,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$85,$35,$33,$33,$88,$92,$35,$31,$32,$00,$21,$0a,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$96,$35,$33,$33,$88,$92,$8b,$33,$36,$33,$30,$30,$34,$36,$34,$31,$00,$21,$0b,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$b2,$35,$33,$33,$88,$92,$8b,$33,$36,$33,$30,$30,$34,$31,$32,$39,$00,$18,$0c,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$92,$35,$33,$33,$88,$92,$30,$00,$19,$0d,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$90,$35,$33,$33,$88,$92,$8b,$31,$00,$19,$0e,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$91,$35,$33,$33,$88,$92,$8b,$31,$00,$19,$0f,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$8f,$35,$33,$33,$88,$92,$8b,$31,$00,$18,$10,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$94,$35,$33,$33,$88,$92,$30,$00,$18,$11,$02,$97,$20,$87,$8b,$33,$36,$33,$30,$30,$34,$31,$35,$30,$93,$35,$33,$33,$88,$92,$30,$00,$17,$12,$02,$97,$20,$87,$81,$67,$73,$27,$81,$b3,$81,$46,$4a,$67,$81,$88,$20,$92,$20,$31,$00,$0f,$13,$02,$97,$20,$37,$8a,$32,$30,$37,$92,$32,$31,$34,$00,$10,$14,$02,$97,$20,$37,$89,$32,$30,$37,$92,$31,$34,$34,$39,$00,$0d,$15,$02,$97,$20,$37,$8c,$32,$30,$37,$92,$30,$00,$0d,$16,$02,$97,$20,$37,$84,$32,$30,$37,$92,$37,$00,$0f,$17,$02,$97,$20,$87,$37,$85,$32,$30,$37,$88,$92,$37,$00,$11,$18,$02,$97,$20,$87,$37,$96,$32,$30,$37,$88,$92,$32,$30,$30,$00,$11,$19,$02,$97,$20,$87,$37,$b2,$32,$30,$37,$88,$92,$32,$30,$37,$00,$0f,$1a,$02,$97,$20,$87,$37,$92,$32,$30,$37,$88,$92,$30,$00,$10,$1b,$02,$97,$20,$87,$37,$90,$32,$30,$37,$88,$92,$8b,$31,$00,$10,$1c,$02,$97,$20,$87,$37,$91,$32,$30,$37,$88,$92,$8b,$31,$00,$10,$1d,$02,$97,$20,$87,$37,$8f,$32,$30,$37,$88,$92,$8b,$31,$00,$0f,$1e,$02,$97,$20,$87,$37,$94,$32,$30,$37,$88,$92,$30,$00,$0f,$1f,$02,$97,$20,$87,$37,$93,$32,$30,$37,$88,$92,$30,$00,$17,$20,$02,$97,$20,$87,$81,$62,$34,$60,$81,$b3,$81,$5f,$31,$38,$81,$88,$20,$92,$20,$31,$00,$1d,$21,$02,$97,$20,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$8a,$30,$92,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$00,$14,$22,$02,$97,$20,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$89,$30,$92,$30,$00,$16,$23,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$85,$30,$88,$92,$30,$00,$1f,$24,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$96,$30,$88,$92,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$00,$1f,$25,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$b2,$30,$88,$92,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$00,$16,$26,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$92,$30,$88,$92,$30,$00,$17,$27,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$90,$30,$88,$92,$8b,$31,$00,$17,$28,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$91,$30,$88,$92,$8b,$31,$00,$17,$29,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$8f,$30,$88,$92,$8b,$31,$00,$16,$2a,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$94,$30,$88,$92,$30,$00,$16,$2b,$02,$97,$20,$87,$8b,$37,$37,$37,$30,$39,$34,$33,$32,$35,$93,$30,$88,$92,$30,$00,$18,$2c,$02,$97,$20,$87,$81,$51,$6a,$35,$81,$b3,$81,$56,$55,$70,$81,$88,$20,$92,$20,$8b,$31,$00,$00
+>2208	34 37 31 38 39 35 34 8a 8b 38 36 38 37 39 35 38
+>2218	37 31 92 8b 31 36 31 33 35 31 34 38 32 35 00 25
+>2228	02 00 97 20 8b 37 34 34 37 31 38 39 35 34 8b 8b
+>2238	38 36 38 37 39 35 38 37 31 92 31 32 34 30 37 36
+>2248	39 31 37 00 1d 03 00 97 20 8b 37 34 34 37 31 38
+>2258	39 35 34 8c 8b 38 36 38 37 39 35 38 37 31 92 30
+>2268	00 23 04 00 97 20 37 34 34 37 31 38 39 35 34 84
+>2278	38 36 38 37 39 35 38 37 31 92 37 34 34 37 31 38
+>2288	39 35 34 00 29 05 00 97 20 87 8b 37 34 34 37 31
+>2298	38 39 35 34 85 8b 38 36 38 37 39 35 38 37 31 88
+>22a8	92 8b 31 30 37 32 34 31 36 37 36 38 00 27 06 00
+>22b8	97 20 87 8b 37 34 34 37 31 38 39 35 34 96 8b 38
+>22c8	36 38 37 39 35 38 37 31 88 92 35 33 31 33 31 38
+>22d8	37 31 31 00 28 07 00 97 20 87 8b 37 34 34 37 31
+>22e8	38 39 35 34 b2 8b 38 36 38 37 39 35 38 37 31 88
+>22f8	92 8b 35 34 31 30 39 38 30 35 37 00 1f 08 00 97
+>2308	20 87 8b 37 34 34 37 31 38 39 35 34 92 8b 38 36
+>2318	38 37 39 35 38 37 31 88 92 30 00 20 09 00 97 20
+>2328	87 8b 37 34 34 37 31 38 39 35 34 90 8b 38 36 38
+>2338	37 39 35 38 37 31 88 92 8b 31 00 1f 0a 00 97 20
+>2348	87 8b 37 34 34 37 31 38 39 35 34 91 8b 38 36 38
+>2358	37 39 35 38 37 31 88 92 30 00 1f 0b 00 97 20 87
+>2368	8b 37 34 34 37 31 38 39 35 34 8f 8b 38 36 38 37
+>2378	39 35 38 37 31 88 92 30 00 20 0c 00 97 20 87 8b
+>2388	37 34 34 37 31 38 39 35 34 94 8b 38 36 38 37 39
+>2398	35 38 37 31 88 92 8b 31 00 20 0d 00 97 20 87 8b
+>23a8	37 34 34 37 31 38 39 35 34 93 8b 38 36 38 37 39
+>23b8	35 38 37 31 88 92 8b 31 00 17 0e 00 97 20 87 81
+>23c8	77 72 4c 81 b3 81 67 2e 52 81 88 20 92 20 31 00
+>23d8	0f 0f 00 97 20 34 39 35 8a 31 92 34 39 36 00 0f
+>23e8	10 00 97 20 34 39 35 8b 31 92 34 39 34 00 0f 11
+>23f8	00 97 20 34 39 35 89 31 92 34 39 35 00 0f 12 00
+>2408	97 20 34 39 35 8c 31 92 34 39 35 00 0d 13 00 97
+>2418	20 34 39 35 84 31 92 30 00 0f 14 00 97 20 87 34
+>2428	39 35 85 31 88 92 31 00 11 15 00 97 20 87 34 39
+>2438	35 96 31 88 92 34 39 34 00 11 16 00 97 20 87 34
+>2448	39 35 b2 31 88 92 34 39 35 00 0f 17 00 97 20 87
+>2458	34 39 35 92 31 88 92 30 00 10 18 00 97 20 87 34
+>2468	39 35 90 31 88 92 8b 31 00 0f 19 00 97 20 87 34
+>2478	39 35 91 31 88 92 30 00 0f 1a 00 97 20 87 34 39
+>2488	35 8f 31 88 92 30 00 10 1b 00 97 20 87 34 39 35
+>2498	94 31 88 92 8b 31 00 10 1c 00 97 20 87 34 39 35
+>24a8	93 31 88 92 8b 31 00 18 1d 00 97 20 87 81 26 53
+>24b8	66 81 b3 81 7d 74 28 81 88 20 92 20 8b 31 00 0f
+>24c8	1e 00 97 20 39 35 37 8a 31 92 39 35 38 00 0f 1f
+>24d8	00 97 20 39 35 37 8b 31 92 39 35 36 00 0f 20 00
+>24e8	97 20 39 35 37 89 31 92 39 35 37 00 0f 21 00 97
+>24f8	20 39 35 37 8c 31 92 39 35 37 00 0d 22 00 97 20
+>2508	39 35 37 84 31 92 30 00 0f 23 00 97 20 87 39 35
+>2518	37 85 31 88 92 31 00 11 24 00 97 20 87 39 35 37
+>2528	96 31 88 92 39 35 36 00 11 25 00 97 20 87 39 35
+>2538	37 b2 31 88 92 39 35 37 00 0f 26 00 97 20 87 39
+>2548	35 37 92 31 88 92 30 00 10 27 00 97 20 87 39 35
+>2558	37 90 31 88 92 8b 31 00 0f 28 00 97 20 87 39 35
+>2568	37 91 31 88 92 30 00 0f 29 00 97 20 87 39 35 37
+>2578	8f 31 88 92 30 00 10 2a 00 97 20 87 39 35 37 94
+>2588	31 88 92 8b 31 00 10 2b 00 97 20 87 39 35 37 93
+>2598	31 88 92 8b 31 00 17 2c 00 97 20 87 81 58 5f 2b
+>25a8	81 b3 81 4e 40 63 81 88 20 92 20 31 00 0f 2d 00
+>25b8	97 20 8b 38 8a 8b 36 92 8b 31 34 00 0e 2e 00 97
+>25c8	20 8b 38 89 8b 36 92 34 38 00 0d 2f 00 97 20 8b
+>25d8	38 8c 8b 36 92 31 00 0b 30 00 97 20 38 84 36 92
+>25e8	32 00 10 31 00 97 20 87 8b 38 85 8b 36 88 92 8b
+>25f8	38 00 0f 32 00 97 20 87 8b 38 96 8b 36 88 92 32
+>2608	00 10 33 00 97 20 87 8b 38 b2 8b 36 88 92 8b 36
+>2618	00 0f 34 00 97 20 87 8b 38 92 8b 36 88 92 30 00
+>2628	10 35 00 97 20 87 8b 38 90 8b 36 88 92 8b 31 00
+>2638	10 36 00 97 20 87 8b 38 91 8b 36 88 92 8b 31 00
+>2648	10 37 00 97 20 87 8b 38 8f 8b 36 88 92 8b 31 00
+>2658	0f 38 00 97 20 87 8b 38 94 8b 36 88 92 30 00 0f
+>2668	39 00 97 20 87 8b 38 93 8b 36 88 92 30 00 18 3a
+>2678	00 97 20 87 81 4e 52 63 81 b3 81 6f 57 64 81 88
+>2688	20 92 20 8b 31 00 26 3b 00 97 20 8b 34 38 37 37
+>2698	33 33 37 35 33 8a 8b 32 31 38 36 30 32 33 31 32
+>26a8	92 8b 37 30 36 33 33 36 30 36 35 00 1d 3c 00 97
+>26b8	20 8b 34 38 37 37 33 33 37 35 33 8c 8b 32 31 38
+>26c8	36 30 32 33 31 32 92 32 00 22 3d 00 97 20 34 38
+>26d8	37 37 33 33 37 35 33 84 32 31 38 36 30 32 33 31
+>26e8	32 92 35 30 35 32 39 31 32 39 00 28 3e 00 97 20
+>26f8	87 8b 34 38 37 37 33 33 37 35 33 85 8b 32 31 38
+>2708	36 30 32 33 31 32 88 92 8b 34 38 38 30 39 34 37
+>2718	32 30 00 27 3f 00 97 20 87 8b 34 38 37 37 33 33
+>2728	37 35 33 96 8b 32 31 38 36 30 32 33 31 32 88 92
+>2738	32 36 39 38 35 33 33 37 35 00 28 40 00 97 20 87
+>2748	8b 34 38 37 37 33 33 37 35 33 b2 8b 32 31 38 36
+>2758	30 32 33 31 32 88 92 8b 32 31 38 32 34 31 33 34
+>2768	35 00 1f 41 00 97 20 87 8b 34 38 37 37 33 33 37
+>2778	35 33 92 8b 32 31 38 36 30 32 33 31 32 88 92 30
+>2788	00 20 42 00 97 20 87 8b 34 38 37 37 33 33 37 35
+>2798	33 90 8b 32 31 38 36 30 32 33 31 32 88 92 8b 31
+>27a8	00 20 43 00 97 20 87 8b 34 38 37 37 33 33 37 35
+>27b8	33 91 8b 32 31 38 36 30 32 33 31 32 88 92 8b 31
+>27c8	00 20 44 00 97 20 87 8b 34 38 37 37 33 33 37 35
+>27d8	33 8f 8b 32 31 38 36 30 32 33 31 32 88 92 8b 31
+>27e8	00 1f 45 00 97 20 87 8b 34 38 37 37 33 33 37 35
+>27f8	33 94 8b 32 31 38 36 30 32 33 31 32 88 92 30 00
+>2808	1f 46 00 97 20 87 8b 34 38 37 37 33 33 37 35 33
+>2818	93 8b 32 31 38 36 30 32 33 31 32 88 92 30 00 17
+>2828	47 00 97 20 87 81 51 49 50 81 b3 81 31 54 70 81
+>2838	88 20 92 20 31 00 23 48 00 97 20 36 34 38 31 39
+>2848	36 36 33 33 8a 8b 33 32 37 37 30 30 39 38 92 36
+>2858	31 35 34 32 36 35 33 35 00 23 49 00 97 20 36 34
+>2868	38 31 39 36 36 33 33 8b 8b 33 32 37 37 30 30 39
+>2878	38 92 36 38 30 39 36 36 37 33 31 00 2c 4a 00 97
+>2888	20 36 34 38 31 39 36 36 33 33 89 8b 33 32 37 37
+>2898	30 30 39 38 92 8b 32 31 32 34 31 34 36 37 31 38
+>28a8	36 36 38 30 30 33 34 00 1d 4b 00 97 20 36 34 38
+>28b8	31 39 36 36 33 33 8c 8b 33 32 37 37 30 30 39 38
+>28c8	92 8b 31 39 00 21 4c 00 97 20 36 34 38 31 39 36
+>28d8	36 33 33 84 33 32 37 37 30 30 39 38 92 32 35 35
+>28e8	36 34 37 37 31 00 25 4d 00 97 20 87 36 34 38 31
+>28f8	39 36 36 33 33 85 8b 33 32 37 37 30 30 39 38 88
+>2908	92 36 33 37 37 31 30 38 35 36 00 26 4e 00 97 20
+>2918	87 36 34 38 31 39 36 36 33 33 96 8b 33 32 37 37
+>2928	30 30 39 38 88 92 8b 36 35 39 39 39 35 31 37 37
+>2938	00 25 4f 00 97 20 87 36 34 38 31 39 36 36 33 33
+>2948	b2 8b 33 32 37 37 30 30 39 38 88 92 8b 32 32 32
+>2958	38 34 33 32 31 00 1d 50 00 97 20 87 36 34 38 31
+>2968	39 36 36 33 33 92 8b 33 32 37 37 30 30 39 38 88
+>2978	92 30 00 1e 51 00 97 20 87 36 34 38 31 39 36 36
+>2988	33 33 90 8b 33 32 37 37 30 30 39 38 88 92 8b 31
+>2998	00 1d 52 00 97 20 87 36 34 38 31 39 36 36 33 33
+>29a8	91 8b 33 32 37 37 30 30 39 38 88 92 30 00 1d 53
+>29b8	00 97 20 87 36 34 38 31 39 36 36 33 33 8f 8b 33
+>29c8	32 37 37 30 30 39 38 88 92 30 00 1e 54 00 97 20
+>29d8	87 36 34 38 31 39 36 36 33 33 94 8b 33 32 37 37
+>29e8	30 30 39 38 88 92 8b 31 00 1e 55 00 97 20 87 36
+>29f8	34 38 31 39 36 36 33 33 93 8b 33 32 37 37 30 30
+>2a08	39 38 88 92 8b 31 00 17 56 00 97 20 87 81 5b 2c
+>2a18	7c 81 b3 81 3a 44 55 81 88 20 92 20 31 00 0d 57
+>2a28	00 97 20 30 8a 8b 37 92 8b 37 00 0c 58 00 97 20
+>2a38	30 8b 8b 37 92 37 00 0c 59 00 97 20 30 89 8b 37
+>2a48	92 30 00 0c 5a 00 97 20 30 8c 8b 37 92 30 00 0b
+>2a58	5b 00 97 20 30 84 37 92 30 00 0e 5c 00 97 20 87
+>2a68	30 85 8b 37 88 92 30 00 0f 5d 00 97 20 87 30 96
+>2a78	8b 37 88 92 8b 37 00 0f 5e 00 97 20 87 30 b2 8b
+>2a88	37 88 92 8b 37 00 0e 5f 00 97 20 87 30 92 8b 37
+>2a98	88 92 30 00 0f 60 00 97 20 87 30 90 8b 37 88 92
+>2aa8	8b 31 00 0e 61 00 97 20 87 30 91 8b 37 88 92 30
+>2ab8	00 0e 62 00 97 20 87 30 8f 8b 37 88 92 30 00 0f
+>2ac8	63 00 97 20 87 30 94 8b 37 88 92 8b 31 00 0f 64
+>2ad8	00 97 20 87 30 93 8b 37 88 92 8b 31 00 18 65 00
+>2ae8	97 20 87 81 29 40 68 81 b3 81 2a 58 60 81 88 20
+>2af8	92 20 8b 31 00 1c 66 00 97 20 8b 31 33 36 8a 31
+>2b08	37 34 38 37 36 33 35 92 31 37 34 38 37 34 39 39
+>2b18	00 1f 67 00 97 20 8b 31 33 36 89 31 37 34 38 37
+>2b28	36 33 35 92 8b 32 33 37 38 33 31 38 33 36 30 00
+>2b38	15 68 00 97 20 8b 31 33 36 8c 31 37 34 38 37 36
+>2b48	33 35 92 30 00 16 69 00 97 20 31 33 36 84 31 37
+>2b58	34 38 37 36 33 35 92 31 33 36 00 1e 6a 00 97 20
+>2b68	87 8b 31 33 36 85 31 37 34 38 37 36 33 35 88 92
+>2b78	31 37 34 38 37 36 33 32 00 1f 6b 00 97 20 87 8b
+>2b88	31 33 36 96 31 37 34 38 37 36 33 35 88 92 8b 31
+>2b98	37 34 38 37 37 36 35 00 1a 6c 00 97 20 87 8b 31
+>2ba8	33 36 b2 31 37 34 38 37 36 33 35 88 92 8b 31 33
+>2bb8	33 00 17 6d 00 97 20 87 8b 31 33 36 92 31 37 34
+>2bc8	38 37 36 33 35 88 92 30 00 18 6e 00 97 20 87 8b
+>2bd8	31 33 36 90 31 37 34 38 37 36 33 35 88 92 8b 31
+>2be8	00 18 6f 00 97 20 87 8b 31 33 36 91 31 37 34 38
+>2bf8	37 36 33 35 88 92 8b 31 00 18 70 00 97 20 87 8b
+>2c08	31 33 36 8f 31 37 34 38 37 36 33 35 88 92 8b 31
+>2c18	00 17 71 00 97 20 87 8b 31 33 36 94 31 37 34 38
+>2c28	37 36 33 35 88 92 30 00 17 72 00 97 20 87 8b 31
+>2c38	33 36 93 31 37 34 38 37 36 33 35 88 92 30 00 18
+>2c48	73 00 97 20 87 81 30 5c 26 81 b3 81 36 43 5c 81
+>2c58	88 20 92 20 8b 31 00 27 74 00 97 20 8b 31 35 39
+>2c68	31 39 37 33 39 34 8a 8b 38 34 35 33 31 30 39 37
+>2c78	35 92 8b 31 30 30 34 35 30 38 33 36 39 00 25 75
+>2c88	00 97 20 8b 31 35 39 31 39 37 33 39 34 8b 8b 38
+>2c98	34 35 33 31 30 39 37 35 92 36 38 36 31 31 33 35
+>2ca8	38 31 00 1d 76 00 97 20 8b 31 35 39 31 39 37 33
+>2cb8	39 34 8c 8b 38 34 35 33 31 30 39 37 35 92 30 00
+>2cc8	23 77 00 97 20 31 35 39 31 39 37 33 39 34 84 38
+>2cd8	34 35 33 31 30 39 37 35 92 31 35 39 31 39 37 33
+>2ce8	39 34 00 28 78 00 97 20 87 8b 31 35 39 31 39 37
+>2cf8	33 39 34 85 8b 38 34 35 33 31 30 39 37 35 88 92
+>2d08	8b 39 39 38 32 30 36 34 36 34 00 27 79 00 97 20
+>2d18	87 8b 31 35 39 31 39 37 33 39 34 96 8b 38 34 35
+>2d28	33 31 30 39 37 35 88 92 39 39 31 39 30 34 35 35
+>2d38	39 00 26 7a 00 97 20 87 8b 31 35 39 31 39 37 33
+>2d48	39 34 b2 8b 38 34 35 33 31 30 39 37 35 88 92 8b
+>2d58	36 33 30 31 39 30 35 00 1f 7b 00 97 20 87 8b 31
+>2d68	35 39 31 39 37 33 39 34 92 8b 38 34 35 33 31 30
+>2d78	39 37 35 88 92 30 00 20 7c 00 97 20 87 8b 31 35
+>2d88	39 31 39 37 33 39 34 90 8b 38 34 35 33 31 30 39
+>2d98	37 35 88 92 8b 31 00 1f 7d 00 97 20 87 8b 31 35
+>2da8	39 31 39 37 33 39 34 91 8b 38 34 35 33 31 30 39
+>2db8	37 35 88 92 30 00 1f 7e 00 97 20 87 8b 31 35 39
+>2dc8	31 39 37 33 39 34 8f 8b 38 34 35 33 31 30 39 37
+>2dd8	35 88 92 30 00 20 7f 00 97 20 87 8b 31 35 39 31
+>2de8	39 37 33 39 34 94 8b 38 34 35 33 31 30 39 37 35
+>2df8	88 92 8b 31 00 20 80 00 97 20 87 8b 31 35 39 31
+>2e08	39 37 33 39 34 93 8b 38 34 35 33 31 30 39 37 35
+>2e18	88 92 8b 31 00 18 81 00 97 20 87 81 2a 4a 67 81
+>2e28	b3 81 51 3f 28 81 88 20 92 20 8b 31 00 1f 82 00
+>2e38	97 20 8b 32 35 32 33 30 31 33 34 36 8a 31 35 36
+>2e48	92 8b 32 35 32 33 30 31 31 39 30 00 21 83 00 97
+>2e58	20 8b 32 35 32 33 30 31 33 34 36 89 31 35 36 92
+>2e68	8b 33 39 33 35 39 30 30 39 39 37 36 00 1d 84 00
+>2e78	97 20 8b 32 35 32 33 30 31 33 34 36 8c 31 35 36
+>2e88	92 8b 31 36 31 37 33 31 36 00 16 85 00 97 20 32
+>2e98	35 32 33 30 31 33 34 36 84 31 35 36 92 35 30 00
+>2ea8	1a 86 00 97 20 87 8b 32 35 32 33 30 31 33 34 36
+>2eb8	85 31 35 36 88 92 31 35 36 00 21 87 00 97 20 87
+>2ec8	8b 32 35 32 33 30 31 33 34 36 96 31 35 36 88 92
+>2ed8	8b 32 35 32 33 30 31 35 30 32 00 21 88 00 97 20
+>2ee8	87 8b 32 35 32 33 30 31 33 34 36 b2 31 35 36 88
+>2ef8	92 8b 32 35 32 33 30 31 33 34 36 00 18 89 00 97
+>2f08	20 87 8b 32 35 32 33 30 31 33 34 36 92 31 35 36
+>2f18	88 92 30 00 19 8a 00 97 20 87 8b 32 35 32 33 30
+>2f28	31 33 34 36 90 31 35 36 88 92 8b 31 00 19 8b 00
+>2f38	97 20 87 8b 32 35 32 33 30 31 33 34 36 91 31 35
+>2f48	36 88 92 8b 31 00 19 8c 00 97 20 87 8b 32 35 32
+>2f58	33 30 31 33 34 36 8f 31 35 36 88 92 8b 31 00 18
+>2f68	8d 00 97 20 87 8b 32 35 32 33 30 31 33 34 36 94
+>2f78	31 35 36 88 92 30 00 18 8e 00 97 20 87 8b 32 35
+>2f88	32 33 30 31 33 34 36 93 31 35 36 88 92 30 00 18
+>2f98	8f 00 97 20 87 81 3f 47 5d 81 b3 81 6a 3f 2b 81
+>2fa8	88 20 92 20 8b 31 00 1d 90 00 97 20 8b 35 38 34
+>2fb8	32 38 30 38 32 34 8a 30 92 8b 35 38 34 32 38 30
+>2fc8	38 32 34 00 14 91 00 97 20 8b 35 38 34 32 38 30
+>2fd8	38 32 34 89 30 92 30 00 16 92 00 97 20 87 8b 35
+>2fe8	38 34 32 38 30 38 32 34 85 30 88 92 30 00 1f 93
+>2ff8	00 97 20 87 8b 35 38 34 32 38 30 38 32 34 96 30
+>3008	88 92 8b 35 38 34 32 38 30 38 32 34 00 1f 94 00
+>3018	97 20 87 8b 35 38 34 32 38 30 38 32 34 b2 30 88
+>3028	92 8b 35 38 34 32 38 30 38 32 34 00 16 95 00 97
+>3038	20 87 8b 35 38 34 32 38 30 38 32 34 92 30 88 92
+>3048	30 00 17 96 00 97 20 87 8b 35 38 34 32 38 30 38
+>3058	32 34 90 30 88 92 8b 31 00 17 97 00 97 20 87 8b
+>3068	35 38 34 32 38 30 38 32 34 91 30 88 92 8b 31 00
+>3078	17 98 00 97 20 87 8b 35 38 34 32 38 30 38 32 34
+>3088	8f 30 88 92 8b 31 00 16 99 00 97 20 87 8b 35 38
+>3098	34 32 38 30 38 32 34 94 30 88 92 30 00 16 9a 00
+>30a8	97 20 87 8b 35 38 34 32 38 30 38 32 34 93 30 88
+>30b8	92 30 00 17 9b 00 97 20 87 81 6c 3f 43 81 b3 81
+>30c8	4f 4b 68 81 88 20 92 20 31 00 1b 9c 00 97 20 36
+>30d8	39 31 34 32 37 33 35 32 8a 34 92 36 39 31 34 32
+>30e8	37 33 35 36 00 1b 9d 00 97 20 36 39 31 34 32 37
+>30f8	33 35 32 8b 34 92 36 39 31 34 32 37 33 34 38 00
+>3108	1b 9e 00 97 20 36 39 31 34 32 37 33 35 32 8c 34
+>3118	92 31 37 32 38 35 36 38 33 38 00 13 9f 00 97 20
+>3128	36 39 31 34 32 37 33 35 32 84 34 92 30 00 15 a0
+>3138	00 97 20 87 36 39 31 34 32 37 33 35 32 85 34 88
+>3148	92 30 00 1d a1 00 97 20 87 36 39 31 34 32 37 33
+>3158	35 32 96 34 88 92 36 39 31 34 32 37 33 35 36 00
+>3168	1d a2 00 97 20 87 36 39 31 34 32 37 33 35 32 b2
+>3178	34 88 92 36 39 31 34 32 37 33 35 36 00 15 a3 00
+>3188	97 20 87 36 39 31 34 32 37 33 35 32 92 34 88 92
+>3198	30 00 16 a4 00 97 20 87 36 39 31 34 32 37 33 35
+>31a8	32 90 34 88 92 8b 31 00 15 a5 00 97 20 87 36 39
+>31b8	31 34 32 37 33 35 32 91 34 88 92 30 00 15 a6 00
+>31c8	97 20 87 36 39 31 34 32 37 33 35 32 8f 34 88 92
+>31d8	30 00 16 a7 00 97 20 87 36 39 31 34 32 37 33 35
+>31e8	32 94 34 88 92 8b 31 00 16 a8 00 97 20 87 36 39
+>31f8	31 34 32 37 33 35 32 93 34 88 92 8b 31 00 18 a9
+>3208	00 97 20 87 81 27 73 3f 81 b3 81 30 31 4e 81 88
+>3218	20 92 20 8b 31 00 1c aa 00 97 20 8b 33 39 35 8a
+>3228	34 37 36 39 36 31 31 31 92 34 37 36 39 35 37 31
+>3238	36 00 20 ab 00 97 20 8b 33 39 35 89 34 37 36 39
+>3248	36 31 31 31 92 8b 31 38 38 33 39 39 36 33 38 34
+>3258	35 00 15 ac 00 97 20 8b 33 39 35 8c 34 37 36 39
+>3268	36 31 31 31 92 30 00 16 ad 00 97 20 33 39 35 84
+>3278	34 37 36 39 36 31 31 31 92 33 39 35 00 1e ae 00
+>3288	97 20 87 8b 33 39 35 85 34 37 36 39 36 31 31 31
+>3298	88 92 34 37 36 39 35 39 37 33 00 1f af 00 97 20
+>32a8	87 8b 33 39 35 96 34 37 36 39 36 31 31 31 88 92
+>32b8	8b 34 37 36 39 36 32 33 30 00 1a b0 00 97 20 87
+>32c8	8b 33 39 35 b2 34 37 36 39 36 31 31 31 88 92 8b
+>32d8	32 35 37 00 17 b1 00 97 20 87 8b 33 39 35 92 34
+>32e8	37 36 39 36 31 31 31 88 92 30 00 18 b2 00 97 20
+>32f8	87 8b 33 39 35 90 34 37 36 39 36 31 31 31 88 92
+>3308	8b 31 00 18 b3 00 97 20 87 8b 33 39 35 91 34 37
+>3318	36 39 36 31 31 31 88 92 8b 31 00 18 b4 00 97 20
+>3328	87 8b 33 39 35 8f 34 37 36 39 36 31 31 31 88 92
+>3338	8b 31 00 17 b5 00 97 20 87 8b 33 39 35 94 34 37
+>3348	36 39 36 31 31 31 88 92 30 00 17 b6 00 97 20 87
+>3358	8b 33 39 35 93 34 37 36 39 36 31 31 31 88 92 30
+>3368	00 18 b7 00 97 20 87 81 54 3c 5d 81 b3 81 62 5e
+>3378	5b 81 88 20 92 20 8b 31 00 28 b8 00 97 20 8b 33
+>3388	31 38 39 30 37 36 37 35 8a 8b 31 30 30 33 33 30
+>3398	32 35 32 38 92 8b 31 33 32 32 32 31 30 32 30 33
+>33a8	00 26 b9 00 97 20 8b 33 31 38 39 30 37 36 37 35
+>33b8	8b 8b 31 30 30 33 33 30 32 35 32 38 92 36 38 34
+>33c8	33 39 34 38 35 33 00 1e ba 00 97 20 8b 33 31 38
+>33d8	39 30 37 36 37 35 8c 8b 31 30 30 33 33 30 32 35
+>33e8	32 38 92 30 00 24 bb 00 97 20 33 31 38 39 30 37
+>33f8	36 37 35 84 31 30 30 33 33 30 32 35 32 38 92 33
+>3408	31 38 39 30 37 36 37 35 00 2a bc 00 97 20 87 8b
+>3418	33 31 38 39 30 37 36 37 35 85 8b 31 30 30 33 33
+>3428	30 32 35 32 38 88 92 8b 31 30 30 33 34 33 33 38
+>3438	35 36 00 28 bd 00 97 20 87 8b 33 31 38 39 30 37
+>3448	36 37 35 96 8b 31 30 30 33 33 30 32 35 32 38 88
+>3458	92 36 38 34 36 35 37 35 30 39 00 29 be 00 97 20
+>3468	87 8b 33 31 38 39 30 37 36 37 35 b2 8b 31 30 30
+>3478	33 33 30 32 35 32 38 88 92 8b 33 31 38 37 37 36
+>3488	33 34 37 00 20 bf 00 97 20 87 8b 33 31 38 39 30
+>3498	37 36 37 35 92 8b 31 30 30 33 33 30 32 35 32 38
+>34a8	88 92 30 00 21 c0 00 97 20 87 8b 33 31 38 39 30
+>34b8	37 36 37 35 90 8b 31 30 30 33 33 30 32 35 32 38
+>34c8	88 92 8b 31 00 20 c1 00 97 20 87 8b 33 31 38 39
+>34d8	30 37 36 37 35 91 8b 31 30 30 33 33 30 32 35 32
+>34e8	38 88 92 30 00 20 c2 00 97 20 87 8b 33 31 38 39
+>34f8	30 37 36 37 35 8f 8b 31 30 30 33 33 30 32 35 32
+>3508	38 88 92 30 00 21 c3 00 97 20 87 8b 33 31 38 39
+>3518	30 37 36 37 35 94 8b 31 30 30 33 33 30 32 35 32
+>3528	38 88 92 8b 31 00 21 c4 00 97 20 87 8b 33 31 38
+>3538	39 30 37 36 37 35 93 8b 31 30 30 33 33 30 32 35
+>3548	32 38 88 92 8b 31 00 18 c5 00 97 20 87 81 34 6a
+>3558	2a 81 b3 81 4b 6e 61 81 88 20 92 20 8b 31 00 1c
+>3568	c6 00 97 20 34 36 35 38 37 39 31 31 32 8a 8b 34
+>3578	92 34 36 35 38 37 39 31 30 38 00 1c c7 00 97 20
+>3588	34 36 35 38 37 39 31 31 32 8b 8b 34 92 34 36 35
+>3598	38 37 39 31 31 36 00 1e c8 00 97 20 34 36 35 38
+>35a8	37 39 31 31 32 89 8b 34 92 8b 31 38 36 33 35 31
+>35b8	36 34 34 38 00 1d c9 00 97 20 34 36 35 38 37 39
+>35c8	31 31 32 8c 8b 34 92 8b 31 31 36 34 36 39 37 37
+>35d8	38 00 13 ca 00 97 20 34 36 35 38 37 39 31 31 32
+>35e8	84 34 92 30 00 1e cb 00 97 20 87 34 36 35 38 37
+>35f8	39 31 31 32 85 8b 34 88 92 34 36 35 38 37 39 31
+>3608	31 32 00 1f cc 00 97 20 87 34 36 35 38 37 39 31
+>3618	31 32 96 8b 34 88 92 8b 34 36 35 38 37 39 31 31
+>3628	36 00 17 cd 00 97 20 87 34 36 35 38 37 39 31 31
+>3638	32 b2 8b 34 88 92 8b 34 00 16 ce 00 97 20 87 34
+>3648	36 35 38 37 39 31 31 32 92 8b 34 88 92 30 00 17
+>3658	cf 00 97 20 87 34 36 35 38 37 39 31 31 32 90 8b
+>3668	34 88 92 8b 31 00 16 d0 00 97 20 87 34 36 35 38
+>3678	37 39 31 31 32 91 8b 34 88 92 30 00 16 d1 00 97
+>3688	20 87 34 36 35 38 37 39 31 31 32 8f 8b 34 88 92
+>3698	30 00 17 d2 00 97 20 87 34 36 35 38 37 39 31 31
+>36a8	32 94 8b 34 88 92 8b 31 00 17 d3 00 97 20 87 34
+>36b8	36 35 38 37 39 31 31 32 93 8b 34 88 92 8b 31 00
+>36c8	18 d4 00 97 20 87 81 36 5d 64 81 b3 81 4c 37 3a
+>36d8	81 88 20 92 20 8b 31 00 23 d5 00 97 20 34 38 34
+>36e8	33 39 31 32 36 32 8a 34 38 34 33 39 31 32 36 32
+>36f8	92 39 36 38 37 38 32 35 32 34 00 1b d6 00 97 20
+>3708	34 38 34 33 39 31 32 36 32 8c 34 38 34 33 39 31
+>3718	32 36 32 92 31 00 1b d7 00 97 20 34 38 34 33 39
+>3728	31 32 36 32 84 34 38 34 33 39 31 32 36 32 92 30
+>3738	00 25 d8 00 97 20 87 34 38 34 33 39 31 32 36 32
+>3748	85 34 38 34 33 39 31 32 36 32 88 92 34 38 34 33
+>3758	39 31 32 36 32 00 1d d9 00 97 20 87 34 38 34 33
+>3768	39 31 32 36 32 96 34 38 34 33 39 31 32 36 32 88
+>3778	92 30 00 25 da 00 97 20 87 34 38 34 33 39 31 32
+>3788	36 32 b2 34 38 34 33 39 31 32 36 32 88 92 34 38
+>3798	34 33 39 31 32 36 32 00 1e db 00 97 20 87 34 38
+>37a8	34 33 39 31 32 36 32 92 34 38 34 33 39 31 32 36
+>37b8	32 88 92 8b 31 00 1d dc 00 97 20 87 34 38 34 33
+>37c8	39 31 32 36 32 90 34 38 34 33 39 31 32 36 32 88
+>37d8	92 30 00 1d dd 00 97 20 87 34 38 34 33 39 31 32
+>37e8	36 32 91 34 38 34 33 39 31 32 36 32 88 92 30 00
+>37f8	1e de 00 97 20 87 34 38 34 33 39 31 32 36 32 8f
+>3808	34 38 34 33 39 31 32 36 32 88 92 8b 31 00 1d df
+>3818	00 97 20 87 34 38 34 33 39 31 32 36 32 94 34 38
+>3828	34 33 39 31 32 36 32 88 92 30 00 1e e0 00 97 20
+>3838	87 34 38 34 33 39 31 32 36 32 93 34 38 34 33 39
+>3848	31 32 36 32 88 92 8b 31 00 18 e1 00 97 20 87 81
+>3858	58 55 26 81 b3 81 76 50 3f 81 88 20 92 20 8b 31
+>3868	00 0c e2 00 97 20 8b 36 8a 36 92 30 00 0e e3 00
+>3878	97 20 8b 36 89 36 92 8b 33 36 00 0d e4 00 97 20
+>3888	8b 36 8c 36 92 8b 31 00 0b e5 00 97 20 36 84 36
+>3898	92 30 00 0e e6 00 97 20 87 8b 36 85 36 88 92 32
+>38a8	00 0f e7 00 97 20 87 8b 36 96 36 88 92 8b 34 00
+>38b8	0f e8 00 97 20 87 8b 36 b2 36 88 92 8b 32 00 0e
+>38c8	e9 00 97 20 87 8b 36 92 36 88 92 30 00 0f ea 00
+>38d8	97 20 87 8b 36 90 36 88 92 8b 31 00 0f eb 00 97
+>38e8	20 87 8b 36 91 36 88 92 8b 31 00 0f ec 00 97 20
+>38f8	87 8b 36 8f 36 88 92 8b 31 00 0e ed 00 97 20 87
+>3908	8b 36 94 36 88 92 30 00 0e ee 00 97 20 87 8b 36
+>3918	93 36 88 92 30 00 17 ef 00 97 20 87 81 69 61 5a
+>3928	81 b3 81 30 70 6d 81 88 20 92 20 31 00 13 f0 00
+>3938	97 20 8b 36 37 35 8a 33 39 37 92 8b 32 37 38 00
+>3948	16 f1 00 97 20 8b 36 37 35 89 33 39 37 92 8b 32
+>3958	36 37 39 37 35 00 11 f2 00 97 20 8b 36 37 35 8c
+>3968	33 39 37 92 8b 31 00 11 f3 00 97 20 36 37 35 84
+>3978	33 39 37 92 32 37 38 00 14 f4 00 97 20 87 8b 36
+>3988	37 35 85 33 39 37 88 92 32 36 39 00 15 f5 00 97
+>3998	20 87 8b 36 37 35 96 33 39 37 88 92 8b 38 31 36
+>39a8	00 15 f6 00 97 20 87 8b 36 37 35 b2 33 39 37 88
+>39b8	92 8b 35 34 37 00 12 f7 00 97 20 87 8b 36 37 35
+>39c8	92 33 39 37 88 92 30 00 13 f8 00 97 20 87 8b 36
+>39d8	37 35 90 33 39 37 88 92 8b 31 00 13 f9 00 97 20
+>39e8	87 8b 36 37 35 91 33 39 37 88 92 8b 31 00 13 fa
+>39f8	00 97 20 87 8b 36 37 35 8f 33 39 37 88 92 8b 31
+>3a08	00 12 fb 00 97 20 87 8b 36 37 35 94 33 39 37 88
+>3a18	92 30 00 12 fc 00 97 20 87 8b 36 37 35 93 33 39
+>3a28	37 88 92 30 00 18 fd 00 97 20 87 81 53 46 72 81
+>3a38	b3 81 74 78 3c 81 88 20 92 20 8b 31 00 1f fe 00
+>3a48	97 20 8b 31 30 30 30 35 33 31 37 36 33 8a 30 92
+>3a58	8b 31 30 30 30 35 33 31 37 36 33 00 15 ff 00 97
+>3a68	20 8b 31 30 30 30 35 33 31 37 36 33 89 30 92 30
+>3a78	00 17 00 01 97 20 87 8b 31 30 30 30 35 33 31 37
+>3a88	36 33 85 30 88 92 30 00 21 01 01 97 20 87 8b 31
+>3a98	30 30 30 35 33 31 37 36 33 96 30 88 92 8b 31 30
+>3aa8	30 30 35 33 31 37 36 33 00 21 02 01 97 20 87 8b
+>3ab8	31 30 30 30 35 33 31 37 36 33 b2 30 88 92 8b 31
+>3ac8	30 30 30 35 33 31 37 36 33 00 17 03 01 97 20 87
+>3ad8	8b 31 30 30 30 35 33 31 37 36 33 92 30 88 92 30
+>3ae8	00 18 04 01 97 20 87 8b 31 30 30 30 35 33 31 37
+>3af8	36 33 90 30 88 92 8b 31 00 18 05 01 97 20 87 8b
+>3b08	31 30 30 30 35 33 31 37 36 33 91 30 88 92 8b 31
+>3b18	00 18 06 01 97 20 87 8b 31 30 30 30 35 33 31 37
+>3b28	36 33 8f 30 88 92 8b 31 00 17 07 01 97 20 87 8b
+>3b38	31 30 30 30 35 33 31 37 36 33 94 30 88 92 30 00
+>3b48	17 08 01 97 20 87 8b 31 30 30 30 35 33 31 37 36
+>3b58	33 93 30 88 92 30 00 18 09 01 97 20 87 81 45 55
+>3b68	3b 81 b3 81 69 71 5d 81 88 20 92 20 8b 31 00 12
+>3b78	0a 01 97 20 37 39 37 8a 8b 38 35 32 92 8b 35 35
+>3b88	00 13 0b 01 97 20 37 39 37 8b 8b 38 35 32 92 31
+>3b98	36 34 39 00 16 0c 01 97 20 37 39 37 89 8b 38 35
+>3ba8	32 92 8b 36 37 39 30 34 34 00 10 0d 01 97 20 37
+>3bb8	39 37 8c 8b 38 35 32 92 30 00 11 0e 01 97 20 37
+>3bc8	39 37 84 38 35 32 92 37 39 37 00 13 0f 01 97 20
+>3bd8	87 37 39 37 85 8b 38 35 32 88 92 31 32 00 14 10
+>3be8	01 97 20 87 37 39 37 96 8b 38 35 32 88 92 8b 37
+>3bf8	39 00 14 11 01 97 20 87 37 39 37 b2 8b 38 35 32
+>3c08	88 92 8b 36 37 00 12 12 01 97 20 87 37 39 37 92
+>3c18	8b 38 35 32 88 92 30 00 13 13 01 97 20 87 37 39
+>3c28	37 90 8b 38 35 32 88 92 8b 31 00 12 14 01 97 20
+>3c38	87 37 39 37 91 8b 38 35 32 88 92 30 00 12 15 01
+>3c48	97 20 87 37 39 37 8f 8b 38 35 32 88 92 30 00 13
+>3c58	16 01 97 20 87 37 39 37 94 8b 38 35 32 88 92 8b
+>3c68	31 00 13 17 01 97 20 87 37 39 37 93 8b 38 35 32
+>3c78	88 92 8b 31 00 17 18 01 97 20 87 81 7c 78 5e 81
+>3c88	b3 81 59 2c 5b 81 88 20 92 20 31 00 26 19 01 97
+>3c98	20 8b 34 31 32 32 30 37 30 34 37 8a 8b 35 30 36
+>3ca8	35 31 33 30 34 38 92 8b 39 31 38 37 32 30 30 39
+>3cb8	35 00 24 1a 01 97 20 8b 34 31 32 32 30 37 30 34
+>3cc8	37 8b 8b 35 30 36 35 31 33 30 34 38 92 39 34 33
+>3cd8	30 36 30 30 31 00 1d 1b 01 97 20 8b 34 31 32 32
+>3ce8	30 37 30 34 37 8c 8b 35 30 36 35 31 33 30 34 38
+>3cf8	92 30 00 23 1c 01 97 20 34 31 32 32 30 37 30 34
+>3d08	37 84 35 30 36 35 31 33 30 34 38 92 34 31 32 32
+>3d18	30 37 30 34 37 00 28 1d 01 97 20 87 8b 34 31 32
+>3d28	32 30 37 30 34 37 85 8b 35 30 36 35 31 33 30 34
+>3d38	38 88 92 8b 35 31 34 39 36 37 35 31 32 00 27 1e
+>3d48	01 97 20 87 8b 34 31 32 32 30 37 30 34 37 96 8b
+>3d58	35 30 36 35 31 33 30 34 38 88 92 31 31 31 32 31
+>3d68	34 39 32 39 00 28 1f 01 97 20 87 8b 34 31 32 32
+>3d78	30 37 30 34 37 b2 8b 35 30 36 35 31 33 30 34 38
+>3d88	88 92 8b 34 30 33 37 35 32 35 38 33 00 1f 20 01
+>3d98	97 20 87 8b 34 31 32 32 30 37 30 34 37 92 8b 35
+>3da8	30 36 35 31 33 30 34 38 88 92 30 00 20 21 01 97
+>3db8	20 87 8b 34 31 32 32 30 37 30 34 37 90 8b 35 30
+>3dc8	36 35 31 33 30 34 38 88 92 8b 31 00 1f 22 01 97
+>3dd8	20 87 8b 34 31 32 32 30 37 30 34 37 91 8b 35 30
+>3de8	36 35 31 33 30 34 38 88 92 30 00 1f 23 01 97 20
+>3df8	87 8b 34 31 32 32 30 37 30 34 37 8f 8b 35 30 36
+>3e08	35 31 33 30 34 38 88 92 30 00 20 24 01 97 20 87
+>3e18	8b 34 31 32 32 30 37 30 34 37 94 8b 35 30 36 35
+>3e28	31 33 30 34 38 88 92 8b 31 00 20 25 01 97 20 87
+>3e38	8b 34 31 32 32 30 37 30 34 37 93 8b 35 30 36 35
+>3e48	31 33 30 34 38 88 92 8b 31 00 17 26 01 97 20 87
+>3e58	81 75 5b 5a 81 b3 81 42 54 2d 81 88 20 92 20 31
+>3e68	00 0f 27 01 97 20 30 8a 37 33 38 92 37 33 38 00
+>3e78	0d 28 01 97 20 30 89 37 33 38 92 30 00 0d 29 01
+>3e88	97 20 30 8c 37 33 38 92 30 00 0d 2a 01 97 20 30
+>3e98	84 37 33 38 92 30 00 0f 2b 01 97 20 87 30 85 37
+>3ea8	33 38 88 92 30 00 11 2c 01 97 20 87 30 96 37 33
+>3eb8	38 88 92 37 33 38 00 11 2d 01 97 20 87 30 b2 37
+>3ec8	33 38 88 92 37 33 38 00 0f 2e 01 97 20 87 30 92
+>3ed8	37 33 38 88 92 30 00 10 2f 01 97 20 87 30 90 37
+>3ee8	33 38 88 92 8b 31 00 10 30 01 97 20 87 30 91 37
+>3ef8	33 38 88 92 8b 31 00 10 31 01 97 20 87 30 8f 37
+>3f08	33 38 88 92 8b 31 00 0f 32 01 97 20 87 30 94 37
+>3f18	33 38 88 92 30 00 0f 33 01 97 20 87 30 93 37 33
+>3f28	38 88 92 30 00 18 34 01 97 20 87 81 4a 47 5a 81
+>3f38	b3 81 71 50 3a 81 88 20 92 20 8b 31 00 26 35 01
+>3f48	97 20 8b 37 37 37 36 34 39 34 34 8a 8b 39 34 39
+>3f58	30 38 31 38 31 37 92 8b 31 30 32 36 38 34 36 37
+>3f68	36 31 00 24 36 01 97 20 8b 37 37 37 36 34 39 34
+>3f78	34 8b 8b 39 34 39 30 38 31 38 31 37 92 38 37 31
+>3f88	33 31 36 38 37 33 00 1c 37 01 97 20 8b 37 37 37
+>3f98	36 34 39 34 34 8c 8b 39 34 39 30 38 31 38 31 37
+>3fa8	92 30 00 21 38 01 97 20 37 37 37 36 34 39 34 34
+>3fb8	84 39 34 39 30 38 31 38 31 37 92 37 37 37 36 34
+>3fc8	39 34 34 00 28 39 01 97 20 87 8b 37 37 37 36 34
+>3fd8	39 34 34 85 8b 39 34 39 30 38 31 38 31 37 88 92
+>3fe8	8b 31 30 31 38 34 32 31 32 31 36 00 27 3a 01 97
+>3ff8	20 87 8b 37 37 37 36 34 39 34 34 96 8b 39 34 39
+>4008	30 38 31 38 31 37 88 92 31 30 30 39 39 39 35 36
+>4018	37 31 00 25 3b 01 97 20 87 8b 37 37 37 36 34 39
+>4028	34 34 b2 8b 39 34 39 30 38 31 38 31 37 88 92 8b
+>4038	38 34 32 35 35 34 35 00 1e 3c 01 97 20 87 8b 37
+>4048	37 37 36 34 39 34 34 92 8b 39 34 39 30 38 31 38
+>4058	31 37 88 92 30 00 1f 3d 01 97 20 87 8b 37 37 37
+>4068	36 34 39 34 34 90 8b 39 34 39 30 38 31 38 31 37
+>4078	88 92 8b 31 00 1e 3e 01 97 20 87 8b 37 37 37 36
+>4088	34 39 34 34 91 8b 39 34 39 30 38 31 38 31 37 88
+>4098	92 30 00 1e 3f 01 97 20 87 8b 37 37 37 36 34 39
+>40a8	34 34 8f 8b 39 34 39 30 38 31 38 31 37 88 92 30
+>40b8	00 1f 40 01 97 20 87 8b 37 37 37 36 34 39 34 34
+>40c8	94 8b 39 34 39 30 38 31 38 31 37 88 92 8b 31 00
+>40d8	1f 41 01 97 20 87 8b 37 37 37 36 34 39 34 34 93
+>40e8	8b 39 34 39 30 38 31 38 31 37 88 92 8b 31 00 18
+>40f8	42 01 97 20 87 81 32 4c 47 81 b3 81 48 77 7d 81
+>4108	88 20 92 20 8b 31 00 27 43 01 97 20 8b 38 32 32
+>4118	31 30 39 35 37 38 8a 8b 36 33 37 35 31 34 32 32
+>4128	30 92 8b 31 34 35 39 36 32 33 37 39 38 00 1d 44
+>4138	01 97 20 8b 38 32 32 31 30 39 35 37 38 8c 8b 36
+>4148	33 37 35 31 34 32 32 30 92 31 00 23 45 01 97 20
+>4158	38 32 32 31 30 39 35 37 38 84 36 33 37 35 31 34
+>4168	32 32 30 92 31 38 34 35 39 35 33 35 38 00 28 46
+>4178	01 97 20 87 8b 38 32 32 31 30 39 35 37 38 85 8b
+>4188	36 33 37 35 31 34 32 32 30 88 92 8b 39 30 35 39
+>4198	36 37 30 38 34 00 27 47 01 97 20 87 8b 38 32 32
+>41a8	31 30 39 35 37 38 96 8b 36 33 37 35 31 34 32 32
+>41b8	30 88 92 33 35 32 33 31 30 33 37 30 00 28 48 01
+>41c8	97 20 87 8b 38 32 32 31 30 39 35 37 38 b2 8b 36
+>41d8	33 37 35 31 34 32 32 30 88 92 8b 35 35 33 36 35
+>41e8	36 37 31 34 00 1f 49 01 97 20 87 8b 38 32 32 31
+>41f8	30 39 35 37 38 92 8b 36 33 37 35 31 34 32 32 30
+>4208	88 92 30 00 20 4a 01 97 20 87 8b 38 32 32 31 30
+>4218	39 35 37 38 90 8b 36 33 37 35 31 34 32 32 30 88
+>4228	92 8b 31 00 20 4b 01 97 20 87 8b 38 32 32 31 30
+>4238	39 35 37 38 91 8b 36 33 37 35 31 34 32 32 30 88
+>4248	92 8b 31 00 20 4c 01 97 20 87 8b 38 32 32 31 30
+>4258	39 35 37 38 8f 8b 36 33 37 35 31 34 32 32 30 88
+>4268	92 8b 31 00 1f 4d 01 97 20 87 8b 38 32 32 31 30
+>4278	39 35 37 38 94 8b 36 33 37 35 31 34 32 32 30 88
+>4288	92 30 00 1f 4e 01 97 20 87 8b 38 32 32 31 30 39
+>4298	35 37 38 93 8b 36 33 37 35 31 34 32 32 30 88 92
+>42a8	30 00 18 4f 01 97 20 87 81 3f 48 42 81 b3 81 73
+>42b8	58 5e 81 88 20 92 20 8b 31 00 26 50 01 97 20 8b
+>42c8	31 38 31 35 35 36 31 32 33 8a 8b 33 37 31 37 39
+>42d8	38 39 32 39 92 8b 35 35 33 33 35 35 30 35 32 00
+>42e8	25 51 01 97 20 8b 31 38 31 35 35 36 31 32 33 8b
+>42f8	8b 33 37 31 37 39 38 39 32 39 92 31 39 30 32 34
+>4308	32 38 30 36 00 1d 52 01 97 20 8b 31 38 31 35 35
+>4318	36 31 32 33 8c 8b 33 37 31 37 39 38 39 32 39 92
+>4328	30 00 23 53 01 97 20 31 38 31 35 35 36 31 32 33
+>4338	84 33 37 31 37 39 38 39 32 39 92 31 38 31 35 35
+>4348	36 31 32 33 00 28 54 01 97 20 87 8b 31 38 31 35
+>4358	35 36 31 32 33 85 8b 33 37 31 37 39 38 39 32 39
+>4368	88 92 8b 35 31 39 37 39 35 36 31 31 00 27 55 01
+>4378	97 20 87 8b 31 38 31 35 35 36 31 32 33 96 8b 33
+>4388	37 31 37 39 38 39 32 39 88 92 34 38 36 32 33 36
+>4398	31 37 30 00 27 56 01 97 20 87 8b 31 38 31 35 35
+>43a8	36 31 32 33 b2 8b 33 37 31 37 39 38 39 32 39 88
+>43b8	92 8b 33 33 35 35 39 34 34 31 00 1f 57 01 97 20
+>43c8	87 8b 31 38 31 35 35 36 31 32 33 92 8b 33 37 31
+>43d8	37 39 38 39 32 39 88 92 30 00 20 58 01 97 20 87
+>43e8	8b 31 38 31 35 35 36 31 32 33 90 8b 33 37 31 37
+>43f8	39 38 39 32 39 88 92 8b 31 00 1f 59 01 97 20 87
+>4408	8b 31 38 31 35 35 36 31 32 33 91 8b 33 37 31 37
+>4418	39 38 39 32 39 88 92 30 00 1f 5a 01 97 20 87 8b
+>4428	31 38 31 35 35 36 31 32 33 8f 8b 33 37 31 37 39
+>4438	38 39 32 39 88 92 30 00 20 5b 01 97 20 87 8b 31
+>4448	38 31 35 35 36 31 32 33 94 8b 33 37 31 37 39 38
+>4458	39 32 39 88 92 8b 31 00 20 5c 01 97 20 87 8b 31
+>4468	38 31 35 35 36 31 32 33 93 8b 33 37 31 37 39 38
+>4478	39 32 39 88 92 8b 31 00 18 5d 01 97 20 87 81 39
+>4488	55 39 81 b3 81 65 7c 79 81 88 20 92 20 8b 31 00
+>4498	12 5e 01 97 20 8b 37 30 35 8a 8b 37 92 8b 37 31
+>44a8	32 00 12 5f 01 97 20 8b 37 30 35 89 8b 37 92 34
+>44b8	39 33 35 00 11 60 01 97 20 8b 37 30 35 8c 8b 37
+>44c8	92 31 30 30 00 0d 61 01 97 20 37 30 35 84 37 92
+>44d8	35 00 14 62 01 97 20 87 8b 37 30 35 85 8b 37 88
+>44e8	92 8b 37 31 31 00 13 63 01 97 20 87 8b 37 30 35
+>44f8	96 8b 37 88 92 37 31 30 00 12 64 01 97 20 87 8b
+>4508	37 30 35 b2 8b 37 88 92 8b 31 00 11 65 01 97 20
+>4518	87 8b 37 30 35 92 8b 37 88 92 30 00 12 66 01 97
+>4528	20 87 8b 37 30 35 90 8b 37 88 92 8b 31 00 12 67
+>4538	01 97 20 87 8b 37 30 35 91 8b 37 88 92 8b 31 00
+>4548	12 68 01 97 20 87 8b 37 30 35 8f 8b 37 88 92 8b
+>4558	31 00 11 69 01 97 20 87 8b 37 30 35 94 8b 37 88
+>4568	92 30 00 11 6a 01 97 20 87 8b 37 30 35 93 8b 37
+>4578	88 92 30 00 18 6b 01 97 20 87 81 27 63 5f 81 b3
+>4588	81 5e 5e 55 81 88 20 92 20 8b 31 00 1b 6c 01 97
+>4598	20 30 8a 8b 34 34 37 36 33 39 39 37 92 8b 34 34
+>45a8	37 36 33 39 39 37 00 1a 6d 01 97 20 30 8b 8b 34
+>45b8	34 37 36 33 39 39 37 92 34 34 37 36 33 39 39 37
+>45c8	00 13 6e 01 97 20 30 89 8b 34 34 37 36 33 39 39
+>45d8	37 92 30 00 13 6f 01 97 20 30 8c 8b 34 34 37 36
+>45e8	33 39 39 37 92 30 00 12 70 01 97 20 30 84 34 34
+>45f8	37 36 33 39 39 37 92 30 00 15 71 01 97 20 87 30
+>4608	85 8b 34 34 37 36 33 39 39 37 88 92 30 00 1d 72
+>4618	01 97 20 87 30 96 8b 34 34 37 36 33 39 39 37 88
+>4628	92 8b 34 34 37 36 33 39 39 37 00 1d 73 01 97 20
+>4638	87 30 b2 8b 34 34 37 36 33 39 39 37 88 92 8b 34
+>4648	34 37 36 33 39 39 37 00 15 74 01 97 20 87 30 92
+>4658	8b 34 34 37 36 33 39 39 37 88 92 30 00 16 75 01
+>4668	97 20 87 30 90 8b 34 34 37 36 33 39 39 37 88 92
+>4678	8b 31 00 15 76 01 97 20 87 30 91 8b 34 34 37 36
+>4688	33 39 39 37 88 92 30 00 15 77 01 97 20 87 30 8f
+>4698	8b 34 34 37 36 33 39 39 37 88 92 30 00 16 78 01
+>46a8	97 20 87 30 94 8b 34 34 37 36 33 39 39 37 88 92
+>46b8	8b 31 00 16 79 01 97 20 87 30 93 8b 34 34 37 36
+>46c8	33 39 39 37 88 92 8b 31 00 18 7a 01 97 20 87 81
+>46d8	4e 30 44 81 b3 81 5d 3f 39 81 88 20 92 20 8b 31
+>46e8	00 25 7b 01 97 20 8b 33 33 34 30 33 35 35 34 35
+>46f8	8a 31 33 36 31 38 35 35 37 33 92 8b 31 39 37 38
+>4708	34 39 39 37 32 00 2d 7c 01 97 20 8b 33 33 34 30
+>4718	33 35 35 34 35 89 31 33 36 31 38 35 35 37 33 92
+>4728	8b 34 35 34 39 30 38 32 32 30 39 38 31 39 32 32
+>4738	38 35 00 1d 7d 01 97 20 8b 33 33 34 30 33 35 35
+>4748	34 35 8c 31 33 36 31 38 35 35 37 33 92 8b 32 00
+>4758	22 7e 01 97 20 33 33 34 30 33 35 35 34 35 84 31
+>4768	33 36 31 38 35 35 37 33 92 36 31 36 36 34 33 39
+>4778	39 00 26 7f 01 97 20 87 8b 33 33 34 30 33 35 35
+>4788	34 35 85 31 33 36 31 38 35 35 37 33 88 92 31 33
+>4798	35 36 36 30 37 30 39 00 27 80 01 97 20 87 8b 33
+>47a8	33 34 30 33 35 35 34 35 96 31 33 36 31 38 35 35
+>47b8	37 33 88 92 8b 34 36 39 31 37 31 33 39 30 00 27
+>47c8	81 01 97 20 87 8b 33 33 34 30 33 35 35 34 35 b2
+>47d8	31 33 36 31 38 35 35 37 33 88 92 8b 33 33 33 35
+>47e8	31 30 36 38 31 00 1e 82 01 97 20 87 8b 33 33 34
+>47f8	30 33 35 35 34 35 92 31 33 36 31 38 35 35 37 33
+>4808	88 92 30 00 1f 83 01 97 20 87 8b 33 33 34 30 33
+>4818	35 35 34 35 90 31 33 36 31 38 35 35 37 33 88 92
+>4828	8b 31 00 1f 84 01 97 20 87 8b 33 33 34 30 33 35
+>4838	35 34 35 91 31 33 36 31 38 35 35 37 33 88 92 8b
+>4848	31 00 1f 85 01 97 20 87 8b 33 33 34 30 33 35 35
+>4858	34 35 8f 31 33 36 31 38 35 35 37 33 88 92 8b 31
+>4868	00 1e 86 01 97 20 87 8b 33 33 34 30 33 35 35 34
+>4878	35 94 31 33 36 31 38 35 35 37 33 88 92 30 00 1e
+>4888	87 01 97 20 87 8b 33 33 34 30 33 35 35 34 35 93
+>4898	31 33 36 31 38 35 35 37 33 88 92 30 00 18 88 01
+>48a8	97 20 87 81 56 37 50 81 b3 81 74 57 64 81 88 20
+>48b8	92 20 8b 31 00 1e 89 01 97 20 8b 36 38 34 39 33
+>48c8	31 38 35 39 8a 8b 33 92 8b 36 38 34 39 33 31 38
+>48d8	36 32 00 1d 8a 01 97 20 8b 36 38 34 39 33 31 38
+>48e8	35 39 8c 8b 33 92 32 32 38 33 31 30 36 31 39 00
+>48f8	13 8b 01 97 20 36 38 34 39 33 31 38 35 39 84 33
+>4908	92 32 00 20 8c 01 97 20 87 8b 36 38 34 39 33 31
+>4918	38 35 39 85 8b 33 88 92 8b 36 38 34 39 33 31 38
+>4928	35 39 00 1f 8d 01 97 20 87 8b 36 38 34 39 33 31
+>4938	38 35 39 96 8b 33 88 92 36 38 34 39 33 31 38 35
+>4948	36 00 18 8e 01 97 20 87 8b 36 38 34 39 33 31 38
+>4958	35 39 b2 8b 33 88 92 8b 33 00 17 8f 01 97 20 87
+>4968	8b 36 38 34 39 33 31 38 35 39 92 8b 33 88 92 30
+>4978	00 18 90 01 97 20 87 8b 36 38 34 39 33 31 38 35
+>4988	39 90 8b 33 88 92 8b 31 00 18 91 01 97 20 87 8b
+>4998	36 38 34 39 33 31 38 35 39 91 8b 33 88 92 8b 31
+>49a8	00 18 92 01 97 20 87 8b 36 38 34 39 33 31 38 35
+>49b8	39 8f 8b 33 88 92 8b 31 00 17 93 01 97 20 87 8b
+>49c8	36 38 34 39 33 31 38 35 39 94 8b 33 88 92 30 00
+>49d8	17 94 01 97 20 87 8b 36 38 34 39 33 31 38 35 39
+>49e8	93 8b 33 88 92 30 00 18 95 01 97 20 87 81 4a 7a
+>49f8	37 81 b3 81 5a 78 55 81 88 20 92 20 8b 31 00 1b
+>4a08	96 01 97 20 30 8a 33 34 35 37 36 31 35 35 30 92
+>4a18	33 34 35 37 36 31 35 35 30 00 13 97 01 97 20 30
+>4a28	89 33 34 35 37 36 31 35 35 30 92 30 00 13 98 01
+>4a38	97 20 30 8c 33 34 35 37 36 31 35 35 30 92 30 00
+>4a48	13 99 01 97 20 30 84 33 34 35 37 36 31 35 35 30
+>4a58	92 30 00 15 9a 01 97 20 87 30 85 33 34 35 37 36
+>4a68	31 35 35 30 88 92 30 00 1d 9b 01 97 20 87 30 96
+>4a78	33 34 35 37 36 31 35 35 30 88 92 33 34 35 37 36
+>4a88	31 35 35 30 00 1d 9c 01 97 20 87 30 b2 33 34 35
+>4a98	37 36 31 35 35 30 88 92 33 34 35 37 36 31 35 35
+>4aa8	30 00 15 9d 01 97 20 87 30 92 33 34 35 37 36 31
+>4ab8	35 35 30 88 92 30 00 16 9e 01 97 20 87 30 90 33
+>4ac8	34 35 37 36 31 35 35 30 88 92 8b 31 00 16 9f 01
+>4ad8	97 20 87 30 91 33 34 35 37 36 31 35 35 30 88 92
+>4ae8	8b 31 00 16 a0 01 97 20 87 30 8f 33 34 35 37 36
+>4af8	31 35 35 30 88 92 8b 31 00 15 a1 01 97 20 87 30
+>4b08	94 33 34 35 37 36 31 35 35 30 88 92 30 00 15 a2
+>4b18	01 97 20 87 30 93 33 34 35 37 36 31 35 35 30 88
+>4b28	92 30 00 17 a3 01 97 20 87 81 49 4b 64 81 b3 81
+>4b38	47 58 6e 81 88 20 92 20 31 00 0b a4 01 97 20 39
+>4b48	8a 30 92 39 00 0b a5 01 97 20 39 8b 30 92 39 00
+>4b58	0b a6 01 97 20 39 89 30 92 30 00 0d a7 01 97 20
+>4b68	87 39 85 30 88 92 30 00 0d a8 01 97 20 87 39 96
+>4b78	30 88 92 39 00 0d a9 01 97 20 87 39 b2 30 88 92
+>4b88	39 00 0d aa 01 97 20 87 39 92 30 88 92 30 00 0e
+>4b98	ab 01 97 20 87 39 90 30 88 92 8b 31 00 0d ac 01
+>4ba8	97 20 87 39 91 30 88 92 30 00 0d ad 01 97 20 87
+>4bb8	39 8f 30 88 92 30 00 0e ae 01 97 20 87 39 94 30
+>4bc8	88 92 8b 31 00 0e af 01 97 20 87 39 93 30 88 92
+>4bd8	8b 31 00 17 b0 01 97 20 87 81 70 64 49 81 b3 81
+>4be8	40 2e 7b 81 88 20 92 20 31 00 1b b1 01 97 20 30
+>4bf8	8a 34 38 37 35 36 33 31 34 39 92 34 38 37 35 36
+>4c08	33 31 34 39 00 13 b2 01 97 20 30 89 34 38 37 35
+>4c18	36 33 31 34 39 92 30 00 13 b3 01 97 20 30 8c 34
+>4c28	38 37 35 36 33 31 34 39 92 30 00 13 b4 01 97 20
+>4c38	30 84 34 38 37 35 36 33 31 34 39 92 30 00 15 b5
+>4c48	01 97 20 87 30 85 34 38 37 35 36 33 31 34 39 88
+>4c58	92 30 00 1d b6 01 97 20 87 30 96 34 38 37 35 36
+>4c68	33 31 34 39 88 92 34 38 37 35 36 33 31 34 39 00
+>4c78	1d b7 01 97 20 87 30 b2 34 38 37 35 36 33 31 34
+>4c88	39 88 92 34 38 37 35 36 33 31 34 39 00 15 b8 01
+>4c98	97 20 87 30 92 34 38 37 35 36 33 31 34 39 88 92
+>4ca8	30 00 16 b9 01 97 20 87 30 90 34 38 37 35 36 33
+>4cb8	31 34 39 88 92 8b 31 00 16 ba 01 97 20 87 30 91
+>4cc8	34 38 37 35 36 33 31 34 39 88 92 8b 31 00 16 bb
+>4cd8	01 97 20 87 30 8f 34 38 37 35 36 33 31 34 39 88
+>4ce8	92 8b 31 00 15 bc 01 97 20 87 30 94 34 38 37 35
+>4cf8	36 33 31 34 39 88 92 30 00 15 bd 01 97 20 87 30
+>4d08	93 34 38 37 35 36 33 31 34 39 88 92 30 00 17 be
+>4d18	01 97 20 87 81 55 3b 26 81 b3 81 51 4b 55 81 88
+>4d28	20 92 20 31 00 1e bf 01 97 20 32 34 35 34 34 36
+>4d38	30 31 35 8a 8b 31 30 37 92 32 34 35 34 34 35 39
+>4d48	30 38 00 1e c0 01 97 20 32 34 35 34 34 36 30 31
+>4d58	35 8b 8b 31 30 37 92 32 34 35 34 34 36 31 32 32
+>4d68	00 21 c1 01 97 20 32 34 35 34 34 36 30 31 35 89
+>4d78	8b 31 30 37 92 8b 32 36 32 36 32 37 32 33 36 30
+>4d88	35 00 1d c2 01 97 20 32 34 35 34 34 36 30 31 35
+>4d98	8c 8b 31 30 37 92 8b 32 32 39 33 38 38 37 00 17
+>4da8	c3 01 97 20 32 34 35 34 34 36 30 31 35 84 31 30
+>4db8	37 92 31 30 36 00 20 c4 01 97 20 87 32 34 35 34
+>4dc8	34 36 30 31 35 85 8b 31 30 37 88 92 32 34 35 34
+>4dd8	34 35 39 30 39 00 21 c5 01 97 20 87 32 34 35 34
+>4de8	34 36 30 31 35 96 8b 31 30 37 88 92 8b 32 34 35
+>4df8	34 34 35 39 31 30 00 19 c6 01 97 20 87 32 34 35
+>4e08	34 34 36 30 31 35 b2 8b 31 30 37 88 92 8b 31 00
+>4e18	18 c7 01 97 20 87 32 34 35 34 34 36 30 31 35 92
+>4e28	8b 31 30 37 88 92 30 00 19 c8 01 97 20 87 32 34
+>4e38	35 34 34 36 30 31 35 90 8b 31 30 37 88 92 8b 31
+>4e48	00 18 c9 01 97 20 87 32 34 35 34 34 36 30 31 35
+>4e58	91 8b 31 30 37 88 92 30 00 18 ca 01 97 20 87 32
+>4e68	34 35 34 34 36 30 31 35 8f 8b 31 30 37 88 92 30
+>4e78	00 19 cb 01 97 20 87 32 34 35 34 34 36 30 31 35
+>4e88	94 8b 31 30 37 88 92 8b 31 00 19 cc 01 97 20 87
+>4e98	32 34 35 34 34 36 30 31 35 93 8b 31 30 37 88 92
+>4ea8	8b 31 00 17 cd 01 97 20 87 81 55 2f 4d 81 b3 81
+>4eb8	45 77 62 81 88 20 92 20 31 00 0f ce 01 97 20 35
+>4ec8	38 33 8a 30 92 35 38 33 00 0f cf 01 97 20 35 38
+>4ed8	33 8b 30 92 35 38 33 00 0d d0 01 97 20 35 38 33
+>4ee8	89 30 92 30 00 0f d1 01 97 20 87 35 38 33 85 30
+>4ef8	88 92 30 00 11 d2 01 97 20 87 35 38 33 96 30 88
+>4f08	92 35 38 33 00 11 d3 01 97 20 87 35 38 33 b2 30
+>4f18	88 92 35 38 33 00 0f d4 01 97 20 87 35 38 33 92
+>4f28	30 88 92 30 00 10 d5 01 97 20 87 35 38 33 90 30
+>4f38	88 92 8b 31 00 0f d6 01 97 20 87 35 38 33 91 30
+>4f48	88 92 30 00 0f d7 01 97 20 87 35 38 33 8f 30 88
+>4f58	92 30 00 10 d8 01 97 20 87 35 38 33 94 30 88 92
+>4f68	8b 31 00 10 d9 01 97 20 87 35 38 33 93 30 88 92
+>4f78	8b 31 00 17 da 01 97 20 87 81 4a 2b 67 81 b3 81
+>4f88	2e 68 3e 81 88 20 92 20 31 00 1e db 01 97 20 8b
+>4f98	35 8a 31 30 33 31 35 31 35 31 37 30 92 31 30 33
+>4fa8	31 35 31 35 31 36 35 00 1f dc 01 97 20 8b 35 89
+>4fb8	31 30 33 31 35 31 35 31 37 30 92 8b 35 31 35 37
+>4fc8	35 37 35 38 35 30 00 15 dd 01 97 20 8b 35 8c 31
+>4fd8	30 33 31 35 31 35 31 37 30 92 30 00 14 de 01 97
+>4fe8	20 35 84 31 30 33 31 35 31 35 31 37 30 92 35 00
+>4ff8	20 df 01 97 20 87 8b 35 85 31 30 33 31 35 31 35
+>5008	31 37 30 88 92 31 30 33 31 35 31 35 31 37 30 00
+>5018	21 e0 01 97 20 87 8b 35 96 31 30 33 31 35 31 35
+>5028	31 37 30 88 92 8b 31 30 33 31 35 31 35 31 37 35
+>5038	00 18 e1 01 97 20 87 8b 35 b2 31 30 33 31 35 31
+>5048	35 31 37 30 88 92 8b 35 00 17 e2 01 97 20 87 8b
+>5058	35 92 31 30 33 31 35 31 35 31 37 30 88 92 30 00
+>5068	18 e3 01 97 20 87 8b 35 90 31 30 33 31 35 31 35
+>5078	31 37 30 88 92 8b 31 00 18 e4 01 97 20 87 8b 35
+>5088	91 31 30 33 31 35 31 35 31 37 30 88 92 8b 31 00
+>5098	18 e5 01 97 20 87 8b 35 8f 31 30 33 31 35 31 35
+>50a8	31 37 30 88 92 8b 31 00 17 e6 01 97 20 87 8b 35
+>50b8	94 31 30 33 31 35 31 35 31 37 30 88 92 30 00 17
+>50c8	e7 01 97 20 87 8b 35 93 31 30 33 31 35 31 35 31
+>50d8	37 30 88 92 30 00 18 e8 01 97 20 87 81 56 4c 6b
+>50e8	81 b3 81 76 53 58 81 88 20 92 20 8b 31 00 1b e9
+>50f8	01 97 20 37 34 34 35 39 31 39 38 39 8a 34 92 37
+>5108	34 34 35 39 31 39 39 33 00 1b ea 01 97 20 37 34
+>5118	34 35 39 31 39 38 39 8b 34 92 37 34 34 35 39 31
+>5128	39 38 35 00 1b eb 01 97 20 37 34 34 35 39 31 39
+>5138	38 39 8c 34 92 31 38 36 31 34 37 39 39 37 00 13
+>5148	ec 01 97 20 37 34 34 35 39 31 39 38 39 84 34 92
+>5158	31 00 15 ed 01 97 20 87 37 34 34 35 39 31 39 38
+>5168	39 85 34 88 92 34 00 1d ee 01 97 20 87 37 34 34
+>5178	35 39 31 39 38 39 96 34 88 92 37 34 34 35 39 31
+>5188	39 38 35 00 1d ef 01 97 20 87 37 34 34 35 39 31
+>5198	39 38 39 b2 34 88 92 37 34 34 35 39 31 39 38 39
+>51a8	00 15 f0 01 97 20 87 37 34 34 35 39 31 39 38 39
+>51b8	92 34 88 92 30 00 16 f1 01 97 20 87 37 34 34 35
+>51c8	39 31 39 38 39 90 34 88 92 8b 31 00 15 f2 01 97
+>51d8	20 87 37 34 34 35 39 31 39 38 39 91 34 88 92 30
+>51e8	00 15 f3 01 97 20 87 37 34 34 35 39 31 39 38 39
+>51f8	8f 34 88 92 30 00 16 f4 01 97 20 87 37 34 34 35
+>5208	39 31 39 38 39 94 34 88 92 8b 31 00 16 f5 01 97
+>5218	20 87 37 34 34 35 39 31 39 38 39 93 34 88 92 8b
+>5228	31 00 17 f6 01 97 20 87 81 4f 7c 57 81 b3 81 35
+>5238	70 45 81 88 20 92 20 31 00 0f f7 01 97 20 30 8a
+>5248	39 33 37 92 39 33 37 00 0d f8 01 97 20 30 89 39
+>5258	33 37 92 30 00 0d f9 01 97 20 30 8c 39 33 37 92
+>5268	30 00 0d fa 01 97 20 30 84 39 33 37 92 30 00 0f
+>5278	fb 01 97 20 87 30 85 39 33 37 88 92 30 00 11 fc
+>5288	01 97 20 87 30 96 39 33 37 88 92 39 33 37 00 11
+>5298	fd 01 97 20 87 30 b2 39 33 37 88 92 39 33 37 00
+>52a8	0f fe 01 97 20 87 30 92 39 33 37 88 92 30 00 10
+>52b8	ff 01 97 20 87 30 90 39 33 37 88 92 8b 31 00 10
+>52c8	00 02 97 20 87 30 91 39 33 37 88 92 8b 31 00 10
+>52d8	01 02 97 20 87 30 8f 39 33 37 88 92 8b 31 00 0f
+>52e8	02 02 97 20 87 30 94 39 33 37 88 92 30 00 0f 03
+>52f8	02 97 20 87 30 93 39 33 37 88 92 30 00 18 04 02
+>5308	97 20 87 81 45 39 6d 81 b3 81 78 46 6b 81 88 20
+>5318	92 20 8b 31 00 1f 05 02 97 20 8b 33 36 33 30 30
+>5328	34 31 35 30 8a 35 33 33 92 8b 33 36 33 30 30 33
+>5338	36 31 37 00 22 06 02 97 20 8b 33 36 33 30 30 34
+>5348	31 35 30 89 35 33 33 92 8b 31 39 33 34 38 31 32
+>5358	31 31 39 35 30 00 1c 07 02 97 20 8b 33 36 33 30
+>5368	30 34 31 35 30 8c 35 33 33 92 8b 36 38 31 30 35
+>5378	38 00 17 08 02 97 20 33 36 33 30 30 34 31 35 30
+>5388	84 35 33 33 92 32 33 36 00 1a 09 02 97 20 87 8b
+>5398	33 36 33 30 30 34 31 35 30 85 35 33 33 88 92 35
+>53a8	31 32 00 21 0a 02 97 20 87 8b 33 36 33 30 30 34
+>53b8	31 35 30 96 35 33 33 88 92 8b 33 36 33 30 30 34
+>53c8	36 34 31 00 21 0b 02 97 20 87 8b 33 36 33 30 30
+>53d8	34 31 35 30 b2 35 33 33 88 92 8b 33 36 33 30 30
+>53e8	34 31 32 39 00 18 0c 02 97 20 87 8b 33 36 33 30
+>53f8	30 34 31 35 30 92 35 33 33 88 92 30 00 19 0d 02
+>5408	97 20 87 8b 33 36 33 30 30 34 31 35 30 90 35 33
+>5418	33 88 92 8b 31 00 19 0e 02 97 20 87 8b 33 36 33
+>5428	30 30 34 31 35 30 91 35 33 33 88 92 8b 31 00 19
+>5438	0f 02 97 20 87 8b 33 36 33 30 30 34 31 35 30 8f
+>5448	35 33 33 88 92 8b 31 00 18 10 02 97 20 87 8b 33
+>5458	36 33 30 30 34 31 35 30 94 35 33 33 88 92 30 00
+>5468	18 11 02 97 20 87 8b 33 36 33 30 30 34 31 35 30
+>5478	93 35 33 33 88 92 30 00 17 12 02 97 20 87 81 67
+>5488	73 27 81 b3 81 46 4a 67 81 88 20 92 20 31 00 0f
+>5498	13 02 97 20 37 8a 32 30 37 92 32 31 34 00 10 14
+>54a8	02 97 20 37 89 32 30 37 92 31 34 34 39 00 0d 15
+>54b8	02 97 20 37 8c 32 30 37 92 30 00 0d 16 02 97 20
+>54c8	37 84 32 30 37 92 37 00 0f 17 02 97 20 87 37 85
+>54d8	32 30 37 88 92 37 00 11 18 02 97 20 87 37 96 32
+>54e8	30 37 88 92 32 30 30 00 11 19 02 97 20 87 37 b2
+>54f8	32 30 37 88 92 32 30 37 00 0f 1a 02 97 20 87 37
+>5508	92 32 30 37 88 92 30 00 10 1b 02 97 20 87 37 90
+>5518	32 30 37 88 92 8b 31 00 10 1c 02 97 20 87 37 91
+>5528	32 30 37 88 92 8b 31 00 10 1d 02 97 20 87 37 8f
+>5538	32 30 37 88 92 8b 31 00 0f 1e 02 97 20 87 37 94
+>5548	32 30 37 88 92 30 00 0f 1f 02 97 20 87 37 93 32
+>5558	30 37 88 92 30 00 17 20 02 97 20 87 81 62 34 60
+>5568	81 b3 81 5f 31 38 81 88 20 92 20 31 00 1d 21 02
+>5578	97 20 8b 37 37 37 30 39 34 33 32 35 8a 30 92 8b
+>5588	37 37 37 30 39 34 33 32 35 00 14 22 02 97 20 8b
+>5598	37 37 37 30 39 34 33 32 35 89 30 92 30 00 16 23
+>55a8	02 97 20 87 8b 37 37 37 30 39 34 33 32 35 85 30
+>55b8	88 92 30 00 1f 24 02 97 20 87 8b 37 37 37 30 39
+>55c8	34 33 32 35 96 30 88 92 8b 37 37 37 30 39 34 33
+>55d8	32 35 00 1f 25 02 97 20 87 8b 37 37 37 30 39 34
+>55e8	33 32 35 b2 30 88 92 8b 37 37 37 30 39 34 33 32
+>55f8	35 00 16 26 02 97 20 87 8b 37 37 37 30 39 34 33
+>5608	32 35 92 30 88 92 30 00 17 27 02 97 20 87 8b 37
+>5618	37 37 30 39 34 33 32 35 90 30 88 92 8b 31 00 17
+>5628	28 02 97 20 87 8b 37 37 37 30 39 34 33 32 35 91
+>5638	30 88 92 8b 31 00 17 29 02 97 20 87 8b 37 37 37
+>5648	30 39 34 33 32 35 8f 30 88 92 8b 31 00 16 2a 02
+>5658	97 20 87 8b 37 37 37 30 39 34 33 32 35 94 30 88
+>5668	92 30 00 16 2b 02 97 20 87 8b 37 37 37 30 39 34
+>5678	33 32 35 93 30 88 92 30 00 18 2c 02 97 20 87 81
+>5688	51 6a 35 81 b3 81 56 55 70 81 88 20 92 20 8b 31
+>5698	00 00
 
 ;******  Return to file: basic.asm
 
