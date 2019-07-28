@@ -33,7 +33,7 @@ KeywordVectorTable:
 	.word	SyntaxError                   ; "goto"     ($009f)
 	.word	SyntaxError                   ; "input"    ($00a0)
 	.word	SyntaxError                   ; "if"       ($00a1)
-	.word	SyntaxError                   ; "list"     ($00a2)
+	.word	COMMAND_List                  ; "list"     ($00a2)
 	.word	SyntaxError                   ; "loop"     ($00a3)
 	.word	SyntaxError                   ; "link"     ($00a4)
 	.word	COMMAND_Let                   ; "let"      ($00a5)
@@ -77,33 +77,33 @@ TokenText:
 	.byte $be                             ; $0094 >
 	.byte $bf                             ; $0095 ?
 	.byte $de                             ; $0096 ^
-	.byte $61,$73,$73,$65,$72,$f4         ; $0097 assert
-	.byte $61,$62,$f3                     ; $0098 abs
-	.byte $63,$6c,$65,$61,$f2             ; $0099 clear
-	.byte $63,$e8                         ; $009a ch
-	.byte $64,$ef                         ; $009b do
-	.byte $65,$6e,$e4                     ; $009c end
-	.byte $66,$6f,$f2                     ; $009d for
-	.byte $67,$6f,$73,$75,$e2             ; $009e gosub
-	.byte $67,$6f,$74,$ef                 ; $009f goto
-	.byte $69,$6e,$70,$75,$f4             ; $00a0 input
-	.byte $69,$e6                         ; $00a1 if
-	.byte $6c,$69,$73,$f4                 ; $00a2 list
-	.byte $6c,$6f,$6f,$f0                 ; $00a3 loop
-	.byte $6c,$69,$6e,$eb                 ; $00a4 link
-	.byte $6c,$65,$f4                     ; $00a5 let
-	.byte $6c,$65,$ee                     ; $00a6 len
-	.byte $6e,$65,$78,$f4                 ; $00a7 next
-	.byte $6e,$65,$f7                     ; $00a8 new
-	.byte $6f,$6c,$e4                     ; $00a9 old
-	.byte $70,$72,$69,$6e,$f4             ; $00aa print
-	.byte $72,$65,$ed                     ; $00ab rem
-	.byte $72,$6e,$e4                     ; $00ac rnd
-	.byte $73,$74,$6f,$f0                 ; $00ad stop
-	.byte $73,$74,$65,$f0                 ; $00ae step
-	.byte $74,$68,$65,$ee                 ; $00af then
-	.byte $74,$6f,$f0                     ; $00b0 top
-	.byte $74,$ef                         ; $00b1 to
+	.byte $41,$53,$53,$45,$52,$d4         ; $0097 assert
+	.byte $41,$42,$d3                     ; $0098 abs
+	.byte $43,$4c,$45,$41,$d2             ; $0099 clear
+	.byte $43,$c8                         ; $009a ch
+	.byte $44,$cf                         ; $009b do
+	.byte $45,$4e,$c4                     ; $009c end
+	.byte $46,$4f,$d2                     ; $009d for
+	.byte $47,$4f,$53,$55,$c2             ; $009e gosub
+	.byte $47,$4f,$54,$cf                 ; $009f goto
+	.byte $49,$4e,$50,$55,$d4             ; $00a0 input
+	.byte $49,$c6                         ; $00a1 if
+	.byte $4c,$49,$53,$d4                 ; $00a2 list
+	.byte $4c,$4f,$4f,$d0                 ; $00a3 loop
+	.byte $4c,$49,$4e,$cb                 ; $00a4 link
+	.byte $4c,$45,$d4                     ; $00a5 let
+	.byte $4c,$45,$ce                     ; $00a6 len
+	.byte $4e,$45,$58,$d4                 ; $00a7 next
+	.byte $4e,$45,$d7                     ; $00a8 new
+	.byte $4f,$4c,$c4                     ; $00a9 old
+	.byte $50,$52,$49,$4e,$d4             ; $00aa print
+	.byte $52,$45,$cd                     ; $00ab rem
+	.byte $52,$4e,$c4                     ; $00ac rnd
+	.byte $53,$54,$4f,$d0                 ; $00ad stop
+	.byte $53,$54,$45,$d0                 ; $00ae step
+	.byte $54,$48,$45,$ce                 ; $00af then
+	.byte $54,$4f,$d0                     ; $00b0 top
+	.byte $54,$cf                         ; $00b1 to
 	.byte $fc                             ; $00b2 |
 	.byte $fe                             ; $00b3 ~
 	.byte $00

@@ -31,7 +31,7 @@ class TokenCodeGenerator(object):
 		h.write("TokenText:\n")
 		size = 1
 		for t in self.tokens:
-			codes = [ord(x) for x in t[0]]
+			codes = [ord(x) for x in t[0].upper()]
 			codes[-1] = codes[-1] | 0x80
 			size = size + len(codes)
 			codes = ",".join(["${0:02x}".format(x) for x in codes])

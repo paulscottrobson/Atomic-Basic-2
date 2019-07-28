@@ -120,9 +120,9 @@ if __name__ == '__main__':
 	# bas.add('q!24=#12345678:q?29=42')
 	# bas.add('a=#1D00:aa1=#1D80:aa1?3=42')
 	# bas.add('$a="Hi":a$8="world":@=ch(a$8):stop')
-	bas.add('$#1C00="TESTING!":X = -4')
-	bas.add('print "HELLO WORLD!"\'\'"BYE.";\'$#1C00\'X\'&X')
-	bas.add("stop")
+	bas.add('$#1C00="TESTING!":X = -4',10	)
+	bas.add('print "HELLO WORLD!"\'\'"BYE.";\'$#1C00\'X\'&X',210)
+	bas.add("list:stop",300)
 	#
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)

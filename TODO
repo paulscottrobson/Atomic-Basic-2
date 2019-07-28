@@ -1,10 +1,8 @@
-
 Progress
 ========
-- LIST 
+- GOTO GOSUB , give LIST a start line option.
 - Command Line, tokenisation, executing from keyboard.
 - Code read #1
-- GOTO GOSUB 
 - IF THEN 
 - DO LOOP 
 - FOR TO NEXT STEP
