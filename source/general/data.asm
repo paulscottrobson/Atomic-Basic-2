@@ -25,6 +25,8 @@ zTargetAddr: 	.dword 	? 					; address of LHS of assignment, list pointer.
 FixedVariables:	.fill 	27*4 				; address of 26 x 4 byte fixed variables @A-Z
 											; these must be page aligned.
 
+Control 		.byte 	? 					; 0 = normal, 1 = tokenise, 2 = run program.
+
 InputLine:		.fill 	EXTWidth+1 			; screen input buffer, cannot cross page.
 
 HighMemory:		.word 	?					; highest memory location available (2 bytes)

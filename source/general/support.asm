@@ -39,3 +39,23 @@ _CNCLoop:
 		rts
 _CNCFail:
 		#error 	"Missing token"		
+
+; *******************************************************************************************
+;
+;		On the Mega65 copy the first 1/2k into RAM. Obviously can't do
+;		this seriously.
+;
+; *******************************************************************************************
+
+		.if TARGET=1
+CopyBasicCode:
+		ldx 	#0
+_CopyLoop:		
+		lda 	BasicCode,x
+		sta 	BasicProgram,x
+		lda 	BasicCode+$100,x
+		sta 	BasicProgram+$100,x
+		inx
+		bne 	_CopyLoop
+		rts
+		.endif

@@ -19,6 +19,7 @@
 		.include 	"general/evaluate.asm"	; evaluation code.
 		.include 	"general/variable.asm"	; variable handling.
 		.include 	"general/screenio.asm"	; I/O functions.
+		.include 	"general/tokeniser.asm"	; tokeniser.
 
 		.include 	"binary/arithmetic.asm" ; basic arithmetic
 		.include 	"binary/binary.asm" 	; binary operators
@@ -64,19 +65,3 @@ ReportError:
 BasicCode:
 		.include "include/basic_generated.inc"
 
-		;
-		;		On the Mega65 copy the first 1/2k into RAM. Obviously can't do
-		;		this seriously.
-		;
-		.if TARGET=1
-CopyBasicCode:
-		ldx 	#0
-_CopyLoop:		
-		lda 	BasicCode,x
-		sta 	BasicProgram,x
-		lda 	BasicCode+$100,x
-		sta 	BasicProgram+$100,x
-		inx
-		bne 	_CopyLoop
-		rts
-		.endif
