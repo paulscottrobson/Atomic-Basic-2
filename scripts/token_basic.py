@@ -114,12 +114,14 @@ if __name__ == '__main__':
 
 	bas = BasicProgram()
 	#
-	bas.add('c = 42:d = -2:e = c * 2:@ = -1:@ = d - 1',1)
-	bas.add('?#1FFF = 63:!#1FF8=#AB784501')
-	bas.add('q=#1E00: qq3=e:!q=-1:qq2=-2:q(4)=#5A6A7A8A')
-	bas.add('q!24=#12345678:q?29=42')
-	bas.add('a=#1D00:aa1=#1D80:aa1?3=42')
-	bas.add('$a="Hi":a$8="world":@=ch(a$8):stop')
+	# bas.add('c = 42:d = -2:e = c * 2:@ = -1:@ = d - 1',1)
+	# bas.add('?#1FFF = 63:!#1FF8=#AB784501')
+	# bas.add('q=#1E00: qq3=e:!q=-1:qq2=-2:q(4)=#5A6A7A8A')
+	# bas.add('q!24=#12345678:q?29=42')
+	# bas.add('a=#1D00:aa1=#1D80:aa1?3=42')
+	# bas.add('$a="Hi":a$8="world":@=ch(a$8):stop')
+	bas.add('$#1C00="TESTING!":X = -4')
+	bas.add('print "HELLO WORLD!"\'\'"BYE.";\'$#1C00\'X\'&X')
 	bas.add("stop")
 	#
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")

@@ -111,8 +111,9 @@ _CCNoCarry:
 ; *******************************************************************************************
 
 COMMAND_Old:	;; OLD
+
 		lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
-		sta 	zLowMemory 						
+		sta 	zLowMemory 
 		lda 	#BasicProgram >> 8
 		sta 	zLowMemory+1
 		ldy 	#3 							; look for the $00 end of line marker.

@@ -41,7 +41,7 @@ KeywordVectorTable:
 	.word	SyntaxError                   ; "next"     ($00a7)
 	.word	COMMAND_New                   ; "new"      ($00a8)
 	.word	COMMAND_Old                   ; "old"      ($00a9)
-	.word	SyntaxError                   ; "print"    ($00aa)
+	.word	COMMAND_Print                 ; "print"    ($00aa)
 	.word	COMMAND_Rem                   ; "rem"      ($00ab)
 	.word	UNARY_Rnd                     ; "rnd"      ($00ac)
 	.word	COMMAND_Stop                  ; "stop"     ($00ad)

@@ -31,19 +31,19 @@
 		.include 	"commands/execute.asm"	; run/stop etc.		
 		.include 	"commands/miscellany.asm" ; miscellany
 		.include 	"commands/let.asm"		; assignment.
-
+		.include 	"commands/print.asm" 	; print statement
 		
 Start:
 		#resetstack 						; reset CPU stack.
-		jsr 	SIOInitialise 				; initialise the I/O system.
-h1:		
-		jsr 	SIOReadLine
-;		#break
-		bra 	h1
 
+		.if TARGET=1 						; on the MEGA65 if we provide code we have to copy
+		jsr 	CopyBasicCode 				; it into the BASIC area.
+		.endif
+
+		jsr 	SIOInitialise 				; initialise the I/O system.
 		jsr 	COMMAND_New 				; do a new 
 		jsr 	COMMAND_Old 				; get back the old program as we're deving.
-
+		
 WarmStart:
 		#resetstack 						; reset the stack
 		jmp 	COMMAND_Run 				; RUN current program.
@@ -57,6 +57,25 @@ ReportError:
 		break
 		bra 	ReportError
 
-		* = basicProgram					; load BASIC into RAM space.
+		.if TARGET=2 						; emulator, can just include code and it's loaded
+		* = BasicProgram
+		.endif
+BasicCode:
 		.include "include/basic_generated.inc"
 
+		;
+		;		On the Mega65 copy the first 1/2k into RAM. Obviously can't do
+		;		this seriously.
+		;
+		.if TARGET=1
+CopyBasicCode:
+		ldx 	#0
+_CopyLoop:		
+		lda 	BasicCode,x
+		sta 	BasicProgram,x
+		lda 	BasicCode+$100,x
+		sta 	BasicProgram+$100,x
+		inx
+		bne 	_CopyLoop
+		rts
+		.endif

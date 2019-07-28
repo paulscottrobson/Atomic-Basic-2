@@ -1,2 +1,2 @@
-minicom -D unix#/home/paulr/Projects/mega65-integer-basic/experiments/testing/uart.sock 
+minicom -D unix#/home/paulr/Projects/Atomic-Basic/miscellany/uart.sock 
 rm uart.sock

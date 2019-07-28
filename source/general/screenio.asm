@@ -37,15 +37,16 @@ SIOPrintString:
 		pha 								; save registers
 		phx
 		phy
-		stx 	zTemp1 						; set up indirect pointer
-		sty 	zTemp1+1
+		stx 	zTemp2 						; set up indirect pointer
+		sty 	zTemp2+1
 		ldy 	#0 
 _SIOPSLoop:
-		lda 	(zTemp1),y 					; read next, exit if 0
+		lda 	(zTemp2),y 					; read next, exit if 0
 		beq 	_SIOPSExit
 		jsr 	SIOPrintCharacter 			; print and bump
 		iny
-		bra 	_SIOPSLoop
+		bne 	_SIOPSLoop
+		#error 	"Bad String Printed" 		; in case we print a non string from PRINT.
 _SIOPSExit:
 		ply 								; restore and exit.
 		plx
@@ -296,3 +297,35 @@ SIOLoadCursor:
 		tay
 		pla 								; restore and exit
 		rts
+
+; *******************************************************************************************
+;
+;								Print A as hex digit.
+;
+; *******************************************************************************************
+
+SIOPrintHex:
+		pha
+		pha
+		lda 	#32
+		jsr 	SIOPrintCharacter
+		pla
+		pha
+		lsr 	a
+		lsr 	a
+		lsr 	a
+		lsr 	a
+		jsr 	_SIOPHex
+		pla
+		jsr 	_SIOPHex
+		pla
+		rts
+
+_SIOPHex:
+		and 	#15
+		cmp 	#10
+		bcc 	_SIOPHex2
+		adc 	#6
+_SIOPHex2:
+		adc 	#48
+		jmp 	SIOPrintCharacter				
