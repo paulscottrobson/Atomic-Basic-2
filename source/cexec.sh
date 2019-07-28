@@ -6,4 +6,5 @@ sh prelim.sh
 if [ $? -eq 0 ]
 then
 	../6502system/emulator/em6502 rom.bin go
+	python ../scripts/post_check.py
 fi
