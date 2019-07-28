@@ -160,12 +160,12 @@ WORD16 CPUGetStepOverBreakpoint(void) {
 }
 
 void CPUEndRun(void) {
-	FILE *f = fopen("memory.dump","wb");
-	fwrite(ramMemory,1,RAMSIZE,f);
-	fclose(f);
 }
 
 void CPUExit(void) {	
+	FILE *f = fopen("memory.dump","wb");
+	fwrite(ramMemory,1,RAMSIZE,f);
+	fclose(f);
 	GFXExit();
 }
 

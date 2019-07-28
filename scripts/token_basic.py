@@ -100,6 +100,7 @@ class BasicProgram(object):
 	#
 	def render(self,handle):
 		out = self.tokens+ [0]
+		print("Size of program = ${0:04x}".format(len(out)))
 		out = ",".join(["${0:02x}".format(x) for x in out])
 		handle.write("\t.byte {0}\n".format(out))
 
@@ -119,6 +120,7 @@ if __name__ == '__main__':
 	bas.add('q!24=#12345678:q?29=42')
 	bas.add('a=#1D00:aa1=#1D80:aa1?3=42')
 	bas.add('$a="Hi":a$8="world":@=ch(a$8):stop')
+	bas.add("stop")
 	#
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(sys.stdout)

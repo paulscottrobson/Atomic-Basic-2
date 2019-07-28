@@ -34,7 +34,7 @@ class UnitTest(object):
 	def create(self):
 		self.basic = BasicProgram()
 		for i in range(0,self.getCount()):
-			self.generate()
+			self.generate(i)
 		name = "../source/include/basic_generated.inc".replace("/",os.sep)
 		targetFile = open(name,"w")
 		self.basic.render(targetFile)
@@ -51,9 +51,10 @@ class UnitTest(object):
 			n = random.randint(0,0x3FFFFFFF)
 		return n if random.randint(0,1) == 0 else -n
 	#
-	def add(self,text):
-		#print(text)
+	def add(self,text,show = False):
 		self.basic.add(text,self.lineNumber)
+		if show:
+			print(self.lineNumber,text)
 		self.basicCode.write("{0:5} {1}\n".format(self.lineNumber,text))
 		self.lineNumber += 1
 	#
@@ -71,7 +72,7 @@ class SimpleMathUnitTest(UnitTest):
 	def getCount(self):
 		return 40
 
-	def generate(self):
+	def generate(self,n):
 		n1 = self.getInteger()
 		n2 = self.getInteger()
 		if random.randint(0,20) == 0:

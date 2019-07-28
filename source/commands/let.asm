@@ -185,7 +185,6 @@ _CLEWordWrite:
 		;		You cannot write to hardware this way.
 		;
 _CLEStringWrite:
-		#break
 		lda 	evalStack+0,x 				; source string -> zTemp1
 		sta 	zTemp1 
 		lda 	evalStack+1,x

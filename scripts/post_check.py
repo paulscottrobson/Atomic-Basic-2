@@ -25,9 +25,9 @@ if os.path.exists("memory.dump") and os.path.exists("../scripts/block.check"):
 	print(" *** Comparing files ***")
 	errors = 0
 	for n in range(0,len(check)):
-		addr = 0x1C00
+		addr = 0x1C00+n
 		if dump[addr] != check[n]:
 			errors += 1
-			print("\tError at ${0:04x} is ${1:02x} should be ${2:02x}".format(addr,check[n],dump[addr]))
+			print("\tError at ${0:04x} tester:${1:02x} emulator:${2:02x}".format(addr,check[n],dump[addr]))
 	if errors == 0:
 		print("\t*** Matches ***")

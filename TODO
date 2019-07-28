@@ -1,16 +1,17 @@
 
 Progress
 ========
-- Indirection unit tests ?
-- Code read #1
-- Command Line, tokenisation, executing from keyboard.
+- Improved I/O.
+- PRINT
 - LIST 
+- Command Line, tokenisation, executing from keyboard.
+- Code read #1
 - GOTO GOSUB 
 - IF THEN 
 - DO LOOP 
 - FOR TO NEXT STEP
 - LINK
-- INPUT PRINT
+- INPUT
 
 Later fixes
 ===========
