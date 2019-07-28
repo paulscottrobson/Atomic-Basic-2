@@ -13,5 +13,4 @@ Progress
 
 Later fixes
 ===========
-- Ctrl+C check add. ReadKey scans but doesn't clear, ClearKey resets.
 - Fix long read/write for ! and ? to use the extended access on Mega65

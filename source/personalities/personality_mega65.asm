@@ -106,6 +106,28 @@ EXTSetupKeyAddress:
 
 ; ******************************************************************************
 ;
+;								Break Test
+;
+; ******************************************************************************
+		
+EXTCheckBreak:
+	phz
+	jsr 	EXTSetupKeyAddress 				; point to keyboard
+	inc 	EXTZPWork 						; point to modifiers.
+	nop 									; read modifiers.
+	lda 	(EXTZPWork),z
+	plz 									; restore Z
+	and 	#5								; break is LeftShift+Ctrl
+	cmp 	#5 		
+	beq 	_EXTCBYes
+	lda 	#0
+	rts
+_EXTCBYes:
+	lda 	#1
+	rts	
+
+; ******************************************************************************
+;
 ;		Read a byte from the screen (C64 codes, e.g. @ = 0) at XY -> A
 ;
 ; ******************************************************************************

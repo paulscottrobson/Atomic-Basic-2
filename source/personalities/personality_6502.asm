@@ -33,6 +33,7 @@ EXTHighMemory = $6000 						; Workspace RAM ends here
 
 PScreen = $B000								; 1k screen RAM here
 PKeyboard = $B800							; Keyboard port.
+PBreak = $B801 								; Break key.
 
 ; ******************************************************************************
 ;
@@ -76,7 +77,17 @@ EXTRemoveKeyPressed:
 	sta 	PKeyboard
 	pla
 	rts
+
+; ******************************************************************************
+;
+;								Break Test
+;
+; ******************************************************************************
 		
+EXTCheckBreak:
+	lda 	PBreak
+	rts
+
 ; ******************************************************************************
 ;
 ;		Read a byte from the screen (C64 codes, e.g. @ = 0) at XY -> A

@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "sys_processor.h"
 #include "sys_debug_system.h"
+#include "gfx.h"
 
 // *******************************************************************************************************************************
 //														   Timing
@@ -99,6 +100,7 @@ BYTE8 CPUExecuteInstruction(void) {
 	}
 	if (cycles < CYCLES_PER_FRAME) return 0;										// Not completed a frame.
 	cycles = cycles - CYCLES_PER_FRAME;												// Adjust this frame rate.
+	ramMemory[0xB801] = (GFXIsKeyPressed(GFXKEY_CONTROL) && GFXIsKeyPressed('C')) ? 1 : 0;
 	return FRAME_RATE;																// Return frame rate.
 }
 

@@ -47,6 +47,15 @@ IOCursorY = 9
 ; ******************************************************************************
 
 StartLoop:
+	inc 	10
+	lda 	10
+	ldx 	#4
+	ldy 	#0
+	jsr 	EXTWriteScreen
+	jsr 	EXTCheckBreak
+	inx
+	inx
+	jsr 	EXTWriteScreen
 	jsr 	EXTReadKeyPort
 	beq 	StartLoop
 Start:
