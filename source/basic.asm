@@ -18,7 +18,8 @@
 		.include 	"general/data.asm"		; data handling.
 		.include 	"general/evaluate.asm"	; evaluation code.
 		.include 	"general/variable.asm"	; variable handling.
-		
+		.include 	"general/screenio.asm"	; I/O functions.
+
 		.include 	"binary/arithmetic.asm" ; basic arithmetic
 		.include 	"binary/binary.asm" 	; binary operators
 		.include 	"binary/multiply.asm" 	; multiplication
@@ -34,6 +35,12 @@
 		
 Start:
 		#resetstack 						; reset CPU stack.
+		jsr 	SIOInitialise 				; initialise the I/O system.
+h1:		
+		jsr 	SIOReadLine
+;		#break
+		bra 	h1
+
 		jsr 	COMMAND_New 				; do a new 
 		jsr 	COMMAND_Old 				; get back the old program as we're deving.
 

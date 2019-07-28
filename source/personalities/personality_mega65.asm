@@ -84,12 +84,14 @@ EXTReadKeyPort:
 	rts
 
 EXTRemoveKeyPressed:
+	pha
 	phz
 	jsr 	EXTSetupKeyAddress
 	lda 	#0
 	nop 									; read keyboard
 	sta 	(EXTZPWork),z 
 	plz
+	pla
 	rts
 
 EXTSetupKeyAddress:

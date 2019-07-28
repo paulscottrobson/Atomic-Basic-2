@@ -24,15 +24,20 @@ zTargetAddr: 	.dword 	? 					; address of LHS of assignment
 
 FixedVariables:	.fill 	27*4 				; address of 26 x 4 byte fixed variables @A-Z
 											; these must be page aligned.
-											
+
+InputLine:		.fill 	EXTWidth+1 			; screen input buffer, cannot cross page.
+
 HighMemory:		.word 	?					; highest memory location available (2 bytes)
 Temp1:			.dword	?					; 4 byte temporary stores.
 SignCount:		.byte 	? 					; count of signs in divide.
 StringBufferPos:.byte 	? 					; next free slot in string buffer
 RandomSeed 		.word 	? 					; Random Number
+xCursor 		.byte 	? 					; cursor position
+yCursor 		.byte 	?
 
 				.align	256 				
-StringBuffer:	 							; string buffer.
+TokeniseBuffer: 							; tokenise buffer. use the same space as the
+StringBuffer:	 							; temporary string buffer (quoted strings in code)
 				.byte ?
 
 				.align	256 				

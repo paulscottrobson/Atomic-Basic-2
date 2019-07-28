@@ -1,7 +1,6 @@
 
 Progress
 ========
-- Improved I/O.
 - PRINT
 - LIST 
 - Command Line, tokenisation, executing from keyboard.
