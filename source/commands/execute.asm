@@ -33,6 +33,8 @@ CRUNNewLine:
 		;		Run another instruction from (zCurrentLine),y
 		;
 CRUNNextInstruction:
+		lda 	#0 							; reset the string buffer position
+		sta 	StringBufferPos
 		lda 	(zCurrentLine),y 			; get next token
 		beq 	CRUNNextLine 				; if zero, then end of line.
 		;
@@ -79,8 +81,6 @@ CRUNExecuteOne:
 		sta 	Temp1+2
 		lda 	#$6C 						; make it jump indirect
 		sta 	Temp1+0
-		lda 	#0 							; reset the string buffer position
-		sta 	StringBufferPos
 		jsr 	Temp1 						; call instruction
 		bra 	CRUNNextInstruction 		; do next instruction.
 		;

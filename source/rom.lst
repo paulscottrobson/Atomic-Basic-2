@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.54.1900 listing file
 ; 64tass -q -c -D TARGET=2 -b -L rom.lst -o rom.bin basic.asm
-; Sun Jul 28 07:42:40 2019
+; Sun Jul 28 08:07:01 2019
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -17,7 +17,7 @@
 .fff8					EXTDummyInterrupt:
 .fff8	40		rti				rti
 >fffa	f8 ff						.word 	EXTDummyInterrupt
->fffc	6e e9						.word 	Start
+>fffc	9b e9						.word 	Start
 >fffe	f8 ff						.word 	EXTDummyInterrupt
 =4					EXTZPWork = 4								; Zero Page work for Personality (4 bytes)
 =8					IOCursorX = 8 								; Cursor position
@@ -43,7 +43,7 @@
 .a002	9a		txs			txs
 .a003	20 82 a0	jsr $a082		jsr 	EXTReset 						; reset video
 .a006	20 38 a0	jsr $a038		jsr 	EXTClearScreen 					; clear screen
-.a009	4c 6e e9	jmp $e96e		jmp 	Start 							; start main application
+.a009	4c 9b e9	jmp $e99b		jmp 	Start 							; start main application
 .a00c					EXTReadKeyPort:
 .a00c	ad 00 b8	lda $b800		lda 	PKeyboard							; read key
 .a00f	09 00		ora #$00		ora 	#0
@@ -136,20 +136,20 @@
 
 .e000					KeywordVectorTable:
 >e000	5b e4					.word	BFUNC_WordInd                 ; "!"        ($0080)
->e002	7d e9					.word	SyntaxError                   ; """        ($0081)
->e004	7d e9					.word	SyntaxError                   ; "#"        ($0082)
+>e002	aa e9					.word	SyntaxError                   ; """        ($0081)
+>e004	aa e9					.word	SyntaxError                   ; "#"        ($0082)
 >e006	50 e4					.word	BFUNC_String                  ; "$"        ($0083)
 >e008	ef e5					.word	BFUNC_Modulus                 ; "%"        ($0084)
 >e00a	62 e4					.word	BFUNC_And                     ; "&"        ($0085)
->e00c	7d e9					.word	SyntaxError                   ; "'"        ($0086)
->e00e	7d e9					.word	SyntaxError                   ; "("        ($0087)
->e010	7d e9					.word	SyntaxError                   ; ")"        ($0088)
+>e00c	aa e9					.word	SyntaxError                   ; "'"        ($0086)
+>e00e	aa e9					.word	SyntaxError                   ; "("        ($0087)
+>e010	aa e9					.word	SyntaxError                   ; ")"        ($0088)
 >e012	d1 e4					.word	BFUNC_Multiply                ; "*"        ($0089)
 >e014	04 e4					.word	BFUNC_Add                     ; "+"        ($008a)
 >e016	2a e4					.word	BFUNC_Subtract                ; "-"        ($008b)
 >e018	28 e5					.word	BFUNC_Divide                  ; "/"        ($008c)
->e01a	7d e9					.word	SyntaxError                   ; ":"        ($008d)
->e01c	7d e9					.word	SyntaxError                   ; ";"        ($008e)
+>e01a	aa e9					.word	SyntaxError                   ; ":"        ($008d)
+>e01c	aa e9					.word	SyntaxError                   ; ";"        ($008e)
 >e01e	6d e6					.word	BFUNC_LessEqual               ; "<="       ($008f)
 >e020	0e e6					.word	BFUNC_NotEquals               ; "<>"       ($0090)
 >e022	48 e6					.word	BFUNC_Less                    ; "<"        ($0091)
@@ -162,29 +162,29 @@
 >e030	21 e7					.word	UNARY_Abs                     ; "abs"      ($0098)
 >e032	28 e8					.word	COMMAND_Clear                 ; "clear"    ($0099)
 >e034	0c e7					.word	UNARY_Ch                      ; "ch"       ($009a)
->e036	7d e9					.word	SyntaxError                   ; "do"       ($009b)
+>e036	aa e9					.word	SyntaxError                   ; "do"       ($009b)
 >e038	e3 e7					.word	COMMAND_End                   ; "end"      ($009c)
->e03a	7d e9					.word	SyntaxError                   ; "for"      ($009d)
->e03c	7d e9					.word	SyntaxError                   ; "gosub"    ($009e)
->e03e	7d e9					.word	SyntaxError                   ; "goto"     ($009f)
->e040	7d e9					.word	SyntaxError                   ; "input"    ($00a0)
->e042	7d e9					.word	SyntaxError                   ; "if"       ($00a1)
->e044	7d e9					.word	SyntaxError                   ; "list"     ($00a2)
->e046	7d e9					.word	SyntaxError                   ; "loop"     ($00a3)
->e048	7d e9					.word	SyntaxError                   ; "link"     ($00a4)
+>e03a	aa e9					.word	SyntaxError                   ; "for"      ($009d)
+>e03c	aa e9					.word	SyntaxError                   ; "gosub"    ($009e)
+>e03e	aa e9					.word	SyntaxError                   ; "goto"     ($009f)
+>e040	aa e9					.word	SyntaxError                   ; "input"    ($00a0)
+>e042	aa e9					.word	SyntaxError                   ; "if"       ($00a1)
+>e044	aa e9					.word	SyntaxError                   ; "list"     ($00a2)
+>e046	aa e9					.word	SyntaxError                   ; "loop"     ($00a3)
+>e048	aa e9					.word	SyntaxError                   ; "link"     ($00a4)
 >e04a	92 e8					.word	COMMAND_Let                   ; "let"      ($00a5)
 >e04c	ca e6					.word	UNARY_Len                     ; "len"      ($00a6)
->e04e	7d e9					.word	SyntaxError                   ; "next"     ($00a7)
+>e04e	aa e9					.word	SyntaxError                   ; "next"     ($00a7)
 >e050	15 e8					.word	COMMAND_New                   ; "new"      ($00a8)
 >e052	5c e8					.word	COMMAND_Old                   ; "old"      ($00a9)
->e054	7d e9					.word	SyntaxError                   ; "print"    ($00aa)
+>e054	aa e9					.word	SyntaxError                   ; "print"    ($00aa)
 >e056	0b e8					.word	COMMAND_Rem                   ; "rem"      ($00ab)
 >e058	3e e7					.word	UNARY_Rnd                     ; "rnd"      ($00ac)
 >e05a	db e7					.word	COMMAND_Stop                  ; "stop"     ($00ad)
->e05c	7d e9					.word	SyntaxError                   ; "step"     ($00ae)
->e05e	7d e9					.word	SyntaxError                   ; "then"     ($00af)
+>e05c	aa e9					.word	SyntaxError                   ; "step"     ($00ae)
+>e05e	aa e9					.word	SyntaxError                   ; "then"     ($00af)
 >e060	29 e7					.word	UNARY_Top                     ; "top"      ($00b0)
->e062	7d e9					.word	SyntaxError                   ; "to"       ($00b1)
+>e062	aa e9					.word	SyntaxError                   ; "to"       ($00b1)
 >e064	87 e4					.word	BFUNC_Or                      ; "|"        ($00b2)
 >e066	8c e6					.word	BFUNC_StringCompare           ; "~"        ($00b3)
 .e068					TokenText:
@@ -368,7 +368,7 @@
 .e128	d0 01		bne $e12b			bne 	_CNCFail
 .e12a	60		rts				rts
 .e12b					_CNCFail:
-.e12b	20 82 e9	jsr $e982			jsr 	ReportError
+.e12b	20 af e9	jsr $e9af			jsr 	ReportError
 >e12e	4d 69 73 73 69 6e 67 20				.text 	"Missing token",$00
 >e136	74 6f 6b 65 6e 00
 
@@ -402,17 +402,17 @@
 ;******  Processing file: general/evaluate.asm
 
 .e13c					EvaluateSNError:
-.e13c	4c 7d e9	jmp $e97d			jmp 	SyntaxError
+.e13c	4c aa e9	jmp $e9aa			jmp 	SyntaxError
 .e13f					EvaluateMissingQuote:
-.e13f	20 82 e9	jsr $e982			jsr 	ReportError
+.e13f	20 af e9	jsr $e9af			jsr 	ReportError
 >e142	4d 69 73 73 69 6e 67 20				.text 	"Missing quote",$00
 >e14a	71 75 6f 74 65 00
 .e150					EvaluateStringFull:
-.e150	20 82 e9	jsr $e982			jsr 	ReportError
+.e150	20 af e9	jsr $e9af			jsr 	ReportError
 >e153	53 74 72 69 6e 67 20 42				.text 	"String Buffer full",$00
 >e15b	75 66 66 65 72 20 66 75 6c 6c 00
 .e166					EvaluateBadHex:
-.e166	20 82 e9	jsr $e982			jsr 	ReportError
+.e166	20 af e9	jsr $e9af			jsr 	ReportError
 >e169	42 61 64 20 48 65 78 00				.text 	"Bad Hex",$00
 .e171					EvaluateAtomCurrentLevel:
 .e171	a9 07		lda #$07			lda 	#7
@@ -564,7 +564,7 @@
 .e266	f0 07		beq $e26f			beq 	_EVALByteRead
 .e268	c9 80		cmp #$80			cmp 	#KW_PLING					; word indirection
 .e26a	f0 09		beq $e275			beq 	_EVALWordRead
-.e26c	4c 7d e9	jmp $e97d			jmp 	SyntaxError 				; give up.
+.e26c	4c aa e9	jmp $e9aa			jmp 	SyntaxError 				; give up.
 .e26f					_EVALByteRead:
 .e26f	20 2f e3	jsr $e32f			jsr 	EVALReadByteIndirect
 .e272					_EVALGoGotAtom:
@@ -729,7 +729,7 @@
 .e38d	c9 5b		cmp #$5b			cmp 	#'Z'+1 						; there are 27 variables @ and A-Z
 .e38f	90 03		bcc $e394			bcc 	_VARROkay
 .e391					_VARRError:
-.e391	4c 7d e9	jmp $e97d			jmp		SyntaxError
+.e391	4c aa e9	jmp $e9aa			jmp		SyntaxError
 .e394					_VARROkay:
 .e394	c8		iny				iny 								; consume the variable.
 .e395	d1 20		cmp ($20),y			cmp 	(zCurrentLine),y 			; is it @@ AA BB CC ?
@@ -937,7 +937,7 @@
 .e52e	1d 06 04	ora $0406,x			ora 	evalStack+6,x
 .e531	1d 07 04	ora $0407,x			ora 	evalStack+7,x
 .e534	d0 13		bne $e549			bne 	_BFDOkay
-.e536	20 82 e9	jsr $e982			jsr 	ReportError
+.e536	20 af e9	jsr $e9af			jsr 	ReportError
 >e539	44 69 76 69 73 6f 6e 20				.text 	"Divison by Zero",$00
 >e541	62 79 20 5a 65 72 6f 00
 .e549					_BFDOkay:
@@ -1165,7 +1165,7 @@
 .e6dc	f0 1d		beq $e6fb			beq 	_ULFoundEOL 				; found end of line.
 .e6de	c8		iny				iny
 .e6df	d0 f9		bne $e6da			bne 	_ULGetLength 				; scan 256 only.
-.e6e1	20 82 e9	jsr $e982			jsr 	ReportError
+.e6e1	20 af e9	jsr $e9af			jsr 	ReportError
 >e6e4	43 61 6e 6e 6f 74 20 66				.text 	"Cannot find string end",$00
 >e6ec	69 6e 64 20 73 74 72 69 6e 67 20 65 6e 64 00
 .e6fb					_ULFoundEOL:
@@ -1254,55 +1254,55 @@
 .e78a	f0 57		beq $e7e3			beq 	COMMAND_End 				; if zero, off end of program so stop.
 .e78c	a0 03		ldy #$03			ldy 	#3 							; offset to first token.
 .e78e					CRUNNextInstruction:
-.e78e	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next token
-.e790	f0 0b		beq $e79d			beq 	CRUNNextLine 				; if zero, then end of line.
-.e792					CRUNNotEndOfLine:
-.e792	c9 20		cmp #$20			cmp 	#' '
-.e794	f0 04		beq $e79a			beq 	CRUNSkipLoop
-.e796	c9 8d		cmp #$8d			cmp 	#KW_Colon 					; check for a colon first.
-.e798	d0 12		bne $e7ac			bne 	CRUNExecuteOne 				; if not that, execute the token.
-.e79a					CRUNSkipLoop:
-.e79a	c8		iny				iny		 							; if colon, skip it and loop round.
-.e79b	80 f1		bra $e78e			bra 	CRUNNextInstruction
-.e79d					CRUNNextLine:
-.e79d	a0 00		ldy #$00			ldy 	#0 							; add offset from line to line pointer
-.e79f	b1 20		lda ($20),y			lda 	(zCurrentLine),y
-.e7a1	18		clc				clc
-.e7a2	65 20		adc $20				adc 	zCurrentLine
-.e7a4	85 20		sta $20				sta 	zCurrentLine
-.e7a6	90 de		bcc $e786			bcc 	CRUNNewLine
-.e7a8	e6 21		inc $21				inc 	zCurrentLine+1
-.e7aa	80 da		bra $e786			bra 	CRUNNewLine
-.e7ac					CRUNExecuteOne:
-.e7ac	09 00		ora #$00			ora 	#0 							; if it is a character might be a variable.
-.e7ae	10 26		bpl $e7d6			bpl		_CRUNX1TryLet
-.e7b0	c9 83		cmp #$83			cmp 	#KW_DOLLAR 					; likewise if ! something ? something $ something
-.e7b2	f0 22		beq $e7d6			beq 	_CRUNX1TryLet
-.e7b4	c9 80		cmp #$80			cmp 	#KW_PLING
-.e7b6	f0 1e		beq $e7d6			beq 	_CRUNX1TryLet
-.e7b8	c9 95		cmp #$95			cmp 	#KW_QUESTION
-.e7ba	f0 1a		beq $e7d6			beq 	_CRUNX1TryLet
-.e7bc	c8		iny				iny 								; skip over loaded token
-.e7bd	0a		asl a				asl 	a 							; double lower keyword byte, clears bit 7.
-.e7be	8d 6f 20	sta $206f			sta 	Temp1+1 					; this is the low byte into the KVT
-.e7c1	8a		txa				txa
-.e7c2	a9 e0		lda #$e0			lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
-.e7c4	8d 70 20	sta $2070			sta 	Temp1+2
-.e7c7	a9 6c		lda #$6c			lda 	#$6C 						; make it jump indirect
-.e7c9	8d 6e 20	sta $206e			sta 	Temp1+0
-.e7cc	a9 00		lda #$00			lda 	#0 							; reset the string buffer position
-.e7ce	8d 73 20	sta $2073			sta 	StringBufferPos
+.e78e	a9 00		lda #$00			lda 	#0 							; reset the string buffer position
+.e790	8d 73 20	sta $2073			sta 	StringBufferPos
+.e793	b1 20		lda ($20),y			lda 	(zCurrentLine),y 			; get next token
+.e795	f0 0b		beq $e7a2			beq 	CRUNNextLine 				; if zero, then end of line.
+.e797					CRUNNotEndOfLine:
+.e797	c9 20		cmp #$20			cmp 	#' '
+.e799	f0 04		beq $e79f			beq 	CRUNSkipLoop
+.e79b	c9 8d		cmp #$8d			cmp 	#KW_Colon 					; check for a colon first.
+.e79d	d0 12		bne $e7b1			bne 	CRUNExecuteOne 				; if not that, execute the token.
+.e79f					CRUNSkipLoop:
+.e79f	c8		iny				iny		 							; if colon, skip it and loop round.
+.e7a0	80 ec		bra $e78e			bra 	CRUNNextInstruction
+.e7a2					CRUNNextLine:
+.e7a2	a0 00		ldy #$00			ldy 	#0 							; add offset from line to line pointer
+.e7a4	b1 20		lda ($20),y			lda 	(zCurrentLine),y
+.e7a6	18		clc				clc
+.e7a7	65 20		adc $20				adc 	zCurrentLine
+.e7a9	85 20		sta $20				sta 	zCurrentLine
+.e7ab	90 d9		bcc $e786			bcc 	CRUNNewLine
+.e7ad	e6 21		inc $21				inc 	zCurrentLine+1
+.e7af	80 d5		bra $e786			bra 	CRUNNewLine
+.e7b1					CRUNExecuteOne:
+.e7b1	09 00		ora #$00			ora 	#0 							; if it is a character might be a variable.
+.e7b3	10 21		bpl $e7d6			bpl		_CRUNX1TryLet
+.e7b5	c9 83		cmp #$83			cmp 	#KW_DOLLAR 					; likewise if ! something ? something $ something
+.e7b7	f0 1d		beq $e7d6			beq 	_CRUNX1TryLet
+.e7b9	c9 80		cmp #$80			cmp 	#KW_PLING
+.e7bb	f0 19		beq $e7d6			beq 	_CRUNX1TryLet
+.e7bd	c9 95		cmp #$95			cmp 	#KW_QUESTION
+.e7bf	f0 15		beq $e7d6			beq 	_CRUNX1TryLet
+.e7c1	c8		iny				iny 								; skip over loaded token
+.e7c2	0a		asl a				asl 	a 							; double lower keyword byte, clears bit 7.
+.e7c3	8d 6f 20	sta $206f			sta 	Temp1+1 					; this is the low byte into the KVT
+.e7c6	8a		txa				txa
+.e7c7	a9 e0		lda #$e0			lda 	#KeywordVectorTable >> 8 	; set high byte of KVT
+.e7c9	8d 70 20	sta $2070			sta 	Temp1+2
+.e7cc	a9 6c		lda #$6c			lda 	#$6C 						; make it jump indirect
+.e7ce	8d 6e 20	sta $206e			sta 	Temp1+0
 .e7d1	20 6e 20	jsr $206e			jsr 	Temp1 						; call instruction
 .e7d4	80 b8		bra $e78e			bra 	CRUNNextInstruction 		; do next instruction.
 .e7d6					_CRUNX1TryLet:
 .e7d6	20 92 e8	jsr $e892			jsr 	COMMAND_Let 				; try doing a LET if not a keyword.
 .e7d9	80 b3		bra $e78e			bra 	CRUNNextInstruction
 .e7db					COMMAND_Stop:
-.e7db	20 82 e9	jsr $e982			jsr 	ReportError
+.e7db	20 af e9	jsr $e9af			jsr 	ReportError
 >e7de	53 74 6f 70 00					.text 	"Stop",$00
 .e7e3					COMMAND_End:
 >e7e3	02						.byte 	2
-.e7e4	4c 77 e9	jmp $e977			jmp 	WarmStart
+.e7e4	4c a4 e9	jmp $e9a4			jmp 	WarmStart
 
 ;******  Return to file: basic.asm
 
@@ -1317,7 +1317,7 @@
 .e7f3	1d 03 04	ora $0403,x			ora 	evalStack+3,x
 .e7f6	d0 12		bne $e80a			bne 	_CMDAExit
 .e7f8	ea		nop				nop
-.e7f9	20 82 e9	jsr $e982			jsr 	ReportError
+.e7f9	20 af e9	jsr $e9af			jsr 	ReportError
 >e7fc	41 73 73 65 72 74 20 66				.text 	"Assert failed",$00
 >e804	61 69 6c 65 64 00
 .e80a					_CMDAExit:
@@ -1389,7 +1389,7 @@
 .e874	20 28 e8	jsr $e828			jsr 	COMMAND_Clear 				; reset variables, stacks and pointers.
 .e877	60		rts				rts
 .e878					_COFail:
-.e878	20 82 e9	jsr $e982			jsr 	ReportError
+.e878	20 af e9	jsr $e9af			jsr 	ReportError
 >e87b	43 61 6e 6e 6f 74 20 72				.text 	"Cannot recover program",$00
 >e883	65 63 6f 76 65 72 20 70 72 6f 67 72 61 6d 00
 
@@ -1450,7 +1450,7 @@
 .e8e9	d0 fe		bne $e8e9			bne 	_ErrorInternal
 .e8eb	4c 6d e9	jmp $e96d			jmp 	_CLEStringWrite
 .e8ee					_CLESyntax:
-.e8ee	4c 7d e9	jmp $e97d			jmp 	SyntaxError
+.e8ee	4c aa e9	jmp $e9aa			jmp 	SyntaxError
 .e8f1					_CLEIndirect:
 .e8f1	48		pha				pha 								; save operator on stack
 .e8f2	c8		iny				iny									; advance over cursor
@@ -1521,30 +1521,49 @@
 .e96c	60		rts				rts
 .e96d					_CLEStringWrite:
 .e96d	ea		nop				nop
+.e96e	bd 00 04	lda $0400,x			lda 	evalStack+0,x 				; source string -> zTemp1
+.e971	85 26		sta $26				sta 	zTemp1
+.e973	bd 01 04	lda $0401,x			lda 	evalStack+1,x
+.e976	85 27		sta $27				sta 	zTemp1+1
+.e978	5a		phy				phy
+.e979	a0 00		ldy #$00			ldy 	#0
+.e97b					_CLEStringCopy:
+.e97b	b1 26		lda ($26),y			lda 	(zTemp1),y
+.e97d	91 2a		sta ($2a),y			sta 	(zTargetAddr),y
+.e97f	c9 00		cmp #$00			cmp 	#0
+.e981	f0 16		beq $e999			beq	 	_CLEStringWritten
+.e983	c8		iny				iny
+.e984	d0 f5		bne $e97b			bne 	_CLEStringCopy
+.e986	20 af e9	jsr $e9af			jsr 	ReportError
+>e989	42 61 64 20 73 74 72 69				.text 	"Bad string copy",$00
+>e991	6e 67 20 63 6f 70 79 00
+.e999					_CLEStringWritten:
+.e999	7a		ply				ply
+.e99a	60		rts				rts
 
 ;******  Return to file: basic.asm
 
-.e96e					Start:
-.e96e	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.e970	9a		txs			txs
-.e971	20 15 e8	jsr $e815			jsr 	COMMAND_New 				; do a new
-.e974	20 5c e8	jsr $e85c			jsr 	COMMAND_Old 				; get back the old program as we're deving.
-.e977					WarmStart:
-.e977	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.e979	9a		txs			txs
-.e97a	4c 7b e7	jmp $e77b			jmp 	COMMAND_Run 				; RUN current program.
-.e97d					SyntaxError:
-.e97d	a9 01		lda #$01			lda 	#1
-.e97f	ea		nop				nop
-.e980	80 fb		bra $e97d			bra 	SyntaxError
-.e982					ReportError:
-.e982	a9 02		lda #$02			lda 	#2
-.e984	ea		nop				nop
-.e985	80 fb		bra $e982			bra 	ReportError
+.e99b					Start:
+.e99b	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.e99d	9a		txs			txs
+.e99e	20 15 e8	jsr $e815			jsr 	COMMAND_New 				; do a new
+.e9a1	20 5c e8	jsr $e85c			jsr 	COMMAND_Old 				; get back the old program as we're deving.
+.e9a4					WarmStart:
+.e9a4	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.e9a6	9a		txs			txs
+.e9a7	4c 7b e7	jmp $e77b			jmp 	COMMAND_Run 				; RUN current program.
+.e9aa					SyntaxError:
+.e9aa	a9 01		lda #$01			lda 	#1
+.e9ac	ea		nop				nop
+.e9ad	80 fb		bra $e9aa			bra 	SyntaxError
+.e9af					ReportError:
+.e9af	a9 02		lda #$02			lda 	#2
+.e9b1	ea		nop				nop
+.e9b2	80 fb		bra $e9af			bra 	ReportError
 
 ;******  Processing file: include/basic_generated.inc
 
->2200	2c 01 00 43 20 92 20 34			.byte $2c,$01,$00,$43,$20,$92,$20,$34,$32,$8d,$44,$20,$92,$20,$8b,$32,$8d,$45,$20,$92,$20,$43,$20,$89,$20,$32,$8d,$40,$20,$92,$20,$8b,$31,$8d,$40,$20,$92,$20,$44,$20,$8b,$20,$31,$00,$20,$02,$00,$95,$82,$31,$46,$46,$46,$20,$92,$20,$36,$33,$8d,$80,$82,$31,$46,$46,$38,$92,$82,$41,$42,$37,$38,$34,$35,$30,$31,$00,$2e,$03,$00,$51,$92,$82,$31,$45,$30,$30,$8d,$20,$51,$51,$33,$92,$45,$8d,$80,$51,$92,$8b,$31,$8d,$51,$51,$32,$92,$8b,$32,$8d,$51,$87,$34,$88,$92,$82,$35,$41,$36,$41,$37,$41,$38,$41,$00,$1a,$04,$00,$51,$80,$32,$34,$92,$82,$31,$32,$33,$34,$35,$36,$37,$38,$8d,$51,$95,$32,$39,$92,$34,$32,$00,$20,$05,$00,$41,$92,$82,$31,$44,$30,$30,$8d,$41,$41,$31,$92,$82,$31,$44,$38,$30,$8d,$41,$41,$31,$95,$33,$92,$34,$32,$8d,$ad,$00,$00
+>2200	2c 01 00 43 20 92 20 34			.byte $2c,$01,$00,$43,$20,$92,$20,$34,$32,$8d,$44,$20,$92,$20,$8b,$32,$8d,$45,$20,$92,$20,$43,$20,$89,$20,$32,$8d,$40,$20,$92,$20,$8b,$31,$8d,$40,$20,$92,$20,$44,$20,$8b,$20,$31,$00,$20,$02,$00,$95,$82,$31,$46,$46,$46,$20,$92,$20,$36,$33,$8d,$80,$82,$31,$46,$46,$38,$92,$82,$41,$42,$37,$38,$34,$35,$30,$31,$00,$2e,$03,$00,$51,$92,$82,$31,$45,$30,$30,$8d,$20,$51,$51,$33,$92,$45,$8d,$80,$51,$92,$8b,$31,$8d,$51,$51,$32,$92,$8b,$32,$8d,$51,$87,$34,$88,$92,$82,$35,$41,$36,$41,$37,$41,$38,$41,$00,$1a,$04,$00,$51,$80,$32,$34,$92,$82,$31,$32,$33,$34,$35,$36,$37,$38,$8d,$51,$95,$32,$39,$92,$34,$32,$00,$1e,$05,$00,$41,$92,$82,$31,$44,$30,$30,$8d,$41,$41,$31,$92,$82,$31,$44,$38,$30,$8d,$41,$41,$31,$95,$33,$92,$34,$32,$00,$22,$06,$00,$83,$41,$92,$81,$48,$69,$81,$8d,$41,$83,$38,$92,$81,$77,$6f,$72,$6c,$64,$81,$8d,$40,$92,$9a,$87,$41,$83,$38,$88,$8d,$ad,$00,$00
 >2208	32 8d 44 20 92 20 8b 32 8d 45 20 92 20 43 20 89
 >2218	20 32 8d 40 20 92 20 8b 31 8d 40 20 92 20 44 20
 >2228	8b 20 31 00 20 02 00 95 82 31 46 46 46 20 92 20
@@ -1553,9 +1572,11 @@
 >2258	51 51 33 92 45 8d 80 51 92 8b 31 8d 51 51 32 92
 >2268	8b 32 8d 51 87 34 88 92 82 35 41 36 41 37 41 38
 >2278	41 00 1a 04 00 51 80 32 34 92 82 31 32 33 34 35
->2288	36 37 38 8d 51 95 32 39 92 34 32 00 20 05 00 41
+>2288	36 37 38 8d 51 95 32 39 92 34 32 00 1e 05 00 41
 >2298	92 82 31 44 30 30 8d 41 41 31 92 82 31 44 38 30
->22a8	8d 41 41 31 95 33 92 34 32 8d ad 00 00
+>22a8	8d 41 41 31 95 33 92 34 32 00 22 06 00 83 41 92
+>22b8	81 48 69 81 8d 41 83 38 92 81 77 6f 72 6c 64 81
+>22c8	8d 40 92 9a 87 41 83 38 88 8d ad 00 00
 
 ;******  Return to file: basic.asm
 

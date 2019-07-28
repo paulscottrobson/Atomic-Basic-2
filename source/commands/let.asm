@@ -26,7 +26,7 @@ COMMAND_Let: 	;; let
 		;		Start of assignment
 		;
 		cmp 	#KW_QUESTION				; check for first being indirect.
-		beq 	_CLEIndirect
+		beq 	_CLEIndirect 				; e.g. !x = 42
 		cmp 	#KW_PLING
 		beq 	_CLEIndirect
 		cmp 	#KW_DOLLAR
@@ -181,8 +181,28 @@ _CLEWordWrite:
 		ply 								; restore Y
 		rts
 		;
-		;		Write string at evalStack+0,1 to storage at zTemp1,zTemp1+1
+		;		Write string at evalStack+0,1 to storage at zTargetAddr
 		;		You cannot write to hardware this way.
 		;
 _CLEStringWrite:
 		#break
+		lda 	evalStack+0,x 				; source string -> zTemp1
+		sta 	zTemp1 
+		lda 	evalStack+1,x
+		sta 	zTemp1+1
+		;
+		phy
+		ldy 	#0
+_CLEStringCopy:
+		lda 	(zTemp1),y
+		sta 	(zTargetAddr),y
+		cmp 	#0
+		beq	 	_CLEStringWritten
+		iny
+		bne 	_CLEStringCopy
+		#error 	"Bad string copy"		
+		;
+_CLEStringWritten:
+		ply 	
+		rts
+
