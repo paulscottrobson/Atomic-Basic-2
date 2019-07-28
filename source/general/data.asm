@@ -18,6 +18,7 @@ zBasicStack:	.word 	? 					; stack for BASIC.
 zLowMemory:		.word	?					; next free space after program (arrays,vars etc.)
 zTemp1:			.word 	?					; temporary vars
 zTemp2:			.word 	?
+zTargetAddr: 	.dword 	? 					; address of LHS of assignment
 
 		* = startMemory
 

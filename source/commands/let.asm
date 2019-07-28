@@ -23,6 +23,8 @@ COMMAND_Let: 	;; let
 		beq 	COMMAND_Let
 		dey
 		;
+		;		Start of assignment
+		;
 		cmp 	#KW_QUESTION				; check for first being indirect.
 		beq 	_CLEIndirect
 		cmp 	#KW_PLING
@@ -30,8 +32,20 @@ COMMAND_Let: 	;; let
 		cmp 	#KW_DOLLAR
 		beq 	_CLEIndirect
 		;
+		;		Find a variable reference. Arguably should just be a single variable
+		;		but being able to write AA0!4 would be handy.
+		;
 		ldx 	#0 							; clear evaluation stack.
 		jsr 	VARReference 				; get a variable reference.
+		;
+		lda 	zTemp1 						; copy into target addr
+		sta 	zTargetAddr
+		lda 	zTemp1+1
+		sta 	zTargetAddr+1
+		lda 	zTemp1+2
+		sta 	zTargetAddr+2
+		lda 	zTemp1+3
+		sta 	zTargetAddr+3
 		;
 		;		Check Binary LHS operator, e.g. x?1 n!1 q$1
 		;
@@ -52,18 +66,10 @@ _CLEGetBinLHSOp:
 		;
 		lda 	#KW_PLING 					; we want to do a 32 bit write.
 		;		
-		;		Target address is in zTemp1. Should be pointing at '='
+		;		Target address is in zTargetAddr. Code ptr should be pointing at '='
 		;
 _CLEWriteToAddress:		
-		pha 								; save what we want to do on the stack.
-		lda 	zTemp1 						; push zTemp on the stack
-		pha
-		lda 	zTemp1+1
-		pha
-		lda 	zTemp1+2
-		pha
-		lda 	zTemp1+3
-		pha
+		pha 								; save write-type.
 		;
 		;		Check if the '=' is present.
 		;
@@ -74,40 +80,22 @@ _CLEWriteToAddress:
 		;
 		jsr 	EvaluateBase 				; evaluate the RHS.
 		;
-		;		Restore the address back.
-		;
-		pla 
-		sta 	zTemp1+3
-		pla 	
-		sta 	zTemp1+2
-		pla 	
-		sta 	zTemp1+1
-		pla 	
-		sta 	zTemp1+0
-		;
 		;		Restore the store-type and do the action.
 		;
 		pla
 		cmp 	#KW_PLING
 		beq 	_CLEWordWrite
-		cmp 	#KW_DOLLAR
-		beq 	_CLEStringWrite
 		cmp 	#KW_QUESTION
 		beq 	_CLEByteWrite
-		#error 	"?IN"		
+		cmp 	#KW_DOLLAR
+_ErrorInternal:		
+		bne 	_ErrorInternal
+		jmp 	_CLEStringWrite
 		;
 		;		Come here on error
 		;
 _CLESyntax:
 		jmp 	SyntaxError
-
-		;
-		;		Come here for term!$?term LHS. Already have the address of the
-		;		left term in ZTemp1.
-		;
-_CLEBinaryLHTerm:
-		#break
-
 		; 
 		;		Come here for ?<atom> !<atom> and $<atom>
 		;
@@ -117,16 +105,52 @@ _CLEIndirect:
 		ldx 	#0 							; evaluate the address to indirect through.
 		jsr 	EvaluateAtomCurrentLevel 	
 		lda 	evalStack+0,x				; copy that as the address.
-		sta 	zTemp1+0
+		sta 	zTargetAddr+0
 		lda 	evalStack+1,x
-		sta 	zTemp1+1
+		sta 	zTargetAddr+1
 		lda 	evalStack+2,x
-		sta 	zTemp1+2
+		sta 	zTargetAddr+2
 		lda 	evalStack+3,x
-		sta 	zTemp1+3
+		sta 	zTargetAddr+3
 		pla 								; restore operator.
 		jmp 	_CLEWriteToAddress
-
+		;
+		;		Come here for term!$?term LHS. Already have the address of the
+		;		left term in zTargetAddr.
+		;
+_CLEBinaryLHTerm:
+		pha 								; save operator on stack
+		iny 								; skip over it.
+		ldx 	#0 							; evaluate the address to indirect through.
+		jsr 	EvaluateAtomCurrentLevel 	
+		;
+		lda 	zTargetAddr 				; copy zTargetAddr to zTemp1. Technically
+		sta 	zTemp1 						; a four byte address.....
+		lda 	zTargetAddr+1
+		sta 	zTemp1+1 					; we only worry about 4 byte value
+		;
+		phy 								; save Y
+		clc 								; add variable evaluated to (zTargetAddr)
+		ldy 	#0
+		lda 	(zTemp1),y
+		adc 	evalStack+0,x
+		sta 	zTargetAddr+0
+		iny
+		lda 	(zTemp1),y
+		adc 	evalStack+1,x
+		sta 	zTargetAddr+1
+		iny
+		lda 	(zTemp1),y
+		adc 	evalStack+2,x
+		sta 	zTargetAddr+2
+		iny
+		lda 	(zTemp1),y
+		adc 	evalStack+3,x
+		sta 	zTargetAddr+3
+		;
+		ply 								; restore Y
+		pla 								; restore the operator.
+		jmp 	_CLEWriteToAddress
 		;
 		;		Byte indirect write
 		;		
@@ -134,7 +158,7 @@ _CLEByteWrite:
 		lda 	evalStack+0,x 				; get the byte to write.
 		phy 								; write the byte preserving Y
 		ldy 	#0
-		sta 	(zTemp1),y
+		sta 	(zTargetAddr),y
 		ply
 		rts		
 		;
@@ -144,21 +168,21 @@ _CLEWordWrite:
 		phy
 		ldy 	#0
 		lda 	evalStack+0,x
-		sta 	(zTemp1),y
+		sta 	(zTargetAddr),y
 		iny
 		lda 	evalStack+1,x
-		sta 	(zTemp1),y
+		sta 	(zTargetAddr),y
 		iny
 		lda 	evalStack+2,x
-		sta 	(zTemp1),y
+		sta 	(zTargetAddr),y
 		iny
 		lda 	evalStack+3,x
-		sta 	(zTemp1),y
+		sta 	(zTargetAddr),y
 		ply 								; restore Y
 		rts
 		;
 		;		Write string at evalStack+0,1 to storage at zTemp1,zTemp1+1
+		;		You cannot write to hardware this way.
 		;
 _CLEStringWrite:
 		#break
-
