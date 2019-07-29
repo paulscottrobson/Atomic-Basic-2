@@ -37,12 +37,21 @@
 		
 Start:
 		#resetstack 						; reset CPU stack.
+		jsr 	SIOInitialise 				; initialise the I/O system.
+		ldx 	#BootMsg1 & 255 			; boot text.
+		ldy 	#BootMsg1 >> 8
+		jsr 	SIOPrintString
+		ldx 	#(endMemory-startMemory-1) & $FF
+		ldy 	#(endMemory-startMemory-1) >> 8
+		jsr 	PrintWordInteger
+		ldx 	#BootMsg2 & 255
+		ldy 	#BootMsg2 >> 8
+		jsr 	SIOPrintString
 
 		.if TARGET=1 						; on the MEGA65 if we provide code we have to copy
 		jsr 	CopyBasicCode 				; it into the BASIC area.
 		.endif
 
-		jsr 	SIOInitialise 				; initialise the I/O system.
 		lda 	StartBehaviour 				; what to do ?
 		cmp 	#'C'						; execute from command line
 		beq		CommandLine
@@ -63,8 +72,8 @@ RunProgram:
 		.if TARGET=1						; copy BASIC into RAM on Mega65
 		jsr 	CopyBasicCode
 		.endif
-		jsr 	COMMAND_New 				; do a new 
-		jsr 	COMMAND_Old 				; get back the old program as we're deving.
+		jsr 	COMMAND_NewCode 			; do a new 
+		jsr 	COMMAND_OldCode 			; get back the old program as we're deving.
 		jmp 	COMMAND_Run
 
 ; *******************************************************************************************
@@ -74,7 +83,7 @@ RunProgram:
 ; *******************************************************************************************
 
 CommandLine:		
-		jsr 	Command_New
+		jsr 	Command_NewCode
 WarmStart:
 		#resetstack 						; reset the stack
 		jsr 	SIOReadLine 				; read input line.
@@ -120,6 +129,10 @@ TokeniseExec:
 		jsr 	TokeniseString
 		#exit 								; and exit immediately.
 
+BootMsg1:
+		.text 	"*** ATOMIC BASIC ***",13,13,0
+BootMsg2:		
+		.text	" BYTES FREE.",13,13,0
 ; *******************************************************************************************
 ;
 ;								BASIC Program, built in.
@@ -132,4 +145,5 @@ TokeniseExec:
 
 BasicCode:
 		.include "include/basic_generated.inc"
+
 

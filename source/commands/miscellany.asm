@@ -48,7 +48,11 @@ _CREMExit:
 ;
 ; *******************************************************************************************
 
-COMMAND_New:	 ;; NEW
+COMMAND_NewExec:	;; NEW
+		jsr 	COMMAND_NewCode
+		jmp 	WarmStart
+
+COMMAND_NewCode:		
 		lda 	#0 							; erase the actual program.
 		sta 	BasicProgram 				; by zeroing the initial offset.
 		;
@@ -110,8 +114,11 @@ _CCNoCarry:
 ;
 ; *******************************************************************************************
 
-COMMAND_Old:	;; OLD
+COMMAND_OldExec:;; OLD
+		jsr 	COMMAND_OldCode
+		jmp 	WarmStart
 
+COMMAND_OldCode:
 		lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
 		sta 	zLowMemory 
 		lda 	#BasicProgram >> 8

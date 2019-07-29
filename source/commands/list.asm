@@ -18,6 +18,9 @@ COMMAND_List: 	;; list
 		lda 	#16 						; print 16 lines
 		sta 	zTargetAddr+2
 _CLLILoop:
+		ldy 	#0
+		lda 	(zTargetAddr),y 			; if that offset is zero exit
+		beq 	_CLLIExit
 		jsr 	CLIOneLine 					; list one line.
 		ldy 	#0 							; advance pointer to next.
 		clc
@@ -27,8 +30,6 @@ _CLLILoop:
 		bcc 	_CLLINoCarry
 		inc 	zTargetAddr+1
 _CLLINoCarry:
-		lda 	(zTargetAddr),y 			; if that offset is zero exit
-		beq 	_CLLIExit
 		dec 	zTargetAddr+2 				; done all of them ?
 		bne 	_CLLILoop
 _CLLIExit:

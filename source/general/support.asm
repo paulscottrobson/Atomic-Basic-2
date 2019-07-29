@@ -51,21 +51,35 @@ _REPrint:
 		lda 	#"@"
 		jsr 	SIOPrintCharacter
 		ldy 	#1
-		ldx 	#0
 		lda 	(zCurrentLine),y
-		sta 	evalStack+0,x
+		tax
 		iny
 		lda 	(zCurrentLine),y
+		tay
+		jsr 	PrintWordInteger
+_RENoLineNumber:
+		lda 	#13
+		jsr 	SIOPrintCharacter
+		jmp 	WarmStart		
+
+; *******************************************************************************************
+;
+;							Print XY as an integer
+;
+; *******************************************************************************************
+
+PrintWordInteger:
+		txa
+		ldx 	#0
+		sta 	evalStack+0,x
+		tya
 		sta 	evalStack+1,x
 		iny
 		lda 	#0
 		sta 	evalStack+2,x
 		sta 	evalStack+3,x
 		jsr 	CPRPrintInteger
-_RENoLineNumber:
-		lda 	#13
-		jsr 	SIOPrintCharacter
-		jmp 	WarmStart		
+		rts
 
 ; *******************************************************************************************
 ;
