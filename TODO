@@ -3,6 +3,11 @@ Progress
 
 
 - Tokeniser Unit Tests	
+	- why won't it tokenise a single space correctly ???? (strip bodge)
+	- needs to cope with L/C.
+	- add more random elements from the tokens.
+	- run the unit tests for a bit.
+
 - Proper Error Handlers.
 - Command Line, executing from keyboard (various options)
 

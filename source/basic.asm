@@ -86,13 +86,12 @@ WarmStart:
 ; *******************************************************************************************
 
 TokeniseExec:
-		#break
-		lda 	#InputLine & $FF 			; if so tokenise whatever I've put in the input
-		sta 	zTemp1 						; buffer
-		lda 	#InputLine >> 8
+		lda 	#BasicCode & $FF 			; if so tokenise whatever I've put in the basic code
+		sta 	zTemp1 						; area
+		lda 	#BasicCode >> 8
 		sta 	zTemp1+1
 		jsr 	TokeniseString
-		.byte 	3 							; and exit immediately.
+		#exit 								; and exit immediately.
 
 ; *******************************************************************************************
 ;
