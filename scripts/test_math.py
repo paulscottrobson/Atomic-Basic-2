@@ -33,6 +33,7 @@ class UnitTest(object):
 	#
 	def create(self):
 		self.basic = BasicProgram()
+		self.basic.setBehaviour('R')
 		for i in range(0,self.getCount()):
 			self.generate(i)
 		name = "../source/include/basic_generated.inc".replace("/",os.sep)

@@ -14,6 +14,16 @@ from tokens import *
 from token_basic import *
 from test_math import *
 
+# *******************************************************************************************
+#
+#		Assignment/indirection write test.
+#
+#		This creates the block.check file. When this is found, after execution
+#		it is compared with the memory.dump file from the emulator, thus checking
+#		to see if the various writes to $1C00-end of variabeles worked.
+#
+# *******************************************************************************************
+
 class AssignmentUnitTest(UnitTest):
 
 	def __init__(self,randomSeed = None):

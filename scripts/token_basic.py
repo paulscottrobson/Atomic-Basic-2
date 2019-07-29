@@ -80,6 +80,12 @@ class BasicProgram(object):
 		self.tokens = []														# token code
 		self.lastLine = 0 														# auto number
 		self.tokeniser = Tokeniser()
+		self.action = "C"														# default behaviour
+	#
+	#		Set behaviour (R)un (C)ommand Line (T)okenise
+	#		
+	def setBehaviour(self,behaviour):
+		self.action = behaviour.upper()
 	#
 	#		Add a line of BASIC
 	#	
@@ -103,6 +109,7 @@ class BasicProgram(object):
 		print("Size of program = ${0:04x}".format(len(out)))
 		out = ",".join(["${0:02x}".format(x) for x in out])
 		handle.write("\t.byte {0}\n".format(out))
+		handle.write("StartBehaviour:\n\t.text \"{0}\"\n".format(self.action))
 
 if __name__ == '__main__':
 	#tok = Tokeniser()
@@ -123,10 +130,9 @@ if __name__ == '__main__':
 	bas.add('$#1C00="TESTING!":X = -4',10	)
 	bas.add('print "HELLO WORLD!"\'\'"BYE.";\'$#1C00\'X\'&X',210)
 	bas.add("list:stop",300)
+	bas.setBehaviour('R')
 	#
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
-	bas.render(sys.stdout)
 	bas.render(targetFile)
 	targetFile.close()
 
-# extra space causes the q(4) to fail ????

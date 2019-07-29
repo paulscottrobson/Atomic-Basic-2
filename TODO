@@ -1,11 +1,9 @@
 Progress
 ========
-- Come up with a system for controlling how it behaves on boot.
-	- what can we modify - we can modify the ROM image that's loaded in ?
-	- put the control in the BASIC code.
+
 
 - Tokeniser Unit Tests	
-
+- Proper Error Handlers.
 - Command Line, executing from keyboard (various options)
 
 - GOTO GOSUB , give LIST a start line option.

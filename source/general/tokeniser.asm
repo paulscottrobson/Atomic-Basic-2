@@ -181,19 +181,6 @@ _TSFullFail:
 ;
 ; *******************************************************************************************
 
-TokeniseCheck:
-		;
-		;		TODO: Check goes in.
-		;
-		#break
-		lda 	#InputLine & $FF 			; if so tokenise whatever I've put in the input
-		sta 	zTemp1 						; buffer
-		lda 	#InputLine >> 8
-		sta 	zTemp1+1
-		jsr 	TokeniseString
-		.byte 	3 							; and exit immediately.
-_TCExit:rts
-
 TokeniseTest:
 		lda 	#TTString & $FF
 		sta 	zTemp1

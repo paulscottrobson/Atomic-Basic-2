@@ -43,25 +43,67 @@ Start:
 		.endif
 
 		jsr 	SIOInitialise 				; initialise the I/O system.
+		lda 	StartBehaviour 				; what to do ?
+		cmp 	#'C'						; execute from command line
+		beq		CommandLine
+		cmp 	#'R' 						; run program in memory.
+		beq	 	RunProgram
+		cmp 	#'T'						; tokenise test
+		beq 	TokeniseExec
+
+		jmp		SyntaxError
+
+; *******************************************************************************************
+;
+;									Run whatever is loaded
+;
+; *******************************************************************************************
+
+RunProgram:
+		.if TARGET=1						; copy BASIC into RAM on Mega65
+		jsr 	CopyBasicCode
+		.endif
 		jsr 	COMMAND_New 				; do a new 
 		jsr 	COMMAND_Old 				; get back the old program as we're deving.
-		
+		jmp 	COMMAND_Run
+
+; *******************************************************************************************
+;
+;							Enter commands through the command line
+;
+; *******************************************************************************************
+
+CommandLine:		
+		jsr 	Command_New
 WarmStart:
 		#resetstack 						; reset the stack
-		jmp 	COMMAND_Run 				; RUN current program.
+		jmp 	WarmStart
 
-SyntaxError:
-		lda 	#1
-		break
-		bra 	SyntaxError
-ReportError:	
-		lda 	#2
-		break
-		bra 	ReportError
+; *******************************************************************************************
+;
+;						Tokenise whatever is in the buffer and exit
+;
+; *******************************************************************************************
+
+TokeniseExec:
+		#break
+		lda 	#InputLine & $FF 			; if so tokenise whatever I've put in the input
+		sta 	zTemp1 						; buffer
+		lda 	#InputLine >> 8
+		sta 	zTemp1+1
+		jsr 	TokeniseString
+		.byte 	3 							; and exit immediately.
+
+; *******************************************************************************************
+;
+;								BASIC Program, built in.
+;
+; *******************************************************************************************
 
 		.if TARGET=2 						; emulator, can just include code and it's loaded
-		* = BasicProgram
+		* = BasicProgram 					; mega65, part of the ROM and needs copying in.
 		.endif
+
 BasicCode:
 		.include "include/basic_generated.inc"
 
