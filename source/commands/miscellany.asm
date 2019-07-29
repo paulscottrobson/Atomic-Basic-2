@@ -81,10 +81,10 @@ _CCClearVar:
 		cpx 	#27*4
 		bpl 	_CCClearVar
 		;
-		lda 	#basicStack & $FF 			; reset BASIC stack
-		sta 	zBasicStack
-		lda 	#basicStack >> 8
-		sta 	zBasicStack+1
+		lda 	#0 							; reset BASIC stack index
+		sta 	basicStackIndex
+		lda 	#$FF 						; put invalid token on TOS, so when pulled.
+		sta 	basicStack 					; causes an error.
 		;
 		lda 	#BasicProgram & $FF 		; now find where the program ends.
 		sta 	zLowMemory

@@ -33,6 +33,14 @@ CRUNNewLine:
 		;		Run another instruction from (zCurrentLine),y
 		;
 CRUNNextInstruction:
+		inc 	breakCheckCount 			; don't check every time, might be slow.
+		lda 	breakCheckCount
+		and 	#$1F 						; checking once in 32.
+		beq 	_CRUNNoCheck
+		jsr 	EXTCheckBreak
+		beq 	_CRUNNoCheck
+		#error 	"BREAK"
+_CRUNNoCheck:		
 		lda 	#0 							; reset the string buffer position
 		sta 	StringBufferPos
 		lda 	(zCurrentLine),y 			; get next token

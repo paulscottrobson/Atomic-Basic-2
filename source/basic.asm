@@ -34,7 +34,8 @@
 		.include 	"commands/let.asm"		; assignment.
 		.include 	"commands/print.asm" 	; print statement
 		.include 	"commands/list.asm"		; list statement
-		
+		.include 	"commands/dountil.asm"	; do/until statement
+				
 Start:
 		#resetstack 						; reset CPU stack.
 		jsr 	SIOInitialise 				; initialise the I/O system.

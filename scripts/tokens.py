@@ -81,7 +81,7 @@ class TokenList(object):
 		[command]	let 	end 	goto	gosub	for 	next
 					print 	input 	list 	stop 	assert 	rem		
 					new 	old 	clear	if		then 	do		
-					loop 	to 		step	link	run 	cls					
+					until 	to 		step	link	run 	cls					
 		#
 		#		Unary operators
 		#

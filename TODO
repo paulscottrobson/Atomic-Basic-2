@@ -4,10 +4,8 @@ Progress
 - Code Editing.
 - Test on Mega65 board.
 - GOTO GOSUB , give LIST a start line option.
-- Interrupt with Ctrl+C
 - Code read #1
-- IF THEN 
-- DO LOOP 
+- IF [THEN] 
 - FOR TO NEXT STEP
 - LINK
 - INPUT

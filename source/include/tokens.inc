@@ -27,7 +27,7 @@ KeywordVectorTable:
 	.word	COMMAND_Clear                 ; "clear"    ($0099)
 	.word	COMMAND_CLS                   ; "cls"      ($009a)
 	.word	UNARY_Ch                      ; "ch"       ($009b)
-	.word	SyntaxError                   ; "do"       ($009c)
+	.word	COMMAND_Do                    ; "do"       ($009c)
 	.word	COMMAND_End                   ; "end"      ($009d)
 	.word	SyntaxError                   ; "for"      ($009e)
 	.word	SyntaxError                   ; "gosub"    ($009f)
@@ -35,23 +35,23 @@ KeywordVectorTable:
 	.word	SyntaxError                   ; "input"    ($00a1)
 	.word	SyntaxError                   ; "if"       ($00a2)
 	.word	COMMAND_List                  ; "list"     ($00a3)
-	.word	SyntaxError                   ; "loop"     ($00a4)
-	.word	SyntaxError                   ; "link"     ($00a5)
-	.word	COMMAND_Let                   ; "let"      ($00a6)
-	.word	UNARY_Len                     ; "len"      ($00a7)
-	.word	SyntaxError                   ; "next"     ($00a8)
-	.word	COMMAND_NewExec               ; "new"      ($00a9)
-	.word	COMMAND_OldExec               ; "old"      ($00aa)
-	.word	COMMAND_Print                 ; "print"    ($00ab)
-	.word	UNARY_Page                    ; "page"     ($00ac)
-	.word	COMMAND_Rem                   ; "rem"      ($00ad)
-	.word	COMMAND_Run                   ; "run"      ($00ae)
-	.word	UNARY_Rnd                     ; "rnd"      ($00af)
-	.word	COMMAND_Stop                  ; "stop"     ($00b0)
-	.word	SyntaxError                   ; "step"     ($00b1)
-	.word	SyntaxError                   ; "then"     ($00b2)
-	.word	UNARY_Top                     ; "top"      ($00b3)
-	.word	SyntaxError                   ; "to"       ($00b4)
+	.word	SyntaxError                   ; "link"     ($00a4)
+	.word	COMMAND_Let                   ; "let"      ($00a5)
+	.word	UNARY_Len                     ; "len"      ($00a6)
+	.word	SyntaxError                   ; "next"     ($00a7)
+	.word	COMMAND_NewExec               ; "new"      ($00a8)
+	.word	COMMAND_OldExec               ; "old"      ($00a9)
+	.word	COMMAND_Print                 ; "print"    ($00aa)
+	.word	UNARY_Page                    ; "page"     ($00ab)
+	.word	COMMAND_Rem                   ; "rem"      ($00ac)
+	.word	COMMAND_Run                   ; "run"      ($00ad)
+	.word	UNARY_Rnd                     ; "rnd"      ($00ae)
+	.word	COMMAND_Stop                  ; "stop"     ($00af)
+	.word	SyntaxError                   ; "step"     ($00b0)
+	.word	SyntaxError                   ; "then"     ($00b1)
+	.word	UNARY_Top                     ; "top"      ($00b2)
+	.word	SyntaxError                   ; "to"       ($00b3)
+	.word	COMMAND_Until                 ; "until"    ($00b4)
 	.word	BFUNC_Or                      ; "|"        ($00b5)
 	.word	BFUNC_StringCompare           ; "~"        ($00b6)
 
@@ -93,23 +93,23 @@ TokenText:
 	.byte $49,$4e,$50,$55,$d4             ; $00a1 input
 	.byte $49,$c6                         ; $00a2 if
 	.byte $4c,$49,$53,$d4                 ; $00a3 list
-	.byte $4c,$4f,$4f,$d0                 ; $00a4 loop
-	.byte $4c,$49,$4e,$cb                 ; $00a5 link
-	.byte $4c,$45,$d4                     ; $00a6 let
-	.byte $4c,$45,$ce                     ; $00a7 len
-	.byte $4e,$45,$58,$d4                 ; $00a8 next
-	.byte $4e,$45,$d7                     ; $00a9 new
-	.byte $4f,$4c,$c4                     ; $00aa old
-	.byte $50,$52,$49,$4e,$d4             ; $00ab print
-	.byte $50,$41,$47,$c5                 ; $00ac page
-	.byte $52,$45,$cd                     ; $00ad rem
-	.byte $52,$55,$ce                     ; $00ae run
-	.byte $52,$4e,$c4                     ; $00af rnd
-	.byte $53,$54,$4f,$d0                 ; $00b0 stop
-	.byte $53,$54,$45,$d0                 ; $00b1 step
-	.byte $54,$48,$45,$ce                 ; $00b2 then
-	.byte $54,$4f,$d0                     ; $00b3 top
-	.byte $54,$cf                         ; $00b4 to
+	.byte $4c,$49,$4e,$cb                 ; $00a4 link
+	.byte $4c,$45,$d4                     ; $00a5 let
+	.byte $4c,$45,$ce                     ; $00a6 len
+	.byte $4e,$45,$58,$d4                 ; $00a7 next
+	.byte $4e,$45,$d7                     ; $00a8 new
+	.byte $4f,$4c,$c4                     ; $00a9 old
+	.byte $50,$52,$49,$4e,$d4             ; $00aa print
+	.byte $50,$41,$47,$c5                 ; $00ab page
+	.byte $52,$45,$cd                     ; $00ac rem
+	.byte $52,$55,$ce                     ; $00ad run
+	.byte $52,$4e,$c4                     ; $00ae rnd
+	.byte $53,$54,$4f,$d0                 ; $00af stop
+	.byte $53,$54,$45,$d0                 ; $00b0 step
+	.byte $54,$48,$45,$ce                 ; $00b1 then
+	.byte $54,$4f,$d0                     ; $00b2 top
+	.byte $54,$cf                         ; $00b3 to
+	.byte $55,$4e,$54,$49,$cc             ; $00b4 until
 	.byte $fc                             ; $00b5 |
 	.byte $fe                             ; $00b6 ~
 	.byte $00
@@ -151,23 +151,23 @@ TokenTypeInformation:
 	.byte $04                             ; $00a1 input
 	.byte $04                             ; $00a2 if
 	.byte $04                             ; $00a3 list
-	.byte $04                             ; $00a4 loop
-	.byte $04                             ; $00a5 link
-	.byte $04                             ; $00a6 let
-	.byte $09                             ; $00a7 len
-	.byte $04                             ; $00a8 next
-	.byte $04                             ; $00a9 new
-	.byte $04                             ; $00aa old
-	.byte $04                             ; $00ab print
-	.byte $09                             ; $00ac page
-	.byte $04                             ; $00ad rem
-	.byte $04                             ; $00ae run
-	.byte $09                             ; $00af rnd
-	.byte $04                             ; $00b0 stop
-	.byte $04                             ; $00b1 step
-	.byte $04                             ; $00b2 then
-	.byte $09                             ; $00b3 top
-	.byte $04                             ; $00b4 to
+	.byte $04                             ; $00a4 link
+	.byte $04                             ; $00a5 let
+	.byte $09                             ; $00a6 len
+	.byte $04                             ; $00a7 next
+	.byte $04                             ; $00a8 new
+	.byte $04                             ; $00a9 old
+	.byte $04                             ; $00aa print
+	.byte $09                             ; $00ab page
+	.byte $04                             ; $00ac rem
+	.byte $04                             ; $00ad run
+	.byte $09                             ; $00ae rnd
+	.byte $04                             ; $00af stop
+	.byte $04                             ; $00b0 step
+	.byte $04                             ; $00b1 then
+	.byte $09                             ; $00b2 top
+	.byte $04                             ; $00b3 to
+	.byte $04                             ; $00b4 until
 	.byte $00                             ; $00b5 |
 	.byte $01                             ; $00b6 ~
 
@@ -213,23 +213,23 @@ KW_GOTO = $00a0
 KW_INPUT = $00a1
 KW_IF = $00a2
 KW_LIST = $00a3
-KW_LOOP = $00a4
-KW_LINK = $00a5
-KW_LET = $00a6
-KW_LEN = $00a7
-KW_NEXT = $00a8
-KW_NEW = $00a9
-KW_OLD = $00aa
-KW_PRINT = $00ab
-KW_PAGE = $00ac
-KW_REM = $00ad
-KW_RUN = $00ae
-KW_RND = $00af
-KW_STOP = $00b0
-KW_STEP = $00b1
-KW_THEN = $00b2
-KW_TOP = $00b3
-KW_TO = $00b4
+KW_LINK = $00a4
+KW_LET = $00a5
+KW_LEN = $00a6
+KW_NEXT = $00a7
+KW_NEW = $00a8
+KW_OLD = $00a9
+KW_PRINT = $00aa
+KW_PAGE = $00ab
+KW_REM = $00ac
+KW_RUN = $00ad
+KW_RND = $00ae
+KW_STOP = $00af
+KW_STEP = $00b0
+KW_THEN = $00b1
+KW_TOP = $00b2
+KW_TO = $00b3
+KW_UNTIL = $00b4
 KW_BAR = $00b5
 KW_TILDE = $00b6
 

@@ -14,7 +14,6 @@
 		* = zeroPage
 
 zCurrentLine: 	.word 	?					; address of current line (offset word)
-zBasicStack:	.word 	? 					; stack for BASIC.
 zLowMemory:		.word	?					; next free space after program (arrays,vars etc.)
 zTemp1:			.word 	?					; temporary vars
 zTemp2:			.word 	?
@@ -36,7 +35,8 @@ StringBufferPos:.byte 	? 					; next free slot in string buffer
 RandomSeed 		.word 	? 					; Random Number
 xCursor 		.byte 	? 					; cursor position
 yCursor 		.byte 	?
-
+breakCheckCount	.byte 	?					; how often check for break.
+basicStackIndex	.byte 	? 					; index into Basic Stack.
 				.align	256 				
 TokeniseBuffer: 							; tokenise buffer
 				.fill 	256
