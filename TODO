@@ -1,7 +1,6 @@
 Progress
 ========
 
-- Why doesn't RUN work ?
 - Test on Mega65 board.
 - GOTO GOSUB , give LIST a start line option.
 - Code read #1

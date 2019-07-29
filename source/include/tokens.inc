@@ -43,14 +43,15 @@ KeywordVectorTable:
 	.word	COMMAND_Old                   ; "old"      ($00a9)
 	.word	COMMAND_Print                 ; "print"    ($00aa)
 	.word	COMMAND_Rem                   ; "rem"      ($00ab)
-	.word	UNARY_Rnd                     ; "rnd"      ($00ac)
-	.word	COMMAND_Stop                  ; "stop"     ($00ad)
-	.word	SyntaxError                   ; "step"     ($00ae)
-	.word	SyntaxError                   ; "then"     ($00af)
-	.word	UNARY_Top                     ; "top"      ($00b0)
-	.word	SyntaxError                   ; "to"       ($00b1)
-	.word	BFUNC_Or                      ; "|"        ($00b2)
-	.word	BFUNC_StringCompare           ; "~"        ($00b3)
+	.word	COMMAND_Run                   ; "run"      ($00ac)
+	.word	UNARY_Rnd                     ; "rnd"      ($00ad)
+	.word	COMMAND_Stop                  ; "stop"     ($00ae)
+	.word	SyntaxError                   ; "step"     ($00af)
+	.word	SyntaxError                   ; "then"     ($00b0)
+	.word	UNARY_Top                     ; "top"      ($00b1)
+	.word	SyntaxError                   ; "to"       ($00b2)
+	.word	BFUNC_Or                      ; "|"        ($00b3)
+	.word	BFUNC_StringCompare           ; "~"        ($00b4)
 
 
 TokenText:
@@ -98,14 +99,15 @@ TokenText:
 	.byte $4f,$4c,$c4                     ; $00a9 old
 	.byte $50,$52,$49,$4e,$d4             ; $00aa print
 	.byte $52,$45,$cd                     ; $00ab rem
-	.byte $52,$4e,$c4                     ; $00ac rnd
-	.byte $53,$54,$4f,$d0                 ; $00ad stop
-	.byte $53,$54,$45,$d0                 ; $00ae step
-	.byte $54,$48,$45,$ce                 ; $00af then
-	.byte $54,$4f,$d0                     ; $00b0 top
-	.byte $54,$cf                         ; $00b1 to
-	.byte $fc                             ; $00b2 |
-	.byte $fe                             ; $00b3 ~
+	.byte $52,$55,$ce                     ; $00ac run
+	.byte $52,$4e,$c4                     ; $00ad rnd
+	.byte $53,$54,$4f,$d0                 ; $00ae stop
+	.byte $53,$54,$45,$d0                 ; $00af step
+	.byte $54,$48,$45,$ce                 ; $00b0 then
+	.byte $54,$4f,$d0                     ; $00b1 top
+	.byte $54,$cf                         ; $00b2 to
+	.byte $fc                             ; $00b3 |
+	.byte $fe                             ; $00b4 ~
 	.byte $00
 
 TokenTypeInformation:
@@ -153,14 +155,15 @@ TokenTypeInformation:
 	.byte $04                             ; $00a9 old
 	.byte $04                             ; $00aa print
 	.byte $04                             ; $00ab rem
-	.byte $09                             ; $00ac rnd
-	.byte $04                             ; $00ad stop
-	.byte $04                             ; $00ae step
-	.byte $04                             ; $00af then
-	.byte $09                             ; $00b0 top
-	.byte $04                             ; $00b1 to
-	.byte $00                             ; $00b2 |
-	.byte $01                             ; $00b3 ~
+	.byte $04                             ; $00ac run
+	.byte $09                             ; $00ad rnd
+	.byte $04                             ; $00ae stop
+	.byte $04                             ; $00af step
+	.byte $04                             ; $00b0 then
+	.byte $09                             ; $00b1 top
+	.byte $04                             ; $00b2 to
+	.byte $00                             ; $00b3 |
+	.byte $01                             ; $00b4 ~
 
 
 KTYPE_PRECBASE = $00
@@ -212,12 +215,13 @@ KW_NEW = $00a8
 KW_OLD = $00a9
 KW_PRINT = $00aa
 KW_REM = $00ab
-KW_RND = $00ac
-KW_STOP = $00ad
-KW_STEP = $00ae
-KW_THEN = $00af
-KW_TOP = $00b0
-KW_TO = $00b1
-KW_BAR = $00b2
-KW_TILDE = $00b3
+KW_RUN = $00ac
+KW_RND = $00ad
+KW_STOP = $00ae
+KW_STEP = $00af
+KW_THEN = $00b0
+KW_TOP = $00b1
+KW_TO = $00b2
+KW_BAR = $00b3
+KW_TILDE = $00b4
 

@@ -69,9 +69,13 @@ class TokenCodeGenerator(object):
 		for t in self.tokens:
 			lbl = "SyntaxError"
 			if t[0] in self.routineLabels:
-				lbl = self.routineLabels[t[0]]
+				lbl = self.routineLabels[t[0]][0]
+				self.routineLabels[t[0]][1] = True
 			h.write("\t.word\t{0:30}; {1:10} (${2:04x})\n".format(lbl,'"'+t[0]+'"',t[2]))
 		h.write("\n\n")
+		for k in self.routineLabels.keys():
+			if not self.routineLabels[k][1]:
+				print("*** {0} not in table ***".format(k))
 	#
 	#		Scan source for code markers.
 	#
@@ -85,7 +89,7 @@ class TokenCodeGenerator(object):
 						if m is not None:
 							keyword = m.group(2).strip().lower()
 							assert keyword not in self.routineLabels,"Duplicate "+keyword
-							self.routineLabels[keyword] = m.group(1)
+							self.routineLabels[keyword] = [m.group(1),False]
 
 if __name__ == '__main__':
 	tcg = TokenCodeGenerator()
