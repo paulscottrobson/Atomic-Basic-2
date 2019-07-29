@@ -20,6 +20,7 @@
 		.include 	"general/variable.asm"	; variable handling.
 		.include 	"general/screenio.asm"	; I/O functions.
 		.include 	"general/tokeniser.asm"	; tokeniser.
+		.include 	"general/editor.asm"	; program editing.
 
 		.include 	"binary/arithmetic.asm" ; basic arithmetic
 		.include 	"binary/binary.asm" 	; binary operators
@@ -110,8 +111,8 @@ _WSSkipSpace: 								; look for first non space character
 		bcc 	_WSExecute
 		cmp 	#"9"+1
 		bcs 	_WSExecute
-
-		#error 	"NO EDIT"
+		jsr 	EditProgram
+		jmp 	WarmStart
 
 _WSExecute:
 		jmp 	CRUNNextInstruction
