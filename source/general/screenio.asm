@@ -186,6 +186,7 @@ _SIOBackspace:
 		pha 								; save position.
 		cmp 	#EXTWidth-1 				; not required
 		beq 	_SIONoShift
+		dec 	xCursor
 _SIOShift2:
 		inc 	xCursor 					; copy character backward
 		jsr 	SIOLoadCursor
@@ -206,8 +207,6 @@ _SIONoShift:
 		dec 	a
 		sta 	xCursor
 		jsr 	SIOLoadCursor 				; overwrite
-		lda 	#32
-		jsr 	EXTWriteScreen
 		jmp	 	_SIORLoop		
 		;
 		;		Inserts a space on current line.

@@ -50,7 +50,6 @@ _EPSkipSpaces:
 		cmp 	#32
 		beq 	_EPSkipSpaces
 		dey
-		#break 								; at line contents
 		jsr 	EDInsertLine 				; insert the line.
 		jsr 	COMMAND_Clear 				; set up all the pointers again and reset everything.
 _EPGoWarmStart:
@@ -143,7 +142,6 @@ _EDDelExit:
 ; *******************************************************************************************
 
 EDInsertLine:
-		#break
 		tya 								; make zCurrentLine point to the actual new line.
 		clc
 		adc 	zCurrentLine
@@ -162,10 +160,10 @@ _EDGetLength:
 		;
 		;		Shift up memory to make room. Use zLowMemory as we'll reset it after.
 		;
-		phy 								; save on stack.
 		tya
 		clc
 		adc 	#1+2+1 						; size required. 1 for offset, 2 for line#, 1 for end.
+		pha 								; save total size (e.g. offset)
 		tay 								; in Y
 		ldx 	#0 			
 _EDInsLoop:
@@ -190,6 +188,26 @@ _EDINoBorrow:
 		;		Shift is done. So copy the new stuff in.
 		;
 _EDIShiftOver:		
-		#break
+		pla 								; this is the size + others, e.g. offset
+		ldy 	#0 			 							
+		sta 	(zLowMemory),y 				; write that out.
+		lda 	evalStack+0 				; write LIne# out
+		iny
+		sta 	(zLowMemory),y
+		lda 	evalStack+1
+		iny
+		sta 	(zLowMemory),y
+		iny 								; where the code goes.
+		;
+		;		Finally copy in the tokenised code.
+		;
+		ldx 	#0 							; comes from
+_EDICopyCode:
+		lda 	(zCurrentLine,x)			; read from the current line
+		sta 	(zLowMemory),y 				; write out
+		iny 								; bump pointers
+		inc 	zCurrentLine		
+		cmp 	#0 							; until zero copied
+		bne 	_EDICopyCode
 		rts
 

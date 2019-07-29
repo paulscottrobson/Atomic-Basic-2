@@ -1,14 +1,13 @@
 Progress
 ========
-
-- Code Editing.
-- Test on Mega65 board.
+                                                                                                                       Test on Mega65 board.
 - GOTO GOSUB , give LIST a start line option.
 - Code read #1
 - IF [THEN] 
 - FOR TO NEXT STEP
 - LINK
 - INPUT
+- MAP ?
 
 Later fixes
 ===========

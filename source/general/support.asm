@@ -46,10 +46,9 @@ _REPrint:
 		lda 	zCurrentLine+1 				; running from tokeniser buffer
 		cmp 	#TokeniseBuffer>>8
 		beq 	_RENoLineNumber
-		lda 	#" "
-		jsr 	SIOPrintCharacter
-		lda 	#"@"
-		jsr 	SIOPrintCharacter
+		ldx 	#_REAt & $FF
+		ldy 	#_REAt >> 8
+		jsr 	SIOPrintString
 		ldy 	#1
 		lda 	(zCurrentLine),y
 		tax
@@ -61,6 +60,7 @@ _RENoLineNumber:
 		lda 	#13
 		jsr 	SIOPrintCharacter
 		jmp 	WarmStart		
+_REAt:	.text 	" AT ",0
 
 ; *******************************************************************************************
 ;
