@@ -51,7 +51,10 @@ CRUNSkipLoop:
 		;
 		;		At the $00 token, go to the next line.
 		;
-CRUNNextLine:		
+CRUNNextLine:	
+		lda 	zCurrentLine+1 				; running from input
+		cmp 	#TokeniseBuffer>>8	
+		beq		CRUNWarmStart
 		ldy 	#0 							; add offset from line to line pointer
 		lda 	(zCurrentLine),y
 		clc 				
@@ -61,7 +64,10 @@ CRUNNextLine:
 		inc 	zCurrentLine+1
 		bra 	CRUNNewLine
 		;
+CRUNWarmStart:
+		jmp 	WarmStart				
 		;
+		;		Execute one instruction, first char/token in A
 		;
 CRUNExecuteOne:
 		ora 	#0 							; if it is a character might be a variable.
@@ -95,7 +101,7 @@ _CRUNX1TryLet:
 ; *******************************************************************************************
 
 COMMAND_Stop:	;; stop
-		#error "Stop"
+		#error "STOP"
 
 ; *******************************************************************************************
 ;
@@ -104,6 +110,10 @@ COMMAND_Stop:	;; stop
 ; *******************************************************************************************
 
 COMMAND_End:	;; end
+		lda 	StartBehaviour 				; running program
+		cmp 	#"R"
+		bne 	_CEWarmStart
 		#exit
+_CEWarmStart:		
 		jmp 	WarmStart
 

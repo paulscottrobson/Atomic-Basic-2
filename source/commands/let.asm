@@ -199,7 +199,7 @@ _CLEStringCopy:
 		beq	 	_CLEStringWritten
 		iny
 		bne 	_CLEStringCopy
-		#error 	"Bad string copy"		
+		#error 	"BAD STRING COPY"
 		;
 _CLEStringWritten:
 		ply 	

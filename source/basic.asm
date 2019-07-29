@@ -77,7 +77,34 @@ CommandLine:
 		jsr 	Command_New
 WarmStart:
 		#resetstack 						; reset the stack
-		jmp 	WarmStart
+		jsr 	SIOReadLine 				; read input line.
+		;
+		lda 	#InputLine & $FF 			; tokenise the line
+		sta 	zTemp1
+		lda 	#InputLine >> 8
+		sta 	zTemp1+1
+		jsr 	TokeniseString
+		;
+		lda 	#TokeniseBuffer & $FF 		; point current line to tokenised input buffer.
+		sta 	zCurrentLine
+		lda 	#TokeniseBuffer >> 8
+		sta 	zCurrentLine+1
+		ldy 	#0
+_WSSkipSpace: 								; look for first non space character
+		lda 	(zCurrentLine),y
+		iny
+		cmp 	#' '
+		beq 	_WSSkipSpace
+		dey
+		cmp 	#"0" 						; if not a digit
+		bcc 	_WSExecute
+		cmp 	#"9"+1
+		bcs 	_WSExecute
+
+		#error 	"NO EDIT"
+
+_WSExecute:
+		jmp 	CRUNNextInstruction
 
 ; *******************************************************************************************
 ;

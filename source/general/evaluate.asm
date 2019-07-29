@@ -12,11 +12,11 @@
 EvaluateSNError:
 		jmp 	SyntaxError
 EvaluateMissingQuote:	
-		#error 	"Missing quote"
+		#error 	"MISSING QUOTE"
 EvaluateStringFull:
-		#error 	"String Buffer full"
+		#error 	"STRING BUFFER FULL"
 EvaluateBadHex:
-		#error 	"Bad Hex"
+		#error 	"BAD HEX"
 
 ; *******************************************************************************************
 ;

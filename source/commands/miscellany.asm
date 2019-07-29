@@ -23,7 +23,7 @@ COMMAND_Assert:	;; assert
 		ora 	evalStack+3,x
 		bne 	_CMDAExit
 		#break
-		#error 	"Assert failed"
+		#error 	"ASSERT FAILED"
 _CMDAExit:
 		rts
 
@@ -131,6 +131,6 @@ _COScan:
 		rts
 
 _COFail:
-		#error	"Cannot recover program"
+		#error	"CANNOT RECOVER PROGRAM"
 
 		

@@ -46,7 +46,7 @@ _SIOPSLoop:
 		jsr 	SIOPrintCharacter 			; print and bump
 		iny
 		bne 	_SIOPSLoop
-		#error 	"Bad String Printed" 		; in case we print a non string from PRINT.
+		#error 	"BAD STRING PRINTED"		; in case we print a non string from PRINT.
 _SIOPSExit:
 		ply 								; restore and exit.
 		plx

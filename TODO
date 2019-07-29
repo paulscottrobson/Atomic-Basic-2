@@ -1,12 +1,8 @@
 Progress
 ========
 
-	- why won't it tokenise a single space correctly ???? (strip bodge)
-	- needs to cope with L/C.
-
-- Proper Error Handlers.
-- Command Line, executing from keyboard (various options)
-
+- Why doesn't RUN work ?
+- Test on Mega65 board.
 - GOTO GOSUB , give LIST a start line option.
 - Code read #1
 - IF THEN 

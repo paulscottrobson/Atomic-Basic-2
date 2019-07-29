@@ -32,6 +32,7 @@ _TokLoop:
 		cmp 	#"A"						; more punctuation
 		bcc 	_TokPunctuation 
 		cmp 	#"Z"+1 						; and more punctuation
+		bcs 	_TokPunctuation
 		;
 		;		Tokenise 1 word, e.g. it begins with @-Z
 		;

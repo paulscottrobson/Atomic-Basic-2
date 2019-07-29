@@ -29,7 +29,7 @@ _ULGetLength:
 		beq 	_ULFoundEOL 				; found end of line.
 		iny
 		bne 	_ULGetLength 				; scan 256 only.
-		#error	"Cannot find string end"
+		#error	"CANNOT FIND STRING END"
 		;
 _ULFoundEOL:
 		tya 								; length in A, restore Y

@@ -38,11 +38,11 @@ xCursor 		.byte 	? 					; cursor position
 yCursor 		.byte 	?
 
 				.align	256 				
-TokeniseBuffer: 							; tokenise buffer. use the same space as the
+TokeniseBuffer: 							; tokenise buffer
+				.fill 	256
 StringBuffer:	 							; temporary string buffer (quoted strings in code)
-				.byte ?
-
-				.align	256 				
+				.fill 	256
+ 				
 BasicProgram:					 			; BASIC program starts here.
 
 		* = currentPosData

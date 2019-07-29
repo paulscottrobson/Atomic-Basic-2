@@ -21,7 +21,7 @@ BFUNC_Divide: 	;; 	/
 		ora 	evalStack+6,x
 		ora 	evalStack+7,x
 		bne 	_BFDOkay
-		#error	"Divison by Zero"
+		#error	"DIVISION BY ZERO"
 		;
 _BFDOkay:
 		lda 	#0 							; Temp1 is 'A' (and holds the remainder)

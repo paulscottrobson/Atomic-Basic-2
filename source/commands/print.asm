@@ -47,7 +47,7 @@ _CPRPrintText:
 		bra 	_CPRPrintText 				
 		;
 _CPRError:
-		#error 	"Missing closing quote"		
+		#error 	"MISSING CLOSING QUOTE"
 		;
 _CPRNewLine:
 		lda 	#13

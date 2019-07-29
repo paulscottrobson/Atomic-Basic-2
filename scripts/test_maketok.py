@@ -50,7 +50,7 @@ if sys.argv[1] == "create":
 			src += " "
 		if random.randint(0,2) == 0:
 			src += " "
-	src = src.strip()
+	src = src.strip().upper()
 	print("Source [{0}]".format(src))
 	src = ",".join([str(ord(x)) for x in src])
 	h.write('\t.text {0},0\n\n'.format(src))
@@ -59,12 +59,12 @@ if sys.argv[1] == "create":
 
 elif sys.argv[1] == "check":
 	dump = [x for x in open("memory.dump","rb").read(-1)]
-	source = getString(dump,0x2200)
+	source = getString(dump,0x2300)
 	tokenised = [ord(x) for x in getString(dump,0x2100)]
 	print("Source [{0}]".format(source))
-	print("Tokens ",fmt(tokenised))
+	print("6502 ",fmt(tokenised))
 	result = Tokeniser().tokenise(source)
-	print("Result ",fmt(result))
+	print("Python ",fmt(result))
 	if tokenised != result:
 		while True:
 			pass

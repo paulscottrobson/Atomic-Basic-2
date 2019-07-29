@@ -33,13 +33,39 @@ error:	.macro
 ; *******************************************************************************************
 
 SyntaxError:
-		lda 	#1
-		break
-		bra 	SyntaxError
+		jsr 	ReportError
+		.text	"SYNTAX ERROR",0
 ReportError:	
-		lda 	#2
-		break
-		bra 	ReportError
+		plx
+		ply
+		inx
+		bne 	_REPrint
+		iny
+_REPrint:
+		jsr 	SIOPrintString
+		lda 	zCurrentLine+1 				; running from tokeniser buffer
+		cmp 	#TokeniseBuffer>>8
+		beq 	_RENoLineNumber
+		lda 	#" "
+		jsr 	SIOPrintCharacter
+		lda 	#"@"
+		jsr 	SIOPrintCharacter
+		ldy 	#1
+		ldx 	#0
+		lda 	(zCurrentLine),y
+		sta 	evalStack+0,x
+		iny
+		lda 	(zCurrentLine),y
+		sta 	evalStack+1,x
+		iny
+		lda 	#0
+		sta 	evalStack+2,x
+		sta 	evalStack+3,x
+		jsr 	CPRPrintInteger
+_RENoLineNumber:
+		lda 	#13
+		jsr 	SIOPrintCharacter
+		jmp 	WarmStart		
 
 ; *******************************************************************************************
 ;
@@ -59,7 +85,7 @@ _CNCLoop:
 		bne 	_CNCFail
 		rts
 _CNCFail:
-		#error 	"Missing token"		
+		#error 	"MISSING TOKEN"
 
 ; *******************************************************************************************
 ;
