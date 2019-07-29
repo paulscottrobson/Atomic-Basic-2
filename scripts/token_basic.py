@@ -129,10 +129,19 @@ if __name__ == '__main__':
 	# bas.add('$a="Hi":a$8="world":@=ch(a$8):stop')
 	#bas.add('$#1C00="TESTING!":X = -4',10	)
 	#bas.add('print "HELLO WORLD!"\'\'"BYE.";\'$#1C00\'X\'&X',210)
-	bas.add("a = 0:do",100)
-	bas.add("x = 0",300)
-	bas.add('do:x = x + 1:print a" "x" "a*x:until x = 5')
-	bas.add("a = a + 1:until a = 3:stop")
+
+#	bas.add("a = 0:do",100)
+#	bas.add("x = 0",300)
+#	bas.add('do:x = x + 1:print a" "x" "a*x:until x = 5')
+#	bas.add("a = a + 1:until a = 3:stop")
+
+	bas.add('print"START"')
+	bas.add('i=0')
+	bas.add('do')
+	bas.add('i = i + 1')
+	bas.add('until i = 10000')
+	bas.add('print"END"')
+	bas.add('stop')
 	bas.setBehaviour('R')
 	#
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")

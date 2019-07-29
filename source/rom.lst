@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.54.1900 listing file
 ; 64tass -q --m4510 -D TARGET=1 -b -L rom.lst -o rom.bin basic.asm
-; Mon Jul 29 17:58:38 2019
+; Mon Jul 29 18:02:27 2019
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -2230,7 +2230,7 @@
 .eb4b	20 3d e1	jsr $e13d			jsr 	ReportError
 >eb4e	53 54 4f 50 00					.text 	"STOP",$00
 .eb53					COMMAND_End:
-.eb53	ad 15 f0	lda $f015			lda 	StartBehaviour 				; running program
+.eb53	ad 08 f0	lda $f008			lda 	StartBehaviour 				; running program
 .eb56	c9 52		cmp #$52			cmp 	#"R"
 .eb58	d0 01		bne $eb5b			bne 	_CEWarmStart
 >eb5a	02						.byte 	2
@@ -2779,7 +2779,7 @@
 .ef30	a0 ef		ldy #$ef			ldy 	#BootMsg2 >> 8
 .ef32	20 8f e4	jsr $e48f			jsr 	SIOPrintString
 .ef35	20 a4 e1	jsr $e1a4			jsr 	CopyBasicCode 				; it into the BASIC area.
-.ef38	ad 15 f0	lda $f015			lda 	StartBehaviour 				; what to do ?
+.ef38	ad 08 f0	lda $f008			lda 	StartBehaviour 				; what to do ?
 .ef3b	c9 43		cmp #$43			cmp 	#'C'						; execute from command line
 .ef3d	f0 17		beq $ef56			beq		CommandLine
 .ef3f	c9 52		cmp #$52			cmp 	#'R' 						; run program in memory.
@@ -2839,14 +2839,13 @@
 
 ;******  Processing file: include/basic_generated.inc
 
->efc4	0b 64 00 41 20 92 20 30			.byte $0b,$64,$00,$41,$20,$92,$20,$30,$8d,$9c,$00,$09,$2c,$01,$58,$20,$92,$20,$30,$00,$25,$2d,$01,$9c,$8d,$58,$20,$92,$20,$58,$20,$8a,$20,$31,$8d,$aa,$20,$41,$81,$20,$81,$58,$81,$20,$81,$41,$89,$58,$8d,$b4,$20,$58,$20,$92,$20,$35,$00,$17,$2e,$01,$41,$20,$92,$20,$41,$20,$8a,$20,$31,$8d,$b4,$20,$41,$20,$92,$20,$33,$8d,$af,$00,$00
->efcc	8d 9c 00 09 2c 01 58 20 92 20 30 00 25 2d 01 9c
->efdc	8d 58 20 92 20 58 20 8a 20 31 8d aa 20 41 81 20
->efec	81 58 81 20 81 41 89 58 8d b4 20 58 20 92 20 35
->effc	00 17 2e 01 41 20 92 20 41 20 8a 20 31 8d b4 20
->f00c	41 20 92 20 33 8d af 00 00
-.f015					StartBehaviour:
->f015	52					.text "R"
+>efc4	0c 01 00 aa 81 53 54 41			.byte $0c,$01,$00,$aa,$81,$53,$54,$41,$52,$54,$81,$00,$07,$02,$00,$49,$92,$30,$00,$05,$03,$00,$9c,$00,$0d,$04,$00,$49,$20,$92,$20,$49,$20,$8a,$20,$31,$00,$0f,$05,$00,$b4,$20,$49,$20,$92,$20,$31,$30,$30,$30,$30,$00,$0a,$06,$00,$aa,$81,$45,$4e,$44,$81,$00,$05,$07,$00,$af,$00,$00
+>efcc	52 54 81 00 07 02 00 49 92 30 00 05 03 00 9c 00
+>efdc	0d 04 00 49 20 92 20 49 20 8a 20 31 00 0f 05 00
+>efec	b4 20 49 20 92 20 31 30 30 30 30 00 0a 06 00 aa
+>effc	81 45 4e 44 81 00 05 07 00 af 00 00
+.f008					StartBehaviour:
+>f008	52					.text "R"
 
 ;******  Return to file: basic.asm
 
