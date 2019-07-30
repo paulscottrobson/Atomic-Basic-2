@@ -1,8 +1,6 @@
 Progress
 ========
-
-- tab on PRINT comma.                                                                                                                  Test on Mega65 board.
-- IF [THEN] 
+                                                                                                                Test on Mega65 board.
 - DIM
 - Code read #1
 - map initial RAM layout.

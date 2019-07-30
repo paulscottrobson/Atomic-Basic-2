@@ -33,6 +33,7 @@
 		.include 	"commands/execute.asm"	; run/stop etc.		
 		.include 	"commands/miscellany.asm" ; miscellaneous statements
 		.include 	"commands/let.asm"		; assignment.
+		.include 	"commands/if.asm"		; if/then/else statement.
 		.include 	"commands/print.asm" 	; print statement
 		.include 	"commands/list.asm"		; list statement
 		.include 	"commands/dountil.asm"	; do/until statements

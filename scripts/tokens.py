@@ -36,7 +36,7 @@ class TokenList(object):
 				t = t[1:-1]
 				if t >= "0" and t <= "6":
 					mode = int(t)
-				elif t == "commands":
+				elif t == "command":
 					mode = 8
 				elif t == "unary":
 					mode = 9
@@ -80,19 +80,19 @@ class TokenList(object):
 		#
 		[command]	let 	end 	goto	gosub	for 	next
 					print 	input 	list 	stop 	assert 	rem		
-					new 	old 	clear	if		then 	do		
+					new 	old 	clear	then 	do		else
 					until 	to 		step	link	run 	cls					
-					return
+					return 	if 		dim
 		#
 		#		Unary operators
 		#
 		[unary]		len		ch		rnd 	abs 	top		page	
-					get 	ioaddr
+					get 	ioaddr 
 		#
 		#		Syntax operators
 		#
 		[syntax]	( 		)		# 		:		;		'
-					"
+					"		,
 					
 		""".split("\n")
 

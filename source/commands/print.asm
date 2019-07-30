@@ -23,6 +23,8 @@ COMMAND_Print: 	;; print
 		beq 	COMMAND_Print
 		cmp 	#KW_COLON 					; colon, end of line
 		beq 	_CPRExitNL
+		cmp 	#KW_COMMA 					; comma, tab
+		beq 	_CPRTab
 		cmp 	#KW_SEMICOLON 				; semicolon ?
 		bne 	_CPRNotSemicolon
 		;
@@ -32,6 +34,14 @@ COMMAND_Print: 	;; print
 		bne 	COMMAND_Print 				; if not, just go back round again
 		rts
 		;
+_CPRTab:lda 	#9 							; print tab.
+		jsr 	SIOPrintCharacter
+		lda 	(zCurrentLine),y 			; look at next.
+		beq 	_CPRExit 					; exit if 0 or :
+		cmp 	#KW_COLON
+		beq 	_CPRExit		
+		bra 	COMMAND_Print
+		;		
 _CPRExitNL:									; exit, new line.
 		lda 	#13
 		jsr 	SIOPrintCharacter

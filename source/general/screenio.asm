@@ -66,6 +66,8 @@ SIOPrintCharacter:
 		phy
 		cmp 	#13 						; CR ?
 		beq 	_SIOPReturn
+		cmp 	#9
+		beq 	_SIOPTab
 		jsr 	SIOLoadCursor 				; load cursor position in.
 		and 	#$3F 						; PETSCII conversion
 		jsr 	EXTWriteScreen 				; write character out.
@@ -87,6 +89,14 @@ _SIOPExit:
 		plx
 		pla
 		rts
+
+_SIOPTab:
+		lda 	#32 						; tab.
+		jsr 	SIOPrintCharacter
+		lda 	xCursor
+		and 	#7
+		bne 	_SIOPTab
+		bra 	_SIOPExit		
 
 ; *******************************************************************************************
 ;
