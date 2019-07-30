@@ -82,10 +82,12 @@ class TokenList(object):
 					print 	input 	list 	stop 	assert 	rem		
 					new 	old 	clear	if		then 	do		
 					until 	to 		step	link	run 	cls					
+					return
 		#
 		#		Unary operators
 		#
-		[unary]		len		ch		rnd 	abs 	top		page
+		[unary]		len		ch		rnd 	abs 	top		page	
+					get 	ioaddr
 		#
 		#		Syntax operators
 		#

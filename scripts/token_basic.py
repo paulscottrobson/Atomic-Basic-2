@@ -93,7 +93,7 @@ class BasicProgram(object):
 		lineNumber = lineNumber if lineNumber is not None else self.lastLine+1 	# line number if req
 		self.lastLine = lineNumber
 		#print(lineNumber,text)
-		tokens = self.tokeniser.tokenise(text)									# tokenise/validate
+		tokens = self.tokeniser.tokenise(text.upper())							# tokenise/validate
 		assert len(tokens)*2 < 254,"Line is too long" 											
 		assert lineNumber < 65536,"Bad line number"
 		self.tokens.append(len(tokens)+4)										# add offset, max 255
@@ -120,17 +120,13 @@ if __name__ == '__main__':
 	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
-	#
-	# bas.add('c = 42:d = -2:e = c * 2:@ = -1:@ = d - 1',1)
-	# bas.add('?#1FFF = 63:!#1FF8=#AB784501')
-	# bas.add('q=#1E00: qq3=e:!q=-1:qq2=-2:q(4)=#5A6A7A8A')
-	# bas.add('q!24=#12345678:q?29=42')
-	# bas.add('a=#1D00:aa1=#1D80:aa1?3=42')
-	# bas.add('$a="Hi":a$8="world":@=ch(a$8):stop')
-	#bas.add('$#1C00="TESTING!":X = -4',10	)
-	#bas.add('print "HELLO WORLD!"\'\'"BYE.";\'$#1C00\'X\'&X',210)
-
-	bas.add("M=#FFD3000:stop")
+	bas.add('A = 0',12)
+	bas.add('DO A = A + 1')
+	bas.add('PRINT A;" ";A % 3')
+	bas.add('until A=10',30)
+	bas.add("M=#FFD3000",40)
+	bas.add("stop",100)
+	bas.add('print "*";:return',1000)
 
 	bas.setBehaviour('R')
 	#

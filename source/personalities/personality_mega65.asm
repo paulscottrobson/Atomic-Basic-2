@@ -74,12 +74,24 @@ EXTStartPersonalise:
 ;
 ; ******************************************************************************
 
+KeyMap:	.macro
+	cmp 	#\1
+	bne 	_KMNo
+	lda 	#\2
+_KMNo:
+	.endm
+		
 EXTReadKeyPort:
 	phz
 	jsr 	EXTSetupKeyAddress
 	nop 									; read keyboard
 	lda 	(EXTZPWork),z 
 	plz
+	keymap 	20,"H"-64
+	keymap 	145,"W"-64
+	keymap 	17,"S"-64
+	keymap	157,"A"-64
+	keymap	29,"D"-64
 	cmp 	#0 								; set Z
 	rts
 
@@ -312,7 +324,7 @@ EXTReset:
 	sta 	EXTZPWork+0
 	ldz 	#0
 _EXTClearColorRam:	
-	lda 	#8 								; fill that with this colour.
+	lda 	#3 								; fill that with this colour.
 	nop
 	sta 	(EXTZPWork),z
 	dez

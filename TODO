@@ -1,13 +1,14 @@
 Progress
 ========
-                                                                                                                       Test on Mega65 board.
-- GOTO GOSUB , give LIST a start line option.
-- Code read #1
+
+- tab on PRINT comma.                                                                                                                  Test on Mega65 board.
 - IF [THEN] 
+- DIM
+- Code read #1
+- map initial RAM layout.
 - FOR TO NEXT STEP
 - LINK
 - INPUT
-- map initial RAM layout.
 
 
 

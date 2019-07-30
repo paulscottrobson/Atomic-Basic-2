@@ -30,6 +30,7 @@ COMMAND_Print: 	;; print
 		beq 	_CPRExit
 		cmp 	#KW_COLON
 		bne 	COMMAND_Print 				; if not, just go back round again
+		rts
 		;
 _CPRExitNL:									; exit, new line.
 		lda 	#13

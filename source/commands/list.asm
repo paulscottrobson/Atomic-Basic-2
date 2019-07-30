@@ -10,11 +10,27 @@
 ; *******************************************************************************************
 
 COMMAND_List: 	;; list
+		lda 	(zCurrentLine),y 			; look first non space
+		iny
+		cmp 	#' '
+		beq 	COMMAND_List
+		dey
+		cmp 	#"0" 						; not digit, list all
+		bcc 	_CLIAll
+		cmp 	#"9"+1
+		bcs 	_CLIAll
+		ldx 	#0 							; evaluate the linenumber
+		jsr 	EvaluateBase
+		jsr 	FindProgramLine 			; find that program Line, put in zTargetAddr
+		bra 	_CLIMain 					; list it.
+
+_CLIAll:		
 		phy
 		lda 	#BasicProgram & $FF 		; set target address
 		sta 	zTargetAddr
 		lda 	#BasicProgram >> 8 
 		sta 	zTargetAddr+1
+_CLIMain:		
 		lda 	#16 						; print 16 lines
 		sta 	zTargetAddr+2
 _CLLILoop:
@@ -34,7 +50,7 @@ _CLLINoCarry:
 		bne 	_CLLILoop
 _CLLIExit:
 		ply
-		rts
+		jmp 	WarmStart
 
 CLIOneLine:
 		ldy 	#1 							; get line#
