@@ -57,10 +57,6 @@ Start:
 		ldy 	#BootMsg2 >> 8
 		jsr 	SIOPrintString
 
-		.if TARGET=1 						; on the MEGA65 if we provide code we have to copy
-		jsr 	CopyBasicCode 				; it into the BASIC area.
-		.endif
-
 		lda 	StartBehaviour 				; what to do ?
 		cmp 	#'C'						; execute from command line
 		beq		CommandLine

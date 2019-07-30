@@ -124,7 +124,7 @@ if __name__ == '__main__':
 	bas.add('print"M Set up VIC IV init"')
 	bas.add("stop")
 
-	bas.setBehaviour('R')
+	bas.setBehaviour('C')
 	#
 	targetFile = open("../source/include/basic_generated.inc".replace("/",os.sep),"w")
 	bas.render(targetFile)

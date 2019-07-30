@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.54.1900 listing file
 ; 64tass -q --m4510 -D TARGET=1 -b -L rom.lst -o rom.bin basic.asm
-; Tue Jul 30 18:21:03 2019
+; Tue Jul 30 19:51:40 2019
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -879,7 +879,7 @@
 .e18e					_RENoLineNumber:
 .e18e	a9 0d		lda #$0d			lda 	#13
 .e190	20 1f e5	jsr $e51f			jsr 	SIOPrintCharacter
-.e193	4c 81 f2	jmp $f281			jmp 	WarmStart
+.e193	4c 7e f2	jmp $f27e			jmp 	WarmStart
 >e196	20 41 54 20 00			_REAt:	.text 	" AT ",0
 .e19b					PrintWordInteger:
 .e19b	8a		txa				txa
@@ -911,9 +911,9 @@
 .e1d5					CopyBasicCode:
 .e1d5	a2 00		ldx #$00			ldx 	#0
 .e1d7					_CopyLoop:
-.e1d7	bd e7 f2	lda $f2e7,x			lda 	BasicCode,x
+.e1d7	bd e4 f2	lda $f2e4,x			lda 	BasicCode,x
 .e1da	9d 00 23	sta $2300,x			sta 	BasicProgram,x
-.e1dd	bd e7 f3	lda $f3e7,x			lda 	BasicCode+$100,x
+.e1dd	bd e4 f3	lda $f3e4,x			lda 	BasicCode+$100,x
 .e1e0	9d 00 24	sta $2400,x			sta 	BasicProgram+$100,x
 .e1e3	e8		inx				inx
 .e1e4	d0 f1		bne $e1d7			bne 	_CopyLoop
@@ -1822,7 +1822,7 @@
 .e7ea	20 56 e8	jsr $e856			jsr 	EDInsertLine 				; insert the line.
 .e7ed	20 27 f0	jsr $f027			jsr 	COMMAND_Clear 				; set up all the pointers again and reset everything.
 .e7f0					_EPGoWarmStart:
-.e7f0	4c 81 f2	jmp $f281			jmp 	WarmStart
+.e7f0	4c 7e f2	jmp $f27e			jmp 	WarmStart
 .e7f3					_EPBadLine:
 .e7f3	20 6c e1	jsr $e16c			jsr 	ReportError
 >e7f6	42 41 44 20 4c 49 4e 45				.text 	"BAD LINE",$00
@@ -2880,7 +2880,7 @@
 .ef7f	d0 e6		bne $ef67			bne 	_CLLILoop
 .ef81					_CLLIExit:
 .ef81	7a		ply				ply
-.ef82	4c 81 f2	jmp $f281			jmp 	WarmStart
+.ef82	4c 7e f2	jmp $f27e			jmp 	WarmStart
 .ef85					CLIOneLine:
 .ef85	a0 01		ldy #$01			ldy 	#1 							; get line#
 .ef87	b1 28		lda ($28),y			lda 	(zTargetAddr),y
@@ -2966,7 +2966,7 @@
 .f00d	60		rts				rts
 .f00e					COMMAND_NewExec:
 .f00e	20 14 f0	jsr $f014			jsr 	COMMAND_NewCode
-.f011	4c 81 f2	jmp $f281			jmp 	WarmStart
+.f011	4c 7e f2	jmp $f27e			jmp 	WarmStart
 .f014					COMMAND_NewCode:
 .f014	a9 00		lda #$00			lda 	#0 							; erase the actual program.
 .f016	8d 00 23	sta $2300			sta 	BasicProgram 				; by zeroing the initial offset.
@@ -3010,7 +3010,7 @@
 .f05c	60		rts				rts
 .f05d					COMMAND_OldExec:
 .f05d	20 63 f0	jsr $f063			jsr 	COMMAND_OldCode
-.f060	4c 81 f2	jmp $f281			jmp 	WarmStart
+.f060	4c 7e f2	jmp $f27e			jmp 	WarmStart
 .f063					COMMAND_OldCode:
 .f063	a9 00		lda #$00			lda 	#BasicProgram & $FF 		; point zLowMemory to the first line.
 .f065	85 22		sta $22				sta 	zLowMemory
@@ -3227,7 +3227,7 @@
 .f1fe	e6 21		inc $21				inc 	zCurrentLine+1
 .f200	80 b7		bra $f1b9			bra 	CRUNNewLine
 .f202					CRUNWarmStart:
-.f202	4c 81 f2	jmp $f281			jmp 	WarmStart
+.f202	4c 7e f2	jmp $f27e			jmp 	WarmStart
 .f205					CRUNExecuteOne:
 .f205	09 00		ora #$00			ora 	#0 							; if it is a character might be a variable.
 .f207	10 21		bpl $f22a			bpl		_CRUNX1TryLet
@@ -3254,12 +3254,12 @@
 .f22f	20 6c e1	jsr $e16c			jsr 	ReportError
 >f232	53 54 4f 50 00					.text 	"STOP",$00
 .f237					COMMAND_End:
-.f237	ad 21 f3	lda $f321			lda 	StartBehaviour 				; running program
+.f237	ad 1e f3	lda $f31e			lda 	StartBehaviour 				; running program
 .f23a	c9 52		cmp #$52			cmp 	#"R"
 .f23c	d0 01		bne $f23f			bne 	_CEWarmStart
 >f23e	02						.byte 	2
 .f23f					_CEWarmStart:
-.f23f	4c 81 f2	jmp $f281			jmp 	WarmStart
+.f23f	4c 7e f2	jmp $f27e			jmp 	WarmStart
 
 ;******  Return to file: basic.asm
 
@@ -3267,83 +3267,82 @@
 .f242	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
 .f244	9a		txs			txs
 .f245	20 e1 e4	jsr $e4e1			jsr 	SIOInitialise 				; initialise the I/O system.
-.f248	a2 c1		ldx #$c1			ldx 	#BootMsg1 & 255 			; boot text.
+.f248	a2 be		ldx #$be			ldx 	#BootMsg1 & 255 			; boot text.
 .f24a	a0 f2		ldy #$f2			ldy 	#BootMsg1 >> 8
 .f24c	20 f2 e4	jsr $e4f2			jsr 	SIOPrintString
 .f24f	a2 ff		ldx #$ff			ldx 	#(endMemory-startMemory-1) & $FF
 .f251	a0 5f		ldy #$5f			ldy 	#(endMemory-startMemory-1) >> 8
 .f253	20 9b e1	jsr $e19b			jsr 	PrintWordInteger
-.f256	a2 d8		ldx #$d8			ldx 	#BootMsg2 & 255
+.f256	a2 d5		ldx #$d5			ldx 	#BootMsg2 & 255
 .f258	a0 f2		ldy #$f2			ldy 	#BootMsg2 >> 8
 .f25a	20 f2 e4	jsr $e4f2			jsr 	SIOPrintString
-.f25d	20 d5 e1	jsr $e1d5			jsr 	CopyBasicCode 				; it into the BASIC area.
-.f260	ad 21 f3	lda $f321			lda 	StartBehaviour 				; what to do ?
-.f263	c9 43		cmp #$43			cmp 	#'C'						; execute from command line
-.f265	f0 17		beq $f27e			beq		CommandLine
-.f267	c9 52		cmp #$52			cmp 	#'R' 						; run program in memory.
-.f269	f0 07		beq $f272			beq	 	RunProgram
-.f26b	c9 54		cmp #$54			cmp 	#'T'						; tokenise test
-.f26d	f0 46		beq $f2b5			beq 	TokeniseExec
-.f26f	4c 5c e1	jmp $e15c			jmp		SyntaxError
-.f272					RunProgram:
-.f272	20 d5 e1	jsr $e1d5			jsr 	CopyBasicCode
-.f275	20 14 f0	jsr $f014			jsr 	COMMAND_NewCode 			; do a new
-.f278	20 63 f0	jsr $f063			jsr 	COMMAND_OldCode 			; get back the old program as we're deving.
-.f27b	4c ae f1	jmp $f1ae			jmp 	COMMAND_Run
-.f27e					CommandLine:
-.f27e	20 14 f0	jsr $f014			jsr 	Command_NewCode
-.f281					WarmStart:
-.f281	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
-.f283	9a		txs			txs
-.f284	20 6e e5	jsr $e56e			jsr 	SIOReadLine 				; read input line.
-.f287	a9 6d		lda #$6d			lda 	#InputLine & $FF 			; tokenise the line
-.f289	85 24		sta $24				sta 	zTemp1
-.f28b	a9 20		lda #$20			lda 	#InputLine >> 8
-.f28d	85 25		sta $25				sta 	zTemp1+1
-.f28f	20 da e6	jsr $e6da			jsr 	TokeniseString
-.f292	a9 00		lda #$00			lda 	#TokeniseBuffer & $FF 		; point current line to tokenised input buffer.
-.f294	85 20		sta $20				sta 	zCurrentLine
-.f296	a9 21		lda #$21			lda 	#TokeniseBuffer >> 8
-.f298	85 21		sta $21				sta 	zCurrentLine+1
-.f29a	a0 00		ldy #$00			ldy 	#0
-.f29c					_WSSkipSpace:
-.f29c	b1 20		lda ($20),y			lda 	(zCurrentLine),y
-.f29e	c8		iny				iny
-.f29f	c9 20		cmp #$20			cmp 	#' '
-.f2a1	f0 f9		beq $f29c			beq 	_WSSkipSpace
-.f2a3	88		dey				dey
-.f2a4	c9 30		cmp #$30			cmp 	#"0" 						; if not a digit
-.f2a6	90 0a		bcc $f2b2			bcc 	_WSExecute
-.f2a8	c9 3a		cmp #$3a			cmp 	#"9"+1
-.f2aa	b0 06		bcs $f2b2			bcs 	_WSExecute
-.f2ac	20 af e7	jsr $e7af			jsr 	EditProgram
-.f2af	4c 81 f2	jmp $f281			jmp 	WarmStart
-.f2b2					_WSExecute:
-.f2b2	4c c1 f1	jmp $f1c1			jmp 	CRUNNextInstruction
-.f2b5					TokeniseExec:
-.f2b5	a9 e7		lda #$e7			lda 	#BasicCode & $FF 			; if so tokenise whatever I've put in the basic code
-.f2b7	85 24		sta $24				sta 	zTemp1 						; area
-.f2b9	a9 f2		lda #$f2			lda 	#BasicCode >> 8
-.f2bb	85 25		sta $25				sta 	zTemp1+1
-.f2bd	20 da e6	jsr $e6da			jsr 	TokeniseString
->f2c0	02						.byte 	2
-.f2c1					BootMsg1:
->f2c1	2a 2a 2a 20 41 54 4f 4d				.text 	"*** ATOMIC BASIC ***",13,13,0
->f2c9	49 43 20 42 41 53 49 43 20 2a 2a 2a 0d 0d 00
-.f2d8					BootMsg2:
->f2d8	20 42 59 54 45 53 20 46				.text	" BYTES FREE.",13,13,0
->f2e0	52 45 45 2e 0d 0d 00
-.f2e7					BasicCode:
+.f25d	ad 1e f3	lda $f31e			lda 	StartBehaviour 				; what to do ?
+.f260	c9 43		cmp #$43			cmp 	#'C'						; execute from command line
+.f262	f0 17		beq $f27b			beq		CommandLine
+.f264	c9 52		cmp #$52			cmp 	#'R' 						; run program in memory.
+.f266	f0 07		beq $f26f			beq	 	RunProgram
+.f268	c9 54		cmp #$54			cmp 	#'T'						; tokenise test
+.f26a	f0 46		beq $f2b2			beq 	TokeniseExec
+.f26c	4c 5c e1	jmp $e15c			jmp		SyntaxError
+.f26f					RunProgram:
+.f26f	20 d5 e1	jsr $e1d5			jsr 	CopyBasicCode
+.f272	20 14 f0	jsr $f014			jsr 	COMMAND_NewCode 			; do a new
+.f275	20 63 f0	jsr $f063			jsr 	COMMAND_OldCode 			; get back the old program as we're deving.
+.f278	4c ae f1	jmp $f1ae			jmp 	COMMAND_Run
+.f27b					CommandLine:
+.f27b	20 14 f0	jsr $f014			jsr 	Command_NewCode
+.f27e					WarmStart:
+.f27e	a2 ff		ldx #$ff		ldx 	#$FF 							; reset 6502 stack.
+.f280	9a		txs			txs
+.f281	20 6e e5	jsr $e56e			jsr 	SIOReadLine 				; read input line.
+.f284	a9 6d		lda #$6d			lda 	#InputLine & $FF 			; tokenise the line
+.f286	85 24		sta $24				sta 	zTemp1
+.f288	a9 20		lda #$20			lda 	#InputLine >> 8
+.f28a	85 25		sta $25				sta 	zTemp1+1
+.f28c	20 da e6	jsr $e6da			jsr 	TokeniseString
+.f28f	a9 00		lda #$00			lda 	#TokeniseBuffer & $FF 		; point current line to tokenised input buffer.
+.f291	85 20		sta $20				sta 	zCurrentLine
+.f293	a9 21		lda #$21			lda 	#TokeniseBuffer >> 8
+.f295	85 21		sta $21				sta 	zCurrentLine+1
+.f297	a0 00		ldy #$00			ldy 	#0
+.f299					_WSSkipSpace:
+.f299	b1 20		lda ($20),y			lda 	(zCurrentLine),y
+.f29b	c8		iny				iny
+.f29c	c9 20		cmp #$20			cmp 	#' '
+.f29e	f0 f9		beq $f299			beq 	_WSSkipSpace
+.f2a0	88		dey				dey
+.f2a1	c9 30		cmp #$30			cmp 	#"0" 						; if not a digit
+.f2a3	90 0a		bcc $f2af			bcc 	_WSExecute
+.f2a5	c9 3a		cmp #$3a			cmp 	#"9"+1
+.f2a7	b0 06		bcs $f2af			bcs 	_WSExecute
+.f2a9	20 af e7	jsr $e7af			jsr 	EditProgram
+.f2ac	4c 7e f2	jmp $f27e			jmp 	WarmStart
+.f2af					_WSExecute:
+.f2af	4c c1 f1	jmp $f1c1			jmp 	CRUNNextInstruction
+.f2b2					TokeniseExec:
+.f2b2	a9 e4		lda #$e4			lda 	#BasicCode & $FF 			; if so tokenise whatever I've put in the basic code
+.f2b4	85 24		sta $24				sta 	zTemp1 						; area
+.f2b6	a9 f2		lda #$f2			lda 	#BasicCode >> 8
+.f2b8	85 25		sta $25				sta 	zTemp1+1
+.f2ba	20 da e6	jsr $e6da			jsr 	TokeniseString
+>f2bd	02						.byte 	2
+.f2be					BootMsg1:
+>f2be	2a 2a 2a 20 41 54 4f 4d				.text 	"*** ATOMIC BASIC ***",13,13,0
+>f2c6	49 43 20 42 41 53 49 43 20 2a 2a 2a 0d 0d 00
+.f2d5					BootMsg2:
+>f2d5	20 42 59 54 45 53 20 46				.text	" BYTES FREE.",13,13,0
+>f2dd	52 45 45 2e 0d 0d 00
+.f2e4					BasicCode:
 
 ;******  Processing file: include/basic_generated.inc
 
->f2e7	19 01 00 4d 93 a5 8e 4d			.byte $19,$01,$00,$4d,$93,$a5,$8e,$4d,$96,$34,$37,$93,$82,$34,$37,$8e,$4d,$96,$34,$37,$93,$83,$35,$33,$00,$1b,$02,$00,$af,$81,$4d,$20,$53,$45,$54,$20,$55,$50,$20,$56,$49,$43,$20,$49,$56,$20,$49,$4e,$49,$54,$81,$00,$05,$03,$00,$b6,$00,$00
->f2ef	96 34 37 93 82 34 37 8e 4d 96 34 37 93 83 35 33
->f2ff	00 1b 02 00 af 81 4d 20 53 45 54 20 55 50 20 56
->f30f	49 43 20 49 56 20 49 4e 49 54 81 00 05 03 00 b6
->f31f	00 00
-.f321					StartBehaviour:
->f321	52					.text "R"
+>f2e4	19 01 00 4d 93 a5 8e 4d			.byte $19,$01,$00,$4d,$93,$a5,$8e,$4d,$96,$34,$37,$93,$82,$34,$37,$8e,$4d,$96,$34,$37,$93,$83,$35,$33,$00,$1b,$02,$00,$af,$81,$4d,$20,$53,$45,$54,$20,$55,$50,$20,$56,$49,$43,$20,$49,$56,$20,$49,$4e,$49,$54,$81,$00,$05,$03,$00,$b6,$00,$00
+>f2ec	96 34 37 93 82 34 37 8e 4d 96 34 37 93 83 35 33
+>f2fc	00 1b 02 00 af 81 4d 20 53 45 54 20 55 50 20 56
+>f30c	49 43 20 49 56 20 49 4e 49 54 81 00 05 03 00 b6
+>f31c	00 00
+.f31e					StartBehaviour:
+>f31e	43					.text "C"
 
 ;******  Return to file: basic.asm
 
