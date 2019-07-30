@@ -92,20 +92,20 @@ void DBGXRender(int *address,int showDisplay) {
 		GFXString(GRID(5,row),buffer,GRIDSIZE,isPC ? DBGC_HIGHLIGHT:DBGC_DATA,-1);	// Print the mnemonic
 	}
 
-	int xs = 40;
+	int xs = 80;
 	int ys = 25;
 	if (showDisplay) {
 		renderCount++;
-		int size = 3;
+		int size = 2;
 		int x1 = WIN_WIDTH/2-xs*size*8/2;
-		int y1 = WIN_HEIGHT/2-ys*size*8/2;
+		int y1 = WIN_HEIGHT/2-ys*size*16/2;
 		int cursorPos = 0;
 		SDL_Rect r;
 		int b = 8;
-		r.x = x1-b;r.y = y1-b;r.w = xs*size*8+b*2;r.h=ys*size*8+b*2;
+		r.x = x1-b;r.y = y1-b;r.w = xs*size*8+b*2;r.h=ys*size*16+b*2;
 		GFXRectangle(&r,0xFFFF);
 		b = b - 4;
-		r.x = x1-b;r.y = y1-b;r.w = xs*size*8+b*2;r.h=ys*size*8+b*2;
+		r.x = x1-b;r.y = y1-b;r.w = xs*size*8+b*2;r.h=ys*size*16+b*2;
 		GFXRectangle(&r,0);
 		for (int x = 0;x < xs;x++) 
 		{
@@ -113,18 +113,18 @@ void DBGXRender(int *address,int showDisplay) {
 		 	{
 		 		#define CP(c) ((c) >> 4)
 		 		int colour = 0x0FF;
-		 		int ch = CPUReadMemory(x+y*40+0xB000) ;
+		 		int ch = CPUReadMemory(x+y*80+0xB000) ;
 		 		ch = ch & 0x7F;
 		 		int xc = x1 + x * 8 * size;
-		 		int yc = y1 + y * 8 * size;
+		 		int yc = y1 + y * 16 * size;
 		 		SDL_Rect rc;
 		 		int cp = ch * 8;
-		 		rc.w = size;rc.h = size;														// Width and Height of pixel.
+		 		rc.w = size;rc.h = size*2;														// Width and Height of pixel.
 		 		for (int x = 0;x < 8;x++) {														// 5 Across
 		 			rc.x = xc + x * size;
 		 			for (int y = 0;y < 8;y++) {													// 7 Down
 		 				int f = character_rom[cp+y+0x800];
-		 				rc.y = yc + y * size;
+		 				rc.y = yc + y * 2 * size;
 		 				if (f & (0x80 >> x)) {		
 		 					GFXRectangle(&rc,colour);			
 		 				}

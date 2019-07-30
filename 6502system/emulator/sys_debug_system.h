@@ -16,8 +16,8 @@
 #include "sys_processor.h"
 
 #define WIN_TITLE 		"6502 Emulator"												// Initial Window stuff
-#define WIN_WIDTH		(32*8*4)
-#define WIN_HEIGHT		(25*8*4)
+#define WIN_WIDTH		(42*8*4)
+#define WIN_HEIGHT		(28*8*4)
 #define WIN_BACKCOLOUR	0x004
 
 // *******************************************************************************************************************************

@@ -19,7 +19,7 @@
 ;
 ; ******************************************************************************
 
-EXTWidth = 40 								; screen width
+EXTWidth = 80 								; screen width
 EXTHeight = 25 								; screen height
 
 ; ******************************************************************************
@@ -31,7 +31,7 @@ EXTHeight = 25 								; screen height
 EXTLowMemory = $0800 						; Workspace RAM starts here
 EXTHighMemory = $6000 						; Workspace RAM ends here
 
-PScreen = $B000								; 1k screen RAM here
+PScreen = $B000								; 2k screen RAM here
 PKeyboard = $B800							; Keyboard port.
 PBreak = $B801 								; Break key.
 
@@ -137,6 +137,10 @@ _EXTCSLoop:
 	sta 	PScreen+$100,x
 	sta 	PScreen+$200,x
 	sta 	PScreen+$300,x
+	sta 	PScreen+$400,x
+	sta 	PScreen+$500,x
+	sta 	PScreen+$600,x
+	sta 	PScreen+$700,x
 	inx	
 	bne 	_EXTCSLoop
 	plx 										; restore

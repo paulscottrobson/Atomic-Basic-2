@@ -15,7 +15,7 @@
 ;
 ; ******************************************************************************
 
-EXTWidth = 40 								; screen width
+EXTWidth = 80 								; screen width
 EXTHeight = 25 								; screen height
 
 ; ******************************************************************************
@@ -189,7 +189,7 @@ EXTClearScreen:
 	sta 	EXTZPWork+1
 	ldy 	#0
 _EXTCSLoop:
-	lda 	#32
+	lda 	#32	
 	sta 	(EXTZPWork),y
 	iny
 	bne 	_EXTCSLoop
@@ -267,52 +267,24 @@ EXTReset:
 	lda 	#$00
 	sta 	EXTZPWork+0
 
-	#EXTWrite 	$2F,$47
-	#EXTWrite 	$2F,$53
+	#EXTWrite 	$2F,$A5 					; switch to VIC-III mode
+	#EXTWrite 	$2F,$96	
 
-	#EXTWrite 	$30,$40
-	#EXTWrite 	$31,$40
-
-	lda $d031	; VIC-III Control Register B
-	and #$40	; bit-6 is 4mhz
-	sta $d031
+	#EXTWrite 	$30,$40						; C65 Charset 					
+	#EXTWrite 	$31,$80 					; 80 column mode
 
 	#EXTWrite $20,0 						; black border
 	#EXTWrite $21,0 						; black background
 
-	#EXTWrite $6F,$80						; 60Mhz mode.
-
-
-	lda $d066
-	and #$7F
-	sta $d066
-
-	#EXTWrite $6A,$00
-	#EXTWrite $6B,$00
-	#EXTWrite $78,$00
-	#EXTWrite $5F,$00
-	
-	#EXTWrite $5A,$78
-	#EXTWrite $5D,$C0
-	#EXTWrite $5C,80
-
 	; point VIC-IV to bottom 16KB of display memory
-	;
-	lda #$ff
-	sta $DD01
-	sta $DD00
 
-	#EXTWrite $18,$14
-	#EXTWrite $11,$1B
-	#EXTWrite $16,$C8
+	#EXTWrite $01,$FF
+	#EXTWrite $00,$FF
 
-	#EXTWrite $C5,$54
-
-	#EXTWrite $58,80
-	#EXTWrite $59,0
+	#EXTWrite $16,$C8 					; 40 column mode
 
 	#EXTWrite $18,$42	 				; screen address $0800 video address $1000
-	#EXTWrite $11,$1B
+	#EXTWrite $11,$18 					; check up what this means
 
 ClearColourRAM:
 	lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)
