@@ -382,11 +382,22 @@ EVALReadByteIndirect:
 		lda 	evalStack+3,x 	
 		sta 	zTemp1+3
 		;
+		.if 	TARGET=1 					; only for M65.	
+		lda 	zTemp1+2 					; address $0000xxxx
+		ora 	zTemp1+3 	
+		beq 	_ERBBase
+		ldz 	#0 							; read from far memory.
+		nop
+		lda 	(zTemp1),z
+		bra 	_ERBExit
+		.endif
+_ERBBase:		
 		phy
 		ldy 	#0 							; read byte
 		lda 	(zTemp1),y
-		sta 	evalStack+0,x
 		ply
+_ERBExit:		
+		sta 	evalStack+0,x
 		;
 		lda 	#0 							; zero upper three bytes
 		sta 	evalStack+1,x
@@ -409,10 +420,34 @@ EVALReadWordIndirect:
 		sta 	zTemp1+2
 		lda 	evalStack+3,x 	
 		sta 	zTemp1+3
-		;
+
 EVALReadWordIndirectZTemp:		
-		phy
+		.if 	TARGET=1 					; only for M65.	
+		lda 	zTemp1+2 					; address $0000xxxx
+		ora 	zTemp1+3 	
+		beq 	_ERWBase
+		ldz 	#0 							; read from far memory.
+		nop
+		lda 	(zTemp1),z
+		sta 	evalStack+0,x
+		inz
+		nop
+		lda 	(zTemp1),z
+		sta 	evalStack+1,x
+		inz
+		nop
+		lda 	(zTemp1),z
+		sta 	evalStack+2,x
+		inz
+		nop
+		lda 	(zTemp1),z
+		sta 	evalStack+3,x
+
+		bra 	_ERWExit
+		.endif		;
 		;
+_ERWBase		
+		phy
 		ldy 	#0 							; read word
 		lda 	(zTemp1),y
 		sta 	evalStack+0,x
@@ -427,4 +462,5 @@ EVALReadWordIndirectZTemp:
 		sta 	evalStack+3,x
 		;
 		ply
+_ERWExit:		
 		rts

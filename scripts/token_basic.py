@@ -130,10 +130,7 @@ if __name__ == '__main__':
 	#bas.add('$#1C00="TESTING!":X = -4',10	)
 	#bas.add('print "HELLO WORLD!"\'\'"BYE.";\'$#1C00\'X\'&X',210)
 
-	bas.add("a = 0:do",100)
-	bas.add("x = 0",300)
-	bas.add('do:x = x + 1:print a"X"x"="a*x:until x = 5')
-	bas.add("a = a + 1:until a = 3:stop")
+	bas.add("M=#FFD3000:stop")
 
 	bas.setBehaviour('R')
 	#

@@ -155,16 +155,37 @@ _CLEBinaryLHTerm:
 		;		Byte indirect write
 		;		
 _CLEByteWrite:
+		.if 	TARGET=1
+		lda 	zTargetAddr+2
+		ora 	zTargetAddr+3
+		bne 	_CLEByteWriteExt
+		.fi
+		;
 		lda 	evalStack+0,x 				; get the byte to write.
 		phy 								; write the byte preserving Y
 		ldy 	#0
 		sta 	(zTargetAddr),y
 		ply
+		rts
+		;		
+_CLEByteWriteExt:							; far write.
+		.if 	TARGET=1
+		lda 	evalStack+0,x
+		ldz 	#0
+		nop
+		sta 	(zTargetAddr),z
+		.fi
 		rts		
 		;
 		;		Word indirect write (32 bit)
 		;
 _CLEWordWrite:
+		.if 	TARGET=1
+		lda 	zTargetAddr+2
+		ora 	zTargetAddr+3
+		bne 	_CLEWordWriteExt
+		.fi
+		;
 		phy
 		ldy 	#0
 		lda 	evalStack+0,x
@@ -180,6 +201,27 @@ _CLEWordWrite:
 		sta 	(zTargetAddr),y
 		ply 								; restore Y
 		rts
+		;
+_CLEWordWriteExt:							; far write.
+		.if 	TARGET=1
+		lda 	evalStack+0,x
+		ldz 	#0
+		nop
+		sta 	(zTargetAddr),z
+		inz
+		lda 	evalStack+1,x
+		nop
+		sta 	(zTargetAddr),z
+		inz
+		lda 	evalStack+2,x
+		nop
+		sta 	(zTargetAddr),z
+		inz
+		lda 	evalStack+3,x
+		nop
+		sta 	(zTargetAddr),z
+		.fi
+		rts		
 		;
 		;		Write string at evalStack+0,1 to storage at zTargetAddr
 		;		You cannot write to hardware this way.

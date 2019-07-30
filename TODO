@@ -7,12 +7,8 @@ Progress
 - FOR TO NEXT STEP
 - LINK
 - INPUT
-- MAP ?
+- map initial RAM layout.
 
-Later fixes
-===========
-- Fix long read/write for ! and ? to use the extended access on Mega65. Indirection is
-- fudged due to logical/physical addresses. $0000xxxx is logical (e.g. in 6502 space)
-- non zero is physical (e.g. in Mega65 space)
+
 
 
