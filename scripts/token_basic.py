@@ -120,16 +120,9 @@ if __name__ == '__main__':
 	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
-	bas.add('DIM CC(3),D(4),E(-1),FF(1024),@(-1)',1)
-	bas.add('PRINT "***":goto 1')
-	bas.add('A = 0',12)
-	bas.add('DO A = A + 1')
-	bas.add('PRINT A,')
-	bas.add('IF A%3=0 THEN PRINT "Yes";:ELSE gosub 1000')
-	bas.add('print:until A=11',30)
-	bas.add("M=#FFD3000",40)
-	bas.add("stop",100)
-	bas.add('print "*";:return',1000)
+	bas.add('m=ioaddr:m?47=#47:m?47=$53',1)
+	bas.add('print"M Set up VIC IV init"')
+	bas.add("stop")
 
 	bas.setBehaviour('R')
 	#

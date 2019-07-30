@@ -82,7 +82,7 @@ class TokenList(object):
 					print 	input 	list 	stop 	assert 	rem		
 					new 	old 	clear	then 	do		else
 					until 	to 		step	link	run 	cls					
-					return 	if 		dim
+					return 	if 		dim  	rst
 		#
 		#		Unary operators
 		#

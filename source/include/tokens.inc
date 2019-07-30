@@ -51,15 +51,16 @@ KeywordVectorTable:
 	.word	COMMAND_Return                ; "return"   ($00b1)
 	.word	COMMAND_Rem                   ; "rem"      ($00b2)
 	.word	COMMAND_Run                   ; "run"      ($00b3)
-	.word	UNARY_Rnd                     ; "rnd"      ($00b4)
-	.word	COMMAND_Stop                  ; "stop"     ($00b5)
-	.word	SyntaxError                   ; "step"     ($00b6)
-	.word	COMMAND_THEN                  ; "then"     ($00b7)
-	.word	UNARY_Top                     ; "top"      ($00b8)
-	.word	SyntaxError                   ; "to"       ($00b9)
-	.word	COMMAND_Until                 ; "until"    ($00ba)
-	.word	BFUNC_Or                      ; "|"        ($00bb)
-	.word	BFUNC_StringCompare           ; "~"        ($00bc)
+	.word	COMMAND_RST                   ; "rst"      ($00b4)
+	.word	UNARY_Rnd                     ; "rnd"      ($00b5)
+	.word	COMMAND_Stop                  ; "stop"     ($00b6)
+	.word	SyntaxError                   ; "step"     ($00b7)
+	.word	COMMAND_THEN                  ; "then"     ($00b8)
+	.word	UNARY_Top                     ; "top"      ($00b9)
+	.word	SyntaxError                   ; "to"       ($00ba)
+	.word	COMMAND_Until                 ; "until"    ($00bb)
+	.word	BFUNC_Or                      ; "|"        ($00bc)
+	.word	BFUNC_StringCompare           ; "~"        ($00bd)
 
 
 TokenText:
@@ -115,15 +116,16 @@ TokenText:
 	.byte $52,$45,$54,$55,$52,$ce         ; $00b1 return
 	.byte $52,$45,$cd                     ; $00b2 rem
 	.byte $52,$55,$ce                     ; $00b3 run
-	.byte $52,$4e,$c4                     ; $00b4 rnd
-	.byte $53,$54,$4f,$d0                 ; $00b5 stop
-	.byte $53,$54,$45,$d0                 ; $00b6 step
-	.byte $54,$48,$45,$ce                 ; $00b7 then
-	.byte $54,$4f,$d0                     ; $00b8 top
-	.byte $54,$cf                         ; $00b9 to
-	.byte $55,$4e,$54,$49,$cc             ; $00ba until
-	.byte $fc                             ; $00bb |
-	.byte $fe                             ; $00bc ~
+	.byte $52,$53,$d4                     ; $00b4 rst
+	.byte $52,$4e,$c4                     ; $00b5 rnd
+	.byte $53,$54,$4f,$d0                 ; $00b6 stop
+	.byte $53,$54,$45,$d0                 ; $00b7 step
+	.byte $54,$48,$45,$ce                 ; $00b8 then
+	.byte $54,$4f,$d0                     ; $00b9 top
+	.byte $54,$cf                         ; $00ba to
+	.byte $55,$4e,$54,$49,$cc             ; $00bb until
+	.byte $fc                             ; $00bc |
+	.byte $fe                             ; $00bd ~
 	.byte $00
 
 TokenTypeInformation:
@@ -179,15 +181,16 @@ TokenTypeInformation:
 	.byte $08                             ; $00b1 return
 	.byte $08                             ; $00b2 rem
 	.byte $08                             ; $00b3 run
-	.byte $09                             ; $00b4 rnd
-	.byte $08                             ; $00b5 stop
-	.byte $08                             ; $00b6 step
-	.byte $08                             ; $00b7 then
-	.byte $09                             ; $00b8 top
-	.byte $08                             ; $00b9 to
-	.byte $08                             ; $00ba until
-	.byte $00                             ; $00bb |
-	.byte $01                             ; $00bc ~
+	.byte $08                             ; $00b4 rst
+	.byte $09                             ; $00b5 rnd
+	.byte $08                             ; $00b6 stop
+	.byte $08                             ; $00b7 step
+	.byte $08                             ; $00b8 then
+	.byte $09                             ; $00b9 top
+	.byte $08                             ; $00ba to
+	.byte $08                             ; $00bb until
+	.byte $00                             ; $00bc |
+	.byte $01                             ; $00bd ~
 
 
 KTYPE_PRECBASE = $00
@@ -247,13 +250,14 @@ KW_PAGE = $00b0
 KW_RETURN = $00b1
 KW_REM = $00b2
 KW_RUN = $00b3
-KW_RND = $00b4
-KW_STOP = $00b5
-KW_STEP = $00b6
-KW_THEN = $00b7
-KW_TOP = $00b8
-KW_TO = $00b9
-KW_UNTIL = $00ba
-KW_BAR = $00bb
-KW_TILDE = $00bc
+KW_RST = $00b4
+KW_RND = $00b5
+KW_STOP = $00b6
+KW_STEP = $00b7
+KW_THEN = $00b8
+KW_TOP = $00b9
+KW_TO = $00ba
+KW_UNTIL = $00bb
+KW_BAR = $00bc
+KW_TILDE = $00bd
 

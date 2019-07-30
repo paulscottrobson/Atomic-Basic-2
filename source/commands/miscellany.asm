@@ -140,4 +140,6 @@ _COScan:
 _COFail:
 		#error	"CANNOT RECOVER PROGRAM"
 
-		
+COMMAND_RST:	;; rst
+		jsr 	EXTReset
+		rts

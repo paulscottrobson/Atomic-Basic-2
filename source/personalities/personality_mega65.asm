@@ -314,6 +314,7 @@ EXTReset:
 	#EXTWrite $18,$42	 				; screen address $0800 video address $1000
 	#EXTWrite $11,$1B
 
+ClearColourRAM:
 	lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)
 	sta 	EXTZPWork+3 
 	lda 	#$01
@@ -348,4 +349,3 @@ _EXTCopyCBMFont:
 	plx
 	pla
 	rts
-

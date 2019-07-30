@@ -43,6 +43,9 @@
 				
 Start:
 		#resetstack 						; reset CPU stack.
+		.if TARGET=1
+		;jsr 	RemapMemory 				; remap memory (Mega65 only)
+		.endif
 		jsr 	SIOInitialise 				; initialise the I/O system.
 		ldx 	#BootMsg1 & 255 			; boot text.
 		ldy 	#BootMsg1 >> 8
