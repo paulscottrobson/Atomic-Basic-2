@@ -28,7 +28,7 @@ KeywordVectorTable:
 	.word	COMMAND_Clear                 ; "clear"    ($009a)
 	.word	COMMAND_CLS                   ; "cls"      ($009b)
 	.word	UNARY_Ch                      ; "ch"       ($009c)
-	.word	SyntaxError                   ; "dim"      ($009d)
+	.word	COMMAND_Dim                   ; "dim"      ($009d)
 	.word	COMMAND_Do                    ; "do"       ($009e)
 	.word	COMMAND_ELSE                  ; "else"     ($009f)
 	.word	COMMAND_End                   ; "end"      ($00a0)

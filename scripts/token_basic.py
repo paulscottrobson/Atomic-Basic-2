@@ -120,6 +120,8 @@ if __name__ == '__main__':
 	#tok.tokeniseTest(' printcatdog("Hello world")a')
 
 	bas = BasicProgram()
+	bas.add('DIM CC(3),D(4),E(-1),FF(1024),@(-1)',1)
+	bas.add('PRINT "***":goto 1')
 	bas.add('A = 0',12)
 	bas.add('DO A = A + 1')
 	bas.add('PRINT A,')

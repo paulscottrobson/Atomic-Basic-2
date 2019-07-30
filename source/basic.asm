@@ -24,20 +24,22 @@
 
 		.include 	"binary/arithmetic.asm" ; basic arithmetic
 		.include 	"binary/binary.asm" 	; binary operators
-		.include 	"binary/multiply.asm" 	; multiplication
-		.include 	"binary/divide.asm" 	; division and modulus
 		.include 	"binary/compare.asm"	; numerical comparisons
+		.include 	"binary/divide.asm" 	; division and modulus
+		.include 	"binary/multiply.asm" 	; multiplication
 		.include 	"binary/scompare.asm"	; string comparisons
+
 		.include 	"unary/unary.asm"		; miscellaneous unary functions
 		
-		.include 	"commands/execute.asm"	; run/stop etc.		
-		.include 	"commands/miscellany.asm" ; miscellaneous statements
-		.include 	"commands/let.asm"		; assignment.
-		.include 	"commands/if.asm"		; if/then/else statement.
-		.include 	"commands/print.asm" 	; print statement
-		.include 	"commands/list.asm"		; list statement
+		.include 	"commands/dim.asm" 		; dimension
 		.include 	"commands/dountil.asm"	; do/until statements
 		.include 	"commands/goto.asm"		; goto/gosub/return statements
+		.include 	"commands/if.asm"		; if/then/else statement.
+		.include 	"commands/let.asm"		; assignment.
+		.include 	"commands/list.asm"		; list statement
+		.include 	"commands/miscellany.asm" ; miscellaneous statements
+		.include 	"commands/print.asm" 	; print statement
+		.include 	"commands/execute.asm"	; run/stop etc.		
 				
 Start:
 		#resetstack 						; reset CPU stack.
