@@ -299,7 +299,7 @@ EXTReset:
 	#EXTWrite $58,80
 	#EXTWrite $59,0
 
-	#EXTWrite $18,$42	 				; screen address $0800 video address $2000
+	#EXTWrite $18,$42	 				; screen address $0800 video address $1000
 	#EXTWrite $11,$1B
 
 	lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)
@@ -322,7 +322,7 @@ _EXTClearColorRam:
 
 	ldx 	#0 								; copy PET Font into memory.
 _EXTCopyCBMFont:
-	lda 	EXTCBMFont,x
+	lda 	EXTCBMFont+$800,x 				; +$800 uses the lower case c/set
 	sta 	EXTCharSet,x
 	lda 	EXTCBMFont+$100,x
 	sta 	EXTCharSet+$100,x

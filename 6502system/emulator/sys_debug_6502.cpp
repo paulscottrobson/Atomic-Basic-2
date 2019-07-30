@@ -123,7 +123,7 @@ void DBGXRender(int *address,int showDisplay) {
 		 		for (int x = 0;x < 8;x++) {														// 5 Across
 		 			rc.x = xc + x * size;
 		 			for (int y = 0;y < 8;y++) {													// 7 Down
-		 				int f = character_rom[cp+y];
+		 				int f = character_rom[cp+y+0x800];
 		 				rc.y = yc + y * size;
 		 				if (f & (0x80 >> x)) {		
 		 					GFXRectangle(&rc,colour);			
