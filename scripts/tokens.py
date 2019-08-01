@@ -87,7 +87,7 @@ class TokenList(object):
 		#		Unary operators
 		#
 		[unary]		len		ch		rnd 	abs 	top		page	
-					get 	ioaddr 
+					get 	ioaddr 	cpu
 		#
 		#		Syntax operators
 		#

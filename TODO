@@ -1,9 +1,9 @@
 Progress
 ========
                                                                                                                 Test on Mega65 board.
-- Code read #1
 - map initial RAM layout.
-- LINK
+- LINK A X Y Z P in fixed location
+- Code read #1
 - FOR TO NEXT STEP
 - INPUT
 

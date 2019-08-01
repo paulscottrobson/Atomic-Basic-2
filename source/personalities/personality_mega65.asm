@@ -284,7 +284,7 @@ EXTReset:
 	#EXTWrite $16,$C8 					; 40 column mode
 
 	#EXTWrite $18,$42	 				; screen address $0800 video address $1000
-	#EXTWrite $11,$18 					; check up what this means
+	#EXTWrite $11,$1B 					; check up what this means
 
 ClearColourRAM:
 	lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)
@@ -297,7 +297,7 @@ ClearColourRAM:
 	sta 	EXTZPWork+0
 	ldz 	#0
 _EXTClearColorRam:	
-	lda 	#3 								; fill that with this colour.
+	lda 	#1 								; fill that with this colour.
 	nop
 	sta 	(EXTZPWork),z
 	dez

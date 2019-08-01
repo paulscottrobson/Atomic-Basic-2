@@ -27,40 +27,41 @@ KeywordVectorTable:
 	.word	UNARY_Abs                     ; "abs"      ($0099)
 	.word	COMMAND_Clear                 ; "clear"    ($009a)
 	.word	COMMAND_CLS                   ; "cls"      ($009b)
-	.word	UNARY_Ch                      ; "ch"       ($009c)
-	.word	COMMAND_Dim                   ; "dim"      ($009d)
-	.word	COMMAND_Do                    ; "do"       ($009e)
-	.word	COMMAND_ELSE                  ; "else"     ($009f)
-	.word	COMMAND_End                   ; "end"      ($00a0)
-	.word	SyntaxError                   ; "for"      ($00a1)
-	.word	COMMAND_Gosub                 ; "gosub"    ($00a2)
-	.word	COMMAND_Goto                  ; "goto"     ($00a3)
-	.word	UNARY_Get                     ; "get"      ($00a4)
-	.word	UNARY_IOAddr                  ; "ioaddr"   ($00a5)
-	.word	SyntaxError                   ; "input"    ($00a6)
-	.word	COMMAND_IF                    ; "if"       ($00a7)
-	.word	COMMAND_List                  ; "list"     ($00a8)
-	.word	SyntaxError                   ; "link"     ($00a9)
-	.word	COMMAND_Let                   ; "let"      ($00aa)
-	.word	UNARY_Len                     ; "len"      ($00ab)
-	.word	SyntaxError                   ; "next"     ($00ac)
-	.word	COMMAND_NewExec               ; "new"      ($00ad)
-	.word	COMMAND_OldExec               ; "old"      ($00ae)
-	.word	COMMAND_Print                 ; "print"    ($00af)
-	.word	UNARY_Page                    ; "page"     ($00b0)
-	.word	COMMAND_Return                ; "return"   ($00b1)
-	.word	COMMAND_Rem                   ; "rem"      ($00b2)
-	.word	COMMAND_Run                   ; "run"      ($00b3)
-	.word	COMMAND_RST                   ; "rst"      ($00b4)
-	.word	UNARY_Rnd                     ; "rnd"      ($00b5)
-	.word	COMMAND_Stop                  ; "stop"     ($00b6)
-	.word	SyntaxError                   ; "step"     ($00b7)
-	.word	COMMAND_THEN                  ; "then"     ($00b8)
-	.word	UNARY_Top                     ; "top"      ($00b9)
-	.word	SyntaxError                   ; "to"       ($00ba)
-	.word	COMMAND_Until                 ; "until"    ($00bb)
-	.word	BFUNC_Or                      ; "|"        ($00bc)
-	.word	BFUNC_StringCompare           ; "~"        ($00bd)
+	.word	UNARY_CPU                     ; "cpu"      ($009c)
+	.word	UNARY_Ch                      ; "ch"       ($009d)
+	.word	COMMAND_Dim                   ; "dim"      ($009e)
+	.word	COMMAND_Do                    ; "do"       ($009f)
+	.word	COMMAND_ELSE                  ; "else"     ($00a0)
+	.word	COMMAND_End                   ; "end"      ($00a1)
+	.word	SyntaxError                   ; "for"      ($00a2)
+	.word	COMMAND_Gosub                 ; "gosub"    ($00a3)
+	.word	COMMAND_Goto                  ; "goto"     ($00a4)
+	.word	UNARY_Get                     ; "get"      ($00a5)
+	.word	UNARY_IOAddr                  ; "ioaddr"   ($00a6)
+	.word	SyntaxError                   ; "input"    ($00a7)
+	.word	COMMAND_IF                    ; "if"       ($00a8)
+	.word	COMMAND_List                  ; "list"     ($00a9)
+	.word	SyntaxError                   ; "link"     ($00aa)
+	.word	COMMAND_Let                   ; "let"      ($00ab)
+	.word	UNARY_Len                     ; "len"      ($00ac)
+	.word	SyntaxError                   ; "next"     ($00ad)
+	.word	COMMAND_NewExec               ; "new"      ($00ae)
+	.word	COMMAND_OldExec               ; "old"      ($00af)
+	.word	COMMAND_Print                 ; "print"    ($00b0)
+	.word	UNARY_Page                    ; "page"     ($00b1)
+	.word	COMMAND_Return                ; "return"   ($00b2)
+	.word	COMMAND_Rem                   ; "rem"      ($00b3)
+	.word	COMMAND_Run                   ; "run"      ($00b4)
+	.word	COMMAND_RST                   ; "rst"      ($00b5)
+	.word	UNARY_Rnd                     ; "rnd"      ($00b6)
+	.word	COMMAND_Stop                  ; "stop"     ($00b7)
+	.word	SyntaxError                   ; "step"     ($00b8)
+	.word	COMMAND_THEN                  ; "then"     ($00b9)
+	.word	UNARY_Top                     ; "top"      ($00ba)
+	.word	SyntaxError                   ; "to"       ($00bb)
+	.word	COMMAND_Until                 ; "until"    ($00bc)
+	.word	BFUNC_Or                      ; "|"        ($00bd)
+	.word	BFUNC_StringCompare           ; "~"        ($00be)
 
 
 TokenText:
@@ -92,40 +93,41 @@ TokenText:
 	.byte $41,$42,$d3                     ; $0099 abs
 	.byte $43,$4c,$45,$41,$d2             ; $009a clear
 	.byte $43,$4c,$d3                     ; $009b cls
-	.byte $43,$c8                         ; $009c ch
-	.byte $44,$49,$cd                     ; $009d dim
-	.byte $44,$cf                         ; $009e do
-	.byte $45,$4c,$53,$c5                 ; $009f else
-	.byte $45,$4e,$c4                     ; $00a0 end
-	.byte $46,$4f,$d2                     ; $00a1 for
-	.byte $47,$4f,$53,$55,$c2             ; $00a2 gosub
-	.byte $47,$4f,$54,$cf                 ; $00a3 goto
-	.byte $47,$45,$d4                     ; $00a4 get
-	.byte $49,$4f,$41,$44,$44,$d2         ; $00a5 ioaddr
-	.byte $49,$4e,$50,$55,$d4             ; $00a6 input
-	.byte $49,$c6                         ; $00a7 if
-	.byte $4c,$49,$53,$d4                 ; $00a8 list
-	.byte $4c,$49,$4e,$cb                 ; $00a9 link
-	.byte $4c,$45,$d4                     ; $00aa let
-	.byte $4c,$45,$ce                     ; $00ab len
-	.byte $4e,$45,$58,$d4                 ; $00ac next
-	.byte $4e,$45,$d7                     ; $00ad new
-	.byte $4f,$4c,$c4                     ; $00ae old
-	.byte $50,$52,$49,$4e,$d4             ; $00af print
-	.byte $50,$41,$47,$c5                 ; $00b0 page
-	.byte $52,$45,$54,$55,$52,$ce         ; $00b1 return
-	.byte $52,$45,$cd                     ; $00b2 rem
-	.byte $52,$55,$ce                     ; $00b3 run
-	.byte $52,$53,$d4                     ; $00b4 rst
-	.byte $52,$4e,$c4                     ; $00b5 rnd
-	.byte $53,$54,$4f,$d0                 ; $00b6 stop
-	.byte $53,$54,$45,$d0                 ; $00b7 step
-	.byte $54,$48,$45,$ce                 ; $00b8 then
-	.byte $54,$4f,$d0                     ; $00b9 top
-	.byte $54,$cf                         ; $00ba to
-	.byte $55,$4e,$54,$49,$cc             ; $00bb until
-	.byte $fc                             ; $00bc |
-	.byte $fe                             ; $00bd ~
+	.byte $43,$50,$d5                     ; $009c cpu
+	.byte $43,$c8                         ; $009d ch
+	.byte $44,$49,$cd                     ; $009e dim
+	.byte $44,$cf                         ; $009f do
+	.byte $45,$4c,$53,$c5                 ; $00a0 else
+	.byte $45,$4e,$c4                     ; $00a1 end
+	.byte $46,$4f,$d2                     ; $00a2 for
+	.byte $47,$4f,$53,$55,$c2             ; $00a3 gosub
+	.byte $47,$4f,$54,$cf                 ; $00a4 goto
+	.byte $47,$45,$d4                     ; $00a5 get
+	.byte $49,$4f,$41,$44,$44,$d2         ; $00a6 ioaddr
+	.byte $49,$4e,$50,$55,$d4             ; $00a7 input
+	.byte $49,$c6                         ; $00a8 if
+	.byte $4c,$49,$53,$d4                 ; $00a9 list
+	.byte $4c,$49,$4e,$cb                 ; $00aa link
+	.byte $4c,$45,$d4                     ; $00ab let
+	.byte $4c,$45,$ce                     ; $00ac len
+	.byte $4e,$45,$58,$d4                 ; $00ad next
+	.byte $4e,$45,$d7                     ; $00ae new
+	.byte $4f,$4c,$c4                     ; $00af old
+	.byte $50,$52,$49,$4e,$d4             ; $00b0 print
+	.byte $50,$41,$47,$c5                 ; $00b1 page
+	.byte $52,$45,$54,$55,$52,$ce         ; $00b2 return
+	.byte $52,$45,$cd                     ; $00b3 rem
+	.byte $52,$55,$ce                     ; $00b4 run
+	.byte $52,$53,$d4                     ; $00b5 rst
+	.byte $52,$4e,$c4                     ; $00b6 rnd
+	.byte $53,$54,$4f,$d0                 ; $00b7 stop
+	.byte $53,$54,$45,$d0                 ; $00b8 step
+	.byte $54,$48,$45,$ce                 ; $00b9 then
+	.byte $54,$4f,$d0                     ; $00ba top
+	.byte $54,$cf                         ; $00bb to
+	.byte $55,$4e,$54,$49,$cc             ; $00bc until
+	.byte $fc                             ; $00bd |
+	.byte $fe                             ; $00be ~
 	.byte $00
 
 TokenTypeInformation:
@@ -157,40 +159,41 @@ TokenTypeInformation:
 	.byte $09                             ; $0099 abs
 	.byte $08                             ; $009a clear
 	.byte $08                             ; $009b cls
-	.byte $09                             ; $009c ch
-	.byte $08                             ; $009d dim
-	.byte $08                             ; $009e do
-	.byte $08                             ; $009f else
-	.byte $08                             ; $00a0 end
-	.byte $08                             ; $00a1 for
-	.byte $08                             ; $00a2 gosub
-	.byte $08                             ; $00a3 goto
-	.byte $09                             ; $00a4 get
-	.byte $09                             ; $00a5 ioaddr
-	.byte $08                             ; $00a6 input
-	.byte $08                             ; $00a7 if
-	.byte $08                             ; $00a8 list
-	.byte $08                             ; $00a9 link
-	.byte $08                             ; $00aa let
-	.byte $09                             ; $00ab len
-	.byte $08                             ; $00ac next
-	.byte $08                             ; $00ad new
-	.byte $08                             ; $00ae old
-	.byte $08                             ; $00af print
-	.byte $09                             ; $00b0 page
-	.byte $08                             ; $00b1 return
-	.byte $08                             ; $00b2 rem
-	.byte $08                             ; $00b3 run
-	.byte $08                             ; $00b4 rst
-	.byte $09                             ; $00b5 rnd
-	.byte $08                             ; $00b6 stop
-	.byte $08                             ; $00b7 step
-	.byte $08                             ; $00b8 then
-	.byte $09                             ; $00b9 top
-	.byte $08                             ; $00ba to
-	.byte $08                             ; $00bb until
-	.byte $00                             ; $00bc |
-	.byte $01                             ; $00bd ~
+	.byte $09                             ; $009c cpu
+	.byte $09                             ; $009d ch
+	.byte $08                             ; $009e dim
+	.byte $08                             ; $009f do
+	.byte $08                             ; $00a0 else
+	.byte $08                             ; $00a1 end
+	.byte $08                             ; $00a2 for
+	.byte $08                             ; $00a3 gosub
+	.byte $08                             ; $00a4 goto
+	.byte $09                             ; $00a5 get
+	.byte $09                             ; $00a6 ioaddr
+	.byte $08                             ; $00a7 input
+	.byte $08                             ; $00a8 if
+	.byte $08                             ; $00a9 list
+	.byte $08                             ; $00aa link
+	.byte $08                             ; $00ab let
+	.byte $09                             ; $00ac len
+	.byte $08                             ; $00ad next
+	.byte $08                             ; $00ae new
+	.byte $08                             ; $00af old
+	.byte $08                             ; $00b0 print
+	.byte $09                             ; $00b1 page
+	.byte $08                             ; $00b2 return
+	.byte $08                             ; $00b3 rem
+	.byte $08                             ; $00b4 run
+	.byte $08                             ; $00b5 rst
+	.byte $09                             ; $00b6 rnd
+	.byte $08                             ; $00b7 stop
+	.byte $08                             ; $00b8 step
+	.byte $08                             ; $00b9 then
+	.byte $09                             ; $00ba top
+	.byte $08                             ; $00bb to
+	.byte $08                             ; $00bc until
+	.byte $00                             ; $00bd |
+	.byte $01                             ; $00be ~
 
 
 KTYPE_PRECBASE = $00
@@ -226,38 +229,39 @@ KW_ASSERT = $0098
 KW_ABS = $0099
 KW_CLEAR = $009a
 KW_CLS = $009b
-KW_CH = $009c
-KW_DIM = $009d
-KW_DO = $009e
-KW_ELSE = $009f
-KW_END = $00a0
-KW_FOR = $00a1
-KW_GOSUB = $00a2
-KW_GOTO = $00a3
-KW_GET = $00a4
-KW_IOADDR = $00a5
-KW_INPUT = $00a6
-KW_IF = $00a7
-KW_LIST = $00a8
-KW_LINK = $00a9
-KW_LET = $00aa
-KW_LEN = $00ab
-KW_NEXT = $00ac
-KW_NEW = $00ad
-KW_OLD = $00ae
-KW_PRINT = $00af
-KW_PAGE = $00b0
-KW_RETURN = $00b1
-KW_REM = $00b2
-KW_RUN = $00b3
-KW_RST = $00b4
-KW_RND = $00b5
-KW_STOP = $00b6
-KW_STEP = $00b7
-KW_THEN = $00b8
-KW_TOP = $00b9
-KW_TO = $00ba
-KW_UNTIL = $00bb
-KW_BAR = $00bc
-KW_TILDE = $00bd
+KW_CPU = $009c
+KW_CH = $009d
+KW_DIM = $009e
+KW_DO = $009f
+KW_ELSE = $00a0
+KW_END = $00a1
+KW_FOR = $00a2
+KW_GOSUB = $00a3
+KW_GOTO = $00a4
+KW_GET = $00a5
+KW_IOADDR = $00a6
+KW_INPUT = $00a7
+KW_IF = $00a8
+KW_LIST = $00a9
+KW_LINK = $00aa
+KW_LET = $00ab
+KW_LEN = $00ac
+KW_NEXT = $00ad
+KW_NEW = $00ae
+KW_OLD = $00af
+KW_PRINT = $00b0
+KW_PAGE = $00b1
+KW_RETURN = $00b2
+KW_REM = $00b3
+KW_RUN = $00b4
+KW_RST = $00b5
+KW_RND = $00b6
+KW_STOP = $00b7
+KW_STEP = $00b8
+KW_THEN = $00b9
+KW_TOP = $00ba
+KW_TO = $00bb
+KW_UNTIL = $00bc
+KW_BAR = $00bd
+KW_TILDE = $00be
 

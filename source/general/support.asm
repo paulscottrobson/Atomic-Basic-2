@@ -110,13 +110,31 @@ _CNCFail:
 
 		.if TARGET=1
 CopyBasicCode:
-		ldx 	#0
+		lda 	#IncludeBasicCode & $FF
+		sta 	zTemp1 
+		lda 	#IncludeBasicCode >> 8
+		sta 	zTemp1+1
+		lda 	#BasicProgram & $FF
+		sta 	zTemp2
+		lda 	#BasicProgram >> 8
+		sta 	zTemp2+1
 _CopyLoop:		
-		lda 	BasicCode,x
-		sta 	BasicProgram,x
-		lda 	BasicCode+$100,x
-		sta 	BasicProgram+$100,x
-		inx
+		ldy 	#0
+		lda 	(zTemp1),y
+		sta 	(zTemp2),y
+		inc 	zTemp1
+		bne 	_Copy1
+		inc 	zTemp1+1
+_Copy1:		
+		inc 	zTemp2
+		bne 	_Copy2
+		inc 	zTemp2+1
+_Copy2:
+		lda 	zTemp1
+		cmp 	#EndBasicCode & $FF
+		bne 	_CopyLoop
+		lda 	zTemp1+1
+		cmp 	#EndBasicCode >> 8
 		bne 	_CopyLoop
 		rts
 		.endif

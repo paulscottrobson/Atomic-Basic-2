@@ -174,3 +174,12 @@ UNARY_IOAddr:	;; ioaddr
 		sta 	evalStack+0,x
 		rts
 
+UNARY_CPU:		;; cpu
+		lda 	#$00
+		sta 	evalStack+3,x
+		sta 	evalStack+2,x
+		lda 	#registers >> 8
+		sta 	evalStack+1,x
+		lda 	#registers & $FF
+		sta 	evalStack+0,x
+		rts

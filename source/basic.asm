@@ -11,6 +11,15 @@
 
 		.include 	"porting.asm"			; implementation specific stuff
 
+		.if TARGET=2 						; emulator, can just include code and it's loaded
+		* = BasicProgram 					; mega65, part of the ROM and needs copying in.
+		.endif
+		
+IncludeBasicCode:
+		.include "include/basic_generated.inc"
+EndBasicCode:
+
+
 		* = $E000
 		.include 	"include/tokens.inc"	; generated token tables and constants.
 
@@ -127,9 +136,9 @@ _WSExecute:
 ; *******************************************************************************************
 
 TokeniseExec:
-		lda 	#BasicCode & $FF 			; if so tokenise whatever I've put in the basic code
+		lda 	#IncludeBasicCode & $FF 	; if so tokenise whatever I've put in the basic code
 		sta 	zTemp1 						; area
-		lda 	#BasicCode >> 8
+		lda 	#IncludeBasicCode >> 8
 		sta 	zTemp1+1
 		jsr 	TokeniseString
 		#exit 								; and exit immediately.
@@ -138,17 +147,5 @@ BootMsg1:
 		.text 	"*** ATOMIC BASIC ***",13,13,0
 BootMsg2:		
 		.text	" BYTES FREE.",13,13,0
-; *******************************************************************************************
-;
-;								BASIC Program, built in.
-;
-; *******************************************************************************************
-
-		.if TARGET=2 						; emulator, can just include code and it's loaded
-		* = BasicProgram 					; mega65, part of the ROM and needs copying in.
-		.endif
-
-BasicCode:
-		.include "include/basic_generated.inc"
 
 

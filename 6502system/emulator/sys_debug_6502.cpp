@@ -112,7 +112,7 @@ void DBGXRender(int *address,int showDisplay) {
 			for (int y = 0;y < ys;y++)
 		 	{
 		 		#define CP(c) ((c) >> 4)
-		 		int colour = 0x0FF;
+		 		int colour = 0xFFF;
 		 		int ch = CPUReadMemory(x+y*80+0xB000) ;
 		 		ch = ch & 0x7F;
 		 		int xc = x1 + x * 8 * size;
