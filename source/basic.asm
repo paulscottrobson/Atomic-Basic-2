@@ -18,7 +18,15 @@
 IncludeBasicCode:
 		.include "include/basic_generated.inc"
 EndBasicCode:
-
+	
+		* = $8000
+		.text "Page 8"
+		* = $9000
+		.text "Page 9"
+		* = $C000
+		.text "Hello world"
+		* = $D000
+		.text "Goodbye Cruel World"
 
 		* = $E000
 		.include 	"include/tokens.inc"	; generated token tables and constants.

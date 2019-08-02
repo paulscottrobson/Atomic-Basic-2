@@ -267,14 +267,16 @@ EXTReset:
 	lda 	#$00
 	sta 	EXTZPWork+0
 
-	#EXTWrite 	$2F,$A5 					; switch to VIC-III mode
-	#EXTWrite 	$2F,$96	
+	#EXTWrite 	$2F,$47 					; switch to VIC-IV mode ($A5/$96 VIC III)
+	#EXTWrite 	$2F,$53	
 
 	#EXTWrite 	$30,$40						; C65 Charset 					
-	#EXTWrite 	$31,$80 					; 80 column mode
+	#EXTWrite 	$31,$80+$40 				; 80 column mode, 40Mhz won't work without 3.5Mhz on.
 
 	#EXTWrite $20,0 						; black border
 	#EXTWrite $21,0 						; black background
+
+	#EXTWrite $54,$40 						; Highspeed on.
 
 	; point VIC-IV to bottom 16KB of display memory
 
@@ -285,6 +287,16 @@ EXTReset:
 
 	#EXTWrite $18,$42	 				; screen address $0800 video address $1000
 	#EXTWrite $11,$1B 					; check up what this means
+
+	lda 	#$3F-4  					; puts ROM back in the map (the -4)
+	sta 	$01
+
+	lda 	#$00						; do not map bytes 0000-7FFF
+	ldx 	#$00
+	ldy 	#$00 						; 8000-FFFF offset by $2000
+	ldz 	#$F2
+	map
+	eom
 
 ClearColourRAM:
 	lda 	#$00							; colour RAM at $1F800-1FFFF (2kb)

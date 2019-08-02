@@ -1,16 +1,17 @@
-110 dim c(32),zz(5):print
-111 zz0 = cpu:!zz0 = 0:zz0?4=0
-112 c?0 = #A2:c?1=#83
-113 c?2 = #60
-150 print &c
-170 link c
-175 gosub 2000
-176 stop
+100 a = 0
+110 do
+115 a?2=#AA
+120 gosub 1000
+130 a = a + #1000
+140 until a = #10000
+150 stop
+1000 print &a,
+1010 x = 0
+1020 do
+1025 if a?x<16 then print "0";
+1030 print &a?x;" ";
+1040 x = x + 1
+1050 until x = 16
+1100 print
+1110 return
 
-1985 rem
-1990 rem Dump CPU Status.
-1995 rem
-2000 zz0 = cpu
-2010 print"6502: A:"&zz0?0" X:"&zz0?1" Y:"&zz0?2" Z:"&zz0?3" P:";&zz0?4;" NVSBDIZC:";
-2020 zz1 = 0:zz2=zz0?4:do:print &(zz2 & #80)/128;:zz2 = zz2*2:zz1 = zz1+1:until zz1 = 8:print
-2030 return
