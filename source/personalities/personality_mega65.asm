@@ -281,7 +281,7 @@ EXTReset:
 	#EXTWrite $01,$FF
 	#EXTWrite $00,$FF
 
-	#EXTWrite $16,$C8 					; 40 column mode
+	#EXTWrite $16,$CC 					; 40 column mode
 
 	#EXTWrite $18,$42	 				; screen address $0800 video address $1000
 	#EXTWrite $11,$1B 					; check up what this means

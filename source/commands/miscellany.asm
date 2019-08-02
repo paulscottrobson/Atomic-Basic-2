@@ -143,3 +143,52 @@ _COFail:
 COMMAND_RST:	;; rst
 		jsr 	EXTReset
 		rts
+
+; *******************************************************************************************
+;
+;									  LINK run program
+;
+; *******************************************************************************************
+
+COMMAND_LINK: ;; LINK
+		jsr 	EvaluateBase 				; evaluate the expression, where to call
+		lda 	evalStack+2,x 				; check non zero 	
+		ora 	evalStack+3,x
+		bne 	_CLKError
+		lda 	evalStack+0,x 				; copy link address
+		sta 	linkAddress
+		lda 	evalStack+1,x
+		sta 	linkAddress+1
+		;
+		phy 								; save Y
+		php 								; save PSW.
+
+		lda 	registers+4 				; load P A X Y Z
+		pha
+		lda 	registers+0
+		ldx 	registers+1
+		ldy 	registers+2
+		.if TARGET=1
+		ldz 	registers+3
+		.endif
+		plp
+		;
+		jsr 	_CLKGoLink 					; call code.
+		;
+		php 								; save A X Y Z P
+		sta 	registers+0
+		stx 	registers+1
+		sty 	registers+2
+		.if TARGET=1
+		stz 	registers+3
+		.endif
+		pla
+		sta 	registers+4
+		;
+		plp 								; restore PSW and Y, return.
+		ply
+		rts
+_CLKError:
+		#error 	"BAD CODE ADDRESS"		
+_CLKGoLink:
+		jmp 	(linkAddress)		

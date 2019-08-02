@@ -38,6 +38,7 @@ yCursor 		.byte 	?
 breakCheckCount	.byte 	?					; how often check for break.
 basicStackIndex	.byte 	? 					; index into Basic Stack.
 registers		.fill 	5 					; A X Y Z P registers in/out for LINK.
+linkaddress	 	.fill 	2
 
 				.align	256 				
 TokeniseBuffer: 							; tokenise buffer

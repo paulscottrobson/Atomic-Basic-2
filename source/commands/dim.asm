@@ -19,6 +19,8 @@
 COMMAND_Dim: 	;; dim
 		lda 	(zCurrentLine),y 			; skip over , and space
 		beq 	_CDIMExit
+		cmp		#KW_COLON
+		beq 	_CDIMExit
 		iny
 		cmp 	#KW_COMMA
 		beq 	COMMAND_Dim

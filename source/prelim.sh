@@ -9,7 +9,8 @@ python token_code.py
 
 #python test_math.py
 #python test_assign.py
-python token_basic.py 
+#python token_basic.py 
+python load_basic.py
 
 popd
 

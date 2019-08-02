@@ -41,7 +41,7 @@ KeywordVectorTable:
 	.word	SyntaxError                   ; "input"    ($00a7)
 	.word	COMMAND_IF                    ; "if"       ($00a8)
 	.word	COMMAND_List                  ; "list"     ($00a9)
-	.word	SyntaxError                   ; "link"     ($00aa)
+	.word	COMMAND_LINK                  ; "link"     ($00aa)
 	.word	COMMAND_Let                   ; "let"      ($00ab)
 	.word	UNARY_Len                     ; "len"      ($00ac)
 	.word	SyntaxError                   ; "next"     ($00ad)
