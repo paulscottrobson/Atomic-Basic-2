@@ -16,7 +16,7 @@ EXTDummyInterrupt:							; interrupt that does nothing.
 		.word 	EXTDummyInterrupt
 		.word 	Start
 		.word 	EXTDummyInterrupt
-
+		
 EXTZPWork = 4								; Zero Page work for Personality (4 bytes)
 IOCursorX = 8 								; Cursor position
 IOCursorY = 9

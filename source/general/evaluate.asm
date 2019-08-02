@@ -426,6 +426,7 @@ EVALReadWordIndirectZTemp:
 		lda 	zTemp1+2 					; address $0000xxxx
 		ora 	zTemp1+3 	
 		beq 	_ERWBase
+
 		ldz 	#0 							; read from far memory.
 		nop
 		lda 	(zTemp1),z
